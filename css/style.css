@@ -91,8 +91,8 @@ marquee{
     cursor: pointer;
     position: absolute;
 
-    top: 12px;
-    right: 2px; 
+    top: 2px;
+    left: 2px; 
     opacity: .1;
 }
 #shuffle_button:hover{
@@ -111,7 +111,7 @@ marquee{
     height: 20px;
     cursor: pointer;
     position: absolute;
-    top: 12px;
+    top: 22px;
     left: 2px;  
     
     opacity: .1;
@@ -194,8 +194,8 @@ marquee{
     height: 20px;
     cursor: pointer;
     position: absolute;
-    top: 12px;
-    left: 40px; 
+    top: 2px;
+    right: 2px; 
     opacity: .1;
 }  
 #thumbs_up_button:hover{
@@ -214,8 +214,8 @@ marquee{
     height: 20px;
     cursor: pointer;
     position: absolute;
-    top: 12px;
-    right: 40px; 
+    top: 22px;
+    right: 2px; 
     opacity: .1;
 }  
 #thumbs_down_button:hover{
