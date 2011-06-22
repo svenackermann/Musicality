@@ -10,21 +10,20 @@ var thumbs_up = false;
 var thumbs_down = false;
 
 //Grabbed from music-beta-controller source
+//Special thanks to Brad Lambeth for doing this!
 function FindMusicBetaTab(callback) {
-chrome.windows.getAll({populate: true}, function(windows) {
+    chrome.windows.getAll({populate: true}, function(windows) {
+    var pattern = 'https?\:\/\/music\.google\.com\/music\/listen.*';
     for (var window = 0; window < windows.length; window++) {
-      for (var i = 0; i < windows[window].tabs.length; i++) {
-        if (windows[window].tabs[i].url.
-            indexOf('http://music.google.com/music/listen') == 0 ||
-            windows[window].tabs[i].url.
-            indexOf('https://music.google.com/music/listen') == 0) {
-          callback(windows[window].tabs[i].id)
-          return;
+        for (var i = 0; i < windows[window].tabs.length; i++) {
+            if (windows[window].tabs[i].url.match(pattern)) {
+                callback(windows[window].tabs[i].id)
+                return;
+            }
         }
-      }
     }
     callback(null);
-  });  
+    });
 }
 
 // Send the given command to a tab showing Music Beta,
@@ -52,7 +51,7 @@ function sendCommand(command, divID) { //using divID was for thumbsUp and down s
             }
           }
         } else {
-          chrome.tabs.create({url: 'http://music.google.com/music/listen',
+          chrome.tabs.create({url: 'https://music.google.com/music/listen',
                               selected: true});
         }
     });
@@ -232,7 +231,7 @@ function updateInformation(){
                         $("#total_time").text(response.total_time);
                 });
         }else{
-            chrome.tabs.create({url: 'http://music.google.com/music/listen',
+            chrome.tabs.create({url: 'https://music.google.com/music/listen',
                               selected: true});
         }
     });
