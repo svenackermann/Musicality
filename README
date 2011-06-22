@@ -3,6 +3,8 @@ Some source code derived from http://code.google.com/p/music-beta-controller/
 Apache License 2.0
 Implemented by Kyle Kamperschroer
 
+---NOTES---
+
 antimatter15's notes:
 
 relayouted interface based on a few principles:
@@ -18,3 +20,9 @@ The items to the left of the play/pause button, which lies in the center and rep
 The "negative" actions are skip, thumbs down and shuffle. Skip indicates a temporary disliking of the song, maybe he and/or she has heard it too many times that day, but doesn't necessarily hate it. Thumbs down indicates that the user not only doesn't like it at a certain point in time, but doesn't want to hear it in the future, it's clearly more intense than skip. Shuffle doesn't follow the pattern of intensity spectrum, but it's still a "negative" action, as it represents the idea that the user doesn't particularly care about the identity next song, and feels that the structure of the playlist (which generally has some structure, as intended by the artist) doesn't fit his/her desires and would like serendipity to take over instead. 
 
 I guess that concludes my overanalysis of some little idea.
+
+---People who have helped out---
+antimatter15
+Brad Lambeth
+Marc-Andre Decoste
+
