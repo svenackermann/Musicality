@@ -36,6 +36,7 @@ chrome.extension.onRequest.addListener(
     }
 });
 
+//Thank you antimatter15 for this nice contribution. I'm sure it will be used by other projects as well.
 function trigger_mouse(element){
     location.assign("javascript:(function(element){'over,down,up'.split(',').forEach(function(i){var event = document.createEvent('MouseEvents');event.initMouseEvent('mouse'+i, true, true, document.defaultView, 1, 0, 0, 0, 0, false, false, false, false, 0, element);element.dispatchEvent(event)})})(document.getElementById('"+element+"'))");
 }
