@@ -11,11 +11,6 @@ marquee{
     padding-bottom: 1px;
 }
 
-#gradient_container{
-    background-image: url('../images/gradient.png');
-    background-repeat: repeat-y;
-}
-
 #container{
     width: auto;
     height: 66px;
