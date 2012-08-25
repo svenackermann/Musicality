@@ -51,10 +51,10 @@ function get_play_state(){
 }
 
 function get_shuffle_state(){
-    if($("#shuffle_mode_button").attr("class") == "" || $("#shuffle_mode_button").attr("class") == "on_clicked"){
-        return "Off";
-    }else{
+    if($("#shuffle_mode_button").attr("class") == "checked"){
         return "On";
+    }else{
+        return "Off";
     }
 }
 

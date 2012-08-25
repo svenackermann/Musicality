@@ -13,7 +13,7 @@ var thumbs_down = false;
 //Special thanks to Brad Lambeth for doing this!
 function FindMusicBetaTab(callback) {
     chrome.windows.getAll({populate: true}, function(windows) {
-    var pattern = 'https?\:\/\/music\.google\.com\/music\/listen.*';
+    var pattern = 'https?\:\/\/play\.google\.com\/music\/listen.*';
     for (var window = 0; window < windows.length; window++) {
         for (var i = 0; i < windows[window].tabs.length; i++) {
             if (windows[window].tabs[i].url.match(pattern)) {
@@ -51,7 +51,7 @@ function sendCommand(command, divID) { //using divID was for thumbsUp and down s
             }
           }
         } else {
-          chrome.tabs.create({url: 'https://music.google.com/music/listen',
+          chrome.tabs.create({url: 'https://play.google.com/music/listen',
                               selected: true});
         }
     });
@@ -231,7 +231,7 @@ function updateInformation(){
                         $("#total_time").text(response.total_time);
                 });
         }else{
-            chrome.tabs.create({url: 'https://music.google.com/music/listen',
+            chrome.tabs.create({url: 'https://play.google.com/music/listen',
                               selected: true});
         }
     });
