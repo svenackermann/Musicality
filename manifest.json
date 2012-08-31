@@ -1,29 +1,27 @@
 {
-    "name": "Google Music Applet",
-    "version": "1.1",
-    "description": "Lightweight music playback controls and now playing information for Google Music Beta created by Kyle Kamperschroer",
-    "homepage_url" : "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
-
-    "browser_action": {
-        "default_icon": "images/icon48.png",
-        "popup": "html/background.html",
-        "default_title": "Music Beta Player Applet"
-    },
-    
-    "content_scripts": [
-        {
-            "matches" : ["*://music.google.com/*"],
-            "js" : ["js/jquery.js"],
-            "run_at" : "document_start"
-        },
-        {
-            "matches" : ["*://music.google.com/*"],
-            "js" : ["js/contentscript.js"]
-        }
-    ],
-        
-    "permissions": [
-        "tabs",
-        "*://music.google.com/*"
-    ]
+   "browser_action": {
+      "default_icon": "images/icon48.png",
+      "default_title": "Google Play Music Applet",
+      "popup": "html/background.html"
+   },
+   "content_scripts": [ {
+      "js": [ "js/jquery.js" ],
+      "matches": [ "*://play.google.com/music/*" ],
+      "run_at": "document_start"
+   }, {
+      "js": [ "js/contentscript.js" ],
+      "matches": [ "*://play.google.com/music/*" ]
+   } ],
+   "description": "Lightweight music playback controls and now playing information for Google Play created by Kyle Kamperschroer",
+   "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
+   "icons": {
+      "128": "images/icon128.png",
+      "16": "images/icon16.png",
+      "48": "images/icon48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTwmh5XwQtmQmA+Mo4obkLsHSL5ISycQp/zNibDswA+JPQaTudzTBk8wxDkurGR7Y236MpNyURqxAvZzHkWIr/935Exsu9zo2scULE5ClGV6rJqSaCvPB0+0vVXdjsgZRHoMyJAe45ncGba0cdaV+LtJuyMj1+1hx3KjfhJMBVSQIDAQAB",
+   "name": "Google Music Applet",
+   "permissions": [ "tabs", "*://play.google.com/music*" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "1.3"
 }
