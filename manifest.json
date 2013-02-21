@@ -2,7 +2,7 @@
    "browser_action": {
       "default_icon": "images/icon48.png",
       "default_title": "Google Play Music Applet",
-      "popup": "html/background.html"
+      "default_popup": "html/background.html"
    },
    "content_scripts": [ {
       "js": [ "js/jquery.js" ],
@@ -23,5 +23,6 @@
    "name": "Google Music Applet",
    "permissions": [ "tabs", "*://play.google.com/music*" ],
    "update_url": "http://clients2.google.com/service/update2/crx",
-   "version": "1.3"
+   "version": "1.4",
+   "manifest_version": 2
 }

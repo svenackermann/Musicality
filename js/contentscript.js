@@ -51,7 +51,7 @@ function get_play_state(){
 }
 
 function get_shuffle_state(){
-    if($("#shuffle_mode_button").attr("class") == "checked"){
+    if($("#shuffle_mode_button").attr("class") == "ALL_SHUFFLE"){
         return "On";
     }else{
         return "Off";

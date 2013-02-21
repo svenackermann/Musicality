@@ -189,8 +189,20 @@ function updateInformation(){
     FindMusicBetaTab(function(tab_id) {
         if (tab_id){
             chrome.tabs.sendRequest(tab_id, {gimme: "artist"}, function(response){   
-                    if(response.artist)       
-                        $("#artist").text(response.artist);
+                    if(response.artist){
+                        var artist_element = $("#artist");
+                        artist_element.text(response.artist);
+
+                        // Check if we need to marquee it
+                        if(artist_element.get(0).scrollWidth > artist_element.width()){
+                            // Turn it into a marquee
+                            artist_element.attr('direction', 'right');
+                            artist_element.attr('scrollamount', '1');
+                        }else{
+                            artist_element.attr('scrollamount', '0');
+                            artist_element.attr('direction', 'left');
+                        }
+                    }
                 });
             chrome.tabs.sendRequest(tab_id, {gimme: "art"}, function(response){           
                     if(response.art != "http:undefined" && response.art != "http:default_album_med.png")
@@ -200,7 +212,8 @@ function updateInformation(){
                 });
             chrome.tabs.sendRequest(tab_id, {gimme: "track"}, function(response){    
                     if(response.track){
-                        $("#track").text(response.track);
+                        var track_element = $("#track");
+                        track_element.text(response.track);
                         $("#play_pause").css("opacity", "1");
                         $("#next_track").css("opacity", "1");
                         $("#previous_track").css("opacity", "1");   
@@ -208,7 +221,16 @@ function updateInformation(){
                         $("#repeat_button").css("opacity", ".85");   
                         $("#thumbs_up_button").css("opacity", ".85");   
                         $("#thumbs_down_button").css("opacity", ".85");   
-                                             
+                         
+                        // Check if we need to marquee it
+                        if(track_element.get(0).scrollWidth > track_element.width()){
+                            // Turn it into a marquee
+                            track_element.attr('direction', 'right');
+                            track_element.attr('scrollamount', '1');
+                        }else{
+                            track_element.attr('scrollamount', '0');
+                            track_element.attr('direction', 'left');
+                        }
                     }else{
                         ////////This is where we "disable" buttons if we don't get a response here....
                         $("#play_pause").css("opacity", ".1");
@@ -244,4 +266,42 @@ window.setInterval(function() {
 
 $(document).ready(function(){
    updateInformation(); //Update information right away.
+
+    // Get the clickable elements ready!
+
+    // Shuffle button
+    $("#shuffle_button").bind('click', function(){
+        shuffleClick();
+    });
+
+    // Repeat button
+    $("#repeat_button").bind('click', function(){
+        repeatClick();
+    });
+    
+    // Previous track
+    $("#previous_track").bind('click', function(){
+        prevTrack();
+    });
+
+    // Play/pause
+    $("#play_pause").bind('click', function(){
+        playPause();
+    });
+
+    // Next track
+    $("#next_track").bind('click', function(){
+        nextTrack();
+    });
+
+    // Thumbs up
+    $("#thumbs_up_button").bind('click', function(){
+        thumbsUp();
+    });
+
+    // Thumbs down
+    $("#thumbs_down_button").bind('click', function(){
+        thumbsDown();
+    });
+
 });
