@@ -19,7 +19,6 @@
       "16": "images/icon16.png",
       "48": "images/icon48.png"
    },
-   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDTwmh5XwQtmQmA+Mo4obkLsHSL5ISycQp/zNibDswA+JPQaTudzTBk8wxDkurGR7Y236MpNyURqxAvZzHkWIr/935Exsu9zo2scULE5ClGV6rJqSaCvPB0+0vVXdjsgZRHoMyJAe45ncGba0cdaV+LtJuyMj1+1hx3KjfhJMBVSQIDAQAB",
    "name": "Google Music Applet",
    "permissions": [ "tabs", "*://play.google.com/music*" ],
    "update_url": "http://clients2.google.com/service/update2/crx",
