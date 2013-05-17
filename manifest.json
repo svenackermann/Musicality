@@ -22,6 +22,6 @@
    "name": "Google Music Applet",
    "permissions": [ "tabs", "*://play.google.com/music*" ],
    "update_url": "http://clients2.google.com/service/update2/crx",
-   "version": "1.4.1",
+   "version": "1.4.2",
    "manifest_version": 2
 }
