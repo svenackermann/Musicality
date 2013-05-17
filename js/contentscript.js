@@ -83,7 +83,7 @@ function get_album_art(){
 }
 
 function get_artist(){
-    return $("#player-artist div").text();
+    return $("#player-artist").text();
 }
 
 function get_track(){
