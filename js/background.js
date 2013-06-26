@@ -174,12 +174,12 @@ function repeatClick(){
 }
 
 function thumbsUp(){
-    sendCommand("thumbsUp", "thumbsUpPlayer");
+    sendCommand("thumbsUp", '*[data-rating="5"]');
     UpdateIconFromPageState();
 }
 
 function thumbsDown(){
-    sendCommand("thumbsDown", "thumbsDownPlayer");
+    sendCommand("thumbsDown", '*[data-rating="1"]');
     UpdateIconFromPageState();
 }
 
