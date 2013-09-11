@@ -9,14 +9,30 @@ var shuffle = false;
 var thumbs_up = false;
 var thumbs_down = false;
 
+// Some patterns for tabs we need to find
+var googlemusic_pattern = 'https?\:\/\/play\.google\.com\/music\/listen.*';
+var pandora_pattern = 'https?\:\/\/www\.pandora\.com\/.*';
+
 //Grabbed from music-beta-controller source
 //Special thanks to Brad Lambeth for doing this!
-function FindMusicBetaTab(callback) {
+function FindMusicTab(callback) {
+
+    // Cycle through our tabs, looking for any that match our patterns and are
+    // currently playing music.
     chrome.windows.getAll({populate: true}, function(windows) {
-    var pattern = 'https?\:\/\/play\.google\.com\/music\/listen.*';
+
     for (var window = 0; window < windows.length; window++) {
         for (var i = 0; i < windows[window].tabs.length; i++) {
-            if (windows[window].tabs[i].url.match(pattern)) {
+            var curUrl = windows[window].tabs[i].url;
+
+            // Look for Google Music
+            if (curUrl.match(googlemusic_pattern)) {
+                callback(windows[window].tabs[i].id)
+                return;
+            }
+            
+            // Look for Pandora
+            else if (curUrl.match(pandora_pattern)) {
                 callback(windows[window].tabs[i].id)
                 return;
             }
@@ -29,7 +45,7 @@ function FindMusicBetaTab(callback) {
 // Send the given command to a tab showing Music Beta,
 // or open one if non exists.
 function sendCommand(command, divID) { //using divID was for thumbsUp and down stuff. Not currently used...
-    FindMusicBetaTab(function(tab_id) {
+    FindMusicTab(function(tab_id) {
         if (tab_id) {
           if (command == "foreground") {
             chrome.tabs.update(tab_id, {selected: true});
@@ -128,7 +144,7 @@ function UpdateThumbsDown(state){
 
 // Get the play state from a MusicBeta tab and call UpdateIcon with it.
 function UpdateIconFromPageState() {
-FindMusicBetaTab(function(tab_id) {
+FindMusicTab(function(tab_id) {
     if (tab_id){
         chrome.tabs.sendRequest(tab_id, {gimme: "play_state"}, function(response){
             UpdateIcon(response.state);    
@@ -186,7 +202,7 @@ function thumbsDown(){
 //Updates all track information and art.
 function updateInformation(){
     UpdateIconFromPageState();
-    FindMusicBetaTab(function(tab_id) {
+    FindMusicTab(function(tab_id) {
         if (tab_id){
             chrome.tabs.sendRequest(tab_id, {gimme: "artist"}, function(response){   
                     if(response.artist){
