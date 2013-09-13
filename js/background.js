@@ -15,8 +15,11 @@ var mLastPlayingTabId = null; // TODO -- This needs to be stored locally, not he
 // The parsed ALL_PLAYERS_JSON
 var mAllPlayers = null;
 
-// The player we detected as playing or paused as seen by the ALL_PLAYERS_JSON
+// The player we detected as playing or paused as seen by the ALL_PLAYERS_JSON object
 var mFocusedPlayer = null;
+
+// The contents of the actual players JSON (not ALL_PLAYERS_JSON)
+var mPlayerDetails = null;
 
 // A debug var for printing information to console
 var mDebug = true;
@@ -53,11 +56,18 @@ function FindTabPlayingMusic(){
 
                         // Save some information off
                         var curTabId = windows[window].tabs[i].id;
-                        mFocusedPlayer = curPlayer;
+                        mFocusedPlayer = mAllPlayers[curPlayer];
 
                         // Is it currently playing music?
                         if (IsPlayingMusic(curTabId)){
-                            // This is what we wanted
+                            // This is what we wanted!
+
+                            // Load the details for this player type into memory
+                            $.getJSON(mFocusedPlayer.json_loc, function(data) {
+                                mPlayerDetails = data;
+                            });
+                            
+                            // Now return it's tab id
                             return curTabId;
                         }else if (IsPaused(curTabId)){
                             // This tab is paused. Save it in case we don't find anything.
@@ -69,7 +79,16 @@ function FindTabPlayingMusic(){
         }
     });
 
-    // Ok. Return the first one we found that was paused
+    // Ok. Didn't find any playing players. Use the last paused one, if it was there
+
+    if (mFocusedPlayer != null){
+        // Load the details of the player into memory from JSON
+        $.getJSON(mFocusedPlayer.json_loc, function(data) {
+            mPlayerDetails = data;
+        });
+    }
+
+    // Return the tab id
     return aPausedTab;
 }
 
@@ -90,7 +109,12 @@ function UpdateInformation(){
         }
     }
 
-    // We need to find a tab playing music
+    // We need to find a tab playing music!
+
+    // Start by resetting the focused player and player details
+    mFocusedPlayer = null;
+    mPlayerDetails = null;
+    
     mLastPlayingTabId = FindTabPlayingMusic();
     if (mLastPlayingTabId != null){
         // We've got one. Populate
@@ -107,28 +131,49 @@ function PopulateInformation(tabId){
 
 // Function to determine if a given tab is playing music
 function IsPlayingMusic(tabId){
-    // TODO
+    // Send a request to the tab provided
+    SendPlayerRequest(tabId, "is_playing",
+        function(response){
+            // Got a response back. Return it
+            return response;            
+        }
+    );
+
     return false;
 }
 
 // Function to determine if a given tab is paused, and could play music
 function IsPaused(tabId){
-    // TODO
+    // Send a request to the tab provided
+    SendPlayerRequest(tabId, "is_paused",
+        function(response){
+            // Got a response back. Return it
+            return response;            
+        }
+    );
+
     return false;
 }
 
-// Function to load the values from external JSON
-function LoadPlayersInformation(playerName){
-
-    if (mDebug){
-        console.log("background.js::LoadPlayersInformation(" + playerName + ")");
+// Function to send a request to the player. Callback the response.
+function SendPlayerRequest(tabId, whatIsNeeded, callback){
+    // Check if we have the player details
+    if (mPlayerDetails != null){
+        
+        // Send the request to the tab provided
+        chrome.tabs.sendRequest(
+            tabId,
+            {
+                playerDetails : mPlayerDetails,
+                gimme : whatIsNeeded
+            },
+            function(response){
+                callback(response);
+            }
+        );
     }
-    // TODO -- Load directly from JSON the patterns we need
-
-    // TODO -- Load directly from JSON the div classes/ids for elements given the player
-
+    callback(null);
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
