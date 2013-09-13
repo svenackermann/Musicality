@@ -37,8 +37,8 @@ function FindTabPlayingMusic(){
     
     // Cycle through each tab
     chrome.windows.getAll({populate: true}, function(windows){
-        for (var window=0; window<windows.length; windows++){
-            for (var i=0; i<windows[window].length; i++){
+        for (var window=0; window<windows.length; window++){
+            for (var i=0; i<windows[window].tabs.length; i++){
                 var curUrl = windows[window].tabs[i].url;
 
                 // Now iterate through our patterns, checking if
