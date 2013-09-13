@@ -1,0 +1,36 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat_all" : true,
+    "has_repeat_one" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('*[data-id=\"play-pause\"]').attr(\"title\") == \"Play\"",
+    "is_paused" : "$('*[data-id=\"play-pause\"]').attr(\"title\") == \"Pause\"",
+    "is_shuffled" : "$('*[data-id=\"shuffle\"]').attr(\"value\") == \"ALL_SHUFFLE\"",
+    "is_repeat_off" : "$('*[data-id=\"repeat\"]').attr(\"value\") == \"NO_REPEAT\"",
+    "is_repeat_one" : "$('*[data-id=\"repeat\"]').attr(\"value\") == \"SINGLE_REPEAT\"",
+    "is_repeat_all" : "$('*[data-id=\"repeat\"]').attr(\"value\") == \"LIST_REPEAT\"",
+    "is_thumbed_up" : "$('*[data-rating=\"5\"]').hasClass(\"selected\")",
+    "is_thumbed_down" : "$('*[data-rating=\"1\"]').hasClass(\"selected\")",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "(\"http:\" + $(\"#playingAlbumArt\").attr(\"src\"))",
+    "get_artist" : "$(\"#player-artist\").text()",
+    "get_track" : "$(\"#playerSongTitle\").text()",
+    "get_current_time" : "$(\"#time_container_current\").text()",
+    "get_total_time" : "$(\"#time_container_duration\").text()"
+    
+}
