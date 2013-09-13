@@ -15,6 +15,9 @@ var mLastPlayingTabId = null; // TODO -- This needs to be stored locally, not he
 // The parsed ALL_PLAYERS_JSON
 var mAllPlayers = null;
 
+// The player we detected as playing or paused as seen by the ALL_PLAYERS_JSON
+var mFocusedPlayer = null;
+
 // A debug var for printing information to console
 var mDebug = true;
 
@@ -26,13 +29,48 @@ var mDebug = true;
 function FindTabPlayingMusic(){
 
     if (mDebug){
-        console.log("background.js::FindTabPlayingMusic(" + callback + ")");
+        console.log("background.js::FindTabPlayingMusic()");
     }
+
+    // An array of tabs currently paused
+    var aPausedTab = null;
     
     // Cycle through each tab
+    chrome.windows.getAll({populate: true}, function(windows){
+        for (var window=0; window<windows.length; windows++){
+            for (var i=0; i<windows[window].length; i++){
+                var curUrl = windows[window].tabs[i].url;
 
-    // TODO -- Look for a tab currently playing music
-    // Use external json for patterns
+                // Now iterate through our patterns, checking if
+                // this is a valid music player
+                for (var curPlayer in mAllPlayers){
+                    if (curUrl.match(mAllPlayers[curPlayer]["pattern"])){
+                        // We have found one of our players at this point
+                        
+                        if (mDebug){
+                            console.log("background.js::FindTabPlayingMusic -- Found " + curPlayer);
+                        }
+
+                        // Save some information off
+                        var curTabId = windows[window].tabs[i].id;
+                        mFocusedPlayer = curPlayer;
+
+                        // Is it currently playing music?
+                        if (IsPlayingMusic(curTabId)){
+                            // This is what we wanted
+                            return curTabId;
+                        }else if (IsPaused(curTabId)){
+                            // This tab is paused. Save it in case we don't find anything.
+                            aPausedTab = curTabId;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Ok. Return the first one we found that was paused
+    return aPausedTab;
 }
 
 // Update the information displayed within the extension
@@ -58,6 +96,8 @@ function UpdateInformation(){
         // We've got one. Populate
         PopulateInformation(mLastPlayingTabId);
     }
+
+    // If we didn't find anything, nothing is populated.
 }
 
 // Populate the actual extension given the particular tab id
@@ -67,6 +107,12 @@ function PopulateInformation(tabId){
 
 // Function to determine if a given tab is playing music
 function IsPlayingMusic(tabId){
+    // TODO
+    return false;
+}
+
+// Function to determine if a given tab is paused, and could play music
+function IsPaused(tabId){
     // TODO
     return false;
 }
