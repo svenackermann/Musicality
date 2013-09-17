@@ -12,7 +12,7 @@
                  ],
       "run_at": "document_start"
    }, {
-      "js": [ "js/googlemusic_contentscript.js" ],
+      "js": [ "js/contentscript.js" ],
       "matches": [ "*://play.google.com/music/*" ]
    }, {
       "js": [ "js/pandora_contentscript.js" ],
@@ -31,6 +31,6 @@
                     "*://www.pandora.com/*"
                   ],
    "update_url": "http://clients2.google.com/service/update2/crx",
-   "version": "2.0",
+   "version": "2.0.0",
    "manifest_version": 2
 }

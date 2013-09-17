@@ -2,13 +2,13 @@
     "google_music" : {
         "name" : "Google Music",
         "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",
-        "json_loc" : "../json/google_music.json"
+        "json_loc" : "/json/google_music.json"
     },
 
     "pandora" : {
         "name" : "Pandora",
         "pattern" : "https?\\:\\/\\/www\\.pandora\\.com\\/.*",
-        "json_loc" : "../json/pandora.json"
+        "json_loc" : "/json/pandora.json"
     }
 
 }

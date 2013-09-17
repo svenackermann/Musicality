@@ -3,7 +3,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 // The location of the JSON full of players and patterns, relative to html dir
-var ALL_PLAYERS_JSON = "../json/all_players.json"
+var ALL_PLAYERS_JSON = "/json/all_players.json"
 
 /////////////////////////////////////////////////////////////////////////////
 // Member Variables
@@ -29,7 +29,7 @@ var mDebug = true;
 /////////////////////////////////////////////////////////////////////////////
 
 // Find a tab that is currently playing music
-function FindTabPlayingMusic(){
+function FindTabPlayingMusic(callback){
 
     if (mDebug){
         console.log("background.js::FindTabPlayingMusic()");
@@ -58,21 +58,35 @@ function FindTabPlayingMusic(){
                         var curTabId = windows[window].tabs[i].id;
                         mFocusedPlayer = mAllPlayers[curPlayer];
 
-                        // Is it currently playing music?
-                        if (IsPlayingMusic(curTabId)){
-                            // This is what we wanted!
+                        // Turn async off to load the JSON
+                        $.ajaxSetup({ async : false });
+                        
+                        // Load the details for this player type into memory
+                        $.getJSON(mFocusedPlayer.json_loc, function(data) {
+                            if (mDebug){
+                                console.log("background.js::FindTabPlayingMusic() -- data = " + data);
+                            }
+                            mPlayerDetails = data;
+                        });
 
-                            // Load the details for this player type into memory
-                            $.getJSON(mFocusedPlayer.json_loc, function(data) {
-                                mPlayerDetails = data;
-                            });
-                            
-                            // Now return it's tab id
-                            return curTabId;
-                        }else if (IsPaused(curTabId)){
-                            // This tab is paused. Save it in case we don't find anything.
-                            aPausedTab = curTabId;
-                        }
+                        // Turn async back on
+                        $.ajaxSetup({ async : true });
+
+                        // Is it currently playing music?
+                        IsPlayingMusic(curTabId, function(result){
+                            if (result){
+                                // Sweet. Found one we wanted.
+                                callback(curTabId);
+                            }
+                        });
+                        IsPaused(curTabId, function(result){
+                            if (result){
+                                // Found a paused tab. Save it off in case it's all we have
+                                // TODO -- Figure this out
+                                //aPausedTab = curTabId;
+                                callback(curTabId);
+                            }
+                        });
                     }
                 }
             }
@@ -82,14 +96,22 @@ function FindTabPlayingMusic(){
     // Ok. Didn't find any playing players. Use the last paused one, if it was there
 
     if (mFocusedPlayer != null){
+        // Turn off async, so we block while loading JSON documents
+        $.ajaxSetup({ async : false });
+
         // Load the details of the player into memory from JSON
         $.getJSON(mFocusedPlayer.json_loc, function(data) {
             mPlayerDetails = data;
         });
+
+        // Turn async back on
+        $.ajaxSetup({ async : true });
     }
 
     // Return the tab id
-    return aPausedTab;
+    if (aPausedTab){
+        callback(aPausedTab);
+    }
 }
 
 // Update the information displayed within the extension
@@ -115,44 +137,164 @@ function UpdateInformation(){
     mFocusedPlayer = null;
     mPlayerDetails = null;
     
-    mLastPlayingTabId = FindTabPlayingMusic();
-    if (mLastPlayingTabId != null){
-        // We've got one. Populate
-        PopulateInformation(mLastPlayingTabId);
-    }
+    FindTabPlayingMusic(function(tabId){
+        mLastPlayingTabId = tabId;
+        
+        if (mLastPlayingTabId != null){
+            // We've got one. Populate
+            PopulateInformation(mLastPlayingTabId);
+        }
 
-    // If we didn't find anything, nothing is populated.
+        // If we didn't find anything, nothing is populated.
+        if (mDebug){
+            console.log("background.js::UpdateInformation() -- No players playing");
+        }
+    });
 }
 
 // Populate the actual extension given the particular tab id
 function PopulateInformation(tabId){
-    // TODO
+
+    // Request artist from the content script
+    SendPlayerRequest(tabId, "get_artist", function(artist){
+        // Log it if we've found the artist
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- artist: " + artist);
+        }
+
+        if (artist != null){
+            var artistElement = $("#artist");
+            artistElement.text(artist);
+
+            // Check if we need to marquee it
+            if(artistElement.get(0).scrollWidth > artistElement.width()){
+                // Turn it into a marquee
+                artistElement.attr('direction', 'right');
+                artistElement.attr('scrollamount', '1');
+            }else{
+                artistElement.attr('scrollamount', '0');
+                artistElement.attr('direction', 'left');
+            }
+        }
+    });
+
+    // Request the track from the content script
+    var track = SendPlayerRequest(tabId, "get_track", function(track){
+        // Log it if we've found the track
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- track: " + track);
+        }
+
+        if (track != null){
+            var trackElement = $("#track");
+            trackElement.text(track);
+            
+            $("#play_pause").css("opacity", "1");
+            $("#next_track").css("opacity", "1");
+            $("#previous_track").css("opacity", "1");   
+            $("#shuffle_button").css("opacity", ".85");   
+            $("#repeat_button").css("opacity", ".85");   
+            $("#thumbs_up_button").css("opacity", ".85");   
+            $("#thumbs_down_button").css("opacity", ".85");   
+            
+            // Check if we need to marquee it
+            if(trackElement.get(0).scrollWidth > trackElement.width()){
+                // Turn it into a marquee
+                trackElement.attr('direction', 'right');
+                trackElement.attr('scrollamount', '1');
+            }else{
+                trackElement.attr('scrollamount', '0');
+                trackElement.attr('direction', 'left');
+            }
+        }else{
+            // Looks like we have to disable some buttons
+            $("#play_pause").css("opacity", ".1");
+            $("#next_track").css("opacity", ".1");
+            $("#previous_track").css("opacity", ".1");
+            $("#shuffle_button").css("opacity", ".1");   
+            $("#repeat_button").css("opacity", ".1");   
+            $("#thumbs_up_button").css("opacity", ".1");   
+            $("#thumbs_down_button").css("opacity", ".1"); 
+        }
+
+    });
+
+    // Make a request to the content script for the album art url
+    SendPlayerRequest(tabId, "get_album_art", function(art_url){
+        // Log it if we've found the art
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- art URL: " + art_url);
+        }
+
+        var artElement = $("#art");
+        
+        if (art_url != null){
+            // Update the art to display the now playing art
+            artElement.attr("src", art_url);
+        }else{
+            // Not found, so revert it to the empty art
+            $("#art").attr("src", "/images/empty.png");
+        }
+    });
+
+    // Make a request to the content script for the current time    
+    SendPlayerRequest(tabId, "get_current_time", function(current_time){
+        // Log it if we've found the current time
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- current time: " + current_time);
+        }
+
+        // Get the element in our extension
+        var curTimeElement = $("#cur_time");
+
+        if (current_time != null){
+            curTimeElement.text(current_time + "/");
+        }else{
+            curTimeElement.text("");
+        }
+    });
+
+    // Make a request to the content script for the total time
+    var total_time = SendPlayerRequest(tabId, "get_total_time", function(total_time){
+        // Log it if we've found the total time
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- total time: " + total_time);
+        }
+
+        var totalTimeElement = $("#total_time");
+        
+        // Get the total time element
+        if (total_time != null){
+            totalTimeElement.text(total_time);
+        }else{
+            totalTimeElement.text("");
+        }
+    });
 }
 
 // Function to determine if a given tab is playing music
-function IsPlayingMusic(tabId){
+function IsPlayingMusic(tabId, callback){
     // Send a request to the tab provided
-    SendPlayerRequest(tabId, "is_playing",
-        function(response){
-            // Got a response back. Return it
-            return response;            
+    var result = SendPlayerRequest(
+        tabId,
+        "is_playing",
+        function(result){
+            callback(result);
         }
     );
 
-    return false;
 }
 
 // Function to determine if a given tab is paused, and could play music
-function IsPaused(tabId){
+function IsPaused(tabId, callback){
     // Send a request to the tab provided
-    SendPlayerRequest(tabId, "is_paused",
-        function(response){
-            // Got a response back. Return it
-            return response;            
+    SendPlayerRequest(
+        tabId,
+        "is_paused",
+        function(result){
+            callback(result);
         }
     );
-
-    return false;
 }
 
 // Function to send a request to the player. Callback the response.
@@ -165,14 +307,14 @@ function SendPlayerRequest(tabId, whatIsNeeded, callback){
             tabId,
             {
                 playerDetails : mPlayerDetails,
-                gimme : whatIsNeeded
+                scriptKey : whatIsNeeded
             },
-            function(response){
-                callback(response);
+            function(result){
+                console.log("background.js::SendPlayerRequest() -- result = " + result);
+                callback(result);
             }
         );
     }
-    callback(null);
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -185,6 +327,9 @@ $(document).ready(function(){
     // Immediately update our information
     UpdateInformation();
     
+    // Turn async off to load the JSON
+    $.ajaxSetup({ async : false });
+
     // Deserialize the individual players JSON
     $.getJSON(ALL_PLAYERS_JSON, function(data) {
         mAllPlayers = data;
@@ -195,6 +340,9 @@ $(document).ready(function(){
 
     });
 
+    // Turn async back on
+    $.ajaxSetup({ async : true });
+    
     //Update our information once every second.
     window.setInterval(function() {
         UpdateInformation();
