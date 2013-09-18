@@ -197,6 +197,7 @@ marquee{
     top: 2px;
     right: 2px; 
     opacity: .1;
+    background: url('../images/sprite.png') -270px 0px;
 }  
 #thumbs_up_button:hover{
     background-position: -270px -30px;
@@ -217,6 +218,7 @@ marquee{
     top: 22px;
     right: 2px; 
     opacity: .1;
+    background: url('../images/sprite.png') -300px 0px;
 }  
 #thumbs_down_button:hover{
     background-position: -300px -30px;

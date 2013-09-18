@@ -8,8 +8,7 @@
     "has_prev_track" : false,
     "has_play_pause" : true,
     "has_shuffle" : false,
-    "has_repeat_all" : false,
-    "has_repeat_one" : false,
+    "has_repeat" : false,
     "has_current_track_time" : true,
     "has_total_track_time" : false,
     "has_remaining_track_time" : true,
@@ -31,11 +30,8 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
-    "click_next_track" : "location.assign('javascript:SJBpost(\"nextSong\")')",
-    "click_prev_track" : "location.assign('javascript:SJBpost(\"prevSong\")')",
-    "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
-    "click_repeat" : "location.assign('javascript:SJBpost(\"toggleRepeat\")')",
-    "click_thumbs_up" : "location.assign('javascript:SJBpost(\"thumbsUpPlayer\")')",
-    "click_thumbs_down" : "location.assign('javascript:SJBpost(\"thumbsDownPlayer\")')"
+    "click_play_pause" : "$(\".playButton\").click()",
+    "click_next_track" : "$(\".skipButton\").click()",
+    "click_thumbs_up" : "$(\".thumbsUpButton\").click()",
+    "click_thumbs_down" : "$(\".thumbsDownButton\").click()"
 }

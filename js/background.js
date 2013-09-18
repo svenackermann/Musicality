@@ -186,17 +186,67 @@ function PopulateInformation(tabId){
             console.log("background.js::PopulateInfo -- track: " + track);
         }
 
+        // Get handles to different elements we need
+        var playPauseElement = $("#play_pause");
+        var nextTrackElement = $("#next_track");
+        var prevTrackElement = $("#previous_track");
+        var shuffleButtonElement = $("#shuffle_button");
+        var repeatButtonElement = $("#repeat_button");
+        var thumbsUpButtonElement = $("#thumbs_up_button");
+        var thumbsDownButtonElement = $("#thumbs_down_button");
+        
         if (track != null){
             var trackElement = $("#track");
             trackElement.text(track);
-            
-            $("#play_pause").css("opacity", "1");
-            $("#next_track").css("opacity", "1");
-            $("#previous_track").css("opacity", "1");   
-            $("#shuffle_button").css("opacity", ".85");   
-            $("#repeat_button").css("opacity", ".85");   
-            $("#thumbs_up_button").css("opacity", ".85");   
-            $("#thumbs_down_button").css("opacity", ".85");   
+
+            // Set the play/pause opacity
+            if (mPlayerDetails.has_play_pause){
+                playPauseElement.css("opacity", "1");
+            }else{
+                playPauseElement.css("opacity", "0");
+            }
+
+            // Set the next track opacity
+            if (mPlayerDetails.has_next_track){
+                nextTrackElement.css("opacity", "1");
+            }else{
+                nextTrackElement.css("opacity", "0");
+            }
+
+            // Set the prev track opacity
+            if (mPlayerDetails.has_prev_track){
+                prevTrackElement.css("opacity", "1");
+            }else{
+                prevTrackElement.css("opacity", "0");
+            }
+
+            // Set the shuffle button opacity
+            if (mPlayerDetails.has_shuffle){
+                shuffleButtonElement.css("opacity", ".85");
+            }else{
+                shuffleButtonElement.css("opacity", "0");
+            }
+
+            // Set the repeat button opacity
+            if (mPlayerDetails.has_repeat){
+                repeatButtonElement.css("opacity", ".85");
+            }else{
+                repeatButtonElement.css("opacity", "0");
+            }
+
+            // Set the thumbs up button opacity
+            if (mPlayerDetails.has_thumbs_up){
+                thumbsUpButtonElement.css("opacity", ".85");
+            }else{
+                thumbsUpButtonElement.css("opacity", "0");
+            }
+
+            // Set the thumbs down button opacity
+            if (mPlayerDetails.has_thumbs_down){
+                thumbsDownButtonElement.css("opacity", ".85");
+            }else{
+                thumbsDownButtonElement.css("opacity", "0");
+            }                
             
             // Check if we need to marquee it
             if(trackElement.get(0).scrollWidth > trackElement.width()){
@@ -209,13 +259,13 @@ function PopulateInformation(tabId){
             }
         }else{
             // Looks like we have to disable some buttons
-            $("#play_pause").css("opacity", ".1");
-            $("#next_track").css("opacity", ".1");
-            $("#previous_track").css("opacity", ".1");
-            $("#shuffle_button").css("opacity", ".1");   
-            $("#repeat_button").css("opacity", ".1");   
-            $("#thumbs_up_button").css("opacity", ".1");   
-            $("#thumbs_down_button").css("opacity", ".1"); 
+            playPauseElement.css("opacity", ".1");
+            nextTrackElement.css("opacity", ".1");
+            prevTrackElement.css("opacity", ".1");
+            shuffleButtonElement.css("opacity", ".1");   
+            repeatButtonElement.css("opacity", ".1");   
+            thumbsUpButtonElement.css("opacity", ".1");   
+            thumbsDownButtonElement.css("opacity", ".1"); 
         }
 
     });
@@ -255,24 +305,44 @@ function PopulateInformation(tabId){
         }
     });
 
-    // Make a request to the content script for the total time
-    SendPlayerRequest(tabId, "get_total_time", function(total_time){
-        // Log it if we've found the total time
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- total time: " + total_time);
-        }
+    if (mPlayerDetails.has_total_track_time){
+        // Make a request to the content script for the total time
+        SendPlayerRequest(tabId, "get_total_time", function(total_time){
+            // Log it if we've found the total time
+            if (mDebug){
+                console.log("background.js::PopulateInfo -- total time: " + total_time);
+            }
 
-        // Get the total time element
-        var totalTimeElement = $("#total_time");
+            // Get the total time element
+            var totalTimeElement = $("#total_time");
 
-        // Update the info
-        if (total_time != null){
-            totalTimeElement.text(total_time);
-        }else{
-            totalTimeElement.text("");
-        }
-    });
+            // Update the info
+            if (total_time != null){
+                totalTimeElement.text(total_time);
+            }else{
+                totalTimeElement.text("");
+            }
+        });
+    }else if (mPlayerDetails.has_remaining_track_time){
+        // Make a request to the content script for the remaining time
+        SendPlayerRequest(tabId, "get_remaining_time", function(remaining_time){
+            // Log it if we've found the remaining time
+            if (mDebug){
+                console.log("background.js::PopulateInfo -- remaining time: " + remaining_time);
+            }
 
+            // Get the total time element
+            var totalTimeElement = $("#total_time");
+
+            // Update the info
+            if (remaining_time != null){
+                totalTimeElement.text(remaining_time);
+            }else{
+                totalTimeElement.text("");
+            }
+        });
+    }
+    
     // Make a request to the content script for the play/pause state
     SendPlayerRequest(tabId, "is_playing", function(playing){
         // Log whatever we have got
