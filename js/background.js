@@ -21,9 +21,6 @@ var mFocusedPlayer = null;
 // The contents of the actual players JSON (not ALL_PLAYERS_JSON)
 var mPlayerDetails = null;
 
-// A variable to track if music is currently playing
-var mCurrentlyPlaying = false;
-
 // A debug var for printing information to console
 var mDebug = true;
 
@@ -139,7 +136,7 @@ function UpdateInformation(){
     // Start by resetting the focused player and player details
     mFocusedPlayer = null;
     mPlayerDetails = null;
-    mCurrentlyPlaying = false;
+    mLastPlayingTabId = -1;
     
     FindTabPlayingMusic(function(tabId){
         mLastPlayingTabId = tabId;
@@ -287,15 +284,9 @@ function PopulateInformation(tabId){
         var playPauseElement = $("#play_pause");
 
         if (playing){
-            if (!mCurrentlyPlaying){
-                mCurrentlyPlaying = true;
-                playPauseElement.attr("class", "pause");
-            }
+            playPauseElement.attr("class", "pause");
         }else{
-            if (mCurrentlyPlaying){
-                mCurrentlyPlaying = false;
-                playPauseElement.attr("class", "play");
-            }
+            playPauseElement.attr("class", "play");
         }
     });
 
@@ -439,6 +430,56 @@ function SendPlayerRequest(tabId, whatIsNeeded, callback){
     }
 }
 
+
+//// Click Functions ////
+
+// Method executed when extensions shuffle is clicked
+function ShuffleClick(){
+    // Call the master clicker
+    ClickSomething("click_shuffle");
+}
+
+// Method executed when extensions repeat is clicked
+function RepeatClick(){
+    ClickSomething("click_repeat");
+}
+
+// Method executed when extensions prev track is clicked
+function PrevTrackClick(){
+    ClickSomething("click_prev_track");
+}
+
+// Method executed when extensions play pause is clicked
+function PlayPauseClick(){
+    ClickSomething("click_play_pause");
+}
+
+// Method executed when extensions next track is clicked
+function NextTrackClick(){
+    ClickSomething("click_next_track");
+}
+
+// Method executed when extensions thumbs up is clicked
+function ThumbsUpClick(){
+    ClickSomething("click_thumbs_up");
+}
+
+// Method executed when extensions thumbs down is clicked
+function ThumbsDownClick(){
+    ClickSomething("click_thumbs_down");
+}
+
+// General method for dealing with clicking anything
+function ClickSomething(clickWhat){
+    // First, ensure that something is playing
+    if (mPlayerDetails != null && mLastPlayingTabId > 0){
+        // Cool. Let's do it
+        SendPlayerRequest(mLastPlayingTabId, clickWhat, function(){
+            UpdateInformation();
+        });
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
 /////////////////////////////////////////////////////////////////////////////
@@ -484,27 +525,27 @@ $(document).ready(function(){
     
     // Previous track
     $("#previous_track").bind('click', function(){
-       PrevTrack();
+       PrevTrackClick();
     });
 
     // Play/pause
     $("#play_pause").bind('click', function(){
-        PlayPause();
+        PlayPauseClick();
     });
 
     // Next track
     $("#next_track").bind('click', function(){
-        NextTrack();
+        NextTrackClick();
     });
 
     // Thumbs up
     $("#thumbs_up_button").bind('click', function(){
-        ThumbsUp();
+        ThumbsUpClick();
     });
 
     // Thumbs down
     $("#thumbs_down_button").bind('click', function(){
-        ThumbsDown();
+        ThumbsDownClick();
     });
 
 });

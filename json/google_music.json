@@ -35,12 +35,11 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play_pause" : "SJBpost(\"playPause\")",
-    "click_next_track" : "SJBpost(\"nextSong\")",
-    "click_prev_track" : "SJBpost(\"prevSong\")",
-    "click_shuffle" : "SJBpost(\"toggleShuffle\")",
-    "click_repeat" : "SJBpost(\"toggleRepeat\")",
-    "click_thumbs_up" : "SJBpost(\"thumbsUp\")",
-    "click_thumbs_down" : "SJBpost(\"thumbsDown\")"
-    
+    "click_play_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
+    "click_next_track" : "location.assign('javascript:SJBpost(\"nextSong\")')",
+    "click_prev_track" : "location.assign('javascript:SJBpost(\"prevSong\")')",
+    "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
+    "click_repeat" : "location.assign('javascript:SJBpost(\"toggleRepeat\")')",
+    "click_thumbs_up" : "location.assign('javascript:SJBpost(\"thumbsUpPlayer\")')",
+    "click_thumbs_down" : "location.assign('javascript:SJBpost(\"thumbsDownPlayer\")')"
 }
