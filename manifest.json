@@ -5,18 +5,12 @@
       "default_popup": "html/background.html"
    },
    "content_scripts": [ {
-      "js": [ "js/jquery.js" ],
+      "js": [ "js/jquery.js", "js/contentscript.js" ],
       "matches": [
                      "*://play.google.com/*",
                      "*://www.pandora.com/*"
                  ],
       "run_at": "document_start"
-   }, {
-      "js": [ "js/contentscript.js" ],
-      "matches": [ "*://play.google.com/music/*" ]
-   }, {
-      "js": [ "js/pandora_contentscript.js" ],
-       "matches": [ "*://www.pandora.com/*" ]
    } ],
    "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
    "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
