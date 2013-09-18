@@ -21,6 +21,9 @@ var mFocusedPlayer = null;
 // The contents of the actual players JSON (not ALL_PLAYERS_JSON)
 var mPlayerDetails = null;
 
+// A variable to track if music is currently playing
+var mCurrentlyPlaying = false;
+
 // A debug var for printing information to console
 var mDebug = true;
 
@@ -136,6 +139,7 @@ function UpdateInformation(){
     // Start by resetting the focused player and player details
     mFocusedPlayer = null;
     mPlayerDetails = null;
+    mCurrentlyPlaying = false;
     
     FindTabPlayingMusic(function(tabId){
         mLastPlayingTabId = tabId;
@@ -255,21 +259,139 @@ function PopulateInformation(tabId){
     });
 
     // Make a request to the content script for the total time
-    var total_time = SendPlayerRequest(tabId, "get_total_time", function(total_time){
+    SendPlayerRequest(tabId, "get_total_time", function(total_time){
         // Log it if we've found the total time
         if (mDebug){
             console.log("background.js::PopulateInfo -- total time: " + total_time);
         }
 
-        var totalTimeElement = $("#total_time");
-        
         // Get the total time element
+        var totalTimeElement = $("#total_time");
+
+        // Update the info
         if (total_time != null){
             totalTimeElement.text(total_time);
         }else{
             totalTimeElement.text("");
         }
     });
+
+    // Make a request to the content script for the play/pause state
+    SendPlayerRequest(tabId, "is_playing", function(playing){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is playing: " + playing);
+        }
+
+        // Get the element
+        var playPauseElement = $("#play_pause");
+
+        if (playing){
+            if (!mCurrentlyPlaying){
+                mCurrentlyPlaying = true;
+                playPauseElement.attr("class", "pause");
+            }
+        }else{
+            if (mCurrentlyPlaying){
+                mCurrentlyPlaying = false;
+                playPauseElement.attr("class", "play");
+            }
+        }
+    });
+
+    // Make a request to the content script for the shuffle state
+    SendPlayerRequest(tabId, "is_shuffled", function(shuffled){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is shuffled: " + shuffled);
+        }
+
+        // Get the element
+        var shuffleElement = $("#shuffle_button");
+
+        if (shuffled){
+            shuffleElement.attr("class", "shuffle_on");
+        }else{
+            shuffleElement.attr("class", "shuffle_off");
+        }
+        
+    });
+    
+    // Make a request to the content script for the repeat state
+    SendPlayerRequest(tabId, "is_repeat_off", function(repeat_off){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is repeat off: " + repeat_off);
+        }
+
+        // Get the element
+        if (repeat_off){
+            $("#repeat_button").attr("class", "repeat_off");
+        }
+    });
+    
+    // Make a request to the content script for the repeat state
+    SendPlayerRequest(tabId, "is_repeat_one", function(repeat_one){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is repeat one: " + repeat_one);
+        }
+
+        // Get the element
+        if (repeat_one){
+            $("#repeat_button").attr("class", "repeat_one");
+        }
+    });
+    
+    // Make a request to the content script for the repeat state
+    SendPlayerRequest(tabId, "is_repeat_all", function(repeat_all){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is repeat all: " + repeat_all);
+        }
+
+        // Get the element
+        if (repeat_all){
+            $("#repeat_button").attr("class", "repeat_all");
+        }
+    });
+    
+    // Make a request to the content script for the thumbs state
+    SendPlayerRequest(tabId, "is_thumbed_up", function(thumbed_up){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is thumbed up: " + thumbed_up);
+        }
+
+        // Get the thumbs up element
+        var thumbsUpElement = $("#thumbs_up_button");
+
+        // Toggle it
+        if (thumbed_up){
+            thumbsUpElement.attr("class", "thumbs_up_on");
+        }else{
+            thumbsUpElement.attr("class", "thumbs_up_off");
+        }
+    });
+    
+    // Make a request to the content script for the thumbs state
+    SendPlayerRequest(tabId, "is_thumbed_down", function(thumbed_down){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is thumbed down: " + thumbed_down);
+        }
+
+        // Get the thumbs up element
+        var thumbsDownElement = $("#thumbs_down_button");
+
+        // Toggle it
+        if (thumbed_down){
+            thumbsDownElement.attr("class", "thumbs_down_on");
+        }else{
+            thumbsDownElement.attr("class", "thumbs_down_off");
+        }
+    });
+    
 }
 
 // Function to determine if a given tab is playing music
