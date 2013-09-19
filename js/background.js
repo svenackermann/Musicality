@@ -80,7 +80,6 @@ function FindTabPlayingMusic(callback){
                                 }else{
 
                                     // Check if it was paused instead.
-                                    asyncsRunning.count++;
                                     IsPaused(curTabId, function(isPaused){
                                         if (isPaused){
                                             // Found a paused tab. Save it off
@@ -97,8 +96,6 @@ function FindTabPlayingMusic(callback){
                                             returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
                                         }
                                     });
-                                    // Once again, we need to look and see if asyncs are all done
-                                    returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
                                 }
                             });
                         });
