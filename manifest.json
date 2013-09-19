@@ -1,33 +1,50 @@
 {
-   "browser_action": {
-      "default_icon": "images/icon48.png",
-      "default_title": "Musicality",
-      "default_popup": "html/background.html"
-   },
-   "content_scripts": [ {
-      "js": [ "js/jquery.js", "js/contentscript.js" ],
-      "matches": [
-                     "*://play.google.com/*",
-                     "*://www.pandora.com/*",
-                     "*://play.spotify.com/apps/player/*"
-                 ],
-      "all_frames" : true,
-      "run_at": "document_start"
-   } ],
-   "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
-   "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
-   "icons": {
-      "128": "images/icon128.png",
-      "16": "images/icon16.png",
-      "48": "images/icon48.png"
-   },
-   "name": "Musicality",
-   "permissions": [ "tabs",
-                    "*://play.google.com/music*",
-                    "*://www.pandora.com/*",
-                    "*://play.spotify.com/*"
-                  ],
-   "update_url": "http://clients2.google.com/service/update2/crx",
-   "version": "2.0.0",
-   "manifest_version": 2
+    "browser_action": {
+        "default_icon": "images/icon48.png",
+        "default_title": "Musicality",
+        "default_popup": "html/background.html"
+    },
+    "content_scripts": [
+        {
+            "js":
+            [
+                "js/jquery.js", "js/contentscript.js"
+            ],
+            "matches":
+            [
+                "*://play.google.com/*",
+                "*://www.pandora.com/*"
+            ],
+            "run_at": "document_start"
+        },{
+            "js":
+            [
+                "js/jquery.js", "js/contentscript.js"
+            ],
+            "matches" :
+            [
+                "*://play.spotify.com/apps/player/*"
+            ],
+            "all_frames" : true,
+            "run_at" : "document_start"
+        }
+    ],
+    "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
+    "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
+    "icons": {
+        "128": "images/icon128.png",
+        "16": "images/icon16.png",
+        "48": "images/icon48.png"
+    },
+    "name": "Musicality",
+    "permissions":
+    [
+        "tabs",
+        "*://play.google.com/music*",
+        "*://www.pandora.com/*",
+        "*://play.spotify.com/*"
+    ],
+    "update_url": "http://clients2.google.com/service/update2/crx",
+    "version": "2.0.0",
+    "manifest_version": 2
 }

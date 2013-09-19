@@ -17,8 +17,8 @@
 
     "is_playing" : "$(\".playButton\").attr(\"style\") == \"display: none;\"",
     "is_paused" : "$(\".pauseButton\").attr(\"style\") == \"display: none;\"",
-    "is_thumbed_up" : "$(\".thumbsUpButton.indicator\").length > 0",
-    "is_thumbed_down" : "$(\".thumbsDownButton.indicator\").length > 0",
+    "is_thumbed_up" : "$(\".thumbUpButton.indicator\").length > 0",
+    "is_thumbed_down" : "$(\".thumbDownButton.indicator\").length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
@@ -33,6 +33,6 @@
     "click_play" : "$(\".playButton\").click()",
     "click_pause" : "$(\".pauseButton\").click()",
     "click_next_track" : "$(\".skipButton\").click()",
-    "click_thumbs_up" : "$(\".thumbsUpButton\").click()",
-    "click_thumbs_down" : "$(\".thumbsDownButton\").click()"
+    "click_thumbs_up" : "$(\".thumbUpButton\").click()",
+    "click_thumbs_down" : "$(\".thumbDownButton\").click()"
 }
