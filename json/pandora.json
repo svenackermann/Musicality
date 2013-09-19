@@ -30,7 +30,8 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play_pause" : "$(\".playButton\").click()",
+    "click_play" : "$(\".playButton\").click()",
+    "click_pause" : "$(\".pauseButton\").click()",
     "click_next_track" : "$(\".skipButton\").click()",
     "click_thumbs_up" : "$(\".thumbsUpButton\").click()",
     "click_thumbs_down" : "$(\".thumbsDownButton\").click()"

@@ -21,6 +21,9 @@ var mFocusedPlayer = null;
 // The contents of the actual players JSON (not ALL_PLAYERS_JSON)
 var mPlayerDetails = null;
 
+// Keep track of whether or not music is currently playing
+var mCurrentlyPlaying = false;
+
 // A debug var for printing information to console
 var mDebug = true;
 
@@ -137,6 +140,7 @@ function UpdateInformation(){
     mFocusedPlayer = null;
     mPlayerDetails = null;
     mLastPlayingTabId = -1;
+    mCurrentlyPlaying = false;
     
     FindTabPlayingMusic(function(tabId){
         mLastPlayingTabId = tabId;
@@ -353,6 +357,9 @@ function PopulateInformation(tabId){
         // Get the element
         var playPauseElement = $("#play_pause");
 
+        // Save off whether or not we are playing
+        mCurrentlyPlaying = playing;
+        
         if (playing){
             playPauseElement.attr("class", "pause");
         }else{
@@ -519,9 +526,14 @@ function PrevTrackClick(){
     ClickSomething("click_prev_track");
 }
 
-// Method executed when extensions play pause is clicked
-function PlayPauseClick(){
-    ClickSomething("click_play_pause");
+// Method executed when extensions play is clicked
+function PlayClick(){
+    ClickSomething("click_play");
+}
+
+// Method executed when extensions pause is clicked
+function PauseClick(){
+    ClickSomething("click_pause");
 }
 
 // Method executed when extensions next track is clicked
@@ -599,8 +611,14 @@ $(document).ready(function(){
     });
 
     // Play/pause
-    $("#play_pause").bind('click', function(){
-        PlayPauseClick();
+    $("#play_pause").bind('click', function(handler){
+        // Be smart about what we are clicking
+        var className = handler.currentTarget.className;
+        if (className == "play"){
+            PlayClick();
+        }else if (className == "pause"){
+            PauseClick();
+        }
     });
 
     // Next track

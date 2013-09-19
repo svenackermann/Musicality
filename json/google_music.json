@@ -34,7 +34,8 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
+    "click_play" : "location.assign('javascript:SJBpost(\"playPause\")')",
+    "click_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
     "click_next_track" : "location.assign('javascript:SJBpost(\"nextSong\")')",
     "click_prev_track" : "location.assign('javascript:SJBpost(\"prevSong\")')",
     "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
