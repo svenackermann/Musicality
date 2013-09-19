@@ -13,22 +13,28 @@ var mDebug = true;
 chrome.extension.onRequest.addListener(
     function(request, sender, sendResponse){
 
-        if (mDebug){
-            console.log("contentscript.js -- Receieved request");
-        }
-
         // Disect the request
         var playerDetails = request.playerDetails;
         var scriptKey = request.scriptKey;
         var result = null;
 
+        if (mDebug){
+            console.log("contentscript.js -- Receieved request: " + scriptKey);
+        }
+
         if (playerDetails != null && scriptKey != null){
             var toEval = playerDetails[scriptKey];
+
+            // Debug info
+            if (mDebug){
+                console.log("contentscript.js -- About to eval \"" + toEval + "\"");
+            }
+            
             var result = eval(toEval);
 
             // Log some information, if wanted
             if (mDebug){
-                console.log("contentscript.js -- Evaluating: " + toEval + " yields: " + result);
+                console.log("contentscript.js -- Eval yielded \"" + result + "\"");
             }
         }
             

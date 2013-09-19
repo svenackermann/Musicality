@@ -9,6 +9,11 @@
         "name" : "Pandora",
         "pattern" : "https?\\:\\/\\/www\\.pandora\\.com\\/.*",
         "json_loc" : "/json/pandora.json"
+    },
+    
+    "spotify" : {
+        "name" : "Spotify Web Player",
+        "pattern" : "https?\\:\\/\\/play\\.spotify\\.com\\/*",
+        "json_loc" : "/json/spotify.json"
     }
-
 }

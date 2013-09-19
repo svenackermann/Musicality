@@ -423,43 +423,46 @@ function PopulateInformation(tabId){
             $("#repeat_button").attr("class", "repeat_all");
         }
     });
-    
-    // Make a request to the content script for the thumbs state
-    SendPlayerRequest(tabId, "is_thumbed_up", function(thumbed_up){
-        // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is thumbed up: " + thumbed_up);
-        }
 
-        // Get the thumbs up element
-        var thumbsUpElement = $("#thumbs_up_button");
+    if (mPlayerDetails.has_thumbs_up){
+        // Make a request to the content script for the thumbs state
+        SendPlayerRequest(tabId, "is_thumbed_up", function(thumbed_up){
+            // Log whatever we have got
+            if (mDebug){
+                console.log("background.js::PopulateInfo -- is thumbed up: " + thumbed_up);
+            }
 
-        // Toggle it
-        if (thumbed_up){
-            thumbsUpElement.attr("class", "thumbs_up_on");
-        }else{
-            thumbsUpElement.attr("class", "thumbs_up_off");
-        }
-    });
-    
-    // Make a request to the content script for the thumbs state
-    SendPlayerRequest(tabId, "is_thumbed_down", function(thumbed_down){
-        // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is thumbed down: " + thumbed_down);
-        }
+            // Get the thumbs up element
+            var thumbsUpElement = $("#thumbs_up_button");
 
-        // Get the thumbs up element
-        var thumbsDownElement = $("#thumbs_down_button");
+            // Toggle it
+            if (thumbed_up){
+                thumbsUpElement.attr("class", "thumbs_up_on");
+            }else{
+                thumbsUpElement.attr("class", "thumbs_up_off");
+            }
+        });
+    }
 
-        // Toggle it
-        if (thumbed_down){
-            thumbsDownElement.attr("class", "thumbs_down_on");
-        }else{
-            thumbsDownElement.attr("class", "thumbs_down_off");
-        }
-    });
-    
+    if (mPlayerDetails.has_thumbs_down){
+        // Make a request to the content script for the thumbs state
+        SendPlayerRequest(tabId, "is_thumbed_down", function(thumbed_down){
+            // Log whatever we have got
+            if (mDebug){
+                console.log("background.js::PopulateInfo -- is thumbed down: " + thumbed_down);
+            }
+
+            // Get the thumbs up element
+            var thumbsDownElement = $("#thumbs_down_button");
+
+            // Toggle it
+            if (thumbed_down){
+                thumbsDownElement.attr("class", "thumbs_down_on");
+            }else{
+                thumbsDownElement.attr("class", "thumbs_down_off");
+            }
+        });
+    }    
 }
 
 // Function to determine if a given tab is playing music

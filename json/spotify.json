@@ -1,0 +1,41 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('#play-pause')[0].className == 'playing'",
+    "is_paused" : "$('#play-pause')[0].className != 'playing'",
+    "is_shuffled" : "$('#shuffle')[0].className == 'active'",
+    "is_repeat_off" : "$('#repeat')[0].className != 'active'",
+    "is_repeat_all" : "$('#repeat')[0].className == 'active'",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('.sp-image-img').css('background-image').replace(/^url\\((.+)\\)/, '$1')",
+    "get_artist" : "$('#track-artist').text()",
+    "get_track" : "$('#track-name').text()",
+    "get_current_time" : "$('#track-current').text()",
+    "get_total_time" : "$('#track-length').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('#play-pause').click()",
+    "click_pause" : "$('#play-pause').click()",
+    "click_next_track" : "$('#next').click()",
+    "click_prev_track" : "$('#previous').click()",
+    "click_shuffle" : "$('#shuffle').click()",
+    "click_repeat" : "$('#repeat').click()"
+
+}
