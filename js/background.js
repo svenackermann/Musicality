@@ -56,8 +56,8 @@ function FindTabPlayingMusic(callback){
                                         curPlayer + " at tab " + curTab.id);
                         }
 
-                        // TabId changes with each loop, before everything in the getJSON callback executes.
-                        var checkIfPlaying = function (tabId){
+                        // We want some closure to preserve the tabId for all callbacks.
+                        (function (tabId){
                             // Load the details for this player type into memory
                             $.getJSON(curPlayer.json_loc, function(playerDetails) {
                                 if (mDebug){
@@ -101,9 +101,7 @@ function FindTabPlayingMusic(callback){
                                     }
                                 });
                             });
-                        }
-
-                        checkIfPlaying(curTab.id);
+                        })(curTab.id)
                     }
                 }
             }
@@ -119,11 +117,22 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
     if (--asyncsRunning.count == 0){
         // All done with the asyncs. Check if there were any paused tabs
         if (pausedTabs.length > 0){
-            pausedTabs.sort(); // We want consistent returns on which is selected
+            pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
             callback(pausedTabs[0].id, pausedTabs[0].details);
         }
     }
 
+}
+
+// We need a compare function for sorting the paused tabs
+function pausedTabCompare(tabA, tabB){
+    if (tabA.id < tabB.id){
+        return -1;
+    }else if (tabA.id > tabB.id){
+        return 1;
+    }else{
+        return 0;
+    }
 }
 
 // Update the information displayed within the extension
