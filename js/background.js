@@ -46,59 +46,67 @@ function FindTabPlayingMusic(callback){
         var asyncsRunning = { "count" : 0 };
         for (var window=0; window<windows.length; window++){
             for (var i=0; i<windows[window].tabs.length; i++){
-                var curUrl = windows[window].tabs[i].url;
+                var curTab = windows[window].tabs[i];
 
                 // Now iterate through our patterns, checking if
                 // this is a valid music player
                 for (var curPlayer in mAllPlayers){
-                    if (curUrl.match(mAllPlayers[curPlayer]["pattern"])){
+                    if (curTab.url.match(mAllPlayers[curPlayer]["pattern"])){
                         // We have found one of our players at this point
                         
-                        if (mDebug){
-                            console.log("background.js::FindTabPlayingMusic -- Found " + curPlayer);
-                        }
-
                         // Save some information off
-                        var curTabId = windows[window].tabs[i].id;
                         mFocusedPlayer = mAllPlayers[curPlayer];
 
-                        // Load the details for this player type into memory
-                        $.getJSON(mFocusedPlayer.json_loc, function(data) {
-                            if (mDebug){
-                                console.log("background.js::FindTabPlayingMusic() -- data = " + data);
-                            }
-                            mPlayerDetails = data;
+                        if (mDebug){
+                            console.log("background.js::FindTabPlayingMusic -- Found " +
+                                        curPlayer + " at tab " + curTab.id);
+                        }
 
-                            // Increment the number of asyncs we have running
-                            asyncsRunning.count++;
-                            
-                            // Is it currently playing music?
-                            IsPlayingMusic(curTabId, function(isPlaying){
-                                if (isPlaying){
-                                    // Sweet. Found one we wanted.
-                                    callback(curTabId);
-                                }else{
-
-                                    // Check if it was paused instead.
-                                    IsPaused(curTabId, function(isPaused){
-                                        if (isPaused){
-                                            // Found a paused tab. Save it off
-
-                                            // Load the details of the player into memory from JSON
-                                            $.getJSON(mFocusedPlayer.json_loc, function(data) {
-                                                pausedTabs.push({ "id" : curTabId, "details" : data });
-
-                                                // If everythings done, returned a paused tab
-                                                returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
-                                            });
-                                        }else{
-                                            // This tab wasn't paused, or playing. Check if all asyncs are done.
-                                            returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
-                                        }
-                                    });
+                        // TabId changes with each loop, before everything in the getJSON callback executes.
+                        function (tabId){
+                            // Load the details for this player type into memory
+                            $.getJSON(mFocusedPlayer.json_loc, function(data) {
+                                if (mDebug){
+                                    console.log("background.js::FindTabPlayingMusic() -- data = " + data);
                                 }
+                                mPlayerDetails = data;
+
+                                // Increment the number of asyncs we have running
+                                asyncsRunning.count++;
+                                
+                                // Is it currently playing music?
+                                IsPlayingMusic(curTab.id, function(isPlaying){
+                                    if (isPlaying){
+                                        // Sweet. Found one we wanted.
+                                        callback(curTab.id);
+                                    }else{
+                                        // Check if this was the last tab we were looking at
+                                        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                    }
+                                });
+
+                                // Again, increment the asyncs
+                                asyncsRunning.count++;
+                                
+                                // Check if it was paused instead.
+                                IsPaused(curTab.id, function(isPaused){
+                                    if (isPaused){
+                                        // Found a paused tab. Save it off
+
+                                        // Load the details of the player into memory from JSON
+                                        $.getJSON(mFocusedPlayer.json_loc, function(data) {
+                                            pausedTabs.push({ "id" : curTabId, "details" : data });
+
+                                            // If everythings done, returned a paused tab
+                                            returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                        });
+                                    }else{
+                                        // This tab wasn't paused, or playing. Check if all asyncs are done.
+                                        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                    }
+                                });
                             });
-                        });
+                        }(curTab.id);
                     }
                 }
             }
@@ -512,8 +520,8 @@ function SendPlayerRequest(tabId, whatIsNeeded, callback){
                 scriptKey : whatIsNeeded
             },
             function(result){
-                console.log("background.js::SendPlayerRequest() -- request = \"" +
-                            whatIsNeeded + "\" result = \"" + result + "\"");
+                console.log("background.js::SendPlayerRequest(" +
+                            tabId + "," + whatIsNeeded + "," + result + ")");
                 callback(result);
             }
         );
