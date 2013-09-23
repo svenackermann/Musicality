@@ -21,5 +21,11 @@
         "name" : "Grooveshark",
         "pattern" : "https?\\:\\/\\/grooveshark.com\\/*",
         "json_loc" : "/json/grooveshark.json"
+    },
+
+    "amazon" : {
+        "name" : "Amazon Cloud Player",
+        "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/mp3\\/*",
+        "json_loc" : "/json/amazon.json"
     }
 }

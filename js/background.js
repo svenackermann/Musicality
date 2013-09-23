@@ -53,7 +53,7 @@ function FindTabPlayingMusic(callback){
 
                         if (mDebug){
                             console.log("background.js::FindTabPlayingMusic -- Found " +
-                                        curPlayer + " at tab " + curTab.id);
+                                        curPlayer.name + " at tab " + curTab.id);
                         }
 
                         // We want some closure to preserve the tabId for all callbacks.

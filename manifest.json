@@ -14,7 +14,9 @@
             [
                 "*://play.google.com/*",
                 "*://www.pandora.com/*",
-                "*://grooveshark.com/*"
+                "*://grooveshark.com/*",
+                "*://www.amazon.com/*",
+                "*://*/*"
             ],
             "run_at": "document_start"
         },{
@@ -30,6 +32,7 @@
             "run_at" : "document_start"
         }
     ],
+    "options_page" : "html/options.html",
     "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
     "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
     "icons": {

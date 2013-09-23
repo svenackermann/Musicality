@@ -1,0 +1,40 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\".mp3MasterPlayGroup.playing\").length > 0",
+    "is_paused" : "$(\".mp3MasterPlayGroup.paused\").length > 0",
+    "is_shuffled" : "$(\".buttons.shuffleButton.mp3MasterSprite.shuffled\").length > 0",
+    "is_repeat_off" : "$(\".buttons.repeatButton.mp3MasterSprite.repeated\").length <= 0",
+    "is_repeat_all" : "$(\".buttons.repeatButton.mp3MasterSprite.repeated\").length > 0",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$(\".albumImage.small\").attr(\"src\")",
+    "get_artist" : "$(\".currentSongDetails\").text().split(/[\\s]{2,}/)[3].substring(3)",
+    "get_track" : "$(\".currentSongDetails\").text().split(/[\\s]{2,}/)[2]",
+    "get_current_time" : "$(\".timer\").text().split(/[\\s]{2,}/)[1]",
+    "get_total_time" : "$(\".timer\").text().split(/[\\s]{2,}/)[3]",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "location.assign('javascript:window.amznMusic.widgets.player.resume()')",
+    "click_pause" : "location.assign('javascript:window.amznMusic.widgets.player.pause()')",
+    "click_next_track" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"next\", null, null)')",
+    "click_prev_track" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"previous\", null, null)')",
+    "click_shuffle" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleShuffle\")')",
+    "click_repeat" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleRepeat\")')"
+}
