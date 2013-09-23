@@ -1,0 +1,41 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\"#play-pause\").attr(\"class\") == \"player-btn player-icon playing\"",
+    "is_paused" : "$(\"#play-pause\").attr(\"class\") == \"player-btn player-icon paused\"",
+    "is_shuffled" : "$(\"#shuffle\").attr(\"class\") == \"player-option active\"",
+    "is_repeat_off" : "$(\"#repeat\").attr(\"class\") == \"player-option\"",
+    "is_repeat_one" : "$(\"#repeat\").attr(\"class\") == \"player-option active one\"",
+    "is_repeat_all" : "$(\"#repeat\").attr(\"class\") == \"player-option active\"",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$(\"#now-playing-image\").attr(\"src\")",
+    "get_artist" : "$(\".now-playing-link.artist.no-title-tooltip.show-artist-tooltip\")[0].text",
+    "get_track" : "$(\".now-playing-link.song.no-title-tooltip.song-link.show-song-tooltip\")[0].text",
+    "get_current_time" : "$(\"#time-elapsed\").text()",
+    "get_total_time" : "$(\"#time-total\").text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "location.assign('javascript:$(\"#play-pause\").click()')",
+    "click_pause" : "location.assign('javascript:$(\"#play-pause\").click()')",
+    "click_next_track" : "location.assign('javascript:$(\"#play-next\").click()')",
+    "click_prev_track" : "location.assign('javascript:$(\"#play-prev\").click()')",
+    "click_shuffle" : "location.assign('javascript:$(\"#shuffle\").click()')",
+    "click_repeat" : "location.assign('javascript:$(\"#repeat\").click()')"
+}

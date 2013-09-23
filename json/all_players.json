@@ -15,5 +15,11 @@
         "name" : "Spotify Web Player",
         "pattern" : "https?\\:\\/\\/play\\.spotify\\.com\\/*",
         "json_loc" : "/json/spotify.json"
+    },
+
+    "grooveshark" : {
+        "name" : "Grooveshark",
+        "pattern" : "https?\\:\\/\\/grooveshark.com\\/*",
+        "json_loc" : "/json/grooveshark.json"
     }
 }
