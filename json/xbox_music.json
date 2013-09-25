@@ -1,0 +1,40 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\".iconPlayerPause\").length > 0",
+    "is_paused" : "$(\".iconPlayerPlay\").length > 0",
+    "is_shuffled" : "$(\".playerSettingsMenu .navigationList\").text().match(\"Shuffle: On\") != null",
+    "is_repeat_off" : "$(\".playerSettingsMenu .navigationList\").text().match(\"Repeat: Off\") != null",
+    "is_repeat_all" : "$(\".playerSettingsMenu .navigationList\").text().match(\"Repeat: On\") != null",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$(\".playerNowPlayingImg .imgWrapper .img\").attr(\"src\")",
+    "get_artist" : "$(\".playerNowPlayingMetadata .secondaryMetadata\").children()[0].title",
+    "get_track" : "$(\".playerNowPlayingMetadata .primaryMetadata\").text().trim()",
+    "get_current_time" : "$(\".playerDurationTextOnGoing\").text()",
+    "get_total_time" : "$(\".playerDurationTextRemaining\").text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$(\".playerControls .iconPlayerPlay\").click()",
+    "click_pause" : "$(\".playerControls .iconPlayerPause\").click()",
+    "click_next_track" : "$(\".playerControls .iconPlayerNext\").click()",
+    "click_prev_track" : "$(\".playerControls .iconPlayerPrevious\").click()",
+    "click_shuffle" : "$(\".playerSettingsMenu .navigationList\").children().children()[1].click()",
+    "click_repeat" : "$(\".playerSettingsMenu .navigationList\").children().children()[0].click()"
+}

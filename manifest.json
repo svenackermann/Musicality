@@ -16,7 +16,8 @@
                 "*://www.pandora.com/*",
                 "*://grooveshark.com/*",
                 "*://www.amazon.com/*",
-                "*://www.rdio.com/*"
+                "*://www.rdio.com/*",
+                "*://music.xbox.com/*"
             ],
             "run_at": "document_start"
         },{

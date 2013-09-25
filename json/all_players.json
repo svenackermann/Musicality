@@ -33,5 +33,11 @@
         "name" : "Rdio",
         "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
         "json_loc" : "/json/rdio.json"
+    },
+
+    "xbox_music" : {
+        "name" : "Xbox Music",
+        "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
+        "json_loc" : "/json/xbox_music.json"
     }
 }
