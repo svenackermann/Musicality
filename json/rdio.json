@@ -1,0 +1,41 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\".play_pause.playing\").length > 0",
+    "is_paused" : "$(\".play_pause.playing\").length == 0",
+    "is_shuffled" : "$(\".shuffle.on\").length > 0",
+    "is_repeat_off" : "$(\".repeat\").attr(\"class\") == \"repeat\"",
+    "is_repeat_one" : "$(\".repeat.one\").length > 0",
+    "is_repeat_all" : "$(\".repeat.on\").length > 0",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$(\".queue_art\").attr(\"src\")",
+    "get_artist" : "$(\".artist_title\").text()",
+    "get_track" : "$(\".song_title\").text()",
+    "get_current_time" : "$(\".time\").text()",
+    "get_total_time" : "$(\".bottom .duration\").text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$(\".play_pause\").click()",
+    "click_pause" : "$(\".play_pause\").click()",
+    "click_next_track" : "$(\".next\").click()",
+    "click_prev_track" : "$(\".prev\").click()",
+    "click_shuffle" : "$(\".shuffle\").click()",
+    "click_repeat" : "$(\".repeat\").click()"
+}

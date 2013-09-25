@@ -15,7 +15,8 @@
                 "*://play.google.com/*",
                 "*://www.pandora.com/*",
                 "*://grooveshark.com/*",
-                "*://www.amazon.com/*"
+                "*://www.amazon.com/*",
+                "*://www.rdio.com/*"
             ],
             "run_at": "document_start"
         },{

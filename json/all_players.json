@@ -27,5 +27,11 @@
         "name" : "Amazon Cloud Player",
         "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/mp3\\/*",
         "json_loc" : "/json/amazon.json"
+    },
+
+    "rdio" : {
+        "name" : "Rdio",
+        "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
+        "json_loc" : "/json/rdio.json"
     }
 }
