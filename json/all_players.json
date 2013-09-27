@@ -45,5 +45,11 @@
         "name" : "MOG",
         "pattern" : "https?:\\/\\/mog.com\\/*",
         "json_loc" : "/json/mog.json"
+    },
+
+    "slacker" : {
+        "name" : "Slacker",
+        "pattern" : "https?:\\/\\/www.slacker.com\\/*",
+        "json_loc" : "/json/slacker.json"
     }
 }

@@ -1,0 +1,38 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "",
+    "is_paused" : "",
+    "is_thumbed_up" : "",
+    "is_thumbed_down" : "",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "",
+    "get_artist" : "",
+    "get_track" : "",
+    "get_current_time" : "",
+    "get_total_time" : "",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "location.assign('javascript:playPause()')",
+    "click_pause" : "location.assign('javascript:playPause()')",
+    "click_next_track" : "location.assign('javascript:skip(\"skip\")')",
+    "click_thumbs_up" : "location.assign('javascript:handleHeartAction()')",
+    "click_thumbs_down" : "location.assign('javascript:askBanType(SESSION.get(\"lastTrack\")')"
+}
