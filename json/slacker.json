@@ -3,7 +3,7 @@
 "COMMENT_1" : "This block contiains all of the things a player may or may not have",
 
     "has_thumbs_up" : true,
-    "has_thumbs_down" : true,
+    "has_thumbs_down" : false,
     "has_next_track" : true,
     "has_prev_track" : false,
     "has_play_pause" : true,
@@ -15,18 +15,18 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "",
-    "is_paused" : "",
-    "is_thumbed_up" : "",
-    "is_thumbed_down" : "",
+    "is_playing" : "$(\"#playerPlayPauseButton\").children().attr(\"style\").search(\"background-position: -960px\") > 0",
+    "is_paused" : "$(\"#playerPlayPauseButton\").children().attr(\"style\").search(\"background-position: -48px\") > 0",
+    "is_thumbed_up" : "$(\"#playerHeartBtn\").children().attr(\"style\").search(\"background-position: -1060px\") > 0",
+    "is_thumbed_down" : "$(\"#playerBanBtn\").children().attr(\"style\").search(\"background-position: 0px\") < 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "",
-    "get_artist" : "",
-    "get_track" : "",
-    "get_current_time" : "",
-    "get_total_time" : "",
+    "get_album_art" : "$(\"#track-art-current-img\").attr(\"src\")",
+    "get_artist" : "$(\"#player-artist-name\").text()",
+    "get_track" : "$(\"#player-track-name\").text()",
+    "get_current_time" : "$(\"#current-position\").text()",
+    "get_total_time" : "$(\"#total-length\").text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
@@ -34,5 +34,5 @@
     "click_pause" : "location.assign('javascript:playPause()')",
     "click_next_track" : "location.assign('javascript:skip(\"skip\")')",
     "click_thumbs_up" : "location.assign('javascript:handleHeartAction()')",
-    "click_thumbs_down" : "location.assign('javascript:askBanType(SESSION.get(\"lastTrack\")')"
+    "click_thumbs_down" : ""
 }

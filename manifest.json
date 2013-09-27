@@ -46,10 +46,7 @@
     "name": "Musicality",
     "permissions":
     [
-        "tabs",
-        "*://play.google.com/music*",
-        "*://www.pandora.com/*",
-        "*://play.spotify.com/*"
+        "tabs"
     ],
     "update_url": "http://clients2.google.com/service/update2/crx",
     "version": "2.0.0",
