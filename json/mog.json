@@ -1,0 +1,35 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\"#play\").attr(\"class\") == \"control pause\"",
+    "is_paused" : "$(\"#play\").attr(\"class\") == \"control\"",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "\"http:\" + $(\"#album_cover .album_pic\").attr(\"src\")",
+    "get_artist" : "$(\"#status .artist_name\").text()",
+    "get_track" : "$(\"#status .track_name\").text()",
+    "get_current_time" : "$(\"#elapsed_time\").text()",
+    "get_remaining_time" : "$(\"#remaining_time\").text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$(\"#play\")[0].click()",
+    "click_pause" : "$(\"#play\")[0].click()",
+    "click_next_track" : "$(\"#next\")[0].click()",
+    "click_prev_track" : "$(\"#previous\")[0].click()"
+}

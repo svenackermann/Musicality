@@ -17,7 +17,8 @@
                 "*://grooveshark.com/*",
                 "*://www.amazon.com/*",
                 "*://www.rdio.com/*",
-                "*://music.xbox.com/*"
+                "*://music.xbox.com/*",
+                "*://mog.com/*"
             ],
             "run_at": "document_start"
         },{
@@ -51,5 +52,6 @@
     ],
     "update_url": "http://clients2.google.com/service/update2/crx",
     "version": "2.0.0",
-    "manifest_version": 2
+    "manifest_version": 2,
+    "alarms"
 }

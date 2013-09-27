@@ -39,5 +39,11 @@
         "name" : "Xbox Music",
         "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
         "json_loc" : "/json/xbox_music.json"
+    },
+
+    "mog" : {
+        "name" : "MOG",
+        "pattern" : "https?:\\/\\/mog.com\\/*",
+        "json_loc" : "/json/mog.json"
     }
 }

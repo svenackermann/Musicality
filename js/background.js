@@ -18,9 +18,6 @@ var mAllPlayers = null;
 // The contents of the actual players JSON (not ALL_PLAYERS_JSON)
 var mPlayerDetails = null;
 
-// A debug var for printing information to console
-var mDebug = true;
-
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
@@ -147,9 +144,8 @@ function UpdateInformation(){
         // Is it still playing music?
         IsPlayingMusic(mLastPlayingTabId, mPlayerDetails, function(isPlaying){
             if (isPlaying){
-                // Grab the different pieces from that tab
+                // Grab the different pieces from that tab, if we are displaying
                 PopulateInformation(mLastPlayingTabId);
-                stillPlaying = true;
             }else{
                 lookForPlayingTabHelper();
             }
@@ -171,7 +167,7 @@ function lookForPlayingTabHelper(){
         mPlayerDetails = playerDetails;
         
         if (mLastPlayingTabId != null && mPlayerDetails != null){
-            // We've got one. Populate
+            // We've got one. Populate if displayed
             PopulateInformation(mLastPlayingTabId);
         }else{
             // If we didn't find anything, nothing is populated.
@@ -206,10 +202,13 @@ function PopulateInformation(tabId){
                 artistElement.attr('direction', 'left');
             }
         }
+
+        // Store the artist for now
+        mCurrentArtist = artist;
     });
 
     // Request the track from the content script
-    var track = SendPlayerRequest(tabId, mPlayerDetails, "get_track", function(track){
+    SendPlayerRequest(tabId, mPlayerDetails, "get_track", function(track){
         // Log it if we've found the track
         if (mDebug){
             console.log("background.js::PopulateInfo -- track: " + track);
@@ -286,6 +285,9 @@ function PopulateInformation(tabId){
                 trackElement.attr('scrollamount', '0');
                 trackElement.attr('direction', 'left');
             }
+
+            // Store the track for now
+            mCurTrack = track;
         }else{
             // Looks like we have to disable some buttons
             playPauseElement.css("opacity", ".1");
@@ -485,7 +487,7 @@ function PopulateInformation(tabId){
                 thumbsDownElement.attr("class", "thumbs_down_off");
             }
         });
-    }    
+    }
 }
 
 // Function to determine if a given tab is playing music
@@ -493,7 +495,7 @@ function IsPlayingMusic(tabId, playerDetails, callback){
     // Only check if the tabId > 0
     if (tabId > 0){
         // Send a request to the tab provided
-        var result = SendPlayerRequest(
+        SendPlayerRequest(
             tabId,
             playerDetails,
             "is_playing",
@@ -603,6 +605,9 @@ function ClickSomething(clickWhat){
 // Once the document is ready, bind all of the functions.
 $(document).ready(function(){
 
+    // Set our display variable to true
+    mDisplayed = true;
+
     // Immediately update our information
     UpdateInformation();
     
@@ -671,3 +676,4 @@ $(document).ready(function(){
     });
 
 });
+
