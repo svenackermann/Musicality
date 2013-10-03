@@ -319,22 +319,24 @@ function PopulateInformation(tabId){
         }
     });
 
-    // Make a request to the content script for the current time    
-    SendPlayerRequest(tabId, mPlayerDetails, "get_current_time", function(current_time){
-        // Log it if we've found the current time
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- current time: " + current_time);
-        }
+    if (mPlayerDetails.has_current_track_time){
+        // Make a request to the content script for the current time    
+        SendPlayerRequest(tabId, mPlayerDetails, "get_current_time", function(current_time){
+            // Log it if we've found the current time
+            if (mDebug){
+                console.log("background.js::PopulateInfo -- current time: " + current_time);
+            }
 
-        // Get the element in our extension
-        var curTimeElement = $("#cur_time");
+            // Get the element in our extension
+            var curTimeElement = $("#cur_time");
 
-        if (current_time != null){
-            curTimeElement.text(current_time + "/");
-        }else{
-            curTimeElement.text("");
-        }
-    });
+            if (current_time != null && current_time != ""){
+                curTimeElement.text(current_time + "/");
+            }else{
+                curTimeElement.text("");
+            }
+        });
+    }
 
     if (mPlayerDetails.has_total_track_time){
         // Make a request to the content script for the total time
@@ -348,7 +350,7 @@ function PopulateInformation(tabId){
             var totalTimeElement = $("#total_time");
 
             // Update the info
-            if (total_time != null){
+            if (total_time != null && total_time != ""){
                 totalTimeElement.text(total_time);
             }else{
                 totalTimeElement.text("");
@@ -366,7 +368,7 @@ function PopulateInformation(tabId){
             var totalTimeElement = $("#total_time");
 
             // Update the info
-            if (remaining_time != null){
+            if (remaining_time != null && remaining_time != ""){
                 totalTimeElement.text(remaining_time);
             }else{
                 totalTimeElement.text("");
