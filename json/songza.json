@@ -1,0 +1,36 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : false,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\".sz-player.sz-player-state-play\").length > 0",
+    "is_paused" : "$(\".sz-player.sz-player-state-pause\").length > 0",
+    "is_thumbed_up" : "$(\"li.szi-vote-up-button.player-vote-up\").css(\"background-position\") == \"0px -259px\"",
+    "is_thumbed_down" : "$(\"li.szi-vote-down-button.player-vote-down\").css(\"background-position\") != \"0px -148px\"",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$(\".szi-roll-song img\").attr(\"src\")",
+    "get_artist" : "$(\".szi-artist\").first().text()",
+    "get_track" : "$(\".szi-title\").first().text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$(\".szi-play-button.player-play\").click()",
+    "click_pause" : "$(\".szi-pause-button.player-pause\").click()",
+    "click_next_track" : "$(\".szi-skip-button.player-skip\").click()",
+    "click_thumbs_up" : "$(\"li.szi-vote-up-button.player-vote-up\").click()",
+    "click_thumbs_down" : "$(\"li.szi-vote-down-button.player-vote-down\").click()"
+}

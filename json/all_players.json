@@ -51,5 +51,11 @@
         "name" : "Slacker",
         "pattern" : "https?:\\/\\/www.slacker.com\\/*",
         "json_loc" : "/json/slacker.json"
+    },
+
+    "songza" : {
+        "name" : "Songza",
+        "pattern" : "https?:\\/\\/songza.com\\/*",
+        "json_loc" : "/json/songza.json"
     }
 }

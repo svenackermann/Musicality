@@ -19,7 +19,8 @@
                 "*://www.rdio.com/*",
                 "*://music.xbox.com/*",
                 "*://mog.com/*",
-                "*://www.slacker.com/*"
+                "*://www.slacker.com/*",
+                "*://songza.com/*"
             ],
             "run_at": "document_start"
         },{
