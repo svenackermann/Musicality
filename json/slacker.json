@@ -3,7 +3,7 @@
 "COMMENT_1" : "This block contiains all of the things a player may or may not have",
 
     "has_thumbs_up" : true,
-    "has_thumbs_down" : false,
+    "has_thumbs_down" : true,
     "has_next_track" : true,
     "has_prev_track" : false,
     "has_play_pause" : true,
@@ -34,5 +34,5 @@
     "click_pause" : "location.assign('javascript:playPause()')",
     "click_next_track" : "location.assign('javascript:skip(\"skip\")')",
     "click_thumbs_up" : "location.assign('javascript:handleHeartAction()')",
-    "click_thumbs_down" : ""
+    "click_thumbs_down" : "location.assign('javascript:$(\"playerBanBtn\").click();setTimeout(function(){ $(\"ban-song\").click() }, 10)')"
 }
