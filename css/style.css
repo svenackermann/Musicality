@@ -25,66 +25,66 @@ marquee{
     overflow: hidden;
 }
 
-    #album_art{
-        width: 60px;
-        height: 60px;
-        float: left;
-        margin: 2px;
-        padding: 0px;
-        background: url('../images/sprite.png') 0px 0px;
-        border: solid;
-        border-width: 1px;
-        border-color: black;
-    }
+#album_art{
+    width: 60px;
+    height: 60px;
+    float: left;
+    margin: 2px;
+    padding: 0px;
+    background: url('../images/sprite.png') 0px 0px;
+    border: solid;
+    border-width: 1px;
+    border-color: black;
+}
 
-    #track_info{
+#track_info{
     margin: 2px;
     width: 172px;
     float: left;
-    }
-    
-        #artist_name{
-        padding: 0px;
-        height: 20px;
-        font-weight: bold;
-        font-size: 14px;        
-        overflow: hidden;   
-        }
-        
-        #track_name{
-        padding: 0px;
-        height: 20px;
-        font-size: 14px;        
-        overflow: hidden;       
-        margin-left: auto;
-        margin-right: auto;
-        }
-        
-        #time_info{
-            margin: 0px;
-            margin-top: 8px;
-            padding: 0px;
-            overflow: hidden;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        #cur_time{
-            height: 14px;
-            font-size: 12px;
-            padding: 0px;
-            margin: 0px;
-            float: left;
-        }
-        
-        #total_time{
-            height: 14px;
-            font-size: 12px;
-            padding: 0px;
-            margin: 0px;
-            float: left;
-        }
-  
+}
+
+#artist_name{
+    padding: 0px;
+    height: 20px;
+    font-weight: bold;
+    font-size: 14px;        
+    overflow: hidden;   
+}
+
+#track_name{
+    padding: 0px;
+    height: 20px;
+    font-size: 14px;        
+    overflow: hidden;       
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#time_info{
+    margin: 0px;
+    margin-top: 8px;
+    padding: 0px;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
+    font-size: 12px;
+}
+
+#cur_time{
+    height: 14px;
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
+#total_time{
+    height: 14px;
+    padding: 0px;
+    margin: 0px;
+    float: left;
+}
+
 #shuffle_button{
     width: 30px;
     height: 20px;   
@@ -134,7 +134,7 @@ marquee{
 .repeat_one:hover{
     background-position: -210px -30px;
 }
-            
+
 #previous_track{
     width: 30px;
     height: 30px;
@@ -231,12 +231,10 @@ marquee{
 
 #player_name{
     text-align: right;
-    position: absolute;
-    bottom: 0px;
-    right: 2px;
-    font-size: 14px;
-    opacity: .09;
+    font-size: 12px;
+    opacity: .08;
     text-transform: uppercase;
-    
+    margin: 8px 0px 0px 0px;
+    padding: 0px;
 }
 
