@@ -1,60 +1,50 @@
 {
     "google_music" : {
-        "name" : "Google Music",
         "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",
         "json_loc" : "/json/google_music.json"
     },
 
     "pandora" : {
-        "name" : "Pandora",
         "pattern" : "https?\\:\\/\\/www\\.pandora\\.com\\/.*",
         "json_loc" : "/json/pandora.json"
     },
     
     "spotify" : {
-        "name" : "Spotify Web Player",
         "pattern" : "https?\\:\\/\\/play\\.spotify\\.com\\/*",
         "json_loc" : "/json/spotify.json"
     },
 
     "grooveshark" : {
-        "name" : "Grooveshark",
         "pattern" : "https?\\:\\/\\/grooveshark.com\\/*",
         "json_loc" : "/json/grooveshark.json"
     },
 
     "amazon" : {
-        "name" : "Amazon Cloud Player",
         "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/mp3\\/*",
         "json_loc" : "/json/amazon.json"
     },
 
     "rdio" : {
-        "name" : "Rdio",
         "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
         "json_loc" : "/json/rdio.json"
     },
 
     "xbox_music" : {
-        "name" : "Xbox Music",
         "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
         "json_loc" : "/json/xbox_music.json"
     },
 
     "mog" : {
-        "name" : "MOG",
         "pattern" : "https?:\\/\\/mog.com\\/*",
         "json_loc" : "/json/mog.json"
     },
 
     "slacker" : {
-        "name" : "Slacker",
         "pattern" : "https?:\\/\\/www.slacker.com\\/*",
         "json_loc" : "/json/slacker.json"
     },
 
     "songza" : {
-        "name" : "Songza",
         "pattern" : "https?:\\/\\/songza.com\\/*",
         "json_loc" : "/json/songza.json"
     }

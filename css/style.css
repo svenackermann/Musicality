@@ -229,3 +229,14 @@ marquee{
     background: url('../images/sprite.png') -300px -60px;
 }
 
+#player_name{
+    text-align: right;
+    position: absolute;
+    bottom: 0px;
+    right: 2px;
+    font-size: 14px;
+    opacity: .09;
+    text-transform: uppercase;
+    
+}
+

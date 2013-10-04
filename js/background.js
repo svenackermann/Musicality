@@ -50,7 +50,7 @@ function FindTabPlayingMusic(callback){
 
                         if (mDebug){
                             console.log("background.js::FindTabPlayingMusic -- Found " +
-                                        curPlayer.name + " at tab " + curTab.id);
+                                        curPlayer + " at tab " + curTab.id);
                         }
 
                         // We want some closure to preserve the tabId for all callbacks.
@@ -222,6 +222,7 @@ function PopulateInformation(tabId){
         var repeatButtonElement = $("#repeat_button");
         var thumbsUpButtonElement = $("#thumbs_up_button");
         var thumbsDownButtonElement = $("#thumbs_down_button");
+        var playerNameElement = $("#player_name");
         
         if (track != null){
             var trackElement = $("#track");
@@ -288,6 +289,10 @@ function PopulateInformation(tabId){
 
             // Store the track for now
             mCurTrack = track;
+
+            // Display the name of the player that is playing
+            playerNameElement.text(mPlayerDetails.name);
+            
         }else{
             // Looks like we have to disable some buttons
             playPauseElement.css("opacity", ".1");
@@ -296,7 +301,8 @@ function PopulateInformation(tabId){
             shuffleButtonElement.css("opacity", ".1");   
             repeatButtonElement.css("opacity", ".1");   
             thumbsUpButtonElement.css("opacity", ".1");   
-            thumbsDownButtonElement.css("opacity", ".1"); 
+            thumbsDownButtonElement.css("opacity", ".1");
+            playerNameElement.text("");
         }
 
     });
