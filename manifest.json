@@ -47,7 +47,8 @@
     "name": "Musicality",
     "permissions":
     [
-        "tabs"
+        "tabs",
+        "storage"
     ],
     "update_url": "http://clients2.google.com/service/update2/crx",
     "version": "2.0.0",
