@@ -418,8 +418,8 @@ function DoLastFmWork(){
         if (mTrack != null && mArtist != null){
             // Cool. Tell Last.fm we are playing
             RunLastFmQuery({method: "track.updateNowPlaying",
-                            track: escape(mTrack),
-                            artist: escape(mArtist)}, null);
+                            track: mTrack,
+                            artist: mArtist}, false, null);
 
             // Check if we've played at least 30 seconds
             var curMins = mCurrentTime.split(":")[0];

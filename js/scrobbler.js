@@ -91,7 +91,7 @@ function GetLastFmSession(callback){
                 console.log("Attempting to get last.fm session id");
             }
 
-            RunLastFmQuery({method: "auth.getSession", token: mToken}, function(data){
+            RunLastFmQuery({method: "auth.getSession", token: mToken}, true, function(data){
                 // Check for error in the callback
                 if (data.error){
                     // Yikes. We have an error.
@@ -129,7 +129,7 @@ function GetLastFmSession(callback){
 }
 
 // Run a particular last.fm query. Don't include key in parameters
-function RunLastFmQuery(parameters, callback){
+function RunLastFmQuery(parameters, get, callback){
     // Get the signature
     var signature = GetLastFmQuerySignature(parameters);
     
@@ -140,7 +140,7 @@ function RunLastFmQuery(parameters, callback){
     // Construct the query string
     var queryString = LASTFM_URL + "?api_key=" + LASTFM_KEY;
     for (var key in parameters){
-        queryString += "&" + key + "=" + parameters[key];
+        queryString += "&" + key + "=" + parameters[key].replace(" ", "+");
     }
 
     // Finally, append the signature and json request
@@ -150,17 +150,34 @@ function RunLastFmQuery(parameters, callback){
         console.log("About to execute=\"" + queryString + "\"");
     }
 
-    // Run the query! For real.
-    $.get(queryString, function(data){
-        // Awesome. Got a response.
-        callback(data);
-    });
+    if (get){
+        // Run the query!
+        $.get(queryString, function(data){
+            // Awesome. Got a response.
+            if (callback){
+                callback(data);
+            }
+        });
+    }else{
+        // Post request.
+        $.post(queryString, function(data){
+            // Nice. Callback if there is one.
+            if (callback){
+                callback(data);
+            }
+        });
+    }
 }
 
 // Get the signature for a query
 function GetLastFmQuerySignature(parameters){
     // We need to add our api_key and token to the parameters
     parameters["api_key"] = LASTFM_KEY;
+
+    // If the method isn't auth.getSession, we need to add the session key too
+    if (parameters["method"] != "auth.getSession"){
+        parameters["sk"] = mSessionKey;
+    }
 
     // Extract the keys
     var keys = Object.keys(parameters);
