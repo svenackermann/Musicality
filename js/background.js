@@ -318,7 +318,8 @@ function PopulateInformation(tabId){
                 console.log("background.js::PopulateInfo -- remaining time: " + remaining_time);
             }
 
-            // Call it total time, and save it for the popup
+            // Do some math to get the actual total time instead
+            
             mTotalTime = remaining_time;
         });
     }
@@ -422,9 +423,29 @@ function DoLastFmWork(){
                             artist: mArtist}, false, null);
 
             // Check if we've played at least 30 seconds
-            var curMins = mCurrentTime.split(":")[0];
-            var curSeconds = mCurrentTime.split(":")[1];
+            var splitCurrent = mCurrentTime.split(":");
+            var curMins = parseInt(splitCurrent[0]);
+            var curSeconds = parseInt(splitCurrent[1]) + (curMins*60);
 
+            if (curSeconds > 30){
+                // We could scrobble here. Check if it's halfway over, or greater than 4
+                var splitTotal = mTotalTime.split(":");
+                var totalMins = parseInt(splitTotal[0]);
+                var totalSeconds = parseInt(splitTotal[1]) + (totalMins*60);
+                
+                if (curSeconds/totalSeconds >= 0.5 || curSeconds >= (240)){
+                    // Scrobble!
+                    RunLastFmQuery(
+                        {
+                            method: "track.scrobble",
+                            track: mTrack,
+                            artist: mArtist,
+                            timestamp: Math.round((new Date()).getTime() / 1000)
+                        }, false, function(result){
+                            // TODO -- Double check the result
+                        });
+                }
+            }
         }
     }
 

@@ -131,54 +131,62 @@ function GetLastFmSession(callback){
 // Run a particular last.fm query. Don't include key in parameters
 function RunLastFmQuery(parameters, get, callback){
     // Get the signature
-    var signature = GetLastFmQuerySignature(parameters);
-    
-    if (mDebug){
-        console.log("Signature = \"" + signature + "\"");
-    }
-    
-    // Construct the query string
-    var queryString = LASTFM_URL + "?api_key=" + LASTFM_KEY;
-    for (var key in parameters){
-        queryString += "&" + key + "=" + parameters[key].replace(" ", "+");
-    }
+    GetLastFmQuerySignature(parameters, function(signature){
+        if (mDebug){
+            console.log("Signature = \"" + signature + "\"");
+        }
+        
+        // Construct the query string
+        var queryString = LASTFM_URL + "?api_key=" + LASTFM_KEY;
+        for (var key in parameters){
+            queryString += "&" + key + "=" + parameters[key].split(" ").join("+");
+        }
 
-    // Finally, append the signature and json request
-    queryString += "&" + "api_sig=" + signature + "&format=json";
+        // Finally, append the signature and json request
+        queryString += "&" + "api_sig=" + signature + "&format=json";
 
-    if (mDebug){
-        console.log("About to execute=\"" + queryString + "\"");
-    }
+        if (mDebug){
+            console.log("About to execute=\"" + queryString + "\"");
+        }
 
-    if (get){
-        // Run the query!
-        $.get(queryString, function(data){
-            // Awesome. Got a response.
-            if (callback){
-                callback(data);
-            }
-        });
-    }else{
-        // Post request.
-        $.post(queryString, function(data){
-            // Nice. Callback if there is one.
-            if (callback){
-                callback(data);
-            }
-        });
-    }
+        if (get){
+            // Run the query!
+            $.get(queryString, function(data){
+                // Awesome. Got a response.
+                if (callback){
+                    callback(data);
+                }
+            });
+        }else{
+            // Post request.
+            $.post(queryString, function(data){
+                // Nice. Callback if there is one.
+                if (callback){
+                    callback(data);
+                }
+            });
+        }
+    });
 }
 
 // Get the signature for a query
-function GetLastFmQuerySignature(parameters){
+function GetLastFmQuerySignature(parameters, callback){
     // We need to add our api_key and token to the parameters
     parameters["api_key"] = LASTFM_KEY;
 
     // If the method isn't auth.getSession, we need to add the session key too
     if (parameters["method"] != "auth.getSession"){
-        parameters["sk"] = mSessionKey;
+        GetLastFmSession(function(){
+            parameters["sk"] = mSessionKey;
+            getSignatureHelper(parameters, callback);
+        });
+    }else{
+        getSignatureHelper(parameters, callback);
     }
+}
 
+// Helper method to prevent duped code, and deal with async
+function getSignatureHelper(parameters, callback){
     // Extract the keys
     var keys = Object.keys(parameters);
 
@@ -204,16 +212,7 @@ function GetLastFmQuerySignature(parameters){
     var sig = $.md5(preHashSignature);
 
     // Return the signature
-    return sig;
-}
-
-// Temp test function
-function RunTest(){
-    GetLastFmSession(function(data){
-        if (mDebug){
-            console.log("Test executed. Session returned is " + data);
-        }
-    });
+    callback(sig);
 }
 
 /////////////////////////////////////////////////////////////////////////////
