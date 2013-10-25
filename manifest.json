@@ -37,7 +37,7 @@
         }
     ],
     "background": {
-        "scripts" : ["js/background.js"]
+        "page" : "html/background.html"
     },
     "options_page" : "html/options.html",
     "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
