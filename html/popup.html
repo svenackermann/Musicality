@@ -1,0 +1,32 @@
+<html>
+    <head>        
+        <script type="text/javascript" src="../js/jquery.js"></script>
+        <script type="text/javascript" src="../js/jquery.marquee.js"></script>
+        <script type="text/javascript" src="../js/popup.js"></script>
+        <script type="text/javascript" src="../js/contentscript.js"></script>
+        <link rel="stylesheet" href="../css/style.css"/>
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+    </head>
+    <body>    
+        <div id="shuffle_button" class="shuffle_off"></div>
+        <div id="repeat_button" class="repeat_off"></div>
+        <div id="previous_track"></div>
+        <div id="play_pause" class="play"></div>
+        <div id="next_track"></div>    
+        <div id="thumbs_up_button" class="thumbs_down_off"></div>
+        <div id="thumbs_down_button" class="thumbs_up_off"></div>   
+        <div id="container">
+            <div id="album_art"><img id="art" src="../images/art.jpg" width="60" height="60" /></div>
+            <div id="track_info">
+                <div id="artist_name"><marquee padding="0" id="artist" scrollamount="0" behavior="alternate" direction="right"></marquee></div>
+                <div id="track_name"><marquee padding="0" id="track" scrollamount="1" behavior="alternate" direction="right">Play a song.</marquee></div>
+                <div id="time_info">
+                    <div id="cur_time"></div>
+                    <div id="total_time"></div>
+                </div>
+                <div id="player_name"></div>
+            </div>
+        </div> 
+    </body>
+
+</html>

@@ -2,7 +2,7 @@
     "browser_action": {
         "default_icon": "images/icon48.png",
         "default_title": "Musicality",
-        "default_popup": "html/background.html"
+        "default_popup": "html/popup.html"
     },
     "content_scripts": [
         {
@@ -36,6 +36,9 @@
             "run_at" : "document_start"
         }
     ],
+    "background": {
+        "scripts" : ["js/background.js"]
+    },
     "options_page" : "html/options.html",
     "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
     "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
