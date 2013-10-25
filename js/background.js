@@ -273,7 +273,6 @@ function PopulateInformation(tabId){
 
         // Save the track for the popup
         mTrack = track;
-
     });
 
     // Make a request to the content script for the album art url
@@ -404,6 +403,31 @@ function PopulateInformation(tabId){
             mIsThumbedDown = thumbed_down;
         });
     }
+
+    // Finally, do some work for last.fm
+    DoLastFmWork();
+}
+
+// A function to interact with the scrobbler
+function DoLastFmWork(){
+    // TODO -- Make sure the user wan't to scrobble! Check locally.
+    
+    // Make sure we are playing
+    if (mIsPlaying){
+        // Ensure we have a track and artist
+        if (mTrack != null && mArtist != null){
+            // Cool. Tell Last.fm we are playing
+            RunLastFmQuery({method: "track.updateNowPlaying",
+                            track: escape(mTrack),
+                            artist: escape(mArtist)}, null);
+
+            // Check if we've played at least 30 seconds
+            var curMins = mCurrentTime.split(":")[0];
+            var curSeconds = mCurrentTime.split(":")[1];
+
+        }
+    }
+
 }
 
 // Function to determine if a given tab is playing music
@@ -495,9 +519,9 @@ $(document).ready(function(){
     // Turn async back on
     $.ajaxSetup({ async : true });
     
-    // Update our information once every five seconds.
+    // Update our information once every ten seconds.
     window.setInterval(function() {
         UpdateInformation();
-    }, 5000)
+    }, 10000)
 });
 
