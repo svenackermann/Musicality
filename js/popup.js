@@ -31,9 +31,11 @@ function UpdateInformation(){
     // Tell the background to update too
     mBackground.UpdateInformation();
 
-    if (mBackground.mIsPlaying){
-        PopulateInformation();
-    }
+    // Re-grab the player details in case they changed
+    mPlayerDetails = mBackground.mPlayerDetails;
+
+    // Populate the information
+    PopulateInformation();
 }
 
 // Populate the actual extension contents
@@ -46,8 +48,9 @@ function PopulateInformation(){
         console.log("popup.js::PopulateInfo -- artist: " + artist);
     }
 
+    // Get the artist element
+    var artistElement = $("#artist");
     if (artist != null){
-        var artistElement = $("#artist");
         artistElement.text(artist);
 
         // Check if we need to marquee it
@@ -59,6 +62,9 @@ function PopulateInformation(){
             artistElement.attr('scrollamount', '0');
             artistElement.attr('direction', 'left');
         }
+    }else{
+        // No artist. Update text appropriately
+        artistElement.text("");
     }
 
 
@@ -78,9 +84,9 @@ function PopulateInformation(){
     var thumbsUpButtonElement = $("#thumbs_up_button");
     var thumbsDownButtonElement = $("#thumbs_down_button");
     var playerNameElement = $("#player_name");
+    var trackElement = $("#track");
     
     if (track != null){
-        var trackElement = $("#track");
         trackElement.text(track);
 
         // Set the play/pause opacity
@@ -158,6 +164,13 @@ function PopulateInformation(){
         thumbsUpButtonElement.css("opacity", ".1");   
         thumbsDownButtonElement.css("opacity", ".1");
         playerNameElement.text("");
+
+        // Tell the user nothing is playing
+        trackElement.text("Play a song.");
+
+        // Re-enable the marquee
+        trackElement.attr('direction', 'right');
+        trackElement.attr('scrollamount', '1');
     }
 
 

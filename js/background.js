@@ -24,7 +24,7 @@ var ALL_PLAYERS_JSON = "/json/all_players.json"
 var mDebug = true;
 
 // The id of the tab that was last seen currently playing music
-var mLastPlayingTabId = -1; // TODO -- This needs to be stored locally, not here
+var mLastPlayingTabId = -1;
 
 // The parsed ALL_PLAYERS_JSON
 var mAllPlayers = null;
@@ -73,6 +73,22 @@ var mIsThumbedDown = false;
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
+
+// Reset some members
+function ResetMembers(){
+    mIsPlaying = false;
+    mArtist = null;
+    mTrack = null;
+    mArtUrl = null
+    mCurrentTime = null;
+    mTotalTime = null;
+    mIsShuffled = false;
+    mIsRepeatOne = false;
+    mIsRepeatAll = false;
+    mIsRepeatOff = false;
+    mIsThumbedUp = false;
+    mIsThumbedDown = false;
+}
 
 // Find a tab that is currently playing music
 function FindTabPlayingMusic(callback){
@@ -226,6 +242,9 @@ function lookForPlayingTabHelper(){
             if (mDebug){
                 console.log("background.js::UpdateInformation() -- No players playing");
             }
+
+            // Reset the members
+            ResetMembers();
         }
     });
 }
