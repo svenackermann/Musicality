@@ -18,11 +18,11 @@
     "is_playing" : "$(\"#radioControlPlay\").css(\"display\") == \"none\"",
     "is_paused" : "$(\"#radioControlPause\").css(\"display\") == \"none\"",
     "is_thumbed_up" : "$(\"[accesskey='l']\").css(\"margin\") == \"-63px 0px 0px\"",
-    "is_thumbed_down" : "$(\"[accesskey='b']\").css(\"margin\") != \"0px\"",
+    "is_thumbed_down" : "$(\"[accesskey='b']\").css(\"margin\") != \"0px 0px 0px -30px\"",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "",
+    "get_album_art" : "$(\"#nowPlayingMeta .metadataHeader img\").attr(\"src\")",
     "get_artist" : "$(\".artist\").children().text()",
     "get_track" : "$(\".track\").children().text()",
     "get_current_time" : "$(\"#trackPlayed\").text()",
@@ -30,12 +30,9 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "",
-    "click_pause" : "",
-    "click_next_track" : "",
-    "click_prev_track" : "",
-    "click_shuffle" : "",
-    "click_repeat" : "",
-    "click_thumbs_up" : "",
-    "click_thumbs_down" : ""
+    "click_play" : "$(\"#radioControlPlay\").click()",
+    "click_pause" : "$(\"#radioControlPause\").click()",
+    "click_next_track" : "$(\"#radioControlSkip\").click()",
+    "click_thumbs_up" : "$(\"#radioControlLove\").click()",
+    "click_thumbs_down" : "$(\"#radioControlBan\").click()"
 }
