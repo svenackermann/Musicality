@@ -1,0 +1,41 @@
+{
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$(\"#radioControlPlay\").css(\"display\") == \"none\"",
+    "is_paused" : "$(\"#radioControlPause\").css(\"display\") == \"none\"",
+    "is_thumbed_up" : "$(\"[accesskey='l']\").css(\"margin\") == \"-63px 0px 0px\"",
+    "is_thumbed_down" : "$(\"[accesskey='b']\").css(\"margin\") != \"0px\"",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "",
+    "get_artist" : "$(\".artist\").children().text()",
+    "get_track" : "$(\".track\").children().text()",
+    "get_current_time" : "$(\"#trackPlayed\").text()",
+    "get_remaining_time" : "$(\"#trackRemaining\").text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "",
+    "click_pause" : "",
+    "click_next_track" : "",
+    "click_prev_track" : "",
+    "click_shuffle" : "",
+    "click_repeat" : "",
+    "click_thumbs_up" : "",
+    "click_thumbs_down" : ""
+}

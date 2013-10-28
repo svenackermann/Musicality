@@ -20,7 +20,8 @@
                 "*://music.xbox.com/*",
                 "*://mog.com/*",
                 "*://www.slacker.com/*",
-                "*://songza.com/*"
+                "*://songza.com/*",
+                "*://www.last.fm/listen/*"
             ],
             "run_at": "document_start"
         },{

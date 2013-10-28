@@ -47,5 +47,10 @@
     "songza" : {
         "pattern" : "https?:\\/\\/songza.com\\/*",
         "json_loc" : "/json/songza.json"
+    },
+
+    "last.fm" : {
+        "pattern" : "https?:\\/\\/www.last.fm\\/listen\\/*",
+        "json_loc" : "/json/last_fm.json"
     }
 }
