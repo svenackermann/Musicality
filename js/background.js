@@ -319,8 +319,28 @@ function PopulateInformation(tabId){
             }
 
             // Do some math to get the actual total time instead
-            
-            mTotalTime = remaining_time;
+            var splitCurrent = mCurrentTime.split(":");
+            var curMins = parseInt(splitCurrent[0]);
+            var curSeconds = parseInt(splitCurrent[1]) + (curMins*60);
+
+            // Get int's for the remaining time
+            var splitRemaining = remaining_time.split(":");
+            var remainingMins = parseInt(splitRemaining[0]) * -1; // All have '-' at start
+            var remainingSeconds = parseInt(splitRemaining[1]) + (remainingMins*60);
+
+            // Now we should have integers representing the total time remaining, in seconds
+            var totalSeconds = curSeconds + remainingSeconds;
+            var totalMins = Math.floor(totalSeconds/60);
+            var totalSecs = totalSeconds % 60;
+
+            // Construct the strings we need
+            var sTotalSecs = "" + totalSecs;
+            if (totalSecs < 10){
+                sTotalSecs = "0" + totalSecs;
+            }
+
+            // Set the total time value
+            mTotalTime = totalMins + ":" + sTotalSecs;
         });
     }
     
