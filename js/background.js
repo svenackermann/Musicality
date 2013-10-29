@@ -70,6 +70,14 @@ var mIsThumbedUp = false;
 // Is thumbed down
 var mIsThumbedDown = false;
 
+//// Last.fm variables ////
+
+// Var to track if this song was already scrobbled
+var mNewTrack = true;
+
+// Cache of songs to scrobble
+var mScrobbleCache = [];
+
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
@@ -271,6 +279,11 @@ function PopulateInformation(tabId){
             console.log("background.js::PopulateInfo -- track: " + track);
         }
 
+        // Check if this is a new song
+        if (mTrack != track){
+            mNewTrack = true;
+        }
+        
         // Save the track for the popup
         mTrack = track;
     });
@@ -424,9 +437,6 @@ function PopulateInformation(tabId){
             mIsThumbedDown = thumbed_down;
         });
     }
-
-    // Finally, do some work for last.fm
-    DoLastFmWork();
 }
 
 // A function to interact with the scrobbler
@@ -435,40 +445,49 @@ function DoLastFmWork(){
     
     // Make sure we are playing
     if (mIsPlaying){
+        
         // Ensure we have a track and artist
         if (mTrack != null && mArtist != null){
-            // Cool. Tell Last.fm we are playing
+            // Cool. Tell Last.fm we are playing 
             RunLastFmQuery({method: "track.updateNowPlaying",
                             track: mTrack,
                             artist: mArtist}, false, null);
+        }
 
-            // Check if we've played at least 30 seconds
-            var splitCurrent = mCurrentTime.split(":");
-            var curMins = parseInt(splitCurrent[0]);
-            var curSeconds = parseInt(splitCurrent[1]) + (curMins*60);
+        // Check if we've played at least 30 seconds
+        var splitCurrent = mCurrentTime.split(":");
+        var curMins = parseInt(splitCurrent[0]);
+        var curSeconds = parseInt(splitCurrent[1]) + (curMins*60);
 
-            if (curSeconds > 30){
-                // We could scrobble here. Check if it's halfway over, or greater than 4
-                var splitTotal = mTotalTime.split(":");
-                var totalMins = parseInt(splitTotal[0]);
-                var totalSeconds = parseInt(splitTotal[1]) + (totalMins*60);
+        if (curSeconds > 30){
+            // We could scrobble here. Check if it's halfway over, or greater than 4
+            var splitTotal = mTotalTime.split(":");
+            var totalMins = parseInt(splitTotal[0]);
+            var totalSeconds = parseInt(splitTotal[1]) + (totalMins*60);
+            
+            if ((curSeconds/totalSeconds >= 0.5 || curSeconds >= (240)) && (mNewTrack == true)){
+                // Mark the song as not new
+                mNewTrack = false;
                 
-                if (curSeconds/totalSeconds >= 0.5 || curSeconds >= (240)){
-                    // Scrobble!
-                    RunLastFmQuery(
-                        {
-                            method: "track.scrobble",
-                            track: mTrack,
-                            artist: mArtist,
-                            timestamp: Math.round((new Date()).getTime() / 1000)
-                        }, false, function(result){
-                            // TODO -- Double check the result
-                        });
-                }
+                // Attempt to scrobble!
+                RunLastFmQuery(
+                    {
+                        method: "track.scrobble",
+                        track: mTrack,
+                        artist: mArtist,
+                        timestamp: Math.round((new Date()).getTime() / 1000).toString()
+                    }, false, function(result){
+                        // We need to check if it's failed
+                        if (result.message){
+                            var x = 0; // DEBUG!
+                        }
+                    });
             }
         }
     }
 
+    // Finally, iterate through any old failed requests and try to scrobble
+    // TODO
 }
 
 // Function to determine if a given tab is playing music
@@ -564,5 +583,12 @@ $(document).ready(function(){
     window.setInterval(function() {
         UpdateInformation();
     }, 10000)
+
+    // We want to update last.fm information once every 15 seconds
+    window.setInterval(function() {
+        // Check if the user wants us to do last.fm work first -- check local everytime!
+        // TODO
+        DoLastFmWork();
+    }, 15000)
 });
 
