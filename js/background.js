@@ -479,7 +479,7 @@ function DoLastFmWork(){
                     }, false, function(result){
                         // We need to check if it's failed
                         if (result.message){
-                            var x = 0; // DEBUG!
+                            // TODO
                         }
                     });
             }
