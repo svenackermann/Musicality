@@ -399,7 +399,7 @@ $(document).ready(function(){
     //Update our information once every quarter second.
     window.setInterval(function() {
         UpdateInformation();
-    }, 250)
+    }, 1000)
 
     // Get the clickable elements ready!
 

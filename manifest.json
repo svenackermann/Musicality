@@ -21,7 +21,8 @@
                 "*://mog.com/*",
                 "*://www.slacker.com/*",
                 "*://songza.com/*",
-                "*://www.last.fm/listen/*"
+                "*://www.last.fm/listen/*",
+                "*://hypem.com/*"
             ],
             "run_at": "document_start"
         },{
