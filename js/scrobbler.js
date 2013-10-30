@@ -91,38 +91,43 @@ function GetLastFmSession(callback){
                 console.log("Attempting to get last.fm session id");
             }
 
-            RunLastFmQuery({method: "auth.getSession", token: mToken}, true, function(data){
-                // Check for error in the callback
-                if (data.error){
-                    // Yikes. We have an error.
-                    console.log("Query returned an error: " + data.message);
-                }else{
-                    // Ok. Now get the session and username
-                    if (data.session){
-                        // Store it in memory too
-                        mSessionKey = data.session["key"];
-                        
-                        if (mDebug){
-                            console.log("Session key = " + data.session["key"]);
-                            console.log("Username = " + data.session["name"]);
-                        }
-                        
-                        // Save the information off
-                        chrome.storage.local.set(
-                            {
-                                lastfm_session_key: data.session["key"],
-                                lastfm_username: data.session["name"]
-                            }, function(){
-                                // Save successful.
-                                if (mDebug){
-                                    console.log("Successfully saved session and username");
-                                }
-                            });
+            // We need to grab the latest token out of local storage first
+            chrome.storage.local.get('lastfm_token', function(data){
+                mToken = data.lastfm_token;
+                
+                RunLastFmQuery({method: "auth.getSession", token: mToken}, true, function(data){
+                    // Check for error in the callback
+                    if (data.error){
+                        // Yikes. We have an error.
+                        console.log("Query returned an error: " + data.message);
+                    }else{
+                        // Ok. Now get the session and username
+                        if (data.session){
+                            // Store it in memory too
+                            mSessionKey = data.session["key"];
+                            
+                            if (mDebug){
+                                console.log("Session key = " + data.session["key"]);
+                                console.log("Username = " + data.session["name"]);
+                            }
+                            
+                            // Save the information off
+                            chrome.storage.local.set(
+                                {
+                                    lastfm_session_key: data.session["key"],
+                                    lastfm_username: data.session["name"]
+                                }, function(){
+                                    // Save successful.
+                                    if (mDebug){
+                                        console.log("Successfully saved session and username");
+                                    }
+                                });
 
-                        // Callback with the session key
-                        callback(mSessionKey);
+                            // Callback with the session key
+                            callback(mSessionKey);
+                        }
                     }
-                }
+                });
             });
         }
     });
@@ -139,7 +144,9 @@ function RunLastFmQuery(parameters, get, callback){
         // Construct the query string
         var queryString = LASTFM_URL + "?api_key=" + LASTFM_KEY;
         for (var key in parameters){
-            queryString += "&" + key + "=" + parameters[key].split(" ").join("+");
+            if (key){
+                queryString += "&" + key + "=" + parameters[key].split(" ").join("+");
+            }
         }
 
         // Finally, append the signature and json request
