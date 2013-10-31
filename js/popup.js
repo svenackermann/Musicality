@@ -396,10 +396,10 @@ $(document).ready(function(){
     // Immediately update our information
     UpdateInformation();
     
-    //Update our information once every quarter second.
+    //Update our information once every half second.
     window.setInterval(function() {
         UpdateInformation();
-    }, 1000)
+    }, 500)
 
     // Get the clickable elements ready!
 
