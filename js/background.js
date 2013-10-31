@@ -72,11 +72,11 @@ var mIsThumbedDown = false;
 
 //// Last.fm variables ////
 
-// Var to track if this song was already scrobbled
-var mNewTrack = true;
-
 // Cache of songs to scrobble
 var mScrobbleCache = [];
+
+// Keep track of the last song scrobbled, so we don't double
+var mLastScrobble = "";
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -279,11 +279,6 @@ function PopulateInformation(tabId){
             console.log("background.js::PopulateInfo -- track: " + track);
         }
 
-        // Check if this is a new song
-        if (mTrack != track){
-            mNewTrack = true;
-        }
-        
         // Save the track for the popup
         mTrack = track;
     });
@@ -464,24 +459,33 @@ function DoLastFmWork(){
             var splitTotal = mTotalTime.split(":");
             var totalMins = parseInt(splitTotal[0]);
             var totalSeconds = parseInt(splitTotal[1]) + (totalMins*60);
+
+            // Determine if we've already scrobbled this song
+            var curScrobble = mTrack + " " + mArtist;
+            if (curScrobble != mLastScrobble){
             
-            if ((curSeconds/totalSeconds >= 0.5 || curSeconds >= (240)) && (mNewTrack == true)){
-                // Mark the song as not new
-                mNewTrack = false;
-                
-                // Attempt to scrobble!
-                RunLastFmQuery(
-                    {
-                        method: "track.scrobble",
-                        track: mTrack,
-                        artist: mArtist,
-                        timestamp: Math.round((new Date()).getTime() / 1000).toString()
-                    }, false, function(result){
-                        // We need to check if it's failed
-                        if (result.message){
-                            // TODO
-                        }
-                    });
+                if (curSeconds/totalSeconds >= 0.5 || curSeconds >= (240)){
+                    // Mark the song as not new
+                    mNewTrack = false;
+                    
+                    // Attempt to scrobble!
+                    RunLastFmQuery(
+                        {
+                            method: "track.scrobble",
+                            track: mTrack,
+                            artist: mArtist,
+                            timestamp: Math.round((new Date()).getTime() / 1000).toString()
+                        }, false, function(result){
+                            // We need to check if it's failed
+                            if (result.message){
+                                // TODO
+                            }
+                        });
+
+                    // TODO -- Move this into the result.message block
+                    // Save the scrobble as the last scrobble to prevent doing it again.
+                    mLastScrobble = curScrobble;
+                }
             }
         }
     }
