@@ -2,12 +2,7 @@
 // and keeping the variables internally up to date. These will be accessed by the
 // popup script to display the relevant information to the user.
 
-// TODO -- Move logic that doesn't deal with display to this script
-
-
-// NOTE -- Variables can be accessed using chrome.extension.getBackgroundPage().variable_name
 // Requires reloading the extension for changes in here to be reflected.
-
 
 /////////////////////////////////////////////////////////////////////////////
 // Constants
@@ -152,24 +147,19 @@ function FindTabPlayingMusic(callback){
                                             callback(tabId, playerDetails);
                                         }
                                     }else{
-                                        // Check if this was the last tab we were looking at
-                                        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
-                                    }
-                                });
+                                        // Check if it was paused instead.
+                                        IsPaused(tabId, playerDetails, function(isPaused){
+                                            if (isPaused){
+                                                // Found a paused tab. Save it off
+                                                pausedTabs.push({ "id" : tabId, "details" : playerDetails });
 
-                                // Again, increment the asyncs
-                                asyncsRunning.count++;
-                                
-                                // Check if it was paused instead.
-                                IsPaused(tabId, playerDetails, function(isPaused){
-                                    if (isPaused){
-                                        // Found a paused tab. Save it off
-                                        pausedTabs.push({ "id" : tabId, "details" : playerDetails });
-
-                                        // If everythings done, returned a paused tab
-                                        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
-                                    }else{
-                                        // This tab wasn't paused, or playing. Check if all asyncs are done.
+                                                // If everythings done, returned a paused tab
+                                                returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                            }else{
+                                                // This tab wasn't paused, or playing. Check if all asyncs are done.
+                                                returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                            }
+                                        });
                                         returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
                                     }
                                 });
@@ -557,18 +547,16 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                 chrome.manifest = chrome.app.getDetails();
                 var scripts = chrome.manifest.content_scripts[0].js;
                 for (var i = 0; i < scripts.length; i++){
-                    if (mDebug){
-                        console.log("background.js::Injecting " + scripts[i]);
+                    if(mDebug){
+                        console.log("background.js::Injecting " +
+                                    scripts[i] + " into tab " + tabId);
                     }
+                    
                     chrome.tabs.executeScript(tabId,
                         {
                             file: scripts[i],
-                            allFrames: true,
+                            allFrames: false,
                             runAt: "document_start"
-                        }, function(results){
-                            if (mDebug){
-                                console.log("background.js::Injection results = " + results);
-                            }
                     });
                 }
             }
