@@ -147,6 +147,9 @@ function FindTabPlayingMusic(callback){
                                             callback(tabId, playerDetails);
                                         }
                                     }else{
+                                        // Increment the number of asyncs we have running.
+                                        asyncsRunning.count++;
+                                        
                                         // Check if it was paused instead.
                                         IsPaused(tabId, playerDetails, function(isPaused){
                                             if (isPaused){
@@ -535,7 +538,7 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                                     tabId + "," + whatIsNeeded + "," + result + ")");
                         callback(result);
                     }
-                );                
+                );
             }else{
                 // Need to re-inject everything. Either new install or update.
 
@@ -561,6 +564,11 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                 }
             }
         });
+    }
+
+    // Weren't expecting to make it here
+    if (mDebug){
+        console.log("background.js::Error -- Expecting callback, but returning instead.");
     }
 }
 

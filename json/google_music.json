@@ -38,8 +38,8 @@
 
     "click_play" : "location.assign('javascript:SJBpost(\"playPause\")')",
     "click_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
-    "click_next_track" : "location.assign('javascript:SJBpost(\"nextSong\")')",
-    "click_prev_track" : "location.assign('javascript:SJBpost(\"prevSong\")')",
+    "click_next_track" : "$('*[data-id=\"forward\"]').click()",
+    "click_prev_track" : "$('*[data-id=\"rewind\"]').click()",
     "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
     "click_repeat" : "location.assign('javascript:SJBpost(\"toggleRepeat\")')",
     "click_thumbs_up" : "location.assign('javascript:SJBpost(\"thumbsUpPlayer\")')",
