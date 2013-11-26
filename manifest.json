@@ -1,59 +1,41 @@
 {
     "browser_action": {
-        "default_icon": "images/icon48.png",
+        "default_icon": "/images/icon48.png",
         "default_title": "Musicality",
-        "default_popup": "html/popup.html"
+        "default_popup": "/html/popup.html"
     },
     "content_scripts": [
         {
             "js":
             [
-                "js/jquery.js", "js/contentscript.js"
+                "/js/jquery.js", "/js/contentscript.js"
             ],
             "matches":
             [
-                "*://play.google.com/*",
-                "*://www.pandora.com/*",
-                "*://grooveshark.com/*",
-                "*://www.amazon.com/*",
-                "*://www.rdio.com/*",
-                "*://music.xbox.com/*",
-                "*://mog.com/*",
-                "*://www.slacker.com/*",
-                "*://songza.com/*",
-                "*://www.last.fm/listen/*",
-                "*://hypem.com/*"
+                "https://*/*",
+                "http://*/*"
             ],
             "run_at": "document_start"
-        },{
-            "js":
-            [
-                "js/jquery.js", "js/contentscript.js"
-            ],
-            "matches" :
-            [
-                "*://play.spotify.com/apps/player/*"
-            ],
-            "all_frames" : true,
-            "run_at" : "document_start"
         }
     ],
     "background": {
-        "page" : "html/background.html"
+        "page" : "/html/background.html"
     },
-    "options_page" : "html/options.html",
+    "options_page" : "/html/options.html",
     "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
     "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
     "icons": {
-        "128": "images/icon128.png",
-        "16": "images/icon16.png",
-        "48": "images/icon48.png"
+        "128": "/images/icon128.png",
+        "16": "/images/icon16.png",
+        "48": "/images/icon48.png"
     },
     "name": "Musicality",
     "permissions":
     [
         "tabs",
-        "storage"
+        "storage",
+        "http://*/*",
+        "https://*/*"
     ],
     "update_url": "http://clients2.google.com/service/update2/crx",
     "version": "2.0.0",

@@ -142,7 +142,7 @@ function FindTabPlayingMusic(callback){
 
                                 // A flag to see if we have already returned a player
                                 var alreadyReturned = false;
-                                
+
                                 // Is it currently playing music?
                                 IsPlayingMusic(tabId, playerDetails, function(isPlaying){
                                     if (isPlaying){
@@ -530,20 +530,49 @@ function IsPaused(tabId, playerDetails, callback){
 function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
     // Check if we have the player details
     if (playerDetails != null){
+        // Now ensure we have a content script already running
+        chrome.tabs.sendMessage(tabId, { ping : "ping" }, function(response){
+            if (response){
+                // Tab has content script running. Send it the request.
+                chrome.tabs.sendMessage(
+                    tabId,
+                    {
+                        "playerDetails" : playerDetails,
+                        "scriptKey" : whatIsNeeded
+                    },
+                    function(result){
+                        console.log("background.js::SendPlayerRequest(" +
+                                    tabId + "," + whatIsNeeded + "," + result + ")");
+                        callback(result);
+                    }
+                );                
+            }else{
+                // Need to re-inject everything. Either new install or update.
 
-        // Send the request to the tab provided
-        chrome.tabs.sendRequest(
-            tabId,
-            {
-                "playerDetails" : playerDetails,
-                "scriptKey" : whatIsNeeded
-            },
-            function(result){
-                console.log("background.js::SendPlayerRequest(" +
-                            tabId + "," + whatIsNeeded + "," + result + ")");
-                callback(result);
+                if (mDebug){
+                    console.log("background.js::No contentscript detected on tab " + tabId + ". Re-injecting...");
+                }
+
+                // Get the manifest
+                chrome.manifest = chrome.app.getDetails();
+                var scripts = chrome.manifest.content_scripts[0].js;
+                for (var i = 0; i < scripts.length; i++){
+                    if (mDebug){
+                        console.log("background.js::Injecting " + scripts[i]);
+                    }
+                    chrome.tabs.executeScript(tabId,
+                        {
+                            file: scripts[i],
+                            allFrames: true,
+                            runAt: "document_start"
+                        }, function(results){
+                            if (mDebug){
+                                console.log("background.js::Injection results = " + results);
+                            }
+                    });
+                }
             }
-        );
+        });
     }
 }
 
