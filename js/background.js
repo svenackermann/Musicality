@@ -210,18 +210,39 @@ function UpdateInformation(){
     
     // Have we already found a tab playing music?
     if (mLastPlayingTabId != -1){
-        // Is it still playing music?
-        IsPlayingMusic(mLastPlayingTabId, mPlayerDetails, function(isPlaying){
-            if (isPlaying){
-                // Grab the different pieces from that tab, if we are displaying
-                PopulateInformation(mLastPlayingTabId);
+        // Check if the tab still exists
+        DoesTabExist(mLastPlayingTabId, function(exists){
+
+            if (exists){
+                // Is it still playing music?
+                IsPlayingMusic(mLastPlayingTabId, mPlayerDetails, function(isPlaying){
+                    if (isPlaying){
+                        // Grab the different pieces from that tab, if we are displaying
+                        PopulateInformation(mLastPlayingTabId);
+                    }else{
+                        lookForPlayingTabHelper();
+                    }
+                });
             }else{
+                // Need to look for a tab playing music
                 lookForPlayingTabHelper();
             }
         });
     }else{
         lookForPlayingTabHelper();
     }
+}
+
+// Determine if a tab exists
+function DoesTabExist(tabId, callback){
+    // Use the chrome API to check
+    chrome.tabs.get(tabId, function(tab){
+        if (!tab){
+            callback(false);
+        }else{
+            callback(true);
+        }
+    });
 }
 
 // A helper function to prevent duplication of code in the UpdateInformation function
