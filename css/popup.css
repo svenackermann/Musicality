@@ -95,6 +95,7 @@ marquee{
     left: 2px; 
     opacity: .1;
 }
+
 #shuffle_button:hover{
     background-position: -240px -30px;
 }
@@ -237,4 +238,3 @@ marquee{
     margin: 8px 0px 0px 0px;
     padding: 0px;
 }
-
