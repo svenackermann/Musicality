@@ -377,6 +377,9 @@ function PopulateInformation(tabId){
             mTotalTime = totalMins + ":" + sTotalSecs;
         });
     }else if (mPlayerDetails.has_progress_percentage){
+        // TODO -- Improve over time by using all of the data, from the first time we got a
+        // timestamp for the track. So you get more accurate as the window gets larger.
+        
         // Get the progress from the player
         SendPlayerRequest(tabId, mPlayerDetails, "get_progress", function(currentProgress){
             // This player has a progress percentage, so let's calculate the times.
