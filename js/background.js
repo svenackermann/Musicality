@@ -65,6 +65,18 @@ var mIsThumbedUp = false;
 // Is thumbed down
 var mIsThumbedDown = false;
 
+// For songs with progress, we need to calculate some values
+var mLastUpdateProgress = 0.0;
+
+// Timestamp of the last time we got the progress
+var mLastUpdateTimestamp = 0;
+
+// Total milliseconds
+var mTotalMilliseconds = 0;
+
+// The last update track
+var mLastUpdateTrack = null;
+
 //// Last.fm variables ////
 
 // Cache of songs to scrobble
@@ -364,6 +376,62 @@ function PopulateInformation(tabId){
             // Set the total time value
             mTotalTime = totalMins + ":" + sTotalSecs;
         });
+    }else if (mPlayerDetails.has_progress_percentage){
+        // Get the progress from the player
+        SendPlayerRequest(tabId, mPlayerDetails, "get_progress", function(currentProgress){
+            // This player has a progress percentage, so let's calculate the times.
+            if (mLastUpdateProgress != null){
+                // Get the current timestamp
+                currentTimestamp = Date.now();
+
+                // Check if this is the same track that was playing last time we checked
+                if (mTrack != mLastUpdateTrack){
+                    // Update the last update track and reset values
+                    mLastUpdateTrack = mTrack;
+                    mLastUpdateTimestamp = 0;
+                    mLastUpdateProgress = 0.0;
+                }
+
+                if (mLastUpdateTimestamp > 0){
+                    // Calculate the difference from then to now
+                    var changeInTimestamp = currentTimestamp - mLastUpdateTimestamp;
+
+                    // Only recalculate the time if it's been at least 5 seconds
+                    if (changeInTimestamp > 5000){
+                        // Calculate the difference in the currentProgress from the last update
+                        var changeInProgress = currentProgress - mLastUpdateProgress;
+
+                        // Ensure we actually had a change
+                        if (changeInProgress > 0){
+                            // Calculate the total time
+                            mTotalMilliseconds = changeInTimestamp/changeInProgress;
+
+                            // Finally, build the string and save it off in the globals
+                            mTotalTime = GetTimeStringForMilliseconds(mTotalMilliseconds);
+
+                            // Update some globals
+                            mLastUpdateTimestamp = currentTimestamp;
+                        }
+
+                        // Update the last update progress
+                        mLastUpdateProgress = currentProgress;
+                    }
+
+                    // Ensure the total time is at least 0
+                    if (mTotalMilliseconds > 0){
+                        // Calculate the current time
+                        var currentTime = mTotalMilliseconds * currentProgress;
+
+                        // Now, build the string
+                        mCurrentTime = GetTimeStringForMilliseconds(currentTime);
+                    }
+                }else{
+                    // First time through, apparently. Update the timestamp
+                    mLastUpdateTimestamp = Date.now();
+                }
+            }
+        });
+        
     }
     
     // Make a request to the content script for the play/pause state
@@ -446,6 +514,25 @@ function PopulateInformation(tabId){
             mIsThumbedDown = thumbed_down;
         });
     }
+}
+
+// A function to convert a millisecond value into a string
+function GetTimeStringForMilliseconds(milliseconds){
+    // Get the current time overall seconds
+    var timeOverallSeconds = milliseconds / 1000;
+
+    // Now do the same for the current time
+    var timeMinutes = Math.floor(timeOverallSeconds / 60);
+    var timeSeconds = Math.floor(timeOverallSeconds % 60);
+
+    // Now do the same for current time
+    var timeSecondsString = "" + timeSeconds;
+    if (timeSeconds < 10){
+        timeSecondsString = "0" + timeSecondsString;
+    }
+
+    // Now, build the string
+    return "" + timeMinutes + ":" + timeSecondsString;
 }
 
 // A function to interact with the scrobbler

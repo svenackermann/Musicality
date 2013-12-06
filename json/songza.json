@@ -14,19 +14,21 @@
     "has_current_track_time" : false,
     "has_total_track_time" : false,
     "has_remaining_track_time" : false,
+    "has_progress_percentage" : true,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\".sz-player.sz-player-state-play\").length > 0",
-    "is_paused" : "$(\".sz-player.sz-player-state-pause\").length > 0",
-    "is_thumbed_up" : "$(\"li.szi-vote-up-button.player-vote-up\").css(\"background-position\") == \"0px -259px\"",
-    "is_thumbed_down" : "$(\"li.szi-vote-down-button.player-vote-down\").css(\"background-position\") != \"0px -148px\"",
+    "is_playing" : "$(\".sz-player.sz-player-play-state-play\").length > 0",
+    "is_paused" : "$(\".sz-player.sz-player-play-state-pause\").length > 0",
+    "is_thumbed_up" : "$(\".player-control-button.player-vote-up\").css(\"background-position\") == \"0px -259px\"",
+    "is_thumbed_down" : "$(\".player-control-button.player-vote-down\").css(\"background-position\") != \"0px -148px\"",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\".szi-roll-song img\").attr(\"src\")",
+    "get_album_art" : "$(\".player-state-display.player-state-display-song img\").attr(\"src\")",
     "get_artist" : "$(\".szi-artist\").first().text()",
     "get_track" : "$(\".szi-title\").first().text()",
+    "get_progress" : "parseFloat($(\".szi-bar\").attr(\"style\").split(\":\")[1].trim())/100.0",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
