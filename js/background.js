@@ -255,6 +255,9 @@ function DoesTabExist(tabId, callback){
             callback(true);
         }
     });
+
+    // Shouldn't be here, but something went wrong. Return false
+    callback(false);
 }
 
 // A helper function to prevent duplication of code in the UpdateInformation function
