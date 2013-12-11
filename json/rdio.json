@@ -27,8 +27,8 @@
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
     "get_album_art" : "$(\".queue_art\").attr(\"src\")",
-    "get_artist" : "$(\".artist_title\").text()",
-    "get_track" : "$(\".song_title\").text()",
+    "get_artist" : "$(\".drag_container a.artist_title\").text()",
+    "get_track" : "$(\"a.song_title\").text()",
     "get_current_time" : "$(\".time\").text()",
     "get_total_time" : "$(\".bottom .duration\").text()",
 
