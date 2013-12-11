@@ -7,10 +7,6 @@ body{
     background-image: url('../images/dark_gray_tile.jpg');
 }
 
-marquee{
-    padding-bottom: 1px;
-}
-
 #container{
     width: auto;
     height: 66px;
@@ -22,7 +18,6 @@ marquee{
     bottom: 0;
     position: absolute;
     border-color: #d2732f;
-    overflow: hidden;
 }
 
 #album_art{
@@ -40,35 +35,35 @@ marquee{
 #track_info{
     margin: 2px;
     width: 172px;
+    height: 72px;
     float: left;
 }
 
-#artist_name{
-    padding: 0px;
+.marquee_wrapper{
+    overflow: hidden;
+    width: inherit;
+    padding: 0;
+    margin: 0;
+}
+
+#artist{
     height: 20px;
     font-weight: bold;
     font-size: 14px;        
-    overflow: hidden;   
 }
 
-#track_name{
-    padding: 0px;
-    height: 20px;
+#track{
     font-size: 14px;        
-    overflow: hidden;       
-    margin-left: auto;
-    margin-right: auto;
 }
 
 #time_info{
     margin: 0px;
     margin-top: 8px;
     padding: 0px;
-    overflow: hidden;
     margin-left: auto;
     margin-right: auto;
-    float: left;
     font-size: 12px;
+    width: 72px;
 }
 
 #cur_time{
@@ -90,10 +85,20 @@ marquee{
     height: 20px;   
     cursor: pointer;
     position: absolute;
-
     top: 2px;
     left: 2px; 
     opacity: .1;
+}
+
+.marquee_item{
+    white-space: nowrap;
+    height: 20px;
+    padding: 0;
+}
+
+span{
+    display: inline-block;
+    float: left;
 }
 
 #shuffle_button:hover{
@@ -231,10 +236,13 @@ marquee{
 }
 
 #player_name{
+    margin: 0px;
+    margin-top: 8px;
+    padding: 0px;
     text-align: right;
     font-size: 12px;
-    opacity: .08;
+    opacity: .1;
     text-transform: uppercase;
-    margin: 8px 0px 0px 0px;
-    padding: 0px;
+    width: 100px;
+    overflow: hidden;
 }

@@ -388,7 +388,7 @@ function PopulateInformation(tabId){
                 var currentTimestamp = Date.now();
 
                 // Check if this is the same track that was playing last time we checked
-                if (mTrack != mLastUpdateTrack){
+                if (mTrack != mLastUpdateTrack || !mIsPlaying){
                     // Update the last update track and reset values
                     mLastUpdateTrack = mTrack;
                     mFirstUpdateTimestamp = currentTimestamp;

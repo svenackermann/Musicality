@@ -1,31 +1,34 @@
 <html>
   <head>        
     <script type="text/javascript" src="../js/jquery.js"></script>
-    <script type="text/javascript" src="../js/jquery.marquee.js"></script>
     <script type="text/javascript" src="../js/popup.js"></script>
     <link rel="stylesheet" href="../css/popup.css"/>
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
   </head>
   <body>    
-    <div id="shuffle_button" class="shuffle_off"></div>
-    <div id="repeat_button" class="repeat_off"></div>
-    <div id="previous_track"></div>
-    <div id="play_pause" class="play"></div>
-    <div id="next_track"></div>    
-    <div id="thumbs_up_button" class="thumbs_down_off"></div>
-    <div id="thumbs_down_button" class="thumbs_up_off"></div>   
-    <div id="container">
-      <div id="album_art"><img id="art" src="../images/art.jpg" width="60" height="60" /></div>
-      <div id="track_info">
-        <div id="artist_name"><marquee padding="0" id="artist" scrollamount="0" behavior="alternate" direction="right"></marquee></div>
-        <div id="track_name"><marquee padding="0" id="track" scrollamount="1" behavior="alternate" direction="right">Play a song.</marquee></div>
-        <div id="time_info">
-          <div id="cur_time"></div>
-          <div id="total_time"></div>
-        </div>
-        <div id="player_name"></div>
-      </div>
-    </div> 
+    <span id="shuffle_button" class="shuffle_off"></span>
+    <span id="repeat_button" class="repeat_off"></span>
+    <span id="previous_track"></span>
+    <span id="play_pause" class="play"></span>
+    <span id="next_track"></span>    
+    <span id="thumbs_up_button" class="thumbs_down_off"></span>
+    <span id="thumbs_down_button" class="thumbs_up_off"></span>   
+    <span id="container">
+      <span id="album_art"><img id="art" src="../images/art.jpg" width="60" height="60" /></span>
+      <span id="track_info">
+        <span class="marquee_wrapper">
+          <span id="artist" class="marquee_item"></span>
+        </span>
+        <span class="marquee_wrapper">
+          <span id="track" class="marquee_item">Play a song.</span>
+        </span>
+        <span id="time_info">
+          <span id="cur_time"></span>
+          <span id="total_time"></span>
+        </span>
+        <span id="player_name"></span>
+      </span>
+    </span> 
   </body>
 
 </html>

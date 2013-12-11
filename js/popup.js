@@ -387,6 +387,41 @@ function ClickSomething(clickWhat){
     mBackground.ClickSomething(clickWhat);
 }
 
+// A function to start the marquee when hovered over
+function startMarquee(){
+    // Get the width of the item
+    var width = $(this).width();
+    var parentWidth = $(this).parent().width();
+
+    // Check if we are overflowing
+    if(width > parentWidth) {
+
+        // Get the distance to scroll
+        var scrollDistance = width - parentWidth;
+
+        // Get the item to scroll
+        var itemToScroll = $(this).parent();
+
+        // Stop any current animation on that item
+        itemToScroll.stop();
+        
+        // Start animating
+        itemToScroll.animate({scrollLeft: scrollDistance}, 3000, 'linear');
+    }
+}
+
+// A function to stop the marquee when it's no longer hovered over
+function stopMarquee(){
+    // Get the item that could be scrolling
+    var itemToStop = $(this).parent();
+
+    // Stop the animation
+    itemToStop.stop();
+
+    // Swing it back to the original position
+    itemToStop.animate({scrollLeft: 0}, 'medium', 'swing');
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
 /////////////////////////////////////////////////////////////////////////////
@@ -443,6 +478,7 @@ $(document).ready(function(){
     $("#thumbs_down_button").bind('click', function(){
         ThumbsDownClick();
     });
-    
-});
 
+    // Register all marquee items to marquee
+    $(".marquee_item").hover(startMarquee, stopMarquee);
+});
