@@ -224,7 +224,6 @@ function UpdateInformation(){
     if (mLastPlayingTabId != -1){
         // Check if the tab still exists
         DoesTabExist(mLastPlayingTabId, function(exists){
-
             if (exists){
                 // Is it still playing music?
                 IsPlayingMusic(mLastPlayingTabId, mPlayerDetails, function(isPlaying){
@@ -255,9 +254,6 @@ function DoesTabExist(tabId, callback){
             callback(true);
         }
     });
-
-    // Shouldn't be here, but something went wrong. Return false
-    callback(false);
 }
 
 // A helper function to prevent duplication of code in the UpdateInformation function
@@ -670,11 +666,6 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                 }
             }
         });
-    }
-
-    // Weren't expecting to make it here
-    if (mDebug){
-        console.log("background.js::Error -- Expecting callback, but returning instead.");
     }
 }
 
