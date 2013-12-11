@@ -66,10 +66,10 @@ var mIsThumbedUp = false;
 var mIsThumbedDown = false;
 
 // For songs with progress, we need to calculate some values
-var mLastUpdateProgress = 0.0;
+var mFirstUpdateProgress = 0.0;
 
 // Timestamp of the last time we got the progress
-var mLastUpdateTimestamp = 0;
+var mFirstUpdateTimestamp = 0;
 
 // Total milliseconds
 var mTotalMilliseconds = 0;
@@ -380,41 +380,32 @@ function PopulateInformation(tabId){
         // Get the progress from the player
         SendPlayerRequest(tabId, mPlayerDetails, "get_progress", function(currentProgress){
             // This player has a progress percentage, so let's calculate the times.
-            if (mLastUpdateProgress != null){
+            if (mFirstUpdateProgress != null){
                 // Get the current timestamp
-                currentTimestamp = Date.now();
+                var currentTimestamp = Date.now();
 
                 // Check if this is the same track that was playing last time we checked
                 if (mTrack != mLastUpdateTrack){
                     // Update the last update track and reset values
                     mLastUpdateTrack = mTrack;
-                    mLastUpdateTimestamp = 0;
-                    mLastUpdateProgress = 0.0;
+                    mFirstUpdateTimestamp = currentTimestamp;
+                    mFirstUpdateProgress = currentProgress;
                 }
 
-                if (mLastUpdateTimestamp > 0){
+                if (mFirstUpdateTimestamp > 0){
                     // Calculate the difference from then to now
-                    var changeInTimestamp = currentTimestamp - mLastUpdateTimestamp;
+                    var changeInTimestamp = currentTimestamp - mFirstUpdateTimestamp;
 
-                    // Only recalculate the time if it's been at least 5 seconds
-                    if (changeInTimestamp > 5000){
-                        // Calculate the difference in the currentProgress from the last update
-                        var changeInProgress = currentProgress - mLastUpdateProgress;
+                    // Calculate the difference in the currentProgress from the last update
+                    var changeInProgress = currentProgress - mFirstUpdateProgress;
 
-                        // Ensure we actually had a change
-                        if (changeInProgress > 0){
-                            // Calculate the total time
-                            mTotalMilliseconds = changeInTimestamp/changeInProgress;
+                    // Ensure we actually had a change
+                    if (changeInProgress > 0){
+                        // Calculate the total time
+                        mTotalMilliseconds = changeInTimestamp/changeInProgress;
 
-                            // Finally, build the string and save it off in the globals
-                            mTotalTime = GetTimeStringForMilliseconds(mTotalMilliseconds);
-
-                            // Update some globals
-                            mLastUpdateTimestamp = currentTimestamp;
-                        }
-
-                        // Update the last update progress
-                        mLastUpdateProgress = currentProgress;
+                        // Finally, build the string and save it off in the globals
+                        mTotalTime = GetTimeStringForMilliseconds(mTotalMilliseconds);
                     }
 
                     // Ensure the total time is at least 0
@@ -425,10 +416,10 @@ function PopulateInformation(tabId){
                         // Now, build the string
                         mCurrentTime = GetTimeStringForMilliseconds(currentTime);
                     }
-                }else{
-                    // First time through, apparently. Update the timestamp
-                    mLastUpdateTimestamp = Date.now();
                 }
+            }else{
+                // First time through, apparently. Update the timestamp
+                mFirstUpdateTimestamp = Date.now();
             }
         });
         
