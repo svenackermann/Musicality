@@ -26,8 +26,8 @@
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
     "get_album_art" : "$(\".playerNowPlayingImg .imgWrapper .img\").attr(\"src\")",
-    "get_artist" : "$(\".playerNowPlayingMetadata .secondaryMetadata\").children()[0].title",
-    "get_track" : "$(\".playerNowPlayingMetadata .primaryMetadata\").text().trim()",
+    "get_artist" : "$(\".playerNowPlayingMetadata .secondaryMetadata a\")[0].text",
+    "get_track" : "$(\".playerNowPlayingMetadata .primaryMetadata a\").text()",
     "get_current_time" : "$(\".playerDurationTextOnGoing\").text()",
     "get_total_time" : "$(\".playerDurationTextRemaining\").text()",
 
