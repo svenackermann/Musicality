@@ -377,9 +377,6 @@ function PopulateInformation(tabId){
             mTotalTime = totalMins + ":" + sTotalSecs;
         });
     }else if (mPlayerDetails.has_progress_percentage){
-        // TODO -- Improve over time by using all of the data, from the first time we got a
-        // timestamp for the track. So you get more accurate as the window gets larger.
-        
         // Get the progress from the player
         SendPlayerRequest(tabId, mPlayerDetails, "get_progress", function(currentProgress){
             // This player has a progress percentage, so let's calculate the times.
@@ -412,12 +409,15 @@ function PopulateInformation(tabId){
                     }
 
                     // Ensure the total time is at least 0
-                    if (mTotalMilliseconds > 0){
+                    if (mTotalMilliseconds > 0 && mTotalTime != null){
                         // Calculate the current time
                         var currentTime = mTotalMilliseconds * currentProgress;
 
                         // Now, build the string
                         mCurrentTime = GetTimeStringForMilliseconds(currentTime);
+                    }else{
+                        // Null out current time
+                        mCurrentTime = null;
                     }
                 }
             }else{
@@ -558,8 +558,9 @@ function DoLastFmWork(){
             // Determine if we've already scrobbled this song
             var curScrobble = mTrack + " " + mArtist;
             if (curScrobble != mLastScrobble){
-            
-                if (curSeconds/totalSeconds >= 0.5 || curSeconds >= (240)){
+                // Get the percentage
+                var percentage = curSeconds/totalSeconds;                
+                if ((percentage >= 0.5 && percentage < 1) || curSeconds >= (240)){
                     // Mark the song as not new
                     mNewTrack = false;
                     
