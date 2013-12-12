@@ -712,9 +712,16 @@ $(document).ready(function(){
 
     // We want to update last.fm information once every 15 seconds
     window.setInterval(function() {
-        // Check if the user wants us to do last.fm work first -- check local everytime!
-        // TODO
-        DoLastFmWork();
+        // Check if the user wants us to do last.fm work first
+        IsScrobblingEnabled(function(result){
+            if(result){
+                DoLastFmWork();
+            }else{
+                if(mDebug){
+                    console.log("background.js::Scrobbling disabled. Not doing last.fm work for now.");
+                }
+            }
+        });
     }, 15000)
 });
 
