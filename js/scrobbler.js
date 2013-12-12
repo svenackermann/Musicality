@@ -70,11 +70,62 @@ function AuthenticateWithLastFm(){
             }
         });
 
+        // Also set scrobbling enabled to true
+        chrome.storage.local.set({'scrobbling_enabled': true}, function(){
+            // Succesfully enabled scrobbling
+            if (mDebug){
+                console.log("Saved scrobbling enabled boolean locally.");
+            }
+        });
+
         // Using the token, we now need to request authorization from the user
         var authUrl = LASTFM_AUTH_URL + "?api_key=" + LASTFM_KEY + "&token=" + mToken;
 
         // Open a window containing that URL. Hopefully the user approves.
         window.open(authUrl);
+    });
+}
+
+// Method to check if we have already been authenticated
+function AlreadyAuthenticated(callback){
+    // Attempt to get the last_fm_session_key from storage
+    chrome.storage.local.get('lastfm_session_key', function(data){
+        if (!data.lastfm_session_key || data.lastfm_session_key == ''){
+            callback(false);
+        }else{
+            callback(true);
+        }
+    });    
+}
+
+// Method to check if scrobbling is already enabled
+function IsScrobblingEnabled(callback){
+    // First check if we are even authenticated
+    AlreadyAuthenticated(function(result){
+        if (!result){
+            // Not authenticated, so scrobbling can't be enabled
+            callback(false);
+        }else{
+            // Get the scrobbling_enabled boolean from storage
+            chrome.storage.local.get('scrobbling_enabled', function(data){
+                // Callback with the boolean value
+                callback(data.scrobbling_enabled);
+            });    
+        }
+    });
+}
+
+// Method to set scrobbling state
+function SetScrobblingState(isEnabled, callback){
+    // Set the value in storage
+    chrome.storage.local.set({'scrobbling_enabled': isEnabled}, function(){
+        // Cool. Debug message for it.
+        if (mDebug){
+            console.log("Set scrobbling enabled to " + isEnabled + " locally.");
+        }
+
+        // Callback success
+        callback(true);
     });
 }
 

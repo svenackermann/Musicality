@@ -9,26 +9,53 @@
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/css/options.css"/>
   </head>
   <body>
     <div class='container'>
-      <span id='header'>
-        <h1>Musicality Options</h1>
-      </span>
-      <span class='options_set'>
-        <span class='option'>
-          <h2><u>Last.fm:</u></h2>
-          <button id="authenticate" class="btn btn-large btn-success">Authenticate with Last.fm</button>
-        </span>
-        <span class='option'>
-          <h2><u>Support</u></h2>
-          <p>There are a few ways to support the development of this extension. Please consider:</p>
-          <ul>
-            <li>Donating: Paypal, Google, Etc.</li>
-            <li>Assiting in Development: Link to github</li>
-            <li>Enabling advertisements: Click to enable</li>
-          </ul>
-        </span>
-    </div>
+      <h1>Musicality</h1>
+      <div class='tabbable'>
+        <ul class='nav nav-tabs'>
+          <li class='active'>
+            <a href='#lastfm' data-toggle='tab'>Last.FM</a>
+          </li>
+          <li>
+            <a href='#support' data-toggle='tab'>Support</a>
+          </li>
+          <li>
+            <a href='#contact' data-toggle='tab'>Contact</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class='tab-content'>
+        <div class='tab-pane active' id='lastfm'>
+          <div class='container'>
+            <p>
+              Musicality supports scrobbling to Last.FM!
+              <br/>
+            </p>
+            <button id="authenticate" class="btn btn-large btn-success">Loading...</button>
+            <button id="scrobbling_toggle" class="btn btn-large btn-fail">Loading...</button>
+          </div>
+        </div>
+        <div class='tab-pane' id='support'>
+          <div class='container'>
+            <p>There are a few ways to support the development of this extension. Please consider:</p>
+            <ul>
+              <li>Donating: Paypal, Google, Etc.</li>
+              <li>Assiting in Development: Link to github</li>
+              <li>Enabling advertisements: Click to enable</li>
+            </ul>
+          </div>
+        </div>
+        <div class='tab-pane' id='contact'>
+          <div class='container'>
+            <p>
+              Please feel free to contact at kkamperschroer(at)gmail.com to report bugs, complain, request features, etc.
+            </p>
+          </div>
+        </div>
+      </div>
   </body>
 </html>

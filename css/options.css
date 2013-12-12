@@ -1,26 +1,3 @@
-body{
-    font-family: 'Droid Sans', arial,serif;
-    background-image: -webkit-gradient(linear, left top, right bottom, from(#ffffff), to(#999999));
-}
-
-#header h1{
-    display: inline-block;
-    background-color: #ffffff;
-    border: 3px dotted #333333;
-    padding: 5px;
-}
-
-.options_set{
-    display: block;
-    background-color: #ffffff;
-    border: 1px solid #333333;
-    padding: 10px;
-    width: 700px;
-}
-
-.option{
-    display: block;
-    border: 1px solid #333333;
-    padding: 5px;
-    width: 400px;
+.container{
+    padding: 15px;
 }
