@@ -406,7 +406,7 @@ function startMarquee(){
         itemToScroll.stop();
         
         // Start animating
-        itemToScroll.animate({scrollLeft: scrollDistance}, 3000, 'linear');
+        itemToScroll.animate({scrollLeft: scrollDistance}, 2000 * (scrollDistance/parentWidth), 'linear');
     }
 }
 
