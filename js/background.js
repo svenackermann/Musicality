@@ -760,7 +760,7 @@ $(document).ready(function(){
                 chrome.browserAction.setBadgeText({text: ""});
             }
         });
-    }, 500);
+    }, 250);
 
     // We want to update last.fm information once every 15 seconds
     window.setInterval(function() {
