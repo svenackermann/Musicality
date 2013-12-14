@@ -709,6 +709,14 @@ function ClickSomething(clickWhat){
     }
 }
 
+// A function to check if the badge text is enabled
+function IsBadgeTextEnabled(callback){
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('badge_text_enabled', function(data){
+        callback(data.badge_text_enabled);
+    });
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
 /////////////////////////////////////////////////////////////////////////////
@@ -744,7 +752,14 @@ $(document).ready(function(){
 
     // Update our badge text once every half second
     window.setInterval(function(){
-        UpdateBadgeText();
+        // Check if it's enabled
+        IsBadgeTextEnabled(function(result){
+            if (result){
+                UpdateBadgeText();
+            }else{
+                chrome.browserAction.setBadgeText({text: ""});
+            }
+        });
     }, 500);
 
     // We want to update last.fm information once every 15 seconds

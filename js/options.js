@@ -42,19 +42,42 @@ function SetScrobblingStateButton(isEnabled){
     }
 }
 
+// A function to set the badge text button information
+function SetBadgeTextButton(isEnabled){
+    // Get the button
+    $iconTextBtn = $("#icon_text");
+    $iconTextLbl = $("#icon_text_label");
+
+    if (isEnabled){
+        // Set the button to say disable
+        $iconTextBtn.text("Disable Icon Text");
+        $iconTextBtn.removeClass("btn-fail");
+        $iconTextBtn.addClass("btn-success");
+        $iconTextLbl.text("Disable the scrolling text on the Musicality icon");
+    }else{
+        // Set the button to say enable
+        $iconTextBtn.text("Enable Icon Text");
+        $iconTextBtn.removeClass("btn-success");
+        $iconTextBtn.addClass("btn-fail");
+        $iconTextLbl.text("Enable the scrolling text on the Musicality icon");
+    }
+}
+
 // A function to check if the badge text is enabled
 function IsBadgeTextEnabled(callback){
-    //todo
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('badge_text_enabled', function(data){
+        callback(data.badge_text_enabled);
+    });
 }
 
 // A function to set if badge text should be enabled or not
 function SetBadgeTextEnabled(isEnabled, callback){
-    //todo
-}
-
-// A function to set the badge text button information
-function SetBadgeTextButton(isEnabled){
-    //todo
+    // Set the value in local storage
+    chrome.storage.local.set({'badge_text_enabled' : isEnabled}, function(){
+        // Callback success
+        callback(true);
+    });
 }
 
 // A function to update the buttons to display the correct info
@@ -67,6 +90,11 @@ function UpdateButtons(){
     // Check if last.fm is disabled
     IsScrobblingEnabled(function(result){
         SetScrobblingStateButton(result);
+    });
+
+    // Check if badge text is enabled
+    IsBadgeTextEnabled(function(result){
+        SetBadgeTextButton(result);
     });
 }
 
