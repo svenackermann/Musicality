@@ -42,6 +42,21 @@ function SetScrobblingStateButton(isEnabled){
     }
 }
 
+// A function to check if the badge text is enabled
+function IsBadgeTextEnabled(callback){
+    //todo
+}
+
+// A function to set if badge text should be enabled or not
+function SetBadgeTextEnabled(isEnabled, callback){
+    //todo
+}
+
+// A function to set the badge text button information
+function SetBadgeTextButton(isEnabled){
+    //todo
+}
+
 // A function to update the buttons to display the correct info
 function UpdateButtons(){
     // Check if we are already authenticated
@@ -69,6 +84,16 @@ $(document).ready(function(){
         IsScrobblingEnabled(function(result){
             SetScrobblingState(!result, function(){
                 SetScrobblingStateButton(!result);
+            });
+        });
+    });
+
+    // Bind the click of the icon text button to flip the state of the icon text
+    $("#icon_text").bind('click', function(){
+        // Check if badge text is enabled
+        IsBadgeTextEnabled(function(result){
+            SetBadgeTextEnabled(!result, function(){
+                SetBadgeTextButton(!result);
             });
         });
     });

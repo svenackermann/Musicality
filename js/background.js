@@ -251,11 +251,11 @@ function UpdateInformation(){
 function UpdateBadgeText(){
     if (mIsPlaying){
         // Build our badge text
-        var badgeText = mArtist + "-" + mTrack + "     ";
+        var badgeText = "        " + mArtist + " - " + mTrack + "        ";
         var badgeTextLength = badgeText.length;
 
         // Check if we need to reset our badge text scroll amount
-        if (mBadgeTextScroll >= badgeTextLength - 5){
+        if (mBadgeTextScroll >= badgeTextLength - 8){
             mBadgeTextScroll = 0;
         }
 
