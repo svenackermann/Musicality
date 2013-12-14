@@ -77,6 +77,9 @@ var mTotalMilliseconds = 0;
 // The last update track
 var mLastUpdateTrack = null;
 
+// The number of characters scrolled in the badge text
+var mBadgeTextScroll = 0;
+
 //// Last.fm variables ////
 
 // Cache of songs to scrobble
@@ -241,6 +244,32 @@ function UpdateInformation(){
         });
     }else{
         lookForPlayingTabHelper();
+    }
+}
+
+// Function to update the badge text
+function UpdateBadgeText(){
+    if (mIsPlaying){
+        // Build our badge text
+        var badgeText = mArtist + "-" + mTrack + "     ";
+        var badgeTextLength = badgeText.length;
+
+        // Check if we need to reset our badge text scroll amount
+        if (mBadgeTextScroll >= badgeTextLength - 5){
+            mBadgeTextScroll = 0;
+        }
+
+        // Factor in any scrolling
+        var scrolledBadgeText = badgeText.substring(mBadgeTextScroll);
+
+        // Display it
+        chrome.browserAction.setBadgeText({text: scrolledBadgeText});
+
+        // Increment the scroll amount
+        mBadgeTextScroll++;
+    }else{
+        // Clear the badge text
+        chrome.browserAction.setBadgeText({text: ""});
     }
 }
 
@@ -704,11 +733,19 @@ $(document).ready(function(){
 
     // Turn async back on
     $.ajaxSetup({ async : true });
+
+    // Set the bacground color for the badge
+    chrome.browserAction.setBadgeBackgroundColor({color: "#000000"});
     
     // Update our information once every ten seconds.
     window.setInterval(function() {
         UpdateInformation();
-    }, 10000)
+    }, 10000);
+
+    // Update our badge text once every half second
+    window.setInterval(function(){
+        UpdateBadgeText();
+    }, 500);
 
     // We want to update last.fm information once every 15 seconds
     window.setInterval(function() {
@@ -722,6 +759,6 @@ $(document).ready(function(){
                 }
             }
         });
-    }, 15000)
+    }, 15000);
 });
 
