@@ -2,15 +2,19 @@
 function SetLastFmAuthenticationButton(isAuthed){
     // Get the element we are setting
     $authBtn = $("#authenticate");
+    $authLbl = $("#authenticate_label");
     $scrobBtn = $("#scrobbling_toggle");
+    $scrobLbl = $("#scrobbling_toggle_label");
 
     if (isAuthed){
         $authBtn.text("Reauthenticate");
+        $authLbl.text("If you are experiencing issues, reauthenticating may resolve them.");
 
         // Also set the scrobbling button state
         $scrobBtn.show();
     }else{
         $authBtn.text("Authenticate");
+        $authLbl.text("Authentication is necessary to scrobble to your Last.FM account.");
 
         // We also want to hide the enable/disable button
         $scrobBtn.hide();
@@ -21,17 +25,20 @@ function SetLastFmAuthenticationButton(isAuthed){
 function SetScrobblingStateButton(isEnabled){
     // Get the scrobble button
     $scrobBtn = $("#scrobbling_toggle");
+    $scrobLbl = $("#scrobbling_toggle_label");
 
     if (isEnabled){
         // Set the text and class
         $scrobBtn.text("Disable Scrobbling");
-        $scrobBtn.removeClass("btn-success");
-        $scrobBtn.addClass("btn-fail");
+        $scrobBtn.removeClass("btn-fail");
+        $scrobBtn.addClass("btn-success");
+        $scrobLbl.text("Disable scrobbling to stop sending tracks to Last.FM.");
     }else{
         // Set the text and class
         $scrobBtn.text("Enable Scrobbling");
-        $scrobBtn.removeClass("btn-fail");
-        $scrobBtn.addClass("btn-success");
+        $scrobBtn.removeClass("btn-success");
+        $scrobBtn.addClass("btn-fail");
+        $scrobLbl.text("Enable scrobbling to resume sending tracks to Last.FM.");
     }
 }
 
