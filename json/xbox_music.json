@@ -19,9 +19,9 @@
 
     "is_playing" : "$(\".iconPlayerPause\").length > 0",
     "is_paused" : "$(\".iconPlayerPlay\").length > 0",
-    "is_shuffled" : "$(\".playerSettingsMenu .navigationList\").text().match(\"Shuffle: On\") != null",
-    "is_repeat_off" : "$(\".playerSettingsMenu .navigationList\").text().match(\"Repeat: Off\") != null",
-    "is_repeat_all" : "$(\".playerSettingsMenu .navigationList\").text().match(\"Repeat: On\") != null",
+    "is_shuffled" : "$(\".playerControls .iconPlayerShuffleActive\").length > 0",
+    "is_repeat_off" : "$(\".playerControls .iconPlayerRepeat\").length > 0",
+    "is_repeat_all" : "$(\".playerControls .iconPlayerRepeatActive\").length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
@@ -37,6 +37,6 @@
     "click_pause" : "$(\".playerControls .iconPlayerPause\").click()",
     "click_next_track" : "$(\".playerControls .iconPlayerNext\").click()",
     "click_prev_track" : "$(\".playerControls .iconPlayerPrevious\").click()",
-    "click_shuffle" : "$(\".playerSettingsMenu .navigationList\").children().children()[1].click()",
-    "click_repeat" : "$(\".playerSettingsMenu .navigationList\").children().children()[0].click()"
+    "click_shuffle" : "$(\".playerControls button\")[6].click()",
+    "click_repeat" : "$(\".playerControls button\")[5].click()"
 }
