@@ -12,12 +12,14 @@ function SetLastFmAuthenticationButton(isAuthed){
 
         // Also set the scrobbling button state
         $scrobBtn.show();
+        $scrobLbl.show();
     }else{
         $authBtn.text("Authenticate");
         $authLbl.text("Authentication is necessary to scrobble to your Last.FM account.");
 
         // We also want to hide the enable/disable button
         $scrobBtn.hide();
+        $scrobLbl.hide();
     }
 }
 

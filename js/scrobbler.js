@@ -19,7 +19,7 @@ var LASTFM_AUTH_URL = "http://www.last.fm/api/auth/";
 /////////////////////////////////////////////////////////////////////////////
 
 // Debug flag
-var mDebug = false;
+var mDebug = true;
 
 // Last.fm token
 var mToken = null;
@@ -91,7 +91,14 @@ function AlreadyAuthenticated(callback){
     // Attempt to get the last_fm_session_key from storage
     chrome.storage.local.get('lastfm_session_key', function(data){
         if (!data.lastfm_session_key || data.lastfm_session_key == ''){
-            callback(false);
+            // Hmmm. Try requesting a session key in case we authed
+            GetLastFmSession(function(result){
+                if (result){
+                    callback(true);
+                }else{
+                    callback(false);
+                }
+            });
         }else{
             callback(true);
         }
@@ -145,6 +152,17 @@ function GetLastFmSession(callback){
             // We need to grab the latest token out of local storage first
             chrome.storage.local.get('lastfm_token', function(data){
                 mToken = data.lastfm_token;
+
+                // Debug what token is
+                if (mDebug){
+                    console.log("Token is " + mToken);
+                }
+                
+                // Check if we have a token
+                if (mToken == undefined){
+                    // We don't have a token yet. Callback false
+                    callback(false);
+                }
                 
                 RunLastFmQuery({method: "auth.getSession", token: mToken}, true, function(data){
                     // Check for error in the callback

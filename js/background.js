@@ -664,8 +664,10 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                         "scriptKey" : whatIsNeeded
                     },
                     function(result){
-                        console.log("background.js::SendPlayerRequest(" +
-                                    tabId + "," + whatIsNeeded + "," + result + ")");
+                        if (mDebug){
+                            console.log("background.js::SendPlayerRequest(" +
+                                        tabId + "," + whatIsNeeded + "," + result + ")");
+                        }
                         callback(result);
                     }
                 );
