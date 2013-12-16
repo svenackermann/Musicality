@@ -11,11 +11,12 @@ If you want to add a new player, make sure you add it to json/all_players.json.
 -- Things I need help on --
 
 - There are a number of TODO items in the background.js. Some are fairly simple, and some are more complex.
-- I really need someone with some graphic design background to take control and through together some better mockups. I'm really bad with UI and design, includingn the webstore screenshots and promotional images.
-- Some users have asked for volume control.
-- I really need some assistance building an automated testing framework in order to automatically alert me (or open a bug on GitHub) if one of the players are no longer functioning. Contact me for more details of what I have in mind.
+- I really need someone with some graphic design background to take control and throw together some better mockups. I'm really bad with UI and design, including the webstore screenshots and promotional images.
+- Some users have asked for volume control. I'd like to discuss this futher. Maybe just globally control Chrome's volume?
+- I really need some assistance building an automated testing framework in order to automatically alert me (or open a bug on GitHub) if one of the players are no longer functioning. This happens way more often than it should, when ids or classes are changes which break the selectors. Contact me for more details of what I have in mind.
 - Code janitorial work. There is some serious callback hell in portions of background.js that need to be broken up. Moving portions to other scripts would also be fantastic.
-- Port to Firefox!
+- Port to Firefox! (and IE/Opera?) This would require abstracting API calls out.
+- Adding new players is always awesome.
 - Whatever else you can think of, or bugs you encounter!
 
 Please don't hesitiate to contact me.
