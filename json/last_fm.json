@@ -1,4 +1,5 @@
 {
+    "ignore_lastfm" : true,
 
 "COMMENT_1" : "This block contiains all of the things a player may or may not have",
 
@@ -17,8 +18,8 @@
 
     "is_playing" : "$(\"#radioControlPlay\").css(\"display\") == \"none\"",
     "is_paused" : "$(\"#radioControlPause\").css(\"display\") == \"none\"",
-    "is_thumbed_up" : "$(\"[accesskey='l']\").css(\"margin\") == \"-63px 0px 0px\"",
-    "is_thumbed_down" : "$(\"[accesskey='b']\").css(\"margin\") != \"0px 0px 0px -30px\"",
+    "is_thumbed_up" : "$(\"#radioPlayer.loved\").length > 0",
+    "is_thumbed_down" : "$(\"#radioPlayer.banned\").length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
