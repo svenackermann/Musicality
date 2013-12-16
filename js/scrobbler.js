@@ -19,7 +19,7 @@ var LASTFM_AUTH_URL = "http://www.last.fm/api/auth/";
 /////////////////////////////////////////////////////////////////////////////
 
 // Debug flag
-var mDebug = true;
+var mDebug = false;
 
 // Last.fm token
 var mToken = null;
