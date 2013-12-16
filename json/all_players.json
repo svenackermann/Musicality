@@ -57,5 +57,10 @@
     "Hypemachine" : {
         "pattern" : "https?:\\/\\/hypem.com\\/*",
         "json_loc" : "/json/hypemachine.json"
-    }
+    },
+	
+	"Bandcamp" : {
+		"pattern" : "https?:\\/\\/(.*?)\\.bandcamp.com(\\/album\\/*)?",
+		"json_loc" : "/json/bandcamp.json"
+	}
 }
