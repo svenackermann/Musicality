@@ -716,6 +716,28 @@ function IsBadgeTextEnabled(callback){
     });
 }
 
+// A function to do some processing if this is the first run
+function ProcessFirstRun(){
+    // Query local storage for an init value
+    chrome.storage.local.get('init_complete', function(result){
+        if (!result.init_complete){
+            // Do some init processing
+            chrome.storage.local.set({'scrobbling_enabled' : true,
+                                      'badge_text_enabled' : true,
+                                      'init_complete' : true}, function(){
+                if (mDebug){
+                    console.log("background.js::Init now completed");
+                }
+            });
+        }else{
+            // We're good.
+            if (mDebug){
+                console.log("background.js::Init already completed.");
+            }
+        }
+    });
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
 /////////////////////////////////////////////////////////////////////////////
@@ -724,7 +746,7 @@ function IsBadgeTextEnabled(callback){
 $(document).ready(function(){
     // Immediately update our information
     UpdateInformation();
-    
+
     // Turn async off to load the JSON
     $.ajaxSetup({ async : false });
 
@@ -748,6 +770,9 @@ $(document).ready(function(){
     window.setInterval(function() {
         UpdateInformation();
     }, 10000);
+
+    // Check if this is the first run
+    ProcessFirstRun();
 
     // Update our badge text once every half second
     window.setInterval(function(){
