@@ -356,8 +356,13 @@ function PopulateInformation(tabId){
                 console.log("background.js::PopulateInfo -- current time: " + current_time);
             }
 
-            // Save the current time for the popup
-            mCurrentTime = current_time;
+            // Check if the time is in ms for this player
+            if (mPlayerDetails.has_time_in_ms){
+                mCurrentTime = GetTimeStringForMilliseconds(current_time);
+            }else{
+                // Save the current time for the popup
+                mCurrentTime = current_time;
+            }
         });
     }
 
@@ -369,8 +374,13 @@ function PopulateInformation(tabId){
                 console.log("background.js::PopulateInfo -- total time: " + total_time);
             }
 
-            // Save the total time for the popup
-            mTotalTime = total_time;
+            // Check if the time is in ms for this player
+            if (mPlayerDetails.has_time_in_ms){
+                mTotalTime = GetTimeStringForMilliseconds(total_time);
+            }else{
+                // Save the total time for the popup
+                mTotalTime = total_time;
+            }
         });
     }else if (mPlayerDetails.has_remaining_track_time){
         // Make a request to the content script for the remaining time

@@ -57,5 +57,10 @@
     "Hypemachine" : {
         "pattern" : "https?:\\/\\/hypem.com\\/*",
         "json_loc" : "/json/hypemachine.json"
+    },
+
+    "Soundcloud" : {
+        "pattern" : "https?:\\/\\/soundcloud.com\\/*",
+        "json_loc" : "/json/soundcloud.json"
     }
 }
