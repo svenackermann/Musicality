@@ -563,12 +563,6 @@ function DoLastFmWork(){
     
     // Make sure we are playing
     if (mIsPlaying){
-
-        // Enusre we aren't supposed to ignore, in case the player already scrobbles
-        if (mPlayerDetails.ignore_lastfm){
-            return;
-        }
-        
         // Ensure we have a track and artist
         if (mTrack != null && mArtist != null){
             // Cool. Tell Last.fm we are playing 
