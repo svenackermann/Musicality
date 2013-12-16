@@ -9,7 +9,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 // Whether or not we should debug
-var mDebug = true;
+var mDebug = false;
 
 // The background page
 var mBackground = chrome.extension.getBackgroundPage();

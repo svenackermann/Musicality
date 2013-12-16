@@ -16,7 +16,7 @@ var ALL_PLAYERS_JSON = "/json/all_players.json"
 /////////////////////////////////////////////////////////////////////////////
 
 // Whether or not we should debug (lots of output!)
-var mDebug = true;
+var mDebug = false;
 
 // The id of the tab that was last seen currently playing music
 var mLastPlayingTabId = -1;
