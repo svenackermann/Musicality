@@ -42,6 +42,6 @@
     "click_prev_track" : "$('*[data-id=\"rewind\"]').click()",
     "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
     "click_repeat" : "location.assign('javascript:SJBpost(\"toggleRepeat\")')",
-    "click_thumbs_up" : "location.assign('javascript:SJBpost(\"thumbsUpPlayer\")')",
-    "click_thumbs_down" : "location.assign('javascript:SJBpost(\"thumbsDownPlayer\")')"
+    "click_thumbs_up" : "$('*[data-rating=\"5\"]').click()",
+    "click_thumbs_down" : "$('*[data-rating=\"1\"]').click()"
 }
