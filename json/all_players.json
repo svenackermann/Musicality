@@ -62,5 +62,10 @@
     "Bandcamp" : {
         "pattern" : "https?:\\/\\/(.*?)\\.bandcamp.com(\\/album\\/*)?",
         "json_loc" : "/json/bandcamp.json"
+    },
+
+    "iHeart" : {
+        "pattern" : "https?:\\/\\/(.*?)\\.iheart.com\\/*",
+        "json_loc" : "/json/iheart.json"
     }
 }
