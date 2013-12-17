@@ -207,9 +207,9 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
 
 // We need a compare function for sorting the paused tabs
 function pausedTabCompare(tabA, tabB){
-    if (tabA.id < tabB.id){
+    if (tabA.id > tabB.id){
         return -1;
-    }else if (tabA.id > tabB.id){
+    }else if (tabA.id < tabB.id){
         return 1;
     }else{
         return 0;
