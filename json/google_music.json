@@ -17,31 +17,31 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('*[data-id=\"play-pause\"]').attr(\"title\") == \"Pause\"",
-    "is_paused" : "$('*[data-id=\"play-pause\"]').attr(\"title\") == \"Play\" && $(\"#playerSongTitle\").length > 0",
-    "is_shuffled" : "$('*[data-id=\"shuffle\"]')[0].value == \"ALL_SHUFFLE\"",
-    "is_repeat_off" : "$('*[data-id=\"repeat\"]').attr(\"value\") == \"NO_REPEAT\"",
-    "is_repeat_one" : "$('*[data-id=\"repeat\"]').attr(\"value\") == \"SINGLE_REPEAT\"",
-    "is_repeat_all" : "$('*[data-id=\"repeat\"]').attr(\"value\") == \"LIST_REPEAT\"",
-    "is_thumbed_up" : "$('*[data-rating=\"5\"]').hasClass(\"selected\")",
-    "is_thumbed_down" : "$('*[data-rating=\"1\"]').hasClass(\"selected\")",
+    "is_playing" : "$('*[data-id=play-pause]').hasClass('playing')",
+    "is_paused" : "(!$('#playerSongTitle').hasClass('playing') && $('#playerSongTitle').length > 0)",
+    "is_shuffled" : "$('*[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
+    "is_repeat_off" : "$('*[data-id=repeat]').attr('value') == 'NO_REPEAT'",
+    "is_repeat_one" : "$('*[data-id=repeat]').attr('value') == 'SINGLE_REPEAT'",
+    "is_repeat_all" : "$('*[data-id=repeat]').attr('value') == 'LIST_REPEAT'",
+    "is_thumbed_up" : "$('*[data-rating=5]').hasClass('selected')",
+    "is_thumbed_down" : "$('*[data-rating=1]').hasClass('selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "(\"http:\" + $(\"#playingAlbumArt\").attr(\"src\"))",
-    "get_artist" : "$(\"#player-artist\").text()",
-    "get_track" : "$(\"#playerSongTitle\").text()",
-    "get_current_time" : "$(\"#time_container_current\").text()",
-    "get_total_time" : "$(\"#time_container_duration\").text()",
+    "get_album_art" : "('http:' + $('#playingAlbumArt').attr('src'))",
+    "get_artist" : "$('#player-artist').text()",
+    "get_track" : "$('#playerSongTitle').text()",
+    "get_current_time" : "$('#time_container_current').text()",
+    "get_total_time" : "$('#time_container_duration').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
     "click_play" : "location.assign('javascript:SJBpost(\"playPause\")')",
     "click_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
-    "click_next_track" : "$('*[data-id=\"forward\"]').click()",
-    "click_prev_track" : "$('*[data-id=\"rewind\"]').click()",
+    "click_next_track" : "$('*[data-id=forward]').click()",
+    "click_prev_track" : "$('*[data-id=rewind]').click()",
     "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
     "click_repeat" : "location.assign('javascript:SJBpost(\"toggleRepeat\")')",
-    "click_thumbs_up" : "$('*[data-rating=\"5\"]').click()",
-    "click_thumbs_down" : "$('*[data-rating=\"1\"]').click()"
+    "click_thumbs_up" : "$('*[data-rating=5]').click()",
+    "click_thumbs_down" : "$('*[data-rating=1]').click()"
 }
