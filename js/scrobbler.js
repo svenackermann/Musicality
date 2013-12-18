@@ -214,7 +214,7 @@ function RunLastFmQuery(parameters, get, callback){
         var queryString = LASTFM_URL + "?api_key=" + LASTFM_KEY;
         for (var key in parameters){
             if (key){
-                queryString += "&" + key + "=" + parameters[key].split(" ").join("+").split("&").join("%26");
+                queryString += "&" + key + "=" + encodeURIComponent(parameters[key]);
             }
         }
 
