@@ -1,0 +1,38 @@
+{
+
+    "name" : "Mixcloud",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('#player-play').hasClass('playing')",
+    "is_paused" : "!$('#player-play').hasClass('playing')",
+    "is_thumbed_up" : "$('#cc-favorite-btn').hasClass('unfavorite-btn')",
+    
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "('http:' + $('#cloudcast-image').attr('src'))",
+    "get_artist" : "$('span.js-artist').text().trim()",
+    "get_track" : "$('span.js-title').text().trim()",
+    "get_current_time" : "$('div#player-current-time').text().trim()",
+	"get_remaining_time": "$('div#player-total-time').text().trim()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('span#player-play').click()",
+    "click_pause" : "$('span#player-play').click()",
+    "click_next_track" : "$('#cloudcast-up-next li').click()",
+    "click_thumbs_up" : "$('#cc-favorite-btn').click()"
+}
