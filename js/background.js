@@ -80,6 +80,18 @@ var mLastUpdateTrack = null;
 // The number of characters scrolled in the badge text
 var mBadgeTextScroll = 0;
 
+// The timestamp of the last time we scrolled
+var mBadgeTextLastScrollTime = 0;
+
+// The timestamp of the last time we looked in storage
+var mBadgeTextLastStorageCheck = 0;
+
+// The total amount of time to wait between scrolls
+var mBadgeTextScrollTime = 250;
+
+// A cached version of whether or not badge text is enabled
+var mBadgeTextEnabled = true;
+
 //// Last.fm variables ////
 
 // Cache of songs to scrobble
@@ -207,9 +219,9 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
 
 // We need a compare function for sorting the paused tabs
 function pausedTabCompare(tabA, tabB){
-    if (tabA.id < tabB.id){
+    if (tabA.id > tabB.id){
         return -1;
-    }else if (tabA.id > tabB.id){
+    }else if (tabA.id < tabB.id){
         return 1;
     }else{
         return 0;
@@ -250,6 +262,16 @@ function UpdateInformation(){
 // Function to update the badge text
 function UpdateBadgeText(){
     if (mIsPlaying){
+        // Check if we scrolled within the last amount of time
+        var curTime = Date.now();
+        if ((curTime - mBadgeTextLastScrollTime) < (mBadgeTextScrollTime-5)){
+            // Yikes. For some reason we scrolled too recently. Just don't scroll yet and wait.
+            return;
+        }
+
+        // Save this time off as the last time we scrolled
+        mBadgeTextLastScrollTime = curTime;
+        
         // Build our badge text
         var badgeText = "        " + mArtist + " - " + mTrack + "        ";
         var badgeTextLength = badgeText.length;
@@ -722,10 +744,24 @@ function ClickSomething(clickWhat){
 
 // A function to check if the badge text is enabled
 function IsBadgeTextEnabled(callback){
-    // Query the local storage for the value we are looking for
-    chrome.storage.local.get('badge_text_enabled', function(data){
-        callback(data.badge_text_enabled);
-    });
+    // Check if we've already looked in storage within the last 5 seconds
+    var curTime = Date.now();
+    if ((curTime - mBadgeTextLastStorageCheck) > 5000){
+        // Update the last time we checked
+        mBadgeTextLastStorageCheck = curTime;
+        
+        // Query the local storage for the value we are looking for
+        chrome.storage.local.get('badge_text_enabled', function(data){
+            // Save it off
+            mBadgeTextEnabled = data.badge_text_enabled;
+            
+            // Callback with the value
+            callback(mBadgeTextEnabled);
+        });
+    }else{
+        // Callback with the cached value
+        callback(mBadgeTextEnabled);
+    }
 }
 
 // A function to do some processing if this is the first run
@@ -796,7 +832,7 @@ $(document).ready(function(){
                 chrome.browserAction.setBadgeText({text: ""});
             }
         });
-    }, 250);
+    }, mBadgeTextScrollTime);
 
     // We want to update last.fm information once every 15 seconds
     window.setInterval(function() {

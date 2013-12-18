@@ -19,7 +19,7 @@
 
     "is_playing" : "$('*[data-id=play-pause]').hasClass('playing')",
     "is_paused" : "(!$('#playerSongTitle').hasClass('playing') && $('#playerSongTitle').length > 0)",
-    "is_shuffled" : "$('*[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
+    "is_shuffled" : "$('.player-middle *[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
     "is_repeat_off" : "$('*[data-id=repeat]').attr('value') == 'NO_REPEAT'",
     "is_repeat_one" : "$('*[data-id=repeat]').attr('value') == 'SINGLE_REPEAT'",
     "is_repeat_all" : "$('*[data-id=repeat]').attr('value') == 'LIST_REPEAT'",
