@@ -62,8 +62,8 @@ body{
     padding: 0px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 12px;
-    width: 72px;
+    font-size: 12px;  
+    max-width: 92px;
 }
 
 #cur_time{
@@ -243,6 +243,7 @@ span{
     font-size: 12px;
     opacity: .1;
     text-transform: uppercase;
-    width: 100px;
+    max-width: 80px;
+    float: right;
     overflow: hidden;
 }

@@ -414,17 +414,40 @@ function PopulateInformation(tabId){
 
             // Do some math to get the actual total time instead
             var splitCurrent = mCurrentTime.split(":");
-            var curMins = parseInt(splitCurrent[0]);
-            var curSeconds = parseInt(splitCurrent[1]) + (curMins*60);
-
-            // Get int's for the remaining time
-            var splitRemaining = remaining_time.split(":");
-            var remainingMins = parseInt(splitRemaining[0]) * -1; // All have '-' at start
-            var remainingSeconds = parseInt(splitRemaining[1]) + (remainingMins*60);
-
+            // The rightmost element as seconds
+            var curSeconds = parseInt(splitCurrent[splitCurrent.length - 1]);
+            // The next one from the right as minutes, only if it exists we'll add it.
+            var curMinsText = splitCurrent[splitCurrent.length - 2];
+            if (curMinsText) {
+                curSeconds += parseInt(curMinsText) * 60;
+                // And the next one from the right as hours, same thing.
+                var curHoursText = splitCurrent[splitCurrent.length - 3];
+                if (curHoursText) {
+                    curSeconds += parseInt(curHoursText) * 3600;
+                }
+            }
+            
+            // Get int's for the remaining time and deal with the negative symbol
+            // negative or not, the text will always be the last group,
+            var splitNeg =  remaining_time.split("-");        
+            var splitRemaining = splitNeg[splitNeg.length - 1].split(":");
+            // The rightmost element as seconds
+            var remainingSeconds = parseInt(splitRemaining[splitRemaining.length - 1]);
+            // The next one from the right as minutes, only if it exists we'll add it.
+            var remMinsText = splitRemaining[splitRemaining.length - 2];
+            if (remMinsText) {
+                remainingSeconds += parseInt(remMinsText) * 60;
+                // And the next one from the right as hours, same thing.
+                var remHoursText = splitRemaining[splitRemaining.length - 3];
+                if (remHoursText){
+                    remainingSeconds += parseInt(remHoursText) * 3600;
+                }
+            }
+            
             // Now we should have integers representing the total time remaining, in seconds
             var totalSeconds = curSeconds + remainingSeconds;
-            var totalMins = Math.floor(totalSeconds/60);
+            var totalHours = Math.floor(totalSeconds/3600)
+            var totalMins = Math.floor(totalSeconds/60) % 60;
             var totalSecs = totalSeconds % 60;
 
             // Construct the strings we need
@@ -432,9 +455,18 @@ function PopulateInformation(tabId){
             if (totalSecs < 10){
                 sTotalSecs = "0" + totalSecs;
             }
+            
+            var sTotalMins = "" + totalMins;
+            var sTotalHours = "";
+            if (totalHours > 0) {                
+                if (totalMins < 10){
+                    sTotalMins = "0" + totalMins;
+                }
+                sTotalHours = "" + totalHours + ":"
+            }
 
             // Set the total time value
-            mTotalTime = totalMins + ":" + sTotalSecs;
+            mTotalTime = sTotalHours +  sTotalMins + ":" + sTotalSecs;
         });
     }else if (mPlayerDetails.has_progress_percentage){
         // Get the progress from the player

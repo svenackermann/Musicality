@@ -67,5 +67,10 @@
     "iHeart" : {
         "pattern" : "https?:\\/\\/(.*?)\\.iheart.com\\/*",
         "json_loc" : "/json/iheart.json"
-    }
+    },
+	
+	"Mixcloud" : {
+		"pattern" : "https?:\\/\\/www.mixcloud.com\\/*",
+		"json_loc" : "/json/mixcloud.json"
+	}
 }
