@@ -193,7 +193,7 @@ function PopulateInformation(){
     }
 
     // Get the current time from the player
-    var current_time = mBackground.mCurrentTime;
+    var current_time = mBackground.GetTimeStringForMilliseconds(mBackground.mCurrentTime);
     
     // Log it if we've found the current time
     if (mDebug){
@@ -210,7 +210,7 @@ function PopulateInformation(){
     }
 
     // Get the total time
-    var total_time = mBackground.mTotalTime;
+    var total_time = mBackground.GetTimeStringForMilliseconds(mBackground.mTotalTime);
 
     // Log it if we've found the total time
     if (mDebug){

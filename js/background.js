@@ -371,6 +371,7 @@ function PopulateInformation(tabId){
     });
 
     if (mPlayerDetails.has_current_track_time){
+     
         // Make a request to the content script for the current time    
         SendPlayerRequest(tabId, mPlayerDetails, "get_current_time", function(current_time){
             // Log it if we've found the current time
@@ -380,15 +381,16 @@ function PopulateInformation(tabId){
 
             // Check if the time is in ms for this player
             if (mPlayerDetails.has_time_in_ms){
-                mCurrentTime = GetTimeStringForMilliseconds(current_time);
+                mCurrentTime = current_time;
             }else{
                 // Save the current time for the popup
-                mCurrentTime = current_time;
+                mCurrentTime = GetMillisecondsFromTimeString(current_time);
             }
         });
     }
 
     if (mPlayerDetails.has_total_track_time){
+      
         // Make a request to the content script for the total time
         SendPlayerRequest(tabId, mPlayerDetails, "get_total_time", function(total_time){
             // Log it if we've found the total time
@@ -398,77 +400,35 @@ function PopulateInformation(tabId){
 
             // Check if the time is in ms for this player
             if (mPlayerDetails.has_time_in_ms){
-                mTotalTime = GetTimeStringForMilliseconds(total_time);
+                mTotalTime = total_time;
             }else{
                 // Save the total time for the popup
-                mTotalTime = total_time;
+                mTotalTime = GetMillisecondsFromTimeString(total_time);
             }
         });
     }else if (mPlayerDetails.has_remaining_track_time){
+       
         // Make a request to the content script for the remaining time
         SendPlayerRequest(tabId, mPlayerDetails, "get_remaining_time", function(remaining_time){
             // Log it if we've found the remaining time
             if (mDebug){
                 console.log("background.js::PopulateInfo -- remaining time: " + remaining_time);
             }
-
-            // Do some math to get the actual total time instead
-            var splitCurrent = mCurrentTime.split(":");
-            // The rightmost element as seconds
-            var curSeconds = parseInt(splitCurrent[splitCurrent.length - 1]);
-            // The next one from the right as minutes, only if it exists we'll add it.
-            var curMinsText = splitCurrent[splitCurrent.length - 2];
-            if (curMinsText) {
-                curSeconds += parseInt(curMinsText) * 60;
-                // And the next one from the right as hours, same thing.
-                var curHoursText = splitCurrent[splitCurrent.length - 3];
-                if (curHoursText) {
-                    curSeconds += parseInt(curHoursText) * 3600;
-                }
+            
+            var remainingMillis = 0;
+            
+            // Check if the time is in ms for this player
+            if (mPlayerDetails.has_time_in_ms){
+                remainingMillis = remaining_time;
+            }else{
+                remainingMillis = GetMillisecondsFromTimeString(remaining_time);
             }
             
-            // Get int's for the remaining time and deal with the negative symbol
-            // negative or not, the text will always be the last group,
-            var splitNeg =  remaining_time.split("-");        
-            var splitRemaining = splitNeg[splitNeg.length - 1].split(":");
-            // The rightmost element as seconds
-            var remainingSeconds = parseInt(splitRemaining[splitRemaining.length - 1]);
-            // The next one from the right as minutes, only if it exists we'll add it.
-            var remMinsText = splitRemaining[splitRemaining.length - 2];
-            if (remMinsText) {
-                remainingSeconds += parseInt(remMinsText) * 60;
-                // And the next one from the right as hours, same thing.
-                var remHoursText = splitRemaining[splitRemaining.length - 3];
-                if (remHoursText){
-                    remainingSeconds += parseInt(remHoursText) * 3600;
-                }
-            }
-            
-            // Now we should have integers representing the total time remaining, in seconds
-            var totalSeconds = curSeconds + remainingSeconds;
-            var totalHours = Math.floor(totalSeconds/3600)
-            var totalMins = Math.floor(totalSeconds/60) % 60;
-            var totalSecs = totalSeconds % 60;
-
-            // Construct the strings we need
-            var sTotalSecs = "" + totalSecs;
-            if (totalSecs < 10){
-                sTotalSecs = "0" + totalSecs;
-            }
-            
-            var sTotalMins = "" + totalMins;
-            var sTotalHours = "";
-            if (totalHours > 0) {                
-                if (totalMins < 10){
-                    sTotalMins = "0" + totalMins;
-                }
-                sTotalHours = "" + totalHours + ":"
-            }
-
-            // Set the total time value
-            mTotalTime = sTotalHours +  sTotalMins + ":" + sTotalSecs;
+            // Remaining may or may not be a negative number.
+            mTotalTime = mCurrentTime + Math.abs(remainingMillis);
         });
     }else if (mPlayerDetails.has_progress_percentage){
+      
         // Get the progress from the player
         SendPlayerRequest(tabId, mPlayerDetails, "get_progress", function(currentProgress){
             // This player has a progress percentage, so let's calculate the times.
@@ -497,7 +457,7 @@ function PopulateInformation(tabId){
                         mTotalMilliseconds = changeInTimestamp/changeInProgress;
 
                         // Finally, build the string and save it off in the globals
-                        mTotalTime = GetTimeStringForMilliseconds(mTotalMilliseconds);
+                        mTotalTime = mTotalMilliseconds;
                     }
 
                     // Ensure the total time is at least 0
@@ -506,7 +466,7 @@ function PopulateInformation(tabId){
                         var currentTime = mTotalMilliseconds * currentProgress;
 
                         // Now, build the string
-                        mCurrentTime = GetTimeStringForMilliseconds(currentTime);
+                        mCurrentTime = currentTime;
                     }else{
                         // Null out current time
                         mCurrentTime = null;
@@ -605,25 +565,66 @@ function PopulateInformation(tabId){
 // A function to convert a millisecond value into a string
 function GetTimeStringForMilliseconds(milliseconds){
     // Get the current time overall seconds
-    var timeOverallSeconds = milliseconds / 1000;
+    var totalSeconds = milliseconds / 1000;
 
-    // Now do the same for the current time
-    var timeMinutes = Math.floor(timeOverallSeconds / 60);
-    var timeSeconds = Math.floor(timeOverallSeconds % 60);
+    var totalHours = Math.floor(totalSeconds/3600)
+    var totalMins = Math.floor(totalSeconds/60) % 60;
+    var totalSecs = totalSeconds % 60;
 
-    // Now do the same for current time
-    var timeSecondsString = "" + timeSeconds;
-    if (timeSeconds < 10){
-        timeSecondsString = "0" + timeSecondsString;
+    // Construct the strings we need
+    var sTotalSecs = "" + totalSecs;
+    if (totalSecs < 10){
+        sTotalSecs = "0" + totalSecs;
     }
 
-    // Now, build the string
-    return "" + timeMinutes + ":" + timeSecondsString;
+    var sTotalMins = "" + totalMins;
+    var sTotalHours = "";
+    if (totalHours > 0) {                
+        if (totalMins < 10){
+            sTotalMins = "0" + totalMins;
+        }
+        sTotalHours = "" + totalHours + ":"
+    }
+
+    // Return the total time value
+    return sTotalHours +  sTotalMins + ":" + sTotalSecs;
+}
+
+// A function to parse a time string into milliseconds
+function GetMillisecondsFromTimeString(timeString) {
+
+    // Get ints for the time and deal with the negative symbol
+    // negative or not, the text will always be the last group,
+    var splitNeg =  timeString.split("-");        
+    var splitTime = splitNeg[splitNeg.length - 1].split(":");
+    
+    // The rightmost element as seconds
+    var seconds = parseInt(splitTime[splitTime.length - 1]);
+    
+    // The next one from the right as minutes, only if it exists we'll add it.
+    var minsText = splitTime[splitTime.length - 2];
+    if (minsText) {
+        seconds += parseInt(minsText) * 60;
+       
+       // And the next one from the right as hours, same thing.
+        var hoursText = splitTime[splitTime.length - 3];
+        if (hoursText) {
+            seconds += parseInt(hoursText) * 3600;
+        }
+    }
+    
+    //Determine wether is negative or not
+    var factor = 1;
+    if (splitNeg.length > 1) {
+        factor = -1;
+    }
+    
+    return seconds * 1000 * factor;
 }
 
 // A function to interact with the scrobbler
 function DoLastFmWork(){
-    // TODO -- Make sure the user wan't to scrobble! Check locally.
+    // TODO -- Make sure the user want to scrobble! Check locally.
     
     // Make sure we are playing
     if (mIsPlaying){
@@ -635,23 +636,14 @@ function DoLastFmWork(){
                             artist: mArtist}, false, null);
         }
 
-        // Check if we've played at least 30 seconds
-        var splitCurrent = mCurrentTime.split(":");
-        var curMins = parseInt(splitCurrent[0]);
-        var curSeconds = parseInt(splitCurrent[1]) + (curMins*60);
-
-        if (curSeconds > 30){
-            // We could scrobble here. Check if it's halfway over, or greater than 4
-            var splitTotal = mTotalTime.split(":");
-            var totalMins = parseInt(splitTotal[0]);
-            var totalSeconds = parseInt(splitTotal[1]) + (totalMins*60);
-
+        if (mCurrentTime > 30 * 1000){
+            
             // Determine if we've already scrobbled this song
             var curScrobble = mTrack + " " + mArtist;
             if (curScrobble != mLastScrobble){
                 // Get the percentage
-                var percentage = curSeconds/totalSeconds;                
-                if ((percentage >= 0.5 && percentage < 1) || curSeconds >= (240)){
+                var percentage = mCurrentTime/mTotalTime;                
+                if ((percentage >= 0.5 && percentage < 1) || mCurrentTime >= (240 * 1000)){
                     // Mark the song as not new
                     mNewTrack = false;
                     
