@@ -4,6 +4,7 @@
     <title>Musicality Options</title>
     <script type="text/javascript" src="/js/jquery.js"></script>
     <script type="text/javascript" src="/js/jquery.md5.js"></script>
+    <script type="text/javascript" src="/js/constants.js"></script>
     <script type="text/javascript" src="/js/options.js"></script>
     <script type="text/javascript" src="/js/scrobbler.js"></script>
     <script type="text/javascript" src="/js/bootstrap.min.js"></script>
@@ -35,17 +36,41 @@
             <h2>Last.FM</h2>
             <p>
               Musicality supports scrobbling to Last.FM!
-              <br/>
             </p>
+            <br/>
             <button id="authenticate" class="btn btn-large btn-success">Loading...</button>
             <label id="authenticate_label" class="subtle">Loading...</label>
             <br/><br/>
             <button id="scrobbling_toggle" class="btn btn-large btn-fail">Loading...</button>
             <label id="scrobbling_toggle_label" class="subtle">Loading...</label>
+            
             <br/><br/><hr/>
+            
             <h2>Icon Text</h2>
             <button id="icon_text" class="btn btn-large btn-fail">Loading...</button>
             <label id="icon_text_label" class="subtle">Loading...</label>
+
+            <br/><br/><hr/>
+
+            <h2>Default Player</h2>
+            <p>
+              When no players are playing, which would you like to open when clicking the icon?
+            </p>
+            <button id="players-list-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+              Loading...<span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" id="players-list">
+              <!-- Populated by JS -->
+            </ul>
+
+            <br/><br/><hr/>
+
+            <h2>Disable Popup</h2>
+            <p>
+              Optionally, instead of having the popup behave like normal, you can opt to have the button act as a play/pause toggle for any player
+            </p>
+            <button id="disable_popup_toggle" class="btn btn-large btn-success">Loading...</button>
+            
           </div>
         </div>
         <div class='tab-pane' id='support'>

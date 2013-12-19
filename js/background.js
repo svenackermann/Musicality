@@ -8,8 +8,7 @@
 // Constants
 /////////////////////////////////////////////////////////////////////////////
 
-// The location of the JSON full of players and patterns, relative to html dir
-var ALL_PLAYERS_JSON = "/json/all_players.json"
+// Constants reside in constants.js
 
 /////////////////////////////////////////////////////////////////////////////
 // Member Variables
@@ -624,8 +623,6 @@ function GetMillisecondsFromTimeString(timeString) {
 
 // A function to interact with the scrobbler
 function DoLastFmWork(){
-    // TODO -- Make sure the user want to scrobble! Check locally.
-    
     // Make sure we are playing
     if (mIsPlaying){
         // Ensure we have a track and artist
@@ -636,8 +633,8 @@ function DoLastFmWork(){
                             artist: mArtist}, false, null);
         }
 
+        // Check if the current time is greater than 30 seconds
         if (mCurrentTime > 30 * 1000){
-            
             // Determine if we've already scrobbled this song
             var curScrobble = mTrack + " " + mArtist;
             if (curScrobble != mLastScrobble){

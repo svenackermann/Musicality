@@ -17,6 +17,9 @@ var mBackground = chrome.extension.getBackgroundPage();
 // The player details
 var mPlayerDetails = mBackground.mPlayerDetails;
 
+// Whether or not we've already opened a page (so we don't open many)
+var mAlreadyOpenedPage = false;
+
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
@@ -40,7 +43,6 @@ function UpdateInformation(){
 
 // Populate the actual extension contents
 function PopulateInformation(){
-
     // Get the artist from the background
     var artist = mBackground.mArtist;
     
@@ -168,9 +170,14 @@ function PopulateInformation(){
         // Tell the user nothing is playing
         trackElement.text("Play a song.");
 
-        // Re-enable the marquee
-        trackElement.attr('direction', 'right');
-        trackElement.attr('scrollamount', '1');
+        // Open the default player, if there is one set
+        chrome.storage.local.get('default_open', function(data){
+            // Check if it's set
+            if (data.default_open && !mAlreadyOpenedPage){
+                chrome.tabs.create({'url' : data.default_open});
+                mAlreadyOpenedPage = true;
+            }
+        });
     }
 
 
