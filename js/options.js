@@ -1,3 +1,21 @@
+// This script contains most of the logic for dealing with the options page.
+
+/////////////////////////////////////////////////////////////////////////////
+// Constants
+/////////////////////////////////////////////////////////////////////////////
+
+// Shared constants reside in constants.js
+
+/////////////////////////////////////////////////////////////////////////////
+// Member Variables
+/////////////////////////////////////////////////////////////////////////////
+
+// None
+
+/////////////////////////////////////////////////////////////////////////////
+// Functions
+/////////////////////////////////////////////////////////////////////////////
+
 // A function to change the last.fm button to say authenticate
 function SetLastFmAuthenticationButton(isAuthed){
     // Get the element we are setting
@@ -100,6 +118,94 @@ function UpdateButtons(){
     });
 }
 
+// Function to build the default player for the dropdown
+function BuildDefaultPlayerDropdown(){
+    // Get the element we will be populating
+    var playersList = $("#players-list");
+
+    // We want to build a mapping so we know which player is already selected
+    var pagePlayerMap = {};
+    
+    // Start by loading the all_players ajax
+    $.getJSON(ALL_PLAYERS_JSON, function(all_players){
+        // Iterate through each of the players
+        for (var curPlayer in all_players){
+            // Get the open_page
+            var openPage = all_players[curPlayer].open_page;
+
+            // Get the simple name
+            var simpleName = all_players[curPlayer].simple_name;
+
+            // Save it in our inverse mapping
+            pagePlayerMap[openPage] = curPlayer;
+
+            // Build the string to add
+            var htmlToAdd = "<li id=" + simpleName + "><a href='#'>" + curPlayer + "</a></li>";
+            
+            // Now add the string to our list
+            playersList.append(htmlToAdd);
+
+            // Grab the newly created element
+            var newElement = $("#" + simpleName);
+
+            // Now bind the element to a new click event
+            console.log("Binding " + curPlayer + " to click open " + openPage);
+            (function (player, page){
+                newElement.bind('click', function(){
+                    SaveDefaultPlayer(player, page)
+                });
+            })(curPlayer, openPage);
+        }
+
+        // Grab the players-list-button
+        var playersListButton = $("#players-list-button");
+
+        // Update the button to reflect which one is already stored (if any)
+        chrome.storage.local.get('default_open', function(data){
+            // Check it's value
+            if (data.default_open){
+                // Use our map to set the player text, if it exists
+                var playerName = pagePlayerMap[data.default_open];
+                if (playerName){
+                    // Set the button to this players name
+                    playersListButton.text(playerName);
+
+                    // Append the caret within the button
+                    playersListButton.append("<span class='caret'></span>");
+                }else{
+                    // A players URL may have changed. Leave it unset.
+                    playersListButton.text("None");
+                    playersListButton.append("<span class='caret'></span>");
+                }
+            }else{
+                // Undefined. Leave it unset.
+                playersListButton.text("None");
+                playersListButton.append("<span class='caret'></span>");
+            }
+        });
+    });
+}
+
+// This function is called when a player in the default player dropdown is
+// selelcted. Used to save what is selected.
+function SaveDefaultPlayer(playerName, openPage){
+    // Save this player as the default
+    chrome.storage.local.set({'default_open' : openPage}, function(){
+        console.log("options.js::Saved default player to open " + playerName + " at " + openPage);
+    });
+
+    // Grab the button
+    var playersListButton = $("#players-list-button");
+
+    // We also need to make sure this player is the one selected in the dropdown
+    playersListButton.text(playerName);
+    playersListButton.append("<span class='caret'></span>");
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Execution Start
+/////////////////////////////////////////////////////////////////////////////
+
 // Start of execution when the document is ready
 $(document).ready(function(){
 
@@ -127,6 +233,9 @@ $(document).ready(function(){
             });
         });
     });
+
+    // Build the dropdown for the default player
+    BuildDefaultPlayerDropdown();
 
     // Immediately update the buttons
     UpdateButtons();

@@ -1,91 +1,106 @@
 {
-    "google_music" : {
-        "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",
-        "json_loc" : "/json/google_music.json",
-        "open_page" : "https://play.google.com/music/listen"
-    },
-
-    "pandora" : {
-        "pattern" : "https?\\:\\/\\/www\\.pandora\\.com\\/.*",
-        "json_loc" : "/json/pandora.json",
-        "open_page" : "http://www.pandora.com"
-    },
-    
-    "spotify" : {
-        "pattern" : "https?\\:\\/\\/play\\.spotify\\.com\\/*",
-        "json_loc" : "/json/spotify.json",
-        "open_page" : "https://play.spotify.com"
-    },
-
-    "grooveshark" : {
-        "pattern" : "https?\\:\\/\\/grooveshark.com\\/*",
-        "json_loc" : "/json/grooveshark.json",
-        "open_page" : "http://www.grooveshark.com"
-    },
-
-    "amazon" : {
+    "Amazon Cloud Player" : {
+        "simple_name" : "amazon",
         "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/mp3\\/*",
         "json_loc" : "/json/amazon.json",
         "open_page" : "http://www.amazon.com/cloudplayer"        
     },
 
-    "rdio" : {
-        "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
-        "json_loc" : "/json/rdio.json",
-        "open_page" : "http://www.rdio.com"
-    },
-
-    "xbox_music" : {
-        "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
-        "json_loc" : "/json/xbox_music.json",
-        "open_page" : "http://music.xbox.com"
-    },
-
-    "mog" : {
-        "pattern" : "https?:\\/\\/mog.com\\/*",
-        "json_loc" : "/json/mog.json",
-        "open_page" : "http://mog.com"
-    },
-
-    "slacker" : {
-        "pattern" : "https?:\\/\\/www.slacker.com\\/*",
-        "json_loc" : "/json/slacker.json",
-        "open_page" : "http://www.slacker.com"
-    },
-
-    "songza" : {
-        "pattern" : "https?:\\/\\/songza.com\\/*",
-        "json_loc" : "/json/songza.json",
-        "open_page" : "http://www.songza.com"
-    },
-
-    "last.fm" : {
-        "pattern" : "https?:\\/\\/www.last.fm\\/listen\\/*",
-        "json_loc" : "/json/last_fm.json",
-        "open_page" : "https://www.last.fm/listen"
-    },
-
-    "Hypemachine" : {
-        "pattern" : "https?:\\/\\/hypem.com\\/*",
-        "json_loc" : "/json/hypemachine.json",
-        "open_page" : "http://www.hypem.com"
-    },
-    
     "Bandcamp" : {
+        "simple_name" : "bandcamp",
         "pattern" : "https?:\\/\\/(.*?)\\.bandcamp.com(\\/album\\/*)?",
         "json_loc" : "/json/bandcamp.json",
         "open_page" : "http://www.bandcamp.com"
     },
 
-    "iHeart" : {
+    "Google Music" : {
+        "simple_name" : "google_music",
+        "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",
+        "json_loc" : "/json/google_music.json",
+        "open_page" : "https://play.google.com/music/listen"
+    },
+
+    "Grooveshark" : {
+        "simple_name" : "grooveshark",
+        "pattern" : "https?\\:\\/\\/grooveshark.com\\/*",
+        "json_loc" : "/json/grooveshark.json",
+        "open_page" : "http://www.grooveshark.com"
+    },
+
+    "HypeMachine" : {
+        "simple_name" : "hypem",
+        "pattern" : "https?:\\/\\/hypem.com\\/*",
+        "json_loc" : "/json/hypemachine.json",
+        "open_page" : "http://www.hypem.com"
+    },
+    
+    "iHeart Radio" : {
+        "simple_name" : "iheart",
         "pattern" : "https?:\\/\\/(.*?)\\.iheart.com\\/*",
         "json_loc" : "/json/iheart.json",
         "open_page" : "http://iheart.com"
     },
     
+    "Last.FM" : {
+        "simple_name" : "last_fm",
+        "pattern" : "https?:\\/\\/www.last.fm\\/listen\\/*",
+        "json_loc" : "/json/last_fm.json",
+        "open_page" : "https://www.last.fm/listen"
+    },
+    
     "Mixcloud" : {
+        "simple_name" : "mixcloud",
 	"pattern" : "https?:\\/\\/www.mixcloud.com\\/*",
 	"json_loc" : "/json/mixcloud.json",
         "open_page" : "http://www.mixcloud.com"
+    },
+
+    "MOG" : {
+        "simple_name" : "mog",
+        "pattern" : "https?:\\/\\/mog.com\\/*",
+        "json_loc" : "/json/mog.json",
+        "open_page" : "http://mog.com"
+    },
+    
+    "Pandora" : {
+        "simple_name" : "pandora",
+        "pattern" : "https?\\:\\/\\/www\\.pandora\\.com\\/.*",
+        "json_loc" : "/json/pandora.json",
+        "open_page" : "http://www.pandora.com"
+    },
+    
+    "Rdio" : {
+        "simple_name" : "rdio",
+        "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
+        "json_loc" : "/json/rdio.json",
+        "open_page" : "http://www.rdio.com"
+    },
+
+    "Slacker" : {
+        "simple_name" : "slacker",
+        "pattern" : "https?:\\/\\/www.slacker.com\\/*",
+        "json_loc" : "/json/slacker.json",
+        "open_page" : "http://www.slacker.com"
+    },
+
+    "Songza" : {
+        "simple_name" : "songza",
+        "pattern" : "https?:\\/\\/songza.com\\/*",
+        "json_loc" : "/json/songza.json",
+        "open_page" : "http://www.songza.com"
+    },
+
+    "Spotify Web Player" : {
+        "simple_name" : "spotify",
+        "pattern" : "https?\\:\\/\\/play\\.spotify\\.com\\/*",
+        "json_loc" : "/json/spotify.json",
+        "open_page" : "https://play.spotify.com"
+    },
+
+    "Xbox Music" : {
+        "simple_name" : "xbox_music",
+        "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
+        "json_loc" : "/json/xbox_music.json",
+        "open_page" : "http://music.xbox.com"
     }
 }
