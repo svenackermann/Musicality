@@ -203,7 +203,8 @@ function PopulateInformation(){
     // Get the element in our extension
     var curTimeElement = $("#cur_time");
 
-    if (current_time != null && current_time != ""){
+    // Update the info
+    if (current_time != null && current_time != "" && mBackground.mCurrentTime > 0){
         curTimeElement.text(current_time + "/");
     }else{
         curTimeElement.text("");
@@ -221,7 +222,7 @@ function PopulateInformation(){
     var totalTimeElement = $("#total_time");
 
     // Update the info
-    if (total_time != null && total_time != ""){
+    if (total_time != null && total_time != "" && mBackground.mTotalTime > 0){
         totalTimeElement.text(total_time);
     }else{
         totalTimeElement.text("");
