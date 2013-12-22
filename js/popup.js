@@ -2,7 +2,18 @@
 // Constants
 /////////////////////////////////////////////////////////////////////////////
 
-// None
+// Class name for hidden button
+var HIDDEN_BUTTON_CLASS = "hidden_button";
+
+// Class name for subdued button
+var SUBDUED_BUTTON_CLASS = "subdued_button";
+
+// Class name for dim button
+var DIM_BUTTON_CLASS = "dim_button";
+
+// Class name for visible button
+var VISIBLE_BUTTON_CLASS = "visible_button";
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Member Variables
@@ -68,62 +79,57 @@ function PopulateInformation(){
     var artElement = $("#art");
     var totalTimeElement = $("#total_time");
     var curTimeElement = $("#cur_time");
-    var playPauseElement = $("#play_pause");
-    var shuffleElement = $("#shuffle_button");
-    var repeatElement = $("#repeat_button");
-    var thumbsUpElement = $("#thumbs_up_button");
-    var thumbsDownElement = $("#thumbs_down_button");
     
     if (track && track != null && track != ""){
         trackElement.text(track);
 
         // Set the play/pause opacity
         if (mPlayerDetails.has_play_pause){
-            playPauseElement.css("opacity", "1");
+            UpdateButton(playPauseElement, VISIBLE_BUTTON_CLASS);
         }else{
-            playPauseElement.css("opacity", "0");
+            UpdateButton(playPauseElement, HIDDEN_BUTTON_CLASS);
         }
 
         // Set the next track opacity
         if (mPlayerDetails.has_next_track){
-            nextTrackElement.css("opacity", "1");
+            UpdateButton(nextTrackElement, VISIBLE_BUTTON_CLASS);
         }else{
-            nextTrackElement.css("opacity", "0");
+            UpdateButton(nextTrackElement, HIDDEN_BUTTON_CLASS);
         }
 
         // Set the prev track opacity
         if (mPlayerDetails.has_prev_track){
-            prevTrackElement.css("opacity", "1");
+            UpdateButton(prevTrackElement, VISIBLE_BUTTON_CLASS);
         }else{
-            prevTrackElement.css("opacity", "0");
+            UpdateButton(prevTrackElement, HIDDEN_BUTTON_CLASS);
         }
 
         // Set the shuffle button opacity
         if (mPlayerDetails.has_shuffle){
-            shuffleButtonElement.css("opacity", ".85");
+            UpdateButton(shuffleButtonElement, SUBDUED_BUTTON_CLASS);
         }else{
-            shuffleButtonElement.css("opacity", "0");
+            UpdateButton(shuffleButtonElement, HIDDEN_BUTTON_CLASS);
         }
 
         // Set the repeat button opacity
         if (mPlayerDetails.has_repeat){
-            repeatButtonElement.css("opacity", ".85");
+            UpdateButton(repeatButtonElement, SUBDUED_BUTTON_CLASS);
         }else{
-            repeatButtonElement.css("opacity", "0");
+            UpdateButton(repeatButtonElement, HIDDEN_BUTTON_CLASS);
         }
 
         // Set the thumbs up button opacity
         if (mPlayerDetails.has_thumbs_up){
-            thumbsUpButtonElement.css("opacity", ".85");
+            UpdateButton(thumbsUpButtonElement, SUBDUED_BUTTON_CLASS);
         }else{
-            thumbsUpButtonElement.css("opacity", "0");
+            UpdateButton(thumbsUpButtonElement, HIDDEN_BUTTON_CLASS);
         }
 
         // Set the thumbs down button opacity
         if (mPlayerDetails.has_thumbs_down){
-            thumbsDownButtonElement.css("opacity", ".85");
+            UpdateButton(thumbsDownButtonElement, SUBDUED_BUTTON_CLASS);
         }else{
-            thumbsDownButtonElement.css("opacity", "0");
+            UpdateButton(thumbsDownButtonElement, HIDDEN_BUTTON_CLASS);
         }                
         
         // Store the track for now
@@ -197,9 +203,11 @@ function PopulateInformation(){
 
         // Set the class of the element
         if (playing){
-            playPauseElement.attr("class", "pause");
+            playPauseElement.removeClass("play");
+            playPauseElement.addClass("pause");
         }else{
-            playPauseElement.attr("class", "play");
+            playPauseElement.removeClass("pause");
+            playPauseElement.addClass("play");
         }
 
         // Get whether or not it's shuffled
@@ -211,9 +219,11 @@ function PopulateInformation(){
         }
 
         if (shuffled){
-            shuffleElement.attr("class", "shuffle_on");
+            shuffleButtonElement.removeClass("shuffle_off");
+            shuffleButtonElement.addClass("shuffle_on");
         }else{
-            shuffleElement.attr("class", "shuffle_off");
+            shuffleButtonElement.removeClass("shuffle_on");
+            shuffleButtonElement.addClass("shuffle_off");
         }
         
         // Get whether or not repeat is off
@@ -226,7 +236,9 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_off){
-            repeatElement.attr("class", "repeat_off");
+            repeatButtonElement.removeClass("repeat_all");
+            repeatButtonElement.removeClass("repeat_one");
+            repeatButtonElement.addClass("repeat_off");
         }
 
         // Get whether or not repeat is on (1)
@@ -239,7 +251,9 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_one){
-            repeatElement.attr("class", "repeat_one");
+            repeatButtonElement.removeClass("repeat_all");
+            repeatButtonElement.removeClass("repeat_off");
+            repeatButtonElement.addClass("repeat_one");
         }
 
         // Get whether or not it's repeat all
@@ -252,7 +266,9 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_all){
-            repeatElement.attr("class", "repeat_all");
+            repeatButtonElement.removeClass("repeat_one");
+            repeatButtonElement.removeClass("repeat_off");
+            repeatButtonElement.addClass("repeat_all");
         }
 
         // Get the thumbs up state
@@ -265,9 +281,11 @@ function PopulateInformation(){
 
         // Toggle the thumbs up button
         if (thumbed_up){
-            thumbsUpElement.attr("class", "thumbs_up_on");
+            thumbsUpButtonElement.removeClass("thumbs_up_off");
+            thumbsUpButtonElement.addClass("thumbs_up_on");
         }else{
-            thumbsUpElement.attr("class", "thumbs_up_off");
+            thumbsUpButtonElement.removeClass("thumbs_up_on");
+            thumbsUpButtonElement.addClass("thumbs_up_off");
         }
 
         // Get the thumbed down state
@@ -280,19 +298,21 @@ function PopulateInformation(){
 
         // Toggle the thumbs down button
         if (thumbed_down){
-            thumbsDownElement.attr("class", "thumbs_down_on");
+            thumbsDownButtonElement.removeClass("thumbs_down_off");
+            thumbsDownButtonElement.addClass("thumbs_down_on");
         }else{
-            thumbsDownElement.attr("class", "thumbs_down_off");
+            thumbsDownButtonElement.removeClass("thumbs_down_on");
+            thumbsDownButtonElement.addClass("thumbs_down_off");
         }
     }else{
         // Looks like we have to disable some buttons
-        playPauseElement.css("opacity", ".1");
-        nextTrackElement.css("opacity", ".1");
-        prevTrackElement.css("opacity", ".1");
-        shuffleButtonElement.css("opacity", ".1");   
-        repeatButtonElement.css("opacity", ".1");   
-        thumbsUpButtonElement.css("opacity", ".1");   
-        thumbsDownButtonElement.css("opacity", ".1");
+        UpdateButton(playPauseElement, DIM_BUTTON_CLASS);
+        UpdateButton(nextTrackElement, DIM_BUTTON_CLASS);
+        UpdateButton(prevTrackElement, DIM_BUTTON_CLASS);
+        UpdateButton(shuffleButtonElement, DIM_BUTTON_CLASS);
+        UpdateButton(repeatButtonElement, DIM_BUTTON_CLASS);
+        UpdateButton(thumbsUpButtonElement, DIM_BUTTON_CLASS);
+        UpdateButton(thumbsDownButtonElement, DIM_BUTTON_CLASS);
         playerNameElement.text("");
 
         // Tell the user nothing is playing
@@ -304,6 +324,18 @@ function PopulateInformation(){
         curTimeElement.text("");
         totalTimeElement.text("");
     }
+}
+
+// A function to change the class of the provided element
+function UpdateButton(buttonToUpdate, updatedClass){
+    // Remove all button classes
+    buttonToUpdate.removeClass(HIDDEN_BUTTON_CLASS);
+    buttonToUpdate.removeClass(SUBDUED_BUTTON_CLASS);
+    buttonToUpdate.removeClass(DIM_BUTTON_CLASS);
+    buttonToUpdate.removeClass(VISIBLE_BUTTON_CLASS);
+
+    // Add the new class
+    buttonToUpdate.addClass(updatedClass);
 }
 
 //// Click Functions ////
@@ -422,13 +454,25 @@ $(function(){
     });
 
     // Play/pause
-    $("#play_pause").bind('click', function(handler){
+
+    // Get the elemtn
+    var playPauseElement = $("#play_pause");
+    playPauseElement.bind('click', function(handler){
         // Be smart about what we are clicking
-        var className = handler.currentTarget.className;
-        if (className == "play"){
+        if (playPauseElement.hasClass("play")){
+            // Click play
             PlayClick();
-        }else if (className == "pause"){
+
+            // Update the class right away
+            playPauseElement.removeClass("play");
+            playPauseElement.addClass("pause");
+        }else if (playPauseElement.hasClass("pause")){
+            // Click pause
             PauseClick();
+
+            // Update the class right away
+            playPauseElement.removeClass("pause");
+            playPauseElement.addClass("play");
         }
     });
 

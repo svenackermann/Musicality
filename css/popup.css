@@ -7,8 +7,7 @@
 
 body{
     font-family: 'Droid Sans';
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
     width: 250px;
     height: 115px;
     background-image: url('../images/dark_gray_tile.jpg');
@@ -17,8 +16,8 @@ body{
 #container{
     width: auto;
     height: 66px;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     background-image: url('../images/light_gray_tile.jpg');
     border: solid;
     border-width: 3px;
@@ -32,7 +31,7 @@ body{
     height: 60px;
     float: left;
     margin: 2px;
-    padding: 0px;
+    padding: 0;
     background: url('../images/sprite.png') 0px 0px;
     border: solid;
     border-width: 1px;
@@ -64,9 +63,9 @@ body{
 }
 
 #time_info{
-    margin: 0px;
+    margin: 0;
     margin-top: 8px;
-    padding: 0px;
+    padding: 0;
     margin-left: auto;
     margin-right: auto;
     font-size: 12px;  
@@ -75,26 +74,24 @@ body{
 
 #cur_time{
     height: 14px;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     float: left;
 }
 
 #total_time{
     height: 14px;
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     float: left;
 }
 
 #shuffle_button{
     width: 30px;
     height: 20px;   
-    cursor: pointer;
     position: absolute;
     top: 2px;
     left: 2px; 
-    opacity: .1;
 }
 
 .marquee_item{
@@ -122,12 +119,9 @@ span{
 #repeat_button{
     width: 30px;
     height: 20px;
-    cursor: pointer;
     position: absolute;
     top: 22px;
     left: 2px;  
-    
-    opacity: .1;
 }
 .repeat_off{
     background: url('../images/sprite.png') -180px 0px; 
@@ -152,11 +146,9 @@ span{
     width: 30px;
     height: 30px;
     background: url('../images/sprite.png') -150px 0px; 
-    cursor: pointer;
     position: absolute;
     top: 7px;
     left: 70px; 
-    opacity: .1;
 }
 #previous_track:hover{
     background-position: -150px -30px;
@@ -165,11 +157,9 @@ span{
 #play_pause{    
     width: 30px;
     height: 30px;
-    cursor: pointer;
     position: absolute;
     top: 7px;
     left: 112px;
-    opacity: .1;
 }
 
 .play{
@@ -192,11 +182,9 @@ span{
     width: 30px;
     height: 30px;
     background: url('../images/sprite.png') -120px 0px; 
-    cursor: pointer;
     position: absolute;
     top: 7px;
     left: 150px;
-    opacity: .1;    
 }   
 #next_track:hover{
     background-position: -120px -30px;
@@ -205,11 +193,9 @@ span{
 #thumbs_up_button{
     width: 20px;
     height: 20px;
-    cursor: pointer;
     position: absolute;
     top: 2px;
     right: 2px; 
-    opacity: .1;
 }  
 #thumbs_up_button:hover{
     background-position: -270px -30px;
@@ -225,11 +211,9 @@ span{
 #thumbs_down_button{
     width: 20px;
     height: 20px;
-    cursor: pointer;
     position: absolute;
     top: 22px;
     right: 2px; 
-    opacity: .1;
 }
 
 #thumbs_down_button:hover{
@@ -243,14 +227,34 @@ span{
 }
 
 #player_name{
-    margin: 0px;
+    margin: 0;
     margin-top: 8px;
-    padding: 0px;
+    padding: 0;
     text-align: right;
     font-size: 12px;
-    opacity: .1;
     text-transform: uppercase;
     max-width: 80px;
     float: right;
     overflow: hidden;
+    opacity: 0.1;
+}
+
+.hidden_button{
+    opacity: 0;
+    cursor: default;
+}
+
+.subdued_button{
+    opacity: 0.85;
+    cursor: pointer;
+}
+
+.dim_button{
+    opacity: 0.1;
+    cursor: default;
+}
+
+.visible_button{
+    opacity: 1;
+    cursor: pointer;
 }
