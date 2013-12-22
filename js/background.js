@@ -26,6 +26,9 @@ var mAllPlayers = null;
 // The contents of the actual players JSON (not ALL_PLAYERS_JSON)
 var mPlayerDetails = null;
 
+// A variable set if we actually have found a tab for a player
+var mPlayerOpen = false;
+
 //// Variables containing information accessed by the popup ////
 
 // Is playing
@@ -164,13 +167,18 @@ function FindTabPlayingMusic(callback){
                                 // A flag to see if we have already returned a player
                                 var alreadyReturned = false;
 
+                                // A flag to ensure we know we already have seen a player
+                                mPlayerOpen = true;
+
                                 // Is it currently playing music?
                                 IsPlayingMusic(tabId, playerDetails, function(isPlaying){
                                     if (isPlaying){
                                         // Sweet. Found one we wanted.
                                         if (!alreadyReturned){
                                             alreadyReturned = true;
+                                            console.log("mPlayerOpen = " + mPlayerOpen);
                                             callback(tabId, playerDetails);
+                                            return;
                                         }
                                     }else{
                                         // Increment the number of asyncs we have running.
@@ -200,8 +208,10 @@ function FindTabPlayingMusic(callback){
         }
     });
 
-    // We didn't find anything!
+    // Nothing open. Callback -1 null
+    mPlayerOpen = false;
     callback(-1, null);
+    return;
 }
 
 // A helper function to prevent code duplication
@@ -211,9 +221,12 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
         if (pausedTabs.length > 0){
             pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
             callback(pausedTabs[0].id, pausedTabs[0].details);
+            return;
         }
     }
-
+    mPlayerOpen = false;
+    callback(-1, null);
+    return;
 }
 
 // We need a compare function for sorting the paused tabs
@@ -225,6 +238,25 @@ function pausedTabCompare(tabA, tabB){
     }else{
         return 0;
     }
+}
+
+// A function used by the popup to open the default page if we want to
+function OpenDefaultPlayer(){
+    // Grab the value from storage, if it's there
+    chrome.storage.local.get('default_open', function(data){
+        // Check if it's set
+        if (data.default_open){
+            // Reset mPlayerOpen
+            mPlayerOpen = false;
+            // Check if we have a player
+            FindTabPlayingMusic(function(tabId, playerDetails){
+                if (!mPlayerOpen){
+                    // Nothing open. Open one up
+                    chrome.tabs.create({'url' : data.default_open});
+                }
+            });
+        }
+    });
 }
 
 // Update the information displayed within the extension
