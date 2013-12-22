@@ -34,5 +34,9 @@
     "click_play" : "$('span#player-play').click()",
     "click_pause" : "$('span#player-play').click()",
     "click_next_track" : "$('#cloudcast-up-next li').click()",
-    "click_thumbs_up" : "$('#cc-favorite-btn').click()"
+    "click_thumbs_up" : "$('#cc-favorite-btn').click()",
+
+"COMMENT_5" : "Mixcloud is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
+
+    "scrobbleOnChange" : true
 }

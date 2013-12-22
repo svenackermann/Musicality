@@ -226,19 +226,39 @@ function RunLastFmQuery(parameters, get, callback){
         }
 
         if (get){
-            // Run the query!
-            $.get(queryString, function(data){
-                // Awesome. Got a response.
-                if (callback){
-                    callback(data);
+            // Run the query with error handling
+            $.ajax({
+                url: queryString,
+                type: 'GET',
+                success: function(data){
+                    // Awesome. Got a response.
+                    if (callback){
+                        callback(data);
+                    }
+                },
+                error: function(data){
+                    // Oh no. Callback with a simple structure to signal error
+                    if (callback){
+                        callback({error: -1});
+                    }
                 }
             });
         }else{
             // Post request.
-            $.post(queryString, function(data){
-                // Nice. Callback if there is one.
-                if (callback){
-                    callback(data);
+            $.ajax({
+                url: queryString,
+                type: 'POST',
+                success: function(data){
+                    // Nice. Callback if there is one.
+                    if (callback){
+                        callback(data);
+                    }
+                },
+                error: function(data){
+                    // Yikes. Callback with a simple structure to signal error
+                    if (callback){
+                        callback({error: -1});
+                    }
                 }
             });
         }

@@ -96,11 +96,20 @@ var mBadgeTextEnabled = true;
 
 //// Last.fm variables ////
 
+// The first timestamp we looked at the new song
+var mListeningTrackTimestamp = null;
+
+// The track + " " + artist name to represent the new track
+var mListeningTrackName = null;
+
 // Cache of songs to scrobble
-var mScrobbleCache = [];
+var mScrobbleQueue = [];
 
 // Keep track of the last song scrobbled, so we don't double
 var mLastScrobble = "";
+
+// The time to delay before doing more last.fm work (in ms)
+var mLastFmWorkDelay = 15000;
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -262,7 +271,6 @@ function OpenDefaultPlayer(){
 
             // Check if we have a player
             FindTabPlayingMusic(function(tabId, playerDetails){
-                console.log("Callback returned tabId = " + tabId);
                 if (!mPlayerOpen){
                     // Nothing open. Open one up
                     chrome.tabs.create({'url' : data.default_open});
@@ -670,51 +678,82 @@ function GetMillisecondsFromTimeString(timeString) {
 
 // A function to interact with the scrobbler
 function DoLastFmWork(){
-    // Make sure we are playing
-    if (mIsPlaying){
-        // Ensure we have a track and artist
-        if (mTrack != null && mArtist != null){
-            // Cool. Tell Last.fm we are playing 
-            RunLastFmQuery({method: "track.updateNowPlaying",
-                            track: mTrack,
-                            artist: mArtist}, false, null);
+    // Ensure we have a track and artist
+    if (mTrack != null && mArtist != null){
+        // Cool. Tell Last.fm we are playing 
+        RunLastFmQuery({method: "track.updateNowPlaying",
+                        track: mTrack,
+                        artist: mArtist}, false, null);
+    }
+
+    // Build the curScrobble string
+    var curTrack = mTrack + " " + mArtist;
+
+    // Get the current timestamp
+    var curTimestamp = Date.now();
+
+    // Check if this is a new track
+    if (mListeningTrackName != curTrack){
+        // Reset the stored timestamp
+        mListeningTrackTimestamp = curTimestamp;
+
+        // Reset the listening track variable
+        mListeningTrackName = curTrack;
+
+        // Build up a new queue
+        var newQueue = [];
+
+        // Iterate through the scrobble queue, scrobbling any
+        // tracks we've saved off.
+        // Now we should iterate through everything in our scrobble queue
+        for (var i=0; i<mScrobbleQueue.length; i++){
+            // Get the current track in the queue
+            var curQTrack = mScrobbleQueue[i];
+
+            // Attempt to scrobble it
+            RunLastFmQuery(
+                {
+                    method: "track.scrobble",
+                    track: curQTrack.track,
+                    artist: curQTrack.artist,
+                    timestamp: Math.round((new Date()).getTime() / 1000).toString()
+                }, false, function(result){
+                    // We need to check if it's failed
+                    var errCode = result.error;
+                    if (errCode){
+                        // Check if this error is one we should re-try
+                        if (errCode == 11 || errCode == 16 || errCode == -1){
+                            // Keep it in the cache
+                            console.write("Last.fm scrobbling error: " + result);
+                            newQueue.push(curQTrack);
+                        } // Else, something else is wrong with this track. Discard it
+                    } // Else, success. Nothing to do.
+                });
         }
 
-        // Check if the current time is greater than 30 seconds
-        if (mCurrentTime > 30 * 1000){
-            // Determine if we've already scrobbled this song
-            var curScrobble = mTrack + " " + mArtist;
-            if (curScrobble != mLastScrobble){
-                // Get the percentage
-                var percentage = mCurrentTime/mTotalTime;                
-                if ((percentage >= 0.5 && percentage < 1) || mCurrentTime >= (240 * 1000)){
-                    // Mark the song as not new
-                    mNewTrack = false;
-                    
-                    // Attempt to scrobble!
-                    RunLastFmQuery(
-                        {
-                            method: "track.scrobble",
-                            track: mTrack,
-                            artist: mArtist,
-                            timestamp: Math.round((new Date()).getTime() / 1000).toString()
-                        }, false, function(result){
-                            // We need to check if it's failed
-                            if (result.message){
-                                // TODO
-                            }
-                        });
+        // Now save the mScrobbleQueue as the newQueue
+        mScrobbleQueue = newQueue.slice();
+    }else{
+        // This is not a new track. Check if our timestamp is old enough
+        if (curTimestamp - mListeningTrackTimestamp > 30 - mLastFmWorkDelay){
+            // Get the percentage
+            var percentage = mCurrentTime/mTotalTime;
+            
+            // Now check to ensure it's progress is greater than 50 or that this
+            // player doesn't have any way of tracking progress
+            if (percentage >= 0.5 && percentage < 1 || mPlayerDetails.scrobbleOnChange){
+                // Ensure we haven't already scrobbled this track
+                if (curTrack != mLastScrobble){
+                    // Push this scrobble into our queue
+                    mScrobbleQueue.push({artist: mArtist,
+                                         track: mTrack});
 
-                    // TODO -- Move this into the result.message block
-                    // Save the scrobble as the last scrobble to prevent doing it again.
-                    mLastScrobble = curScrobble;
+                    // Save this track off as the last scrobble
+                    mLastScrobble = curTrack;
                 }
             }
         }
     }
-
-    // Finally, iterate through any old failed requests and try to scrobble
-    // TODO
 }
 
 // Function to determine if a given tab is playing music
@@ -919,6 +958,6 @@ $(function(){
                 }
             }
         });
-    }, 15000);
+    }, mLastFmWorkDelay);
 });
 
