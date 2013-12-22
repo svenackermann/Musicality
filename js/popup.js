@@ -462,17 +462,9 @@ $(function(){
         if (playPauseElement.hasClass("play")){
             // Click play
             PlayClick();
-
-            // Update the class right away
-            playPauseElement.removeClass("play");
-            playPauseElement.addClass("pause");
         }else if (playPauseElement.hasClass("pause")){
             // Click pause
             PauseClick();
-
-            // Update the class right away
-            playPauseElement.removeClass("pause");
-            playPauseElement.addClass("play");
         }
     });
 
