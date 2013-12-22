@@ -313,7 +313,8 @@ function UpdateInformation(){
 
 // Function to update the badge text
 function UpdateBadgeText(){
-    if (mIsPlaying){
+    // Ensure we are playing and have sufficient info to display
+    if (mIsPlaying && mTrack && mTrack != ""){
         // Check if we scrolled within the last amount of time
         var curTime = Date.now();
         if ((curTime - mBadgeTextLastScrollTime) < (mBadgeTextScrollTime-5)){
@@ -325,7 +326,11 @@ function UpdateBadgeText(){
         mBadgeTextLastScrollTime = curTime;
         
         // Build our badge text
-        var badgeText = "        " + mArtist + " - " + mTrack + "        ";
+        var badgeText = "        ";
+        if (mArtist && mArtist != ""){
+            badgeText += mArtist + " - ";
+        }
+        badgeText += mTrack + "        ";
         var badgeTextLength = badgeText.length;
 
         // Check if we need to reset our badge text scroll amount
