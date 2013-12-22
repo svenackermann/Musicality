@@ -120,6 +120,7 @@ function ResetMembers(){
     mIsRepeatOff = false;
     mIsThumbedUp = false;
     mIsThumbedDown = false;
+    mPlayerOpen = false;
 }
 
 // Find a tab that is currently playing music
@@ -148,6 +149,9 @@ function FindTabPlayingMusic(callback){
                         // Save some information off
                         var curPlayer = mAllPlayers[curPlayer];
 
+                        // A flag to ensure we know we already have seen a player
+                        mPlayerOpen = true;
+
                         if (mDebug){
                             console.log("background.js::FindTabPlayingMusic -- Found " +
                                         curPlayer + " at tab " + curTab.id);
@@ -167,9 +171,6 @@ function FindTabPlayingMusic(callback){
                                 // A flag to see if we have already returned a player
                                 var alreadyReturned = false;
 
-                                // A flag to ensure we know we already have seen a player
-                                mPlayerOpen = true;
-
                                 // Is it currently playing music?
                                 IsPlayingMusic(tabId, playerDetails, function(isPlaying){
                                     if (isPlaying){
@@ -188,16 +189,29 @@ function FindTabPlayingMusic(callback){
                                         IsPaused(tabId, playerDetails, function(isPaused){
                                             if (isPaused){
                                                 // Found a paused tab. Save it off
-                                                pausedTabs.push({ "id" : tabId, "details" : playerDetails });
+                                                pausedTabs.push({ "id" : tabId,
+                                                                  "details" : playerDetails
+                                                                });
 
-                                                // If everythings done, returned a paused tab
-                                                returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                                // If everything's done,
+                                                // returned a paused tab
+                                                returnPausedTabHelper(asyncsRunning,
+                                                                      pausedTabs,
+                                                                      callback);
+                                                return;
                                             }else{
-                                                // This tab wasn't paused, or playing. Check if all asyncs are done.
-                                                returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                                // This tab wasn't paused, or playing.
+                                                // Check if all asyncs are done.
+                                                returnPausedTabHelper(asyncsRunning,
+                                                                      pausedTabs,
+                                                                      callback);
+                                                return;
                                             }
                                         });
-                                        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+                                        returnPausedTabHelper(asyncsRunning,
+                                                              pausedTabs,
+                                                              callback);
+                                        return;
                                     }
                                 });
                             });
@@ -220,6 +234,7 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
         // All done with the asyncs. Check if there were any paused tabs
         if (pausedTabs.length > 0){
             pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
+            mPlayerOpen = true;
             callback(pausedTabs[0].id, pausedTabs[0].details);
             return;
         }
@@ -242,17 +257,22 @@ function pausedTabCompare(tabA, tabB){
 
 // A function used by the popup to open the default page if we want to
 function OpenDefaultPlayer(){
+    console.log("1 - Open default player called");
     // Grab the value from storage, if it's there
     chrome.storage.local.get('default_open', function(data){
         // Check if it's set
         if (data.default_open){
-            // Reset mPlayerOpen
-            mPlayerOpen = false;
+            console.log("2 - Default open set to " + data.default_open);
             // Check if we have a player
-            FindTabPlayingMusic(function(tabId, playerDetails){
+            lookForPlayingTabHelper(function(result){
                 if (!mPlayerOpen){
+                    console.log("3 - Opening default player.");
                     // Nothing open. Open one up
                     chrome.tabs.create({'url' : data.default_open});
+                    // Set mPlayerOpen to true
+                    mPlayerOpen = true;
+                }else{
+                    console.log("4 - mPlayerOpen = " + mPlayerOpen + ". Not opening tab.");
                 }
             });
         }
@@ -339,10 +359,11 @@ function DoesTabExist(tabId, callback){
 }
 
 // A helper function to prevent duplication of code in the UpdateInformation function
-function lookForPlayingTabHelper(){
+function lookForPlayingTabHelper(callback){
     // Start by resetting the focused player and player details
     mLastPlayingTabId = -1;
     mPlayerDetails = null;
+    mPlayerOpen = false;
     mLastPlayingTabId = -1;
     
     FindTabPlayingMusic(function(tabId, playerDetails){
@@ -361,6 +382,9 @@ function lookForPlayingTabHelper(){
             // Reset the members
             ResetMembers();
         }
+        // Hit the callback
+        if (typeof callback == 'function') callback(true);
+        return;
     });
 }
 
