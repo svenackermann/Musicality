@@ -171,16 +171,16 @@ function BuildDefaultPlayerDropdown(){
                     playersListButton.text(playerName);
 
                     // Append the caret within the button
-                    playersListButton.append("<span class='caret'></span>");
+                    playersListButton.append("  <span class='caret'></span>");
                 }else{
                     // A players URL may have changed. Leave it unset.
                     playersListButton.text("None");
-                    playersListButton.append("<span class='caret'></span>");
+                    playersListButton.append("  <span class='caret'></span>");
                 }
             }else{
                 // Undefined. Leave it unset.
                 playersListButton.text("None");
-                playersListButton.append("<span class='caret'></span>");
+                playersListButton.append("  <span class='caret'></span>");
             }
         });
     });
@@ -199,7 +199,7 @@ function SaveDefaultPlayer(playerName, openPage){
 
     // We also need to make sure this player is the one selected in the dropdown
     playersListButton.text(playerName);
-    playersListButton.append("<span class='caret'></span>");
+    playersListButton.append("  <span class='caret'></span>");
 }
 
 /////////////////////////////////////////////////////////////////////////////
