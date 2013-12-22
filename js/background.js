@@ -615,7 +615,7 @@ function GetTimeStringForMilliseconds(milliseconds){
 
     var totalHours = Math.floor(totalSeconds/3600)
     var totalMins = Math.floor(totalSeconds/60) % 60;
-    var totalSecs = totalSeconds % 60;
+    var totalSecs = Math.floor(totalSeconds) % 60;
 
     // Construct the strings we need
     var sTotalSecs = "" + totalSecs;
