@@ -85,7 +85,7 @@ function PopulateInformation(){
     var playerNameElement = $("#player_name");
     var trackElement = $("#track");
     
-    if (track != null){
+    if (track && track != null && track != ""){
         trackElement.text(track);
 
         // Set the play/pause opacity
@@ -179,7 +179,7 @@ function PopulateInformation(){
 
     var artElement = $("#art");
     
-    if (art_url != null){
+    if (art_url && art_url != null && art_url != ""){
         // Update the art to display the now playing art
         artElement.attr("src", art_url);
     }else{
