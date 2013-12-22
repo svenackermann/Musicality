@@ -423,7 +423,7 @@ function stopMarquee(){
 /////////////////////////////////////////////////////////////////////////////
 
 // Once the document is ready, bind all of the functions.
-$(document).ready(function(){
+$(function(){
     // Immediately update our information
     UpdateInformation();
     
