@@ -716,7 +716,7 @@ function DoLastFmWork(){
                     method: "track.scrobble",
                     track: curQTrack.track,
                     artist: curQTrack.artist,
-                    timestamp: Math.round((new Date()).getTime() / 1000).toString()
+                    timestamp: curQTrack.timestamp
                 }, false, function(result){
                     // We need to check if it's failed
                     var errCode = result.error;
@@ -746,7 +746,10 @@ function DoLastFmWork(){
                 if (curTrack != mLastScrobble){
                     // Push this scrobble into our queue
                     mScrobbleQueue.push({artist: mArtist,
-                                         track: mTrack});
+                                         track: mTrack,
+                                         timestamp: Math.round(
+                                             (new Date()).getTime() / 1000).toString()
+                                        });
 
                     // Save this track off as the last scrobble
                     mLastScrobble = curTrack;
