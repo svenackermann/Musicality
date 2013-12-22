@@ -395,6 +395,17 @@ function lookForPlayingTabHelper(){
 // Populate the actual extension given the particular tab id
 function PopulateInformation(tabId){
 
+    // Request the track from the content script
+    SendPlayerRequest(tabId, mPlayerDetails, "get_track", function(track){
+        // Log it if we've found the track
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- track: " + track);
+        }
+
+        // Save the track for the popup
+        mTrack = track;
+    });
+
     // Request artist from the content script
     SendPlayerRequest(tabId, mPlayerDetails, "get_artist", function(artist){
         // Log it if we've found the artist
@@ -405,17 +416,6 @@ function PopulateInformation(tabId){
         // Save the artist name for the popup
         mArtist = artist;
 
-    });
-
-    // Request the track from the content script
-    SendPlayerRequest(tabId, mPlayerDetails, "get_track", function(track){
-        // Log it if we've found the track
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- track: " + track);
-        }
-
-        // Save the track for the popup
-        mTrack = track;
     });
 
     // Make a request to the content script for the album art url

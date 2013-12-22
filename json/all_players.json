@@ -90,6 +90,13 @@
         "open_page" : "http://www.songza.com"
     },
 
+    "Soundcloud" : {
+        "simple_name" : "soundcloud",
+        "pattern" : "https?:\\/\\/soundcloud.com\\/*",
+        "json_loc" : "/json/soundcloud.json",
+        "open_page" : "http://soundcloud.com"
+    },
+
     "Spotify Web Player" : {
         "simple_name" : "spotify",
         "pattern" : "https?\\:\\/\\/play\\.spotify\\.com\\/*",

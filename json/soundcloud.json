@@ -18,21 +18,21 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\"button.playControl.playing\").length > 0",
-    "is_paused" : "$(\"button.playControl.playing\").length == 0",
+    "is_playing" : "$('button.playControl.playing').length > 0",
+    "is_paused" : "$('button.playControl.playing').length == 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "",
-    "get_artist" : "$(\".playbackTitle__link\").text().split(\"-\")[0].trim()",
-    "get_track" : "$(\".playbackTitle__link\").text().split(\"-\")[1].trim()",
-    "get_current_time" : "$(\".progressSmall\").attr(\"aria-valuenow\")",
-    "get_total_time" : "$(\".progressSmall\").attr(\"aria-valuemax\")",
+    "get_album_art" : "$('.image__full')[0].src",
+    "get_track" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[1].trim(); else a[0].trim();",
+    "get_artist" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[0].trim(); else 'Unknown'",
+    "get_current_time" : "$('.progressSmall').attr('aria-valuenow')",
+    "get_total_time" : "$('.progressSmall').attr('aria-valuemax')",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$(\"button.playControl\").click()",
-    "click_pause" : "$(\"button.playControl\").click()",
-    "click_next_track" : "$(\"button.skipControl.skipControl__next\").click()",
-    "click_prev_track" : "$(\"button.skipControl.skipControl__previous\").click()"
+    "click_play" : "$('button.playControl').click()",
+    "click_pause" : "$('button.playControl').click()",
+    "click_next_track" : "$('button.skipControl.skipControl__next').click()",
+    "click_prev_track" : "$('button.skipControl.skipControl__previous').click()"
 }
