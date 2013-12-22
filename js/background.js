@@ -120,7 +120,6 @@ function ResetMembers(){
     mIsRepeatOff = false;
     mIsThumbedUp = false;
     mIsThumbedDown = false;
-    mPlayerOpen = false;
 }
 
 // Find a tab that is currently playing music
@@ -177,7 +176,6 @@ function FindTabPlayingMusic(callback){
                                         // Sweet. Found one we wanted.
                                         if (!alreadyReturned){
                                             alreadyReturned = true;
-                                            console.log("mPlayerOpen = " + mPlayerOpen);
                                             callback(tabId, playerDetails);
                                             return;
                                         }
@@ -220,12 +218,12 @@ function FindTabPlayingMusic(callback){
                 }
             }
         }
+        // Yikes. None of our windows matched. Callback -1
+        callback(-1, null);
+        return;
     });
 
-    // Nothing open. Callback -1 null
-    mPlayerOpen = false;
-    callback(-1, null);
-    return;
+    // We don't want to callback anything, since it is likely still processing.
 }
 
 // A helper function to prevent code duplication
@@ -234,12 +232,10 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
         // All done with the asyncs. Check if there were any paused tabs
         if (pausedTabs.length > 0){
             pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
-            mPlayerOpen = true;
             callback(pausedTabs[0].id, pausedTabs[0].details);
             return;
         }
     }
-    mPlayerOpen = false;
     callback(-1, null);
     return;
 }
@@ -257,22 +253,19 @@ function pausedTabCompare(tabA, tabB){
 
 // A function used by the popup to open the default page if we want to
 function OpenDefaultPlayer(){
-    console.log("1 - Open default player called");
     // Grab the value from storage, if it's there
     chrome.storage.local.get('default_open', function(data){
         // Check if it's set
         if (data.default_open){
-            console.log("2 - Default open set to " + data.default_open);
+            // Default mPlayerOpen to false before we check again
+            mPlayerOpen = false;
+
             // Check if we have a player
-            lookForPlayingTabHelper(function(result){
+            FindTabPlayingMusic(function(tabId, playerDetails){
+                console.log("Callback returned tabId = " + tabId);
                 if (!mPlayerOpen){
-                    console.log("3 - Opening default player.");
                     // Nothing open. Open one up
                     chrome.tabs.create({'url' : data.default_open});
-                    // Set mPlayerOpen to true
-                    mPlayerOpen = true;
-                }else{
-                    console.log("4 - mPlayerOpen = " + mPlayerOpen + ". Not opening tab.");
                 }
             });
         }
@@ -352,18 +345,19 @@ function DoesTabExist(tabId, callback){
     chrome.tabs.get(tabId, function(tab){
         if (!tab){
             callback(false);
+            return;
         }else{
             callback(true);
+            return;
         }
     });
 }
 
 // A helper function to prevent duplication of code in the UpdateInformation function
-function lookForPlayingTabHelper(callback){
+function lookForPlayingTabHelper(){
     // Start by resetting the focused player and player details
     mLastPlayingTabId = -1;
     mPlayerDetails = null;
-    mPlayerOpen = false;
     mLastPlayingTabId = -1;
     
     FindTabPlayingMusic(function(tabId, playerDetails){
@@ -382,9 +376,6 @@ function lookForPlayingTabHelper(callback){
             // Reset the members
             ResetMembers();
         }
-        // Hit the callback
-        if (typeof callback == 'function') callback(true);
-        return;
     });
 }
 
@@ -737,6 +728,7 @@ function IsPlayingMusic(tabId, playerDetails, callback){
             "is_playing",
             function(result){
                 callback(result);
+                return;
             }
         );
     }
@@ -753,6 +745,7 @@ function IsPaused(tabId, playerDetails, callback){
             "is_paused",
             function(result){
                 callback(result);
+                return;
             }
         );
     }
@@ -778,6 +771,7 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                                         tabId + "," + whatIsNeeded + "," + result + ")");
                         }
                         callback(result);
+                        return;
                     }
                 );
             }else{
@@ -834,10 +828,12 @@ function IsBadgeTextEnabled(callback){
             
             // Callback with the value
             callback(mBadgeTextEnabled);
+            return;
         });
     }else{
         // Callback with the cached value
         callback(mBadgeTextEnabled);
+        return;
     }
 }
 
@@ -868,7 +864,7 @@ function ProcessFirstRun(){
 /////////////////////////////////////////////////////////////////////////////
 
 // Once the document is ready, bind all of the functions.
-$(document).ready(function(){
+$(function(){
     // Immediately update our information
     UpdateInformation();
 

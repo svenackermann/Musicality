@@ -207,7 +207,7 @@ function SaveDefaultPlayer(playerName, openPage){
 /////////////////////////////////////////////////////////////////////////////
 
 // Start of execution when the document is ready
-$(document).ready(function(){
+$(function(){
 
     // We want to bind the click button to do everything it needs to for authentication
     $("#authenticate").bind('click', function(){
