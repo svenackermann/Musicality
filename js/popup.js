@@ -126,16 +126,6 @@ function PopulateInformation(){
             thumbsDownButtonElement.css("opacity", "0");
         }                
         
-        // Check if we need to marquee it
-        if(trackElement.get(0).scrollWidth > trackElement.width()){
-            // Turn it into a marquee
-            trackElement.attr('direction', 'right');
-            trackElement.attr('scrollamount', '1');
-        }else{
-            trackElement.attr('scrollamount', '0');
-            trackElement.attr('direction', 'left');
-        }
-
         // Store the track for now
         mCurTrack = track;
 
@@ -145,16 +135,6 @@ function PopulateInformation(){
         // Check the artist information and populate
         if (artist != null && artist != ""){
             artistElement.text(artist);
-
-            // Check if we need to marquee it
-            if(artistElement.get(0).scrollWidth > artistElement.width()){
-                // Turn it into a marquee
-                artistElement.attr('direction', 'right');
-                artistElement.attr('scrollamount', '1');
-            }else{
-                artistElement.attr('scrollamount', '0');
-                artistElement.attr('direction', 'left');
-            }
         }else{
             // No artist. Update text appropriately
             artistElement.text("");
