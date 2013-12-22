@@ -17,9 +17,6 @@ var mBackground = chrome.extension.getBackgroundPage();
 // The player details
 var mPlayerDetails = mBackground.mPlayerDetails;
 
-// Whether or not we've already opened a page (so we don't open many)
-var mAlreadyOpenedPage = false;
-
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
@@ -169,15 +166,6 @@ function PopulateInformation(){
 
         // Tell the user nothing is playing
         trackElement.text("Play a song.");
-
-        // Open the default player, if there is one set
-        chrome.storage.local.get('default_open', function(data){
-            // Check if it's set
-            if (data.default_open && !mAlreadyOpenedPage){
-                chrome.tabs.create({'url' : data.default_open});
-                mAlreadyOpenedPage = true;
-            }
-        });
     }
 
 
@@ -489,4 +477,7 @@ $(document).ready(function(){
 
     // Register all marquee items to marquee
     $(".marquee_item").hover(startMarquee, stopMarquee);
+
+    // Tell background to open the default player, if there is one set
+    mBackground.OpenDefaultPlayer();
 });
