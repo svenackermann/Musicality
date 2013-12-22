@@ -64,6 +64,15 @@ function PopulateInformation(){
     var thumbsDownButtonElement = $("#thumbs_down_button");
     var playerNameElement = $("#player_name");
     var trackElement = $("#track");
+    var artistElement = $("#artist");
+    var artElement = $("#art");
+    var totalTimeElement = $("#total_time");
+    var curTimeElement = $("#cur_time");
+    var playPauseElement = $("#play_pause");
+    var shuffleElement = $("#shuffle_button");
+    var repeatElement = $("#repeat_button");
+    var thumbsUpElement = $("#thumbs_up_button");
+    var thumbsDownElement = $("#thumbs_down_button");
     
     if (track && track != null && track != ""){
         trackElement.text(track);
@@ -133,8 +142,7 @@ function PopulateInformation(){
         // Display the name of the player that is playing
         playerNameElement.text(mPlayerDetails.name);
 
-        // Get the artist element
-        var artistElement = $("#artist");
+        // Check the artist information and populate
         if (artist != null && artist != ""){
             artistElement.text(artist);
 
@@ -160,14 +168,13 @@ function PopulateInformation(){
             console.log("popup.js::PopulateInfo -- art URL: " + art_url);
         }
 
-        var artElement = $("#art");
-        
+        // Check if we have art        
         if (art_url && art_url != null && art_url != ""){
             // Update the art to display the now playing art
             artElement.attr("src", art_url);
         }else{
             // Not found, so revert it to the empty art
-            $("#art").attr("src", "/images/empty.png");
+            artElement.attr("src", "/images/empty.png");
         }
 
         // Get the current time from the player
@@ -177,9 +184,6 @@ function PopulateInformation(){
         if (mDebug){
             console.log("popup.js::PopulateInfo -- current time: " + current_time);
         }
-
-        // Get the element in our extension
-        var curTimeElement = $("#cur_time");
 
         // Update the info
         if (current_time != null && current_time != "" && mBackground.mCurrentTime > 0){
@@ -196,9 +200,6 @@ function PopulateInformation(){
             console.log("popup.js::PopulateInfo -- total time: " + total_time);
         }
 
-        // Get the total time element
-        var totalTimeElement = $("#total_time");
-
         // Update the info
         if (total_time != null && total_time != "" && mBackground.mTotalTime > 0){
             totalTimeElement.text(total_time);
@@ -214,9 +215,6 @@ function PopulateInformation(){
             console.log("popup.js::PopulateInfo -- is playing: " + playing);
         }
 
-        // Get the element
-        var playPauseElement = $("#play_pause");
-
         // Set the class of the element
         if (playing){
             playPauseElement.attr("class", "pause");
@@ -231,9 +229,6 @@ function PopulateInformation(){
         if (mDebug){
             console.log("popup.js::PopulateInfo -- is shuffled: " + shuffled);
         }
-
-        // Get the element
-        var shuffleElement = $("#shuffle_button");
 
         if (shuffled){
             shuffleElement.attr("class", "shuffle_on");
@@ -251,7 +246,7 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_off){
-            $("#repeat_button").attr("class", "repeat_off");
+            repeatElement.attr("class", "repeat_off");
         }
 
         // Get whether or not repeat is on (1)
@@ -264,7 +259,7 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_one){
-            $("#repeat_button").attr("class", "repeat_one");
+            repeatElement.attr("class", "repeat_one");
         }
 
         // Get whether or not it's repeat all
@@ -277,7 +272,7 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_all){
-            $("#repeat_button").attr("class", "repeat_all");
+            repeatElement.attr("class", "repeat_all");
         }
 
         // Get the thumbs up state
@@ -288,10 +283,7 @@ function PopulateInformation(){
             console.log("popup.js::PopulateInfo -- is thumbed up: " + thumbed_up);
         }
 
-        // Get the thumbs up element
-        var thumbsUpElement = $("#thumbs_up_button");
-
-        // Toggle it
+        // Toggle the thumbs up button
         if (thumbed_up){
             thumbsUpElement.attr("class", "thumbs_up_on");
         }else{
@@ -306,10 +298,7 @@ function PopulateInformation(){
             console.log("popup.js::PopulateInfo -- is thumbed down: " + thumbed_down);
         }
 
-        // Get the thumbs up element
-        var thumbsDownElement = $("#thumbs_down_button");
-
-        // Toggle it
+        // Toggle the thumbs down button
         if (thumbed_down){
             thumbsDownElement.attr("class", "thumbs_down_on");
         }else{
@@ -328,6 +317,12 @@ function PopulateInformation(){
 
         // Tell the user nothing is playing
         trackElement.text("Play a song.");
+
+        // Empty the other pieces as well
+        artistElement.text("");
+        artElement.attr("src", "/images/empty.png");
+        curTimeElement.text("");
+        totalTimeElement.text("");
     }
 }
 
