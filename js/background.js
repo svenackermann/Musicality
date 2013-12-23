@@ -448,6 +448,9 @@ function PopulateInformation(tabId){
         });
     }
 
+    // Save off if we have time in ms (race condition)
+    var hasTimeInMs = mPlayerDetails.has_time_in_ms;
+
     if (mPlayerDetails.has_total_track_time){
       
         // Make a request to the content script for the total time
@@ -458,11 +461,12 @@ function PopulateInformation(tabId){
             }
 
             // Check if the time is in ms for this player
-            if (mPlayerDetails.has_time_in_ms){
-                mTotalTime = total_time;
-            }else{
+            if (!hasTimeInMs){
                 // Save the total time for the popup
                 mTotalTime = GetMillisecondsFromTimeString(total_time);
+            }else{
+                // Cool. Save it off as total time.
+                mTotalTime = total_time;
             }
         });
     }else if (mPlayerDetails.has_remaining_track_time){

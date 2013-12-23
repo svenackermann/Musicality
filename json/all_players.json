@@ -78,7 +78,7 @@
 
     "Slacker" : {
         "simple_name" : "slacker",
-        "pattern" : "https?:\\/\\/www.slacker.com\\/*",
+        "pattern" : "https?:\\/\\/(.*?)\\.slacker.com\\/*",
         "json_loc" : "/json/slacker.json",
         "open_page" : "http://www.slacker.com"
     },

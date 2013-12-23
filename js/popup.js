@@ -51,6 +51,10 @@ function UpdateInformation(){
 
 // Populate the actual extension contents
 function PopulateInformation(){
+
+    // Grab the player details again
+    mPlayerDetails = mBackground.mPlayerDetails;
+    
     // Get the artist from the background
     var artist = mBackground.mArtist;
     
@@ -80,7 +84,7 @@ function PopulateInformation(){
     var totalTimeElement = $("#total_time");
     var curTimeElement = $("#cur_time");
     
-    if (track && track != null && track != ""){
+    if (track && track != null && track != "" && mPlayerDetails){
         trackElement.text(track);
 
         // Set the play/pause opacity
