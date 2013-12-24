@@ -36,7 +36,7 @@
     
     "iHeart Radio" : {
         "simple_name" : "iheart",
-        "pattern" : "https?:\\/\\/(.*?)\\.iheart.com\\/*",
+        "pattern" : "https?:\\/\\/(.*?)\\.iheart\\.com\\/*",
         "json_loc" : "/json/iheart.json",
         "open_page" : "http://iheart.com"
     },
@@ -60,6 +60,13 @@
         "pattern" : "https?:\\/\\/mog.com\\/*",
         "json_loc" : "/json/mog.json",
         "open_page" : "http://mog.com"
+    },
+
+    "Myspace" : {
+        "simple_name" : "myspace",
+        "pattern" : "https?:\\/\\/myspace\\.com\\/*",
+        "json_loc" : "/json/myspace.json",
+        "open_page" : "https://www.myspace.com/discover/music"
     },
     
     "Pandora" : {

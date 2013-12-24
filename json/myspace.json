@@ -1,0 +1,42 @@
+{
+    "name" : "Myspace",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('*[data-original-title=Pause]').length > 0",
+    "is_paused" : "$('#footer').hasClass('paused')",
+    "is_shuffled" : "$('#footer').hasClass('shuffled')",
+    "is_repeat_off" : "var a = $('#footer'); (!a.hasClass('repeatAll') && !a.hasClass('repeatOne'))",
+    "is_repeat_one" : "$('#footer').hasClass('repeatOne')",
+    "is_repeat_all" : "$('#footer').hasClass('repeatAll')",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('.selected img').attr('src')",
+    "get_artist" : "$('.track .artist').text()",
+    "get_track" : "$('.track .title').text()",
+    "get_current_time" : "$('time .time').text()",
+    "get_total_time" : "$('time .duration').text().split('/')[1].trim()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('.play').click()",
+    "click_pause" : "$('.play').click()",
+    "click_next_track" : "$('.next').click()",
+    "click_prev_track" : "$('.previous').click()",
+    "click_shuffle" : "$('*[data-original-title=Shuffle').click()",
+    "click_repeat" : "$('*[data-original-title=Repeat').click()"
+}
