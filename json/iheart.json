@@ -36,5 +36,9 @@
     "click_pause" : "$('.play.js-play').click()",
     "click_next_track" : "$('.text.js-next.next').click()",
     "click_thumbs_up" : "$('.action.js-thumbs-up').click()",
-    "click_thumbs_down" : "$('.action.js-thumbs-down').click()"
+    "click_thumbs_down" : "$('.action.js-thumbs-down').click()",
+
+    "COMMENT_5" : "iHeart is special since we can't necessarily get individual track progress for scrobbling. Simply scrobble on track changes.",
+
+    "scrobbleOnChange" : true
 }
