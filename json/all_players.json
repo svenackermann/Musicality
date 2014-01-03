@@ -1,4 +1,12 @@
 {
+
+    "8tracks" : {
+        "simple_name" : "8tracks",
+        "pattern" : "https?\\:\\/\\/8tracks\\.com\\/*",
+        "json_loc" : "/json/8tracks.json",
+        "open_page" : "http://8tracks.com"
+    },
+    
     "Amazon Cloud Player" : {
         "simple_name" : "amazon",
         "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/mp3\\/*",

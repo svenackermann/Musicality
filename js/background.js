@@ -755,7 +755,8 @@ function DoLastFmWork(){
             
             // Now check to ensure it's progress is greater than 50 or that this
             // player doesn't have any way of tracking progress
-            if (percentage >= 0.5 && percentage < 1 || mPlayerDetails.scrobbleOnChange){
+            if (percentage >= 0.5 && percentage < 1 ||
+                (mPlayerDetails != null && mPlayerDetails.scrobbleOnChange)){
                 // Ensure we haven't already scrobbled this track
                 if (curTrack != mLastScrobble){
                     // Push this scrobble into our queue
