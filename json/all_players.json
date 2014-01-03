@@ -119,6 +119,13 @@
         "open_page" : "https://play.spotify.com"
     },
 
+    "Tunein" : {
+        "simple_name" : "tunein",
+        "pattern" : "https?\\:\\/\\/tunein\\.com\\/*",
+        "json_loc" : "/json/tunein.json",
+        "open_page" : "http://tunein.com"
+    },
+
     "Xbox Music" : {
         "simple_name" : "xbox_music",
         "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",

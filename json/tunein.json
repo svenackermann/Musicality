@@ -1,0 +1,38 @@
+{
+    "name" : "Tunein",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : false,
+    "has_next_track" : false,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : false,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "var a = $('#tuner'); a.hasClass('playing') || a.hasClass('buffering')",
+    "is_paused" : "$('#tuner').hasClass('stopped')",
+    "is_thumbed_up" : "$('.favorite_song ._favoriteItem.favorite.in').length > 0",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('.artwork.col img').attr('src')",
+    "get_artist" : "var a = $('.line1._navigateNowPlaying').text().split(' - '); if (a.length > 1){a[1];}else{$('.line2._navigateNowPlaying').text();}",
+    "get_track" : "$('.line1._navigateNowPlaying').text().split(' - ')[0]",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('.buttons .action .icon').click()",
+    "click_pause" : "$('.buttons .action .icon').click()",
+    "click_thumbs_up" : "location.assign('javascript:$(\".favorite_song ._favoriteItem\").trigger(\"click\")')",
+
+"COMMENT_5" : "Tunein is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
+
+    "scrobbleOnChange" : true
+}
