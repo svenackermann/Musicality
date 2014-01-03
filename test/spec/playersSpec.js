@@ -1,3 +1,4 @@
 describe("Players", function(){
-    // TODO
+    // Load the json from all players
+    
 });

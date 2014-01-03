@@ -687,8 +687,8 @@ function GetMillisecondsFromTimeString(timeString) {
 
 // A function to interact with the scrobbler
 function DoLastFmWork(){
-    // Ensure we have a track and artist
-    if (mTrack != null && mArtist != null){
+    // Ensure we have a track and artist and are playing
+    if (mTrack != null && mArtist != null && mIsPlaying){
         // Cool. Tell Last.fm we are playing 
         RunLastFmQuery({method: "track.updateNowPlaying",
                         track: mTrack,
