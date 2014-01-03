@@ -347,8 +347,13 @@ function UpdateBadgeText(){
         // Increment the scroll amount
         mBadgeTextScroll++;
     }else{
-        // Clear the badge text
-        chrome.browserAction.setBadgeText({text: ""});
+        // First get the current badge text to see if it's empty or not
+        chrome.browserAction.getBadgeText({}, function(result){
+            if (result != ""){
+                // Clear the badge text
+                chrome.browserAction.setBadgeText({text: ""});
+            }
+        });
     }
 }
 
