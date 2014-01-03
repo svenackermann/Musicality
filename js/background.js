@@ -749,7 +749,7 @@ function DoLastFmWork(){
         mScrobbleQueue = newQueue.slice();
     }else{
         // This is not a new track. Check if our timestamp is old enough
-        if (curTimestamp - mListeningTrackTimestamp > 30 - mLastFmWorkDelay){
+        if (curTimestamp - mListeningTrackTimestamp > 31000 - mLastFmWorkDelay){
             // Get the percentage
             var percentage = mCurrentTime/mTotalTime;
             

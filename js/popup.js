@@ -191,7 +191,8 @@ function PopulateInformation(){
         }
 
         // Update the info
-        if (total_time != null && total_time != "" && mBackground.mTotalTime > 0){
+        if (total_time != null && total_time != "" && mBackground.mTotalTime > 0 &&
+            curTimeElement.text() != ""){
             totalTimeElement.text(total_time);
         }else{
             totalTimeElement.text("");
