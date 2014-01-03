@@ -977,5 +977,6 @@ $(function(){
             }
         });
     }, mLastFmWorkDelay);
+
 });
 

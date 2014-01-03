@@ -37,8 +37,16 @@
         "http://*/*",
         "https://*/*"
     ],
+    "commands" : {
+        "toggle-feature-play-pause" : {
+            "suggested_key" : {
+                "default" : "MediaPlayPause"
+            },
+            "description" : "Toggle Play/Pause"
+        }
+    },
     "update_url": "http://clients2.google.com/service/update2/crx",
-    "version": "2.0.12",
+    "version": "2.0.13",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
 }
