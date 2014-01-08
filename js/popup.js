@@ -348,42 +348,42 @@ function UpdateButton(buttonToUpdate, updatedClass){
 // Method executed when extensions shuffle is clicked
 function ShuffleClick(){
     // Call the master clicker
-    ClickSomething("click_shuffle");
+    ClickSomething(CLICK_SHUFFLE);
 }
 
 // Method executed when extensions repeat is clicked
 function RepeatClick(){
-    ClickSomething("click_repeat");
+    ClickSomething(CLICK_REPEAT);
 }
 
 // Method executed when extensions prev track is clicked
 function PrevTrackClick(){
-    ClickSomething("click_prev_track");
+    ClickSomething(CLICK_PREV_TRACK);
 }
 
 // Method executed when extensions play is clicked
 function PlayClick(){
-    ClickSomething("click_play");
+    ClickSomething(CLICK_PLAY);
 }
 
 // Method executed when extensions pause is clicked
 function PauseClick(){
-    ClickSomething("click_pause");
+    ClickSomething(CLICK_PAUSE);
 }
 
 // Method executed when extensions next track is clicked
 function NextTrackClick(){
-    ClickSomething("click_next_track");
+    ClickSomething(CLICK_NEXT_TRACK);
 }
 
 // Method executed when extensions thumbs up is clicked
 function ThumbsUpClick(){
-    ClickSomething("click_thumbs_up");
+    ClickSomething(CLICK_THUMBS_UP);
 }
 
 // Method executed when extensions thumbs down is clicked
 function ThumbsDownClick(){
-    ClickSomething("click_thumbs_down");
+    ClickSomething(CLICK_THUMBS_DOWN);
 }
 
 // General method for dealing with clicking anything

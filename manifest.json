@@ -43,6 +43,30 @@
                 "default" : "MediaPlayPause"
             },
             "description" : "Toggle Play/Pause"
+        },
+        "toggle-feature-next-track" : {
+            "suggested_key" : {
+                "default" : "MediaNextTrack"
+            },
+            "description" : "Next Track"
+        },
+        "toggle-feature-prev-track" : {
+            "suggested_key" : {
+                "default" : "MediaPrevTrack"
+            },
+            "description" : "Previous Track"
+        },
+        "toggle-feature-thumbs-up" : {
+            "description" : "Toggle Thumbs Up"
+        },
+        "toggle-feature-thumbs-down" : {
+            "description" : "Toggle Thumbs Down"
+        },
+        "toggle-feature-shuffle" : {
+            "description" : "Toggle Shuffle State"
+        },
+        "toggle-feature-repeat" : {
+            "description" : "Toggle Repeat State"
         }
     },
     "update_url": "http://clients2.google.com/service/update2/crx",
