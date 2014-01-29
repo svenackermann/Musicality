@@ -21,6 +21,13 @@
         "open_page" : "http://www.bandcamp.com"
     },
 
+    "Deezer" : {
+        "simple_name" : "deezer",
+        "pattern" : "https?:\\/\\/www.deezer.com\\/*",
+        "json_loc" : "/json/deezer.json",
+        "open_page" : "http://www.deezer.com"
+    },
+
     "Google Music" : {
         "simple_name" : "google_music",
         "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",
