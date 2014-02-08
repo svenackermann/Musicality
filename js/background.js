@@ -916,7 +916,7 @@ function ProcessFirstRun(){
     });
 
     // Check if we've shown the user the current welcome page
-    chrome.storage.local.get('welcome_shown' function(result){
+    chrome.storage.local.get('welcome_shown', function(result){
         if (!result.welcome_shown){
             // Save off that we've shown it
             chrome.storage.local.set({'welcome_shown' : true}, function(){
