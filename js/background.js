@@ -34,6 +34,9 @@ var mPlayerOpen = false;
 // Is playing
 var mIsPlaying = false;
 
+// Is Paused
+var mIsPaused = false;
+
 // The artist
 var mArtist = null;
 
@@ -118,6 +121,7 @@ var mLastFmWorkDelay = 15000;
 // Reset some members
 function ResetMembers(){
     mIsPlaying = false;
+    mIsPaused = false;
     mArtist = null;
     mTrack = null;
     mArtUrl = null
@@ -227,7 +231,9 @@ function FindTabPlayingMusic(callback){
                 }
             }
         }
-        // Yikes. None of our windows matched. Callback -1
+        // Yikes. None of our windows matched.
+
+        // Callback -1
         callback(-1, null);
         return;
     });
@@ -293,7 +299,7 @@ function UpdateInformation(){
         DoesTabExist(mLastPlayingTabId, function(exists){
             if (exists){
                 // Is it still playing music?
-                IsPlayingMusic(mLastPlayingTabId, mPlayerDetails, function(isPlaying){
+                var result = IsPlayingMusic(mLastPlayingTabId, mPlayerDetails, function(isPlaying){
                     if (isPlaying){
                         // Grab the different pieces from that tab, if we are displaying
                         PopulateInformation(mLastPlayingTabId);
@@ -301,6 +307,11 @@ function UpdateInformation(){
                         lookForPlayingTabHelper();
                     }
                 });
+
+                if (!result){
+                    // Something seems weird. Let's look for a tab playing
+                    lookForPlayingTabHelper();
+                }
             }else{
                 // Need to look for a tab playing music
                 lookForPlayingTabHelper();
@@ -393,6 +404,11 @@ function lookForPlayingTabHelper(){
 
             // Reset the members
             ResetMembers();
+
+            // Set the default icon
+            chrome.browserAction.setIcon({
+                path : "/images/icon48.png"
+            });
         }
     });
 }
@@ -548,7 +564,7 @@ function PopulateInformation(tabId){
         
     }
     
-    // Make a request to the content script for the play/pause state
+    // Make a request to the content script for whether or not we are playing
     SendPlayerRequest(tabId, mPlayerDetails, "is_playing", function(playing){
         // Log whatever we have got
         if (mDebug){
@@ -557,6 +573,29 @@ function PopulateInformation(tabId){
 
         // Save whether or not it's playing for the popup
         mIsPlaying = playing;
+    });
+
+    // Check if we are paused
+    SendPlayerRequest(tabId, mPlayerDetails, "is_paused", function(paused){
+        // Log whatever we have got
+        if (mDebug){
+            console.log("background.js::PopulateInfo -- is paused: " + paused);
+        }
+
+        // Save whether or not it's paused for the popup
+        mIsPaused = paused;
+
+        // Update the icon to the paused one if we are paused
+        if (mIsPaused){
+            chrome.browserAction.setIcon({
+                path : "/images/icon48paused.png"
+            });
+        }else{
+            // Update the icon to show we are not paused
+            chrome.browserAction.setIcon({
+                path : "/images/icon48.png"
+            });
+        }
     });
 
     // Make a request to the content script for the shuffle state
@@ -785,10 +824,13 @@ function IsPlayingMusic(tabId, playerDetails, callback){
             "is_playing",
             function(result){
                 callback(result);
-                return;
+                return true;
             }
         );
     }
+
+    // No bueno. Page for given tab may have changed.
+    return false;
 }
 
 // Function to determine if a given tab is paused, and could play music
