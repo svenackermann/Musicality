@@ -407,7 +407,7 @@ function lookForPlayingTabHelper(){
 
             // Set the default icon
             chrome.browserAction.setIcon({
-                path : "/images/icon48.png"
+                path : "/images/icon19.png"
             });
         }
     });
@@ -588,12 +588,12 @@ function PopulateInformation(tabId){
         // Update the icon to the paused one if we are paused
         if (mIsPaused){
             chrome.browserAction.setIcon({
-                path : "/images/icon48paused.png"
+                path : "/images/icon19paused.png"
             });
         }else{
             // Update the icon to show we are not paused
             chrome.browserAction.setIcon({
-                path : "/images/icon48.png"
+                path : "/images/icon19.png"
             });
         }
     });
