@@ -14,7 +14,6 @@
     "has_current_track_time" : false,
     "has_total_track_time" : false,
     "has_remaining_track_time" : false,
-    "has_progress_percentage" : true,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
@@ -28,7 +27,6 @@
     "get_album_art" : "$(\".player-state-display.player-state-display-song img\").attr(\"src\")",
     "get_artist" : "$(\".szi-artist\").first().text()",
     "get_track" : "$(\".szi-title\").first().text()",
-    "get_progress" : "parseFloat($(\".szi-bar\").attr(\"style\").split(\":\")[1].trim())/100.0",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
@@ -36,5 +34,9 @@
     "click_pause" : "$(\".player-control-button.player-pause\").click()",
     "click_next_track" : "$(\".player-control-button.player-skip\").click()",
     "click_thumbs_up" : "$(\".player-control-button.player-vote-up\").click()",
-    "click_thumbs_down" : "$(\".player-control-button.player-vote-down\").click()"
+    "click_thumbs_down" : "$(\".player-control-button.player-vote-down\").click()",
+
+    "COMMENT_5" : "Songza is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
+    
+    "scrobbleOnChange" : true
 }

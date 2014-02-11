@@ -144,12 +144,15 @@ function FindTabPlayingMusic(callback){
 
     // An array of tabs currently paused
     var pausedTabs = [];
+
+    // A counter of async calls running. (starts at 1 before our first async)
+    var asyncsRunning = { "count" : 1 };
     
     // Cycle through each tab
     chrome.windows.getAll({populate: true}, function(windows){
-        var asyncsRunning = { "count" : 0 };
         for (var window=0; window<windows.length; window++){
             for (var i=0; i<windows[window].tabs.length; i++){
+                // Get the current tab
                 var curTab = windows[window].tabs[i];
 
                 // Now iterate through our patterns, checking if
@@ -169,24 +172,34 @@ function FindTabPlayingMusic(callback){
                                         curPlayer + " at tab " + curTab.id);
                         }
 
+                        // Increment the number of asyncs we have running
+                        asyncsRunning.count++;
+
                         // We want some closure to preserve the tabId for all callbacks.
                         (function (tabId){
+                            // Increment asyncs again
+                            asyncsRunning.count++;
+                            
                             // Load the details for this player type into memory
                             $.getJSON(curPlayer.json_loc, function(playerDetails) {
                                 if (mDebug){
                                     console.log("background.js::FindTabPlayingMusic() -- details = " + playerDetails);
                                 }
 
-                                // Increment the number of asyncs we have running
-                                asyncsRunning.count++;
-
                                 // A flag to see if we have already returned a player
                                 var alreadyReturned = false;
+
+                                // Increment asyncs running
+                                asyncsRunning.count++;
 
                                 // Is it currently playing music?
                                 IsPlayingMusic(tabId, playerDetails, function(isPlaying){
                                     if (isPlaying){
                                         // Sweet. Found one we wanted.
+                                        if (mDebug){
+                                            console.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is playing music!");
+                                        }
+                                        
                                         if (!alreadyReturned){
                                             alreadyReturned = true;
                                             callback(tabId, playerDetails);
@@ -199,60 +212,78 @@ function FindTabPlayingMusic(callback){
                                         // Check if it was paused instead.
                                         IsPaused(tabId, playerDetails, function(isPaused){
                                             if (isPaused){
+                                                if (mDebug){
+                                                    console.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
+                                                }
+                                                
                                                 // Found a paused tab. Save it off
-                                                pausedTabs.push({ "id" : tabId,
-                                                                  "details" : playerDetails
-                                                                });
-
-                                                // If everything's done,
-                                                // returned a paused tab
-                                                returnPausedTabHelper(asyncsRunning,
-                                                                      pausedTabs,
-                                                                      callback);
-                                                return;
+                                                pausedTabs.push(
+                                                    {
+                                                        "id" : tabId,
+                                                        "details" : playerDetails
+                                                    });
                                             }else{
-                                                // This tab wasn't paused, or playing.
-                                                // Check if all asyncs are done.
-                                                returnPausedTabHelper(asyncsRunning,
-                                                                      pausedTabs,
-                                                                      callback);
-                                                return;
+                                                if (mDebug){
+                                                    console.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
+                                                }
                                             }
+                                            // If everything's done,
+                                            // returned a paused tab
+                                            returnPausedTabHelper(asyncsRunning,
+                                                                  pausedTabs,
+                                                                  callback);
+
                                         });
-                                        returnPausedTabHelper(asyncsRunning,
-                                                              pausedTabs,
-                                                              callback);
-                                        return;
                                     }
+                                    // Decrement our asyncs running. See if we are
+                                    // done or not.
+                                    returnPausedTabHelper(asyncsRunning,
+                                                          pausedTabs,
+                                                          callback);
                                 });
+                                // Decrement our asyncs running. See if we are
+                                // done or not.
+                                returnPausedTabHelper(asyncsRunning,
+                                                      pausedTabs,
+                                                      callback);
                             });
+                            // Decrement our asyncs running. See if we are
+                            // done or not.
+                            returnPausedTabHelper(asyncsRunning,
+                                                  pausedTabs,
+                                                  callback);
                         })(curTab.id)
                     }
                 }
             }
         }
-        // Yikes. None of our windows matched.
-
-        // Callback -1
-        callback(-1, null);
-        return;
+        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
     });
-
-    // We don't want to callback anything, since it is likely still processing.
 }
 
 // A helper function to prevent code duplication
 function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
+    if (mDebug){
+        console.log("background.js::returnPausedTabHelper() -- asyncsRunning = " +
+                    (asyncsRunning.count - 1) + ", pausedTabs = " + pausedTabs);
+    }
+
+    // Decrement asyncsRunning and check if we are done
     if (--asyncsRunning.count == 0){
         // All done with the asyncs. Check if there were any paused tabs
         if (pausedTabs.length > 0){
             pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
             callback(pausedTabs[0].id, pausedTabs[0].details);
             return;
+        }else{
+            // Nothing has been found. Sad!
+            callback(-1, null);
         }
+    }else if (asyncsRunning.count < 0){
+        // Found nothing. Not a good sign.
+        callback(-1, null);
+        return;
     }
-    callback(-1, null);
-    return;
 }
 
 // We need a compare function for sorting the paused tabs
@@ -512,6 +543,9 @@ function PopulateInformation(tabId){
             mTotalTime = mCurrentTime + Math.abs(remainingMillis);
         });
     }else if (mPlayerDetails.has_progress_percentage){
+
+        // No players are currently using this. Songza did, but it was removed.
+        // If you want to use this, ensure it works.
       
         // Get the progress from the player
         SendPlayerRequest(tabId, mPlayerDetails, "get_progress", function(currentProgress){
