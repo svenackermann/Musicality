@@ -22,7 +22,9 @@
         "page" : "/html/background.html"
     },
     "options_page" : "/html/options.html",
-    "description": "Lightweight music playback controls and now playing information for online music services. Created by Kyle Kamperschroer",
+    "description": "Playback controls, now playing information, keyboard shortcuts, 
+        and scrobbling for online music services such as Pandora™, Google Music™, 
+        HypeMachine™ and more! Created by Kyle Kamperschroer",
     "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
     "icons": {
         "128": "/images/icon128.png",
@@ -70,7 +72,7 @@
         }
     },
     "update_url": "http://clients2.google.com/service/update2/crx",
-    "version": "2.0.17",
+    "version": "2.0.18",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "author": "Kyle Kamperschroer",

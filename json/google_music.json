@@ -18,7 +18,7 @@
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
     "is_playing" : "$('*[data-id=play-pause]').hasClass('playing')",
-    "is_paused" : "(!$('#playerSongTitle').hasClass('playing') && $('#playerSongTitle').length > 0)",
+    "is_paused" : "(!$('*[data-id=play-pause]').hasClass('playing') && $('#playerSongTitle').length > 0)",
     "is_shuffled" : "$('.player-middle *[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
     "is_repeat_off" : "$('*[data-id=repeat]').attr('value') == 'NO_REPEAT'",
     "is_repeat_one" : "$('*[data-id=repeat]').attr('value') == 'SINGLE_REPEAT'",

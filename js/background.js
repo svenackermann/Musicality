@@ -427,6 +427,13 @@ function lookForPlayingTabHelper(){
         if (mLastPlayingTabId != null && mPlayerDetails != null){
             // We've got one. Populate if displayed
             PopulateInformation(mLastPlayingTabId);
+
+            // Let's push the player name as a custom GA variable
+            _gaq.push(['_setCustomVar',
+                1,
+                'Player Name',
+                mPlayerDetails.name,
+                2]);
         }else{
             // If we didn't find anything, nothing is populated.
             if (mDebug){
@@ -481,7 +488,13 @@ function PopulateInformation(tabId){
         mArtUrl = art_url;
     });
 
-    if (mPlayerDetails.has_current_track_time){
+    // Save off if we have time in ms (race condition)
+    var hasTimeInMs;
+    if (mPlayerDetails){
+        hasTimeInMs = mPlayerDetails.has_time_in_ms;
+    }
+
+    if (mPlayerDetails && mPlayerDetails.has_current_track_time){
      
         // Make a request to the content script for the current time    
         SendPlayerRequest(tabId, mPlayerDetails, "get_current_time", function(current_time){
@@ -491,7 +504,7 @@ function PopulateInformation(tabId){
             }
 
             // Check if the time is in ms for this player
-            if (mPlayerDetails.has_time_in_ms){
+            if (hasTimeInMs){
                 mCurrentTime = current_time;
             }else{
                 // Save the current time for the popup
@@ -500,10 +513,7 @@ function PopulateInformation(tabId){
         });
     }
 
-    // Save off if we have time in ms (race condition)
-    var hasTimeInMs = mPlayerDetails.has_time_in_ms;
-
-    if (mPlayerDetails.has_total_track_time){
+    if (mPlayerDetails && mPlayerDetails.has_total_track_time){
       
         // Make a request to the content script for the total time
         SendPlayerRequest(tabId, mPlayerDetails, "get_total_time", function(total_time){
@@ -521,7 +531,7 @@ function PopulateInformation(tabId){
                 mTotalTime = total_time;
             }
         });
-    }else if (mPlayerDetails.has_remaining_track_time){
+    }else if (mPlayerDetails && mPlayerDetails.has_remaining_track_time){
        
         // Make a request to the content script for the remaining time
         SendPlayerRequest(tabId, mPlayerDetails, "get_remaining_time", function(remaining_time){
@@ -533,7 +543,7 @@ function PopulateInformation(tabId){
             var remainingMillis = 0;
             
             // Check if the time is in ms for this player
-            if (mPlayerDetails.has_time_in_ms){
+            if (hasTimeInMs){
                 remainingMillis = remaining_time;
             }else{
                 remainingMillis = GetMillisecondsFromTimeString(remaining_time);
@@ -542,7 +552,7 @@ function PopulateInformation(tabId){
             // Remaining may or may not be a negative number.
             mTotalTime = mCurrentTime + Math.abs(remainingMillis);
         });
-    }else if (mPlayerDetails.has_progress_percentage){
+    }else if (mPlayerDetails && mPlayerDetails.has_progress_percentage){
 
         // No players are currently using this. Songza did, but it was removed.
         // If you want to use this, ensure it works.
@@ -676,7 +686,7 @@ function PopulateInformation(tabId){
         mIsRepeatAll = repeat_all;
     });
 
-    if (mPlayerDetails.has_thumbs_up){
+    if (mPlayerDetails && mPlayerDetails.has_thumbs_up){
         // Make a request to the content script for the thumbs state
         SendPlayerRequest(tabId, mPlayerDetails, "is_thumbed_up", function(thumbed_up){
             // Log whatever we have got
@@ -689,7 +699,7 @@ function PopulateInformation(tabId){
         });
     }
 
-    if (mPlayerDetails.has_thumbs_down){
+    if (mPlayerDetails && mPlayerDetails.has_thumbs_down){
         // Make a request to the content script for the thumbs state
         SendPlayerRequest(tabId, mPlayerDetails, "is_thumbed_down", function(thumbed_down){
             // Log whatever we have got
