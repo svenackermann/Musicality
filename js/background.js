@@ -511,6 +511,9 @@ function PopulateInformation(tabId){
                 mCurrentTime = GetMillisecondsFromTimeString(current_time);
             }
         });
+    }else{
+        // Reset mCurrentTime
+        mCurrentTime = null;
     }
 
     if (mPlayerDetails && mPlayerDetails.has_total_track_time){
@@ -532,6 +535,8 @@ function PopulateInformation(tabId){
             }
         });
     }else if (mPlayerDetails && mPlayerDetails.has_remaining_track_time){
+        // Reset total track time
+        mTotalTime = null;
        
         // Make a request to the content script for the remaining time
         SendPlayerRequest(tabId, mPlayerDetails, "get_remaining_time", function(remaining_time){
@@ -553,6 +558,8 @@ function PopulateInformation(tabId){
             mTotalTime = mCurrentTime + Math.abs(remainingMillis);
         });
     }else if (mPlayerDetails && mPlayerDetails.has_progress_percentage){
+        // Reset total track time
+        mTotalTime = null;
 
         // No players are currently using this. Songza did, but it was removed.
         // If you want to use this, ensure it works.
@@ -606,6 +613,9 @@ function PopulateInformation(tabId){
             }
         });
         
+    }else{
+        // Reset total track time
+        mTotalTime = null;
     }
     
     // Make a request to the content script for whether or not we are playing

@@ -1,0 +1,38 @@
+{
+
+    "name" : "Twitter Music",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : false,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('.cd-controls a').hasClass('playing')",
+    "is_paused" : "!$('.cd-controls a').hasClass('playing') && $('span.track-title').attr('title') != null",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('.artist-tile.artist-tile-cover.playing a img').css('background-image').substring(4).split(')')[0]",
+    "get_artist" : "$('a.track-artist span').attr('title')",
+    "get_track" : "$('span.track-title').attr('title')",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('.cd-controls a')[0].click()",
+    "click_pause" : "$('.cd-controls a')[0].click()",
+    "click_next_track" : "$('a.player-next')[0].click()",
+
+"COMMENT_5" : "Twitter Music is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
+
+    "scrobbleOnChange" : true
+}
