@@ -140,7 +140,12 @@ function PopulateInformation(){
         mCurTrack = track;
 
         // Display the name of the player that is playing
-        playerNameElement.text(mPlayerDetails.name);
+        var playerName = mPlayerDetails.name;
+        if (playerName != null && playerName != ""){
+ 
+           // Set the text appropriately
+           playerNameElement.text(playerName);
+       }
 
         // Check the artist information and populate
         if (artist != null && artist != ""){

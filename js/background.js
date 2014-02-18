@@ -433,7 +433,13 @@ function lookForPlayingTabHelper(){
                 1,
                 'Player Name',
                 mPlayerDetails.name,
-                2]);
+                3]);
+
+            // Track the event
+            _gaq.push(['_trackEvent',
+                'Background',
+                'Found Player'
+                ])
         }else{
             // If we didn't find anything, nothing is populated.
             if (mDebug){
