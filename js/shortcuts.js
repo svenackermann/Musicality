@@ -30,6 +30,19 @@ chrome.commands.onCommand.addListener(function(command){
 
         // Finally, update information
         UpdateInformation();
+
+        // Track what player is in use
+        _gaq.push(['_setCustomVar',
+            1,
+            'Player Name',
+            mPlayerDetails.name,
+            3]);
+
+        // Track the event
+        _gaq.push(['_trackEvent',
+            'Found Player',
+            'Shortcuts'
+            ])
     }
 });
     

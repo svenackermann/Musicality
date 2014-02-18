@@ -145,6 +145,19 @@ function PopulateInformation(){
  
            // Set the text appropriately
            playerNameElement.text(playerName);
+
+           // Let's push the player name as a custom GA variable
+           _gaq.push(['_setCustomVar',
+            1,
+            'Player Name',
+            mPlayerDetails.name,
+            3]);
+
+           // Track the event
+           _gaq.push(['_trackEvent',
+            'Found Player',
+            'Popup'
+            ])
        }
 
         // Check the artist information and populate

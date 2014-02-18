@@ -437,8 +437,8 @@ function lookForPlayingTabHelper(){
 
             // Track the event
             _gaq.push(['_trackEvent',
-                'Background',
-                'Found Player'
+                'Found Player',
+                'Background'
                 ])
         }else{
             // If we didn't find anything, nothing is populated.
