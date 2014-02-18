@@ -4,7 +4,7 @@ Musicality is a [Chrome Extension](https://chrome.google.com/webstore/detail/fji
 
 ## Fixing or Adding a Player
 
-Musicality was implemented with simplicity and extensibility in mind. If you want to contribute to this project and add or fix a player, all you need to know how to do is write JQuery selectors. There needs to be documentation written in order to provide a step-by-step guide to fixing and adding a new player, but the general idea is to modify (json/all_players.json)[https://github.com/kkamperschroer/Musicality/blob/master/json/all_players.json] to specify some metadata about the player, and create a new json file for the player. Use the (Google Music™ json file)[https://github.com/kkamperschroer/Musicality/blob/master/json/google_music.json] as an example of what fields can be used within the configuration file.
+Musicality was implemented with simplicity and extensibility in mind. If you want to contribute to this project and add or fix a player, all you need to know how to do is write JQuery selectors. There needs to be documentation written in order to provide a step-by-step guide to fixing and adding a new player, but the general idea is to modify [json/all_players.json](https://github.com/kkamperschroer/Musicality/blob/master/json/all_players.json) to specify some metadata about the player, and create a new json file for the player. Use the [Google Music™ json file](https://github.com/kkamperschroer/Musicality/blob/master/json/google_music.json) as an example of what fields can be used within the configuration file.
 
 ## Things I Need Your Help For
 
