@@ -26,7 +26,7 @@
     
     "get_album_art" : "$('#art img').attr('data-src')",
     "get_artist" : "$('#now-playing .title').text().split('-')[0].trim()",
-    "get_track" : "$('#now-playing .title').text().split('-')[1].trim()",
+    "get_track" : "var a=$('#now-playing .title').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
     "get_current_time" : "$('.timestamps .elapsed').text()",
     "get_remaining_time" : "$('.timestamps .remaining').text()",
 
