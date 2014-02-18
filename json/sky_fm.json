@@ -1,0 +1,39 @@
+{
+
+    "name" : "Sky.FM",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : false,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('#ctl-play').hasClass('pause')",
+    "is_paused" : "$('#ctl-play').hasClass('play')",
+    "is_thumbed_up" : "$($('.vote-btn.up')[0]).hasClass('voted')",
+    "is_thumbed_down" : "$($('.vote-btn.down')[0]).hasClass('voted')",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('#art img').attr('data-src')",
+    "get_artist" : "$('#now-playing .title').text().split('-')[0].trim()",
+    "get_track" : "var a=$('#now-playing .title').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
+    "get_current_time" : "$('.timestamps .elapsed').text()",
+    "get_remaining_time" : "$('.timestamps .remaining').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('#ctl-play').click()",
+    "click_pause" : "$('#ctl-play').click()",
+    "click_thumbs_up" : "$($('.vote-btn.up')[0]).click()",
+    "click_thumbs_down" : "$($('.vote-btn.down')[0]).click()"
+}

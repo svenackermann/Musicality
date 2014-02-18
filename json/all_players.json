@@ -105,6 +105,14 @@
         "open_page" : "http://www.rdio.com"
     },
 
+    "Sky.FM" : {
+        "simple_name" : "sky_fm",
+        "pattern" : "https?:\\/\\/(.*?)\\.sky\\.fm\\/*",
+        "json_loc" : "/json/sky_fm.json",
+        "open_page" : "http://www.ski.fm"
+    },
+
+
     "Slacker" : {
         "simple_name" : "slacker",
         "pattern" : "https?:\\/\\/(.*?)\\.slacker.com\\/*",
