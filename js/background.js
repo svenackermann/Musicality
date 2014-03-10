@@ -105,6 +105,12 @@ var mListeningTrackTimestamp = null;
 // The track + " " + artist name to represent the new track
 var mListeningTrackName = null;
 
+// The current tracks progess through the song
+var mListeningTrackProgress = null;
+
+// Variable to keep track of if we've scrobbled a repeating track already
+var mTrackRepeatingScrobbled = false;
+
 // Cache of songs to scrobble
 var mScrobbleQueue = [];
 
@@ -805,8 +811,35 @@ function DoLastFmWork(){
     // Get the current timestamp
     var curTimestamp = Date.now();
 
-    // Check if this is a new track
-    if (mListeningTrackName != curTrack){
+    // Variable in case track is repeating
+    var trackRepeating = false;
+
+    // Variable in case track has repeated
+    var trackRepeated = false;
+
+    // Check if the current track is repeating
+    if ((mListeningTrackName == curTrack) &&
+        (mIsRepeatOne || mIsRepeatAll)){
+        // Set a variable that makes it clear this track is in the process
+        // of repeating
+        trackRepeating = true;
+
+        // Now check if it has already repeated, and progress is less
+        // than what it was last time we checked.
+        if (mCurrentTime < mListeningTrackProgress){
+            // Yup. It has repeated, so let's log it as such.
+            trackRepeated = true;
+
+            // Reset trackRepeatingScrobbled so the next repeat will get scrobbled
+            mTrackRepeatingScrobbled = false;
+        }
+    }
+
+    // Set the current listening time
+    mListeningTrackProgress = mCurrentTime;
+
+    // Check if this is a new track, or if we've repeated the same one
+    if (mListeningTrackName != curTrack || trackRepeated){
         // Reset the stored timestamp
         mListeningTrackTimestamp = curTimestamp;
 
@@ -856,8 +889,11 @@ function DoLastFmWork(){
             // player doesn't have any way of tracking progress
             if (percentage >= 0.5 && percentage < 1 ||
                 (mPlayerDetails != null && mPlayerDetails.scrobbleOnChange)){
-                // Ensure we haven't already scrobbled this track
-                if (curTrack != mLastScrobble){
+
+                // Ensure we haven't already scrobbled this track, or that it's
+                // repeating and we have gone backwards in progress
+                if (curTrack != mLastScrobble ||
+                    (trackRepeating && !mTrackRepeatingScrobbled)){
                     // Push this scrobble into our queue
                     mScrobbleQueue.push({artist: mArtist,
                                          track: mTrack,
@@ -867,6 +903,12 @@ function DoLastFmWork(){
 
                     // Save this track off as the last scrobble
                     mLastScrobble = curTrack;
+
+                    // If we scrobbled this due to repeating track, make sure
+                    // we don't do it again until the next repeat
+                    if (trackRepeating){
+                        mTrackRepeatingScrobbled = true;
+                    }
                 }
             }
         }
