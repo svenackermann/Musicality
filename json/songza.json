@@ -17,24 +17,24 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\".sz-player.sz-player-play-state-play\").length > 0",
-    "is_paused" : "$(\".sz-player.sz-player-play-state-pause\").length > 0",
-    "is_thumbed_up" : "$(\".player-control-button.player-vote-up\").css(\"background-position\") == \"0px -259px\"",
-    "is_thumbed_down" : "$(\".player-control-button.player-vote-down\").css(\"background-position\") != \"0px -148px\"",
+    "is_playing" : "$('.player-wrapper.player-state-song').hasClass('player-state-play')",
+    "is_paused" : "$('.player-wrapper.player-state-song').hasClass('player-state-pause')",
+    "is_thumbed_up" : "$('.miniplayer-track-action.thumb-up').hasClass('voted')",
+    "is_thumbed_down" : "$('.miniplayer-track-action.thumb-down').hasClass('voted')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\".player-state-display.player-state-display-song img\").attr(\"src\")",
-    "get_artist" : "$(\".szi-artist\").first().text()",
-    "get_track" : "$(\".szi-title\").first().text()",
+    "get_album_art" : "$('.miniplayer-album-art').attr('src')",
+    "get_artist" : "$('.miniplayer-info-artist-name').text().split('by ')[1]",
+    "get_track" : "$('.miniplayer-info-track-title').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$(\".player-control-button.player-play\").click()",
-    "click_pause" : "$(\".player-control-button.player-pause\").click()",
-    "click_next_track" : "$(\".player-control-button.player-skip\").click()",
-    "click_thumbs_up" : "$(\".player-control-button.player-vote-up\").click()",
-    "click_thumbs_down" : "$(\".player-control-button.player-vote-down\").click()",
+    "click_play" : "$('.miniplayer-control-play-pause').click()",
+    "click_pause" : "$('.miniplayer-control-play-pause').click()",
+    "click_next_track" : "$('.miniplayer-control-skip').click()",
+    "click_thumbs_up" : "$('.miniplayer-track-action.thumb-up').click()",
+    "click_thumbs_down" : "$('.miniplayer-track-action.thumb-down').click()",
 
     "COMMENT_5" : "Songza is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
     
