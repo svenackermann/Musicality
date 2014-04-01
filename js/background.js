@@ -853,6 +853,7 @@ function DoLastFmWork(){
         // tracks we've saved off.
         // Now we should iterate through everything in our scrobble queue
         for (var i=0; i<mScrobbleQueue.length; i++){
+
             // Get the current track in the queue
             var curQTrack = mScrobbleQueue[i];
 

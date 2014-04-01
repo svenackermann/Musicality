@@ -40,8 +40,8 @@
     "click_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
     "click_next_track" : "$('*[data-id=forward]').click()",
     "click_prev_track" : "$('*[data-id=rewind]').click()",
-    "click_shuffle" : "location.assign('javascript:SJBpost(\"toggleShuffle\")')",
-    "click_repeat" : "location.assign('javascript:SJBpost(\"toggleRepeat\")')",
+    "click_shuffle" : "$('*[data-id=\"shuffle\"]').click()",
+    "click_repeat" : "$('*[data-id=\"repeat\"]').click()",
     "click_thumbs_up" : "$('*[data-rating=5]').click()",
     "click_thumbs_down" : "$('*[data-rating=1]').click()"
 }
