@@ -36,7 +36,8 @@
         "tabs",
         "storage",
         "http://*/*",
-        "https://*/*"
+        "https://*/*",
+        "notifications"
     ],
     "commands" : {
         "toggle-feature-play-pause" : {

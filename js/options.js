@@ -83,6 +83,27 @@ function SetBadgeTextButton(isEnabled){
     }
 }
 
+// A function to set the toaster notification information
+function SetToastNotificationsButton(isEnabled){
+    // Get the button
+    $toasterNotificationBtn = $("#toast_notifications");
+    $toasterNotificationLbl = $("#toast_notifications_label");
+
+    if (isEnabled){
+        // Set the button to say disable
+        $toasterNotificationBtn.text("Disable Toast Notifications");
+        $toasterNotificationBtn.removeClass("btn-fail");
+        $toasterNotificationBtn.addClass("btn-success");
+        $toasterNotificationLbl.text("Disable the toast notification popup on track changes.");
+    }else{
+        // Set the button to say enable
+        $toasterNotificationBtn.text("Enable Toast Notifications");
+        $toasterNotificationBtn.removeClass("btn-success");
+        $toasterNotificationBtn.addClass("btn-fail");
+        $toasterNotificationLbl.text("Enable the toast notification popup on track changes.");
+    }
+}
+
 // A function to check if the badge text is enabled
 function IsBadgeTextEnabled(callback){
     // Query the local storage for the value we are looking for
@@ -95,6 +116,23 @@ function IsBadgeTextEnabled(callback){
 function SetBadgeTextEnabled(isEnabled, callback){
     // Set the value in local storage
     chrome.storage.local.set({'badge_text_enabled' : isEnabled}, function(){
+        // Callback success
+        callback(true);
+    });
+}
+
+// A function to check if the toast notifications is enabled
+function AreToastNotificationsEnabled(callback){
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('toaster_enabled', function(data){
+        callback(data.toaster_enabled);
+    });
+}
+
+// A function to set if toast notifications should be enabled or not
+function SetToastNotificationsEnabled(isEnabled, callback){
+    // Set the value in local storage
+    chrome.storage.local.set({'toaster_enabled' : isEnabled}, function(){
         // Callback success
         callback(true);
     });
@@ -115,6 +153,11 @@ function UpdateButtons(){
     // Check if badge text is enabled
     IsBadgeTextEnabled(function(result){
         SetBadgeTextButton(result);
+    });
+
+    // Check if toast notifications are enabled
+    AreToastNotificationsEnabled(function(result){
+        SetToastNotificationsButton(result);
     });
 }
 
@@ -230,6 +273,16 @@ $(function(){
         IsBadgeTextEnabled(function(result){
             SetBadgeTextEnabled(!result, function(){
                 SetBadgeTextButton(!result);
+            });
+        });
+    });
+
+    // Bind the click of the toast notifications button to flip the state
+    $("#toast_notifications").bind('click', function(){
+        // Check if toasting is enabled
+        AreToastNotificationsEnabled(function(result){
+            SetToastNotificationsEnabled(!result, function(){
+                SetToastNotificationsButton(!result);
             });
         });
     });

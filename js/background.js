@@ -97,6 +97,21 @@ var mBadgeTextScrollTime = 250;
 // A cached version of whether or not badge text is enabled
 var mBadgeTextEnabled = true;
 
+// The timestamp of the last time we looked in storage
+var mToastNotificationsLastStorageCheck = 0;
+
+// The total amount of time to wait between checking to toast
+var mToastNotificationsTime = 2000;
+
+// The amount of time to display the toast
+var mToastNotificationsTimeout = 5000;
+
+// A cached version of whether or not toast notifications are enabled
+var mToastNotificationsEnabled = true;
+
+// A variable to hold the last known track
+var mLastToastCheckTrack = "";
+
 //// Last.fm variables ////
 
 // The first timestamp we looked at the new song
@@ -403,6 +418,44 @@ function UpdateBadgeText(){
             }
         });
     }
+}
+
+// A function to display a toast notification if the track has changed
+function ToastIfNecessary(){
+    // First, validate we have a track and artist and we are playing
+    if (!mArtist || !mTrack ||
+        mArtist == "" ||
+        mTrack == "" ||
+        !mIsPlaying
+       ){
+
+        // Just return. Nothing to do.
+        return;
+    }
+    
+    // Get the current track information
+    var curTrack = mArtist + mTrack;
+
+    // Check if it's not equal to the last one we saw
+    if (curTrack != mLastToastCheckTrack){
+        // Store it off
+        mLastToastCheckTrack = curTrack;
+
+        // Build the notification
+        var notification =
+            window.webkitNotifications.createNotification(mArtUrl,
+                                                          mArtist,
+                                                          mTrack);
+        // Show it
+        notification.show();
+
+        // Deal with the timeout
+        if (mToastNotificationsTimeout > 0){
+            setTimeout(function(){
+                notification.cancel();
+            }, mToastNotificationsTimeout);
+        }
+    } // Nothing to do no else
 }
 
 // Determine if a tab exists
@@ -1039,6 +1092,30 @@ function IsBadgeTextEnabled(callback){
     }
 }
 
+// A function to check if the notification toast is enabled
+function AreToastNotificationsEnabled(callback){
+    // Check if we've already looked in storage within the last 5 seconds
+    var curTime = Date.now();
+    if ((curTime - mToastNotificationsLastStorageCheck) > 5000){
+        // Update the last time we checked
+        mToastNotificationsLastStorageCheck = curTime;
+        
+        // Query the local storage for the value we are looking for
+        chrome.storage.local.get('toaster_enabled', function(data){
+            // Save it off
+            mToastNotificationsEnabled = data.toaster_enabled;
+            
+            // Callback with the value
+            callback(mToastNotificationsEnabled);
+            return;
+        });
+    }else{
+        // Callback with the cached value
+        callback(mToastNotificationsEnabled);
+        return;
+    }
+}
+
 // A function to do some processing if this is the first run
 function ProcessFirstRun(){
     // Query local storage for an init value
@@ -1047,7 +1124,8 @@ function ProcessFirstRun(){
             // Do some init processing
             chrome.storage.local.set({'scrobbling_enabled' : true,
                                       'badge_text_enabled' : true,
-                                      'init_complete' : true}, function(){
+                                      'init_complete' : true,
+                                      'toaster_enabled' : true}, function(){
                 if (mDebug){
                     console.log("background.js::Init now completed");
                 }
@@ -1100,10 +1178,10 @@ $(function(){
     // Set the bacground color for the badge
     chrome.browserAction.setBadgeBackgroundColor({color: "#000000"});
     
-    // Update our information once every ten seconds.
+    // Update our information once every five seconds.
     window.setInterval(function() {
         UpdateInformation();
-    }, 10000);
+    }, 5000);
 
     // Check if this is the first run
     ProcessFirstRun();
@@ -1119,6 +1197,16 @@ $(function(){
             }
         });
     }, mBadgeTextScrollTime);
+
+    // Check if we should toast once every two seconds
+    window.setInterval(function(){
+        // Check if it's enabled
+        AreToastNotificationsEnabled(function(result){
+            if (result){
+                ToastIfNecessary();
+            } // Nothing to do on else
+        });
+    }, mToastNotificationsTime);
 
     // We want to update last.fm information once every 15 seconds
     window.setInterval(function() {
