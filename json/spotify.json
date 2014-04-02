@@ -16,27 +16,27 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\"#app-player\").contents().find('#play-pause')[0].className == 'playing'",
-    "is_paused" : "$(\"#app-player\").contents().find('#play-pause')[0].className != 'playing'",
-    "is_shuffled" : "$(\"#app-player\").contents().find('#shuffle')[0].className == 'active'",
-    "is_repeat_off" : "$(\"#app-player\").contents().find('#repeat')[0].className != 'active'",
-    "is_repeat_all" : "$(\"#app-player\").contents().find('#repeat')[0].className == 'active'",
+    "is_playing" : "$('#app-player').contents().find('#play-pause').hasClass('playing')",
+    "is_paused" : "!$('#app-player').contents().find('#play-pause').hasClass('playing')",
+    "is_shuffled" : "$('#app-player').contents().find('#shuffle')[0].className == 'active'",
+    "is_repeat_off" : "$('#app-player').contents().find('#repeat')[0].className != 'active'",
+    "is_repeat_all" : "$('#app-player').contents().find('#repeat')[0].className == 'active'",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\"#app-player\").contents().find('.sp-image-img').css('background-image').replace(/^url\\((.+)\\)/, '$1')",
-    "get_artist" : "$(\"#app-player\").contents().find('#track-artist').text()",
-    "get_track" : "$(\"#app-player\").contents().find('#track-name').text()",
-    "get_current_time" : "$(\"#app-player\").contents().find('#track-current').text()",
-    "get_total_time" : "$(\"#app-player\").contents().find('#track-length').text()",
+    "get_album_art" : "$('#app-player').contents().find('.sp-image-img').css('background-image').replace(/^url\\((.+)\\)/, '$1')",
+    "get_artist" : "$('#app-player').contents().find('#track-artist').text()",
+    "get_track" : "$('#app-player').contents().find('#track-name').text()",
+    "get_current_time" : "$('#app-player').contents().find('#track-current').text()",
+    "get_total_time" : "$('#app-player').contents().find('#track-length').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$(\"#app-player\").contents().find('#play-pause').click()",
-    "click_pause" : "$(\"#app-player\").contents().find('#play-pause').click()",
-    "click_next_track" : "$(\"#app-player\").contents().find('#next').click()",
-    "click_prev_track" : "$(\"#app-player\").contents().find('#previous').click()",
-    "click_shuffle" : "$(\"#app-player\").contents().find('#shuffle').click()",
-    "click_repeat" : "$(\"#app-player\").contents().find('#repeat').click()"
+    "click_play" : "$('#app-player').contents().find('#play-pause').click()",
+    "click_pause" : "$('#app-player').contents().find('#play-pause').click()",
+    "click_next_track" : "$('#app-player').contents().find('#next').click()",
+    "click_prev_track" : "$('#app-player').contents().find('#previous').click()",
+    "click_shuffle" : "$('#app-player').contents().find('#shuffle').click()",
+    "click_repeat" : "$('#app-player').contents().find('#repeat').click()"
 
 }
