@@ -17,8 +17,8 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('#ctl-play').hasClass('pause')",
-    "is_paused" : "$('#ctl-play').hasClass('play')",
+    "is_playing" : "$('#ctl-play .icon').hasClass('icon-stop')",
+    "is_paused" : "$('#ctl-play .icon').hasClass('icon-play')",
     "is_thumbed_up" : "$($('.vote-btn.up')[0]).hasClass('voted')",
     "is_thumbed_down" : "$($('.vote-btn.down')[0]).hasClass('voted')",
 
