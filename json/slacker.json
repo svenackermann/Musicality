@@ -11,30 +11,29 @@
     "has_play_pause" : true,
     "has_shuffle" : false,
     "has_repeat" : false,
-    "has_current_track_time" : true,
-    "has_total_track_time" : true,
-    "has_remaining_track_time" : false,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('#playerPlayPauseButton').children().attr('style').search('background-position: -960px') > 0",
-    "is_paused" : "$('#playerPlayPauseButton').children().attr('style').search('background-position: -48px') > 0",
-    "is_thumbed_up" : "$('#playerHeartBtn').children().attr('style').search('background-position: -1060px') > 0",
-    "is_thumbed_down" : "$('#playerBanBtn').children().attr('style').search('background-position: 0px') < 0",
+    "is_playing" : "$('#mini-play').hasClass('pause')",
+    "is_paused" : "!$('#mini-play').hasClass('pause')",
+    "is_thumbed_up" : "$('#mini-heart').hasClass('active')",
+    "is_thumbed_down" : "$('#mini-ban').hasClass('active')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "'http://slacker.com' + $('#track-art-current-img').attr('src')",
-    "get_artist" : "$('#player-artist-name').text()",
-    "get_track" : "$('#player-track-name').text()",
-    "get_current_time" : "$('#current-position').text()",
-    "get_total_time" : "$('#total-length').text()",
+    "get_album_art" : "$('#mini-track-art-current-img').attr('src')",
+    "get_artist" : "$('#mini-artist-name').text()",
+    "get_track" : "$('#mini-track-name').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
     "click_play" : "location.assign('javascript:playPause()')",
     "click_pause" : "location.assign('javascript:playPause()')",
-    "click_next_track" : "location.assign('javascript:skip(\"skip\")')",
+    "click_next_track" : "location.assign('javascript:skip()')",
     "click_thumbs_up" : "location.assign('javascript:handleHeartAction()')",
-    "click_thumbs_down" : "location.assign('javascript:$(\"playerBanBtn\").click();setTimeout(function(){ $(\"ban-song\").click() }, 10)')"
+    "click_thumbs_down" : "location.assign('javascript:skip(\"ban\")')",
+
+"COMMENT_5" : "Slacker is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
+
+    "scrobbleOnChange" : true
 }
