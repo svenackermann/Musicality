@@ -36,8 +36,8 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "location.assign('javascript:SJBpost(\"playPause\")')",
-    "click_pause" : "location.assign('javascript:SJBpost(\"playPause\")')",
+    "click_play" : "$('*[data-id=play-pause]').click()",
+    "click_pause" : "$('*[data-id=play-pause]').click()",
     "click_next_track" : "$('*[data-id=forward]').click()",
     "click_prev_track" : "$('*[data-id=rewind]').click()",
     "click_shuffle" : "$('*[data-id=\"shuffle\"]').click()",
