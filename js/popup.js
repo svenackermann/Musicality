@@ -506,6 +506,11 @@ $(function(){
         ThumbsDownClick();
     });
 
+    // Player name
+    $('#player_name').bind('click', function(){
+        mBackground.GoToNowPlayingTab();
+    });
+
     // Register all marquee items to marquee
     $(".marquee_item").hover(startMarquee, stopMarquee);
 

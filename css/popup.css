@@ -236,6 +236,7 @@ span{
     float: right;
     overflow: hidden;
     opacity: 0.1;
+    cursor: pointer;
 }
 
 .hidden_button{

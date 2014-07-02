@@ -17,6 +17,9 @@
 // Whether or not we should debug (lots of output!)
 var mDebug = false;
 
+// The id of the window that contained the last tab
+var mLastPlayingWindowId = -1;
+
 // The id of the tab that was last seen currently playing music
 var mLastPlayingTabId = -1;
 
@@ -176,6 +179,9 @@ function FindTabPlayingMusic(callback){
                 // Get the current tab
                 var curTab = windows[window].tabs[i];
 
+                // Get the current window id
+                var windowId = windows[window].id;
+
                 // Now iterate through our patterns, checking if
                 // this is a valid music player
                 for (var curPlayer in mAllPlayers){
@@ -197,7 +203,7 @@ function FindTabPlayingMusic(callback){
                         asyncsRunning.count++;
 
                         // We want some closure to preserve the tabId for all callbacks.
-                        (function (tabId){
+                        (function (tabId, curWindowId){
                             // Increment asyncs again
                             asyncsRunning.count++;
                             
@@ -223,6 +229,7 @@ function FindTabPlayingMusic(callback){
                                         
                                         if (!alreadyReturned){
                                             alreadyReturned = true;
+                                            mLastPlayingWindowId = curWindowId;
                                             callback(tabId, playerDetails);
                                             return;
                                         }
@@ -241,6 +248,7 @@ function FindTabPlayingMusic(callback){
                                                 pausedTabs.push(
                                                     {
                                                         "id" : tabId,
+                                                        "windowId" : curWindowId,
                                                         "details" : playerDetails
                                                     });
                                             }else{
@@ -273,7 +281,7 @@ function FindTabPlayingMusic(callback){
                             returnPausedTabHelper(asyncsRunning,
                                                   pausedTabs,
                                                   callback);
-                        })(curTab.id)
+                        })(curTab.id, windowId)
                     }
                 }
             }
@@ -294,6 +302,7 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
         // All done with the asyncs. Check if there were any paused tabs
         if (pausedTabs.length > 0){
             pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
+            mLastPlayingWindowId = pausedTabs[0].windowId;
             callback(pausedTabs[0].id, pausedTabs[0].details);
             return;
         }else{
@@ -1147,6 +1156,20 @@ function ProcessFirstRun(){
                 chrome.tabs.create({'url' : chrome.extension.getURL('html/welcome.html')});
             });
         }
+    });
+}
+
+// A function to switch the users tab to the current player
+function GoToNowPlayingTab(){
+    // Update the winow to be focused
+    chrome.windows.update(mLastPlayingWindowId,
+    {
+        focused: true
+    });
+
+    // Change the current tab to the current player
+    chrome.tabs.update(mLastPlayingTabId, {
+        selected: true
     });
 }
 
