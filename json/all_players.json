@@ -9,7 +9,7 @@
     
     "Amazon Cloud Player" : {
         "simple_name" : "amazon",
-        "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/mp3\\/*",
+        "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/*",
         "json_loc" : "/json/amazon.json",
         "open_page" : "http://www.amazon.com/cloudplayer"        
     },
