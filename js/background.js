@@ -106,9 +106,6 @@ var mToastNotificationsLastStorageCheck = 0;
 // The total amount of time to wait between checking to toast
 var mToastNotificationsTime = 2000;
 
-// The amount of time to display the toast
-var mToastNotificationsTimeout = 5000;
-
 // A cached version of whether or not toast notifications are enabled
 var mToastNotificationsEnabled = true;
 
@@ -451,19 +448,22 @@ function ToastIfNecessary(){
         mLastToastCheckTrack = curTrack;
 
         // Build the notification
-        var notification =
-            window.webkitNotifications.createNotification(mArtUrl,
-                                                          mArtist,
-                                                          mTrack);
-        // Show it
-        notification.show();
-
-        // Deal with the timeout
-        if (mToastNotificationsTimeout > 0){
-            setTimeout(function(){
-                notification.cancel();
-            }, mToastNotificationsTimeout);
-        }
+        chrome.notifications.create(
+            "",
+            {
+                type: "basic",
+                iconUrl: mArtUrl,
+                title: mTrack,
+                message: mArtist,
+                buttons: [{
+                    title: "Pause",
+                    iconUrl: "/images/notificationPause.jpg"
+                },{
+                    title: "Skip",
+                    iconUrl: "/images/notificationSkip.jpg"
+                }]
+            }, function(id){}
+        );
     } // Nothing to do no else
 }
 
@@ -1227,9 +1227,28 @@ $(function(){
         AreToastNotificationsEnabled(function(result){
             if (result){
                 ToastIfNecessary();
+
             } // Nothing to do on else
         });
     }, mToastNotificationsTime);
+
+    // Bind the buttons on notifications
+    chrome.notifications.onButtonClicked.addListener(function(id, btnIdx){
+        if (btnIdx == 0){
+            // Pause
+            ClickSomething(CLICK_PAUSE);
+        }else if (btnIdx == 1){
+            // Next
+            ClickSomething(CLICK_NEXT_TRACK);
+        }
+        UpdateInformation();
+    });
+
+    // Also bind the click event to switch to the tab playing
+    chrome.notifications.onClicked.addListener(function(id){
+        GoToNowPlayingTab();
+    })
+
 
     // We want to update last.fm information once every 15 seconds
     window.setInterval(function() {
