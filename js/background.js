@@ -106,6 +106,9 @@ var mToastNotificationsLastStorageCheck = 0;
 // The total amount of time to wait between checking to toast
 var mToastNotificationsTime = 2000;
 
+// The amount of time to display the toast
+var mToastNotificationsTimeout = 5000;
+
 // A cached version of whether or not toast notifications are enabled
 var mToastNotificationsEnabled = true;
 
@@ -462,7 +465,14 @@ function ToastIfNecessary(){
                     title: "Skip",
                     iconUrl: "/images/notificationSkip.jpg"
                 }]
-            }, function(id){}
+            }, function(id){
+                // Timeout
+                if (mToastNotificationsTimeout > 0){
+                    setTimeout(function(){
+                        chrome.notifications.clear(id, function(cleared){});
+                    }, mToastNotificationsTimeout);
+                }
+            }
         );
     } // Nothing to do no else
 }
