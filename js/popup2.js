@@ -70,9 +70,9 @@ function PopulateInformation(){
     }
 
     // Get handles to different elements we need
-    var playPauseElement = $("#play_pause");
-    var nextTrackElement = $("#next_track");
-    var prevTrackElement = $("#previous_track");
+    var playPauseElement = $("#playPauseButton");
+    var nextTrackElement = $("#nextButton");
+    var prevTrackElement = $("#previousButton");
     var shuffleButtonElement = $("#shuffle_button");
     var repeatButtonElement = $("#repeat_button");
     var thumbsUpButtonElement = $("#thumbs_up_button");
@@ -82,8 +82,9 @@ function PopulateInformation(){
     var artistElement = $("#artist");
     var artElement = $("#art");
     var playbackControlsImgElement = $("#playbackControlsBackgroundImage");
-    var totalTimeElement = $("#total_time");
-    var curTimeElement = $("#cur_time");
+    var trackInfoImgElement = $("#trackInfoBackgroundImage");
+    var totalTimeElement = $("#totalTime");
+    var curTimeElement = $("#currentTime");
     
     if (track && track != null && track != "" && mPlayerDetails){
         trackElement.text(track);
@@ -184,6 +185,7 @@ function PopulateInformation(){
 
             // Update the inverted blurrty art container as well
             playbackControlsImgElement.attr('src', art_url);
+            trackInfoImgElement.attr('src', art_url);
         }else{
             // Not found, so revert it to the empty art
             artElement.attr("src", "/images/empty.png");
@@ -476,14 +478,14 @@ $(function(){
     });
     
     // Previous track
-    $("#previous_track").bind('click', function(){
+    $("#previousButton").bind('click', function(){
        PrevTrackClick();
     });
 
     // Play/pause
 
     // Get the elemtn
-    var playPauseElement = $("#play_pause");
+    var playPauseElement = $("#playPauseButton");
     playPauseElement.bind('click', function(handler){
         // Be smart about what we are clicking
         if (playPauseElement.hasClass("play")){
@@ -496,7 +498,7 @@ $(function(){
     });
 
     // Next track
-    $("#next_track").bind('click', function(){
+    $("#nextButton").bind('click', function(){
         NextTrackClick();
     });
 
@@ -516,7 +518,7 @@ $(function(){
     });
 
     // Register all marquee items to marquee
-    $(".marquee_item").hover(startMarquee, stopMarquee);
+    $(".marqueeItem").hover(startMarquee, stopMarquee);
 
     // Tell background to open the default player, if there is one set
     mBackground.OpenDefaultPlayer();

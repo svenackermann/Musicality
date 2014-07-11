@@ -8,20 +8,28 @@
   </head>
   <body>    
   	<div id='playbackControlsContainer' class='container'>
-  		<img id="playbackControlsBackgroundImage" src=""/>
+  		<img id="playbackControlsBackgroundImage" class="blurryImage" src=""/>
   		<div id='previousButton' class='playbackControl'></div>
-  		<div id='playButton' class='playbackControl'></div>
+  		<div id='playPauseButton' class='playbackControl play'></div>
   		<div id='nextButton' class='playbackControl'></div>
   	</div>
   	<div id='albumArtContainer' class='container'>
   		<img id='art'/>
   	</div>
   	<div id='trackInfoContainer' class='container'>
-  		<div id='track'></div>
-  		<div id='artist'></div>
+      <img id="trackInfoBackgroundImage" class="blurryImage" src=""/>
+      <span class='marqueeWrapper'>
+        <span id='artist' class='info marqueeItem'></span>
+      </span>
+      <span class='marqueeWrapper'>
+        <span id='track' class='info marqueeItem'></span>
+      </span>
   	</div>
   	<div id='lowerInfoContainer' class='container'>
-  		lowerInfoContainer
+  		<div id='trackTimings'>
+        <span id='currentTime'></span>
+        <span id='totalTime'></span>
+      </div>
   	</div>
     <script type='text/javascript' src='../js/ga.js'></script>
   </body>
