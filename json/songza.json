@@ -24,7 +24,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.miniplayer-album-art').attr('src')",
+    "get_album_art" : "$('.fullplayer-album-art').last().attr('src')",
     "get_artist" : "$('.miniplayer-info-artist-name').text().split('by ')[1]",
     "get_track" : "$('.miniplayer-info-track-title').text()",
 
