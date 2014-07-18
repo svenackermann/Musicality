@@ -14,8 +14,8 @@
 // Member Variables
 /////////////////////////////////////////////////////////////////////////////
 
-// Whether or not we should debug (lots of output!)
-var mDebug = false;
+// The logger (disabled by default)
+var mLogger;
 
 // The id of the window that contained the last tab
 var mLastPlayingWindowId = -1;
@@ -162,9 +162,7 @@ function ResetMembers(){
 // Find a tab that is currently playing music
 function FindTabPlayingMusic(callback){
 
-    if (mDebug){
-        console.log("background.js::FindTabPlayingMusic()");
-    }
+    mLogger.log("background.js::FindTabPlayingMusic()");
 
     // An array of tabs currently paused
     var pausedTabs = [];
@@ -194,10 +192,8 @@ function FindTabPlayingMusic(callback){
                         // A flag to ensure we know we already have seen a player
                         mPlayerOpen = true;
 
-                        if (mDebug){
-                            console.log("background.js::FindTabPlayingMusic -- Found " +
+                        mLogger.log("background.js::FindTabPlayingMusic -- Found " +
                                         curPlayer + " at tab " + curTab.id);
-                        }
 
                         // Increment the number of asyncs we have running
                         asyncsRunning.count++;
@@ -209,9 +205,7 @@ function FindTabPlayingMusic(callback){
                             
                             // Load the details for this player type into memory
                             $.getJSON(curPlayer.json_loc, function(playerDetails) {
-                                if (mDebug){
-                                    console.log("background.js::FindTabPlayingMusic() -- details = " + playerDetails);
-                                }
+                                mLogger.log("background.js::FindTabPlayingMusic() -- details = " + playerDetails);
 
                                 // A flag to see if we have already returned a player
                                 var alreadyReturned = false;
@@ -223,9 +217,7 @@ function FindTabPlayingMusic(callback){
                                 IsPlayingMusic(tabId, playerDetails, function(isPlaying){
                                     if (isPlaying){
                                         // Sweet. Found one we wanted.
-                                        if (mDebug){
-                                            console.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is playing music!");
-                                        }
+                                        mLogger.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is playing music!");
                                         
                                         if (!alreadyReturned){
                                             alreadyReturned = true;
@@ -240,9 +232,7 @@ function FindTabPlayingMusic(callback){
                                         // Check if it was paused instead.
                                         IsPaused(tabId, playerDetails, function(isPaused){
                                             if (isPaused){
-                                                if (mDebug){
-                                                    console.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
-                                                }
+                                                mLogger.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
                                                 
                                                 // Found a paused tab. Save it off
                                                 pausedTabs.push(
@@ -252,9 +242,7 @@ function FindTabPlayingMusic(callback){
                                                         "details" : playerDetails
                                                     });
                                             }else{
-                                                if (mDebug){
-                                                    console.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
-                                                }
+                                                mLogger.log("background.js::FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
                                             }
                                             // If everything's done,
                                             // returned a paused tab
@@ -292,10 +280,8 @@ function FindTabPlayingMusic(callback){
 
 // A helper function to prevent code duplication
 function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
-    if (mDebug){
-        console.log("background.js::returnPausedTabHelper() -- asyncsRunning = " +
+    mLogger.log("background.js::returnPausedTabHelper() -- asyncsRunning = " +
                     (asyncsRunning.count - 1) + ", pausedTabs = " + pausedTabs);
-    }
 
     // Decrement asyncsRunning and check if we are done
     if (--asyncsRunning.count == 0){
@@ -350,9 +336,7 @@ function OpenDefaultPlayer(){
 // Update the information displayed within the extension
 function UpdateInformation(){
 
-    if (mDebug){
-        console.log("background.js::UpdateInformation()");
-    }
+    mLogger.log("background.js::UpdateInformation()");
     
     // Have we already found a tab playing music?
     if (mLastPlayingTabId != -1){
@@ -510,9 +494,7 @@ function lookForPlayingTabHelper(){
                 ])
         }else{
             // If we didn't find anything, nothing is populated.
-            if (mDebug){
-                console.log("background.js::UpdateInformation() -- No players playing");
-            }
+            mLogger.log("background.js::UpdateInformation() -- No players playing");
 
             // Reset the members
             ResetMembers();
@@ -531,9 +513,7 @@ function PopulateInformation(tabId){
     // Request the track from the content script
     SendPlayerRequest(tabId, mPlayerDetails, "get_track", function(track){
         // Log it if we've found the track
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- track: " + track);
-        }
+        mLogger.log("background.js::PopulateInfo -- track: " + track);
 
         // Save the track for the popup
         mTrack = track;
@@ -542,9 +522,7 @@ function PopulateInformation(tabId){
     // Request artist from the content script
     SendPlayerRequest(tabId, mPlayerDetails, "get_artist", function(artist){
         // Log it if we've found the artist
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- artist: " + artist);
-        }
+        mLogger.log("background.js::PopulateInfo -- artist: " + artist);
 
         // Save the artist name for the popup
         mArtist = artist;
@@ -554,9 +532,7 @@ function PopulateInformation(tabId){
     // Make a request to the content script for the album art url
     SendPlayerRequest(tabId, mPlayerDetails, "get_album_art", function(art_url){
         // Log it if we've found the art
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- art URL: " + art_url);
-        }
+        mLogger.log("background.js::PopulateInfo -- art URL: " + art_url);
 
         // Save the art for the popup
         mArtUrl = art_url;
@@ -573,9 +549,7 @@ function PopulateInformation(tabId){
         // Make a request to the content script for the current time    
         SendPlayerRequest(tabId, mPlayerDetails, "get_current_time", function(current_time){
             // Log it if we've found the current time
-            if (mDebug){
-                console.log("background.js::PopulateInfo -- current time: " + current_time);
-            }
+            mLogger.log("background.js::PopulateInfo -- current time: " + current_time);
 
             // Check if the time is in ms for this player
             if (hasTimeInMs){
@@ -595,9 +569,7 @@ function PopulateInformation(tabId){
         // Make a request to the content script for the total time
         SendPlayerRequest(tabId, mPlayerDetails, "get_total_time", function(total_time){
             // Log it if we've found the total time
-            if (mDebug){
-                console.log("background.js::PopulateInfo -- total time: " + total_time);
-            }
+            mLogger.log("background.js::PopulateInfo -- total time: " + total_time);
 
             // Check if the time is in ms for this player
             if (!hasTimeInMs){
@@ -615,9 +587,7 @@ function PopulateInformation(tabId){
         // Make a request to the content script for the remaining time
         SendPlayerRequest(tabId, mPlayerDetails, "get_remaining_time", function(remaining_time){
             // Log it if we've found the remaining time
-            if (mDebug){
-                console.log("background.js::PopulateInfo -- remaining time: " + remaining_time);
-            }
+            mLogger.log("background.js::PopulateInfo -- remaining time: " + remaining_time);
             
             var remainingMillis = 0;
             
@@ -695,9 +665,7 @@ function PopulateInformation(tabId){
     // Make a request to the content script for whether or not we are playing
     SendPlayerRequest(tabId, mPlayerDetails, "is_playing", function(playing){
         // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is playing: " + playing);
-        }
+        mLogger.log("background.js::PopulateInfo -- is playing: " + playing);
 
         // Save whether or not it's playing for the popup
         mIsPlaying = playing;
@@ -706,9 +674,7 @@ function PopulateInformation(tabId){
     // Check if we are paused
     SendPlayerRequest(tabId, mPlayerDetails, "is_paused", function(paused){
         // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is paused: " + paused);
-        }
+        mLogger.log("background.js::PopulateInfo -- is paused: " + paused);
 
         // Save whether or not it's paused for the popup
         mIsPaused = paused;
@@ -729,9 +695,7 @@ function PopulateInformation(tabId){
     // Make a request to the content script for the shuffle state
     SendPlayerRequest(tabId, mPlayerDetails, "is_shuffled", function(shuffled){
         // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is shuffled: " + shuffled);
-        }
+        mLogger.log("background.js::PopulateInfo -- is shuffled: " + shuffled);
 
         // Save it off
         mIsShuffled = shuffled;
@@ -740,9 +704,7 @@ function PopulateInformation(tabId){
     // Make a request to the content script for the repeat state
     SendPlayerRequest(tabId, mPlayerDetails, "is_repeat_off", function(repeat_off){
         // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is repeat off: " + repeat_off);
-        }
+        mLogger.log("background.js::PopulateInfo -- is repeat off: " + repeat_off);
 
         // Save it off
         mIsRepeatOff = repeat_off;
@@ -751,9 +713,7 @@ function PopulateInformation(tabId){
     // Make a request to the content script for the repeat state
     SendPlayerRequest(tabId, mPlayerDetails, "is_repeat_one", function(repeat_one){
         // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is repeat one: " + repeat_one);
-        }
+        mLogger.log("background.js::PopulateInfo -- is repeat one: " + repeat_one);
 
         // Save it
         mIsRepeatOne = repeat_one;
@@ -762,9 +722,7 @@ function PopulateInformation(tabId){
     // Make a request to the content script for the repeat state
     SendPlayerRequest(tabId, mPlayerDetails, "is_repeat_all", function(repeat_all){
         // Log whatever we have got
-        if (mDebug){
-            console.log("background.js::PopulateInfo -- is repeat all: " + repeat_all);
-        }
+        mLogger.log("background.js::PopulateInfo -- is repeat all: " + repeat_all);
 
         // Save it
         mIsRepeatAll = repeat_all;
@@ -774,9 +732,7 @@ function PopulateInformation(tabId){
         // Make a request to the content script for the thumbs state
         SendPlayerRequest(tabId, mPlayerDetails, "is_thumbed_up", function(thumbed_up){
             // Log whatever we have got
-            if (mDebug){
-                console.log("background.js::PopulateInfo -- is thumbed up: " + thumbed_up);
-            }
+            mLogger.log("background.js::PopulateInfo -- is thumbed up: " + thumbed_up);
 
             // Save it
             mIsThumbedUp = thumbed_up;
@@ -787,9 +743,7 @@ function PopulateInformation(tabId){
         // Make a request to the content script for the thumbs state
         SendPlayerRequest(tabId, mPlayerDetails, "is_thumbed_down", function(thumbed_down){
             // Log whatever we have got
-            if (mDebug){
-                console.log("background.js::PopulateInfo -- is thumbed down: " + thumbed_down);
-            }
+            mLogger.log("background.js::PopulateInfo -- is thumbed down: " + thumbed_down);
 
             // Save it
             mIsThumbedDown = thumbed_down;
@@ -1030,10 +984,8 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
                         "scriptKey" : whatIsNeeded
                     },
                     function(result){
-                        if (mDebug){
-                            console.log("background.js::SendPlayerRequest(" +
+                        mLogger.log("background.js::SendPlayerRequest(" +
                                         tabId + "," + whatIsNeeded + "," + result + ")");
-                        }
                         callback(result);
                         return;
                     }
@@ -1041,18 +993,14 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
             }else{
                 // Need to re-inject everything. Either new install or update.
 
-                if (mDebug){
-                    console.log("background.js::No contentscript detected on tab " + tabId + ". Re-injecting...");
-                }
+                mLogger.log("background.js::No contentscript detected on tab " + tabId + ". Re-injecting...");
 
                 // Get the manifest
                 chrome.manifest = chrome.app.getDetails();
                 var scripts = chrome.manifest.content_scripts[0].js;
                 for (var i = 0; i < scripts.length; i++){
-                    if(mDebug){
-                        console.log("background.js::Injecting " +
+                    mLogger.log("background.js::Injecting " +
                                     scripts[i] + " into tab " + tabId);
-                    }
                     
                     chrome.tabs.executeScript(tabId,
                         {
@@ -1135,15 +1083,11 @@ function ProcessFirstRun(){
                                       'badge_text_enabled' : true,
                                       'init_complete' : true,
                                       'toaster_enabled' : true}, function(){
-                if (mDebug){
-                    console.log("background.js::Init now completed");
-                }
+                mLogger.log("background.js::Init now completed");
             });
         }else{
             // We're good.
-            if (mDebug){
-                console.log("background.js::Init already completed.");
-            }
+            mLogger.log("background.js::Init already completed.");
         }
     });
 
@@ -1179,6 +1123,9 @@ function GoToNowPlayingTab(){
 
 // Once the document is ready, bind all of the functions.
 $(function(){
+    // Instantiate the logger (disabled by default)
+    mLogger = new Logger(false);
+
     // Immediately update our information
     UpdateInformation();
 
@@ -1189,9 +1136,7 @@ $(function(){
     $.getJSON(ALL_PLAYERS_JSON, function(data) {
         mAllPlayers = data;
 
-        if (mDebug){
-            console.log(mAllPlayers);
-        }
+        mLogger.log(mAllPlayers);
 
     });
 
@@ -1238,9 +1183,7 @@ $(function(){
             if(result){
                 DoLastFmWork();
             }else{
-                if(mDebug){
-                    console.log("background.js::Scrobbling disabled. Not doing last.fm work for now.");
-                }
+                mLogger.log("background.js::Scrobbling disabled. Not doing last.fm work for now.");
             }
         });
     }, mLastFmWorkDelay);
