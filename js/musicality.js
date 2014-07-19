@@ -1,0 +1,39 @@
+/**
+ * Copyright 2014 Kyle Kamperschroer (http://kylek.me)
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+**/
+
+function Musicality(){
+
+	//// Members
+
+	// The logger (disabled by default)
+	this.logger = new Logger(false);
+
+	// The tab handler
+	this.tabHandler = new TabHandler(logger);
+
+	// The player handler
+	this.playerHandler = new PlayerHandler(tabHandler);
+
+	// The toast handler
+	this.notificationHandler = new NotificationHandler();
+
+	// The scrobble handler
+	this.scrobbleHandler = new ScrobbleHandler();
+}
+
+Musicality.prototype.Run = function(){
+	// Run the main execution loop
+}
