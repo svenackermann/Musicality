@@ -14,45 +14,67 @@
  * limitations under the License.
 **/
 
-// TODO -- Convert to singleton. Only one logger!
-
 /**
- * Class for Logging
+ * Singleton class for Logging
  * @param {boolean} Whether or not the logger is enabled
  */
-function Logger(enabled){
-	// Logger can be toggled to write out or not
-	this.enabled = enabled;
+var Logger = (function(){
+	var instance;
 
-	// Private method to get an error object, used for additional
-	// information upon logging.
-	this.getErrorObject = function(){
-		try { throw Error('') } catch(err) { return err; }
-	}
-}
+	function init(){
 
-/**
- * Set whether or not the logger should be enabled
- * @param {boolean} Whether or not the logger should be enabled
- */
-Logger.prototype.setEnabled = function(enabled){
-	this.enabled = enabled;
-}
+		// Logger can be toggled to write out or not
+		var enabled = false;
 
-/**
- * Log the provided string
- * @param  {string} The string to log out
- */
-Logger.prototype.log = function(stringToLog){
-	// Check if enabled
-	if (this.enabled){
-		// Get an error object to determine the file and line
-		var err = this.getErrorObject();
-		var caller_line = err.stack.split("\n")[4];
-		var index = caller_line.indexOf("at ");
-		var clean = caller_line.slice(index+2, caller_line.length);
+		/**
+		 * Get an error object for additional logging information
+		 * @return {Error}
+		 */
+   	    function getErrorObject(){
+   	    	try { throw Error('') } catch(err) { return err; }
+   	    }
 
-		console.log(clean + ' -- ' + stringToLog);
-	}
-}
+   	    // Public methods returned out
+   	    return {
+   	    	/**
+   	    	 * Set whether or not the logger should be enabled
+   	    	 * @param {boolean} enabled
+   	    	 */
+   	    	setEnabled: function(enabled){
+   	    		this.enabled = enabled;
+   	    	},
 
+   	    	/**
+   	    	 * Log the input to file, along with filename and line number,
+   	    	 * but only if the logger is enabled.
+   	    	 * @param  {String} The string to log out
+   	    	 */
+   	    	log: function(stringToLog){
+   	            // Check if enabled
+   	            if (this.enabled){
+            		// Get an error object to determine the file and line
+            		var err = getErrorObject();
+            		var caller_line = err.stack.split("\n")[4];
+            		var index = caller_line.indexOf("at ");
+            		var clean = caller_line.slice(index+2, caller_line.length);
+
+            		console.log(clean + ' -- ' + stringToLog);
+            	}
+   	    	}
+   	    };
+	};
+
+	return {
+		/**
+		 * Get the singleton instance or create one if it doesn't exist.
+		 * @return {Logger}
+		 */
+		getInstance: function(){
+  		    if (!instance){
+  		    	instance = init();
+  		    }
+
+  		    return instance;
+  		}
+	};
+})();

@@ -14,11 +14,23 @@
  * limitations under the License.
 **/
 
-function TabHandler(){
+/**
+ * Class for handling finding a tab playing music (or paused)
+ * as well as any other tab operations.
+ * @param {Object} logger for logging
+ */
+function TabHandler(logger){
+	this.logger = logger;
 	this.lastPlayingWindowId = -1;
 	this.lastPlayingTabId = -1;
 }
 
+/**
+ * Iterate through tabs finding those playing and paused
+ * @param callback with the tab id upon completion
+ */
 TabHandler.prototype.FindTabPlayingMusic = function(callback){
+	logger.log("FindTabPlayingMusic");
+
 	
 }

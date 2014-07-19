@@ -22,10 +22,10 @@ function Musicality(){
 	this.logger = new Logger(false);
 
 	// The tab handler
-	this.tabHandler = new TabHandler(logger);
+	this.tabHandler = new TabHandler();
 
 	// The player handler
-	this.playerHandler = new PlayerHandler(tabHandler);
+	this.playerHandler = new PlayerHandler();
 
 	// The toast handler
 	this.notificationHandler = new NotificationHandler();

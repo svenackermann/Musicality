@@ -1124,7 +1124,7 @@ function GoToNowPlayingTab(){
 // Once the document is ready, bind all of the functions.
 $(function(){
     // Instantiate the logger (disabled by default)
-    mLogger = new Logger(false);
+    mLogger = Logger.getInstance();
 
     // Immediately update our information
     UpdateInformation();
