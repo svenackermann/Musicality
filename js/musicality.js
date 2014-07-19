@@ -19,7 +19,7 @@ function Musicality(){
 	//// Members
 
 	// The logger (disabled by default)
-	this.logger = new Logger(false);
+	this.logger = Logger.getInstance();
 
 	// The tab handler
 	this.tabHandler = new TabHandler();
