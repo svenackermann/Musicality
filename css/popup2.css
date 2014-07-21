@@ -47,7 +47,7 @@ span{
 
 .blurryImage{
 	position: absolute;
-	left: -10px;
+	left: -15px;
 	width: 255px;
 	height: 255px;
 	-webkit-filter: blur(10px);
