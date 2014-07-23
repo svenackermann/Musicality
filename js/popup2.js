@@ -192,7 +192,7 @@ function PopulateInformation(info){
         }
 
         // Update the info
-        if (current_time != null && current_time != "" && current_time > 0){
+        if (current_time != null && current_time != "" && info.currentTime > 0){
             curTimeElement.text(current_time + "/");
         }else{
             curTimeElement.text("");
@@ -207,7 +207,7 @@ function PopulateInformation(info){
         }
 
         // Update the info
-        if (total_time != null && total_time != "" && total_time > 0 &&
+        if (total_time != null && total_time != "" && info.totalTime > 0 &&
             curTimeElement.text() != ""){
             totalTimeElement.text(total_time);
         }else{

@@ -107,6 +107,10 @@ function PlayerHandler(){
 			if (result != this.currentInfo[key]){
 				this.currentInfo[key] = result;
 			}
+
+			if (callback){
+				callback(result);
+			}
 		}, this));
 	}
 }
@@ -159,10 +163,12 @@ PlayerHandler.prototype.PopulateInformation = function(){
    		if (this.playerDetails.has_current_track_time){
    			this.getValueFromPlayer(
    				"get_current_time",
-   				"currentTime",
+   				"ignore",
    				$.proxy(function(result){
    					if (!hasTimeInMs){
    						this.currentInfo.currentTime = Helper.TimeToMs(result);
+   					}else{
+   						this.currentInfo.currentTime = result;
    					}
    				}, this));
    		}
@@ -170,16 +176,18 @@ PlayerHandler.prototype.PopulateInformation = function(){
    		if (this.playerDetails.has_total_track_time){
    			this.getValueFromPlayer(
    				"get_total_time",
-   				"totalTime",
+   				"ignore",
    				$.proxy(function(result){
    					if (!hasTimeInMs){
    						this.currentInfo.totalTime = Helper.TimeToMs(result);
+   					}else{
+   						this.currentInfo.totalTime = result;
    					}
    				}, this));
    		}else if (this.playerDetails.has_remaining_track_time){
    			this.getValueFromPlayer(
    				"get_remaining_time",
-   				"remainigTime",
+   				"ignore",
    				$.proxy(function(result){
    					var remainingMillis = result;
    					if (!hasTimeInMs){
