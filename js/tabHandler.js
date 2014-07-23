@@ -16,13 +16,14 @@
 
 /**
  * Class for handling finding a tab playing music (or paused)
- * as well as any other tab operations.
+ * @param {Object} playerHandler for dealing with the players
  */
-function TabHandler(){
+function TabHandler(playerHandler){
 	this.logger = Logger.getInstance();
 	this.lastPlayingWindowId = -1;
 	this.lastPlayingTabId = -1;
 	this.playerOpen = false;
+	this.playerHandler = playerHandler;
 
 	// Temporarily turn off async to load the JSON in
     $.ajaxSetup({ async : false });
@@ -203,5 +204,37 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
             }
         }
         returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+    });
+}
+
+TabHandler.prototype.OpenDefaultPlayer = function(){
+    // Grab the value from storage, if it's there
+    chrome.storage.local.get('default_open', function(data){
+        // Check if it's set
+        if (data.default_open){
+            // Default mPlayerOpen to false before we check again
+            mPlayerOpen = false;
+
+            // Check if we have a player
+            FindTabPlayingMusic(function(tabId, playerDetails){
+                if (!mPlayerOpen){
+                    // Nothing open. Open one up
+                    chrome.tabs.create({'url' : data.default_open});
+                }
+            });
+        }
+    });
+}
+
+TabHandler.prototype.GoToNowPlayingTab = function(){
+    // Update the winow to be focused
+    chrome.windows.update(this.lastPlayingWindowId,
+    {
+        focused: true
+    });
+
+    // Change the current tab to the current player
+    chrome.tabs.update(this.lastPlayingTabId, {
+        selected: true
     });
 }

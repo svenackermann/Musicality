@@ -159,6 +159,7 @@ function ResetMembers(){
     mIsThumbedDown = false;
 }
 
+// TODO - move to tabHandler [DONE]
 // Find a tab that is currently playing music
 function FindTabPlayingMusic(callback){
 
@@ -278,6 +279,7 @@ function FindTabPlayingMusic(callback){
     });
 }
 
+// TODO - Move to private tabHandler [DONE]
 // A helper function to prevent code duplication
 function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
     mLogger.log("returnPausedTabHelper() -- asyncsRunning = " +
@@ -302,6 +304,7 @@ function returnPausedTabHelper(asyncsRunning, pausedTabs, callback){
     }
 }
 
+// TODO -- Move to private tabHandler [DONE]
 // We need a compare function for sorting the paused tabs
 function pausedTabCompare(tabA, tabB){
     if (tabA.id > tabB.id){
@@ -313,6 +316,7 @@ function pausedTabCompare(tabA, tabB){
     }
 }
 
+// TODO -- Move to tabHandler [DONE]
 // A function used by the popup to open the default page if we want to
 function OpenDefaultPlayer(){
     // Grab the value from storage, if it's there
@@ -333,6 +337,7 @@ function OpenDefaultPlayer(){
     });
 }
 
+// TODO -- Move to player handler
 // Update the information displayed within the extension
 function UpdateInformation(){
 
@@ -367,6 +372,7 @@ function UpdateInformation(){
     }
 }
 
+// TODO -- Figure out which class should handle this. badge text handler
 // Function to update the badge text
 function UpdateBadgeText(){
     // Ensure we are playing and have sufficient info to display
@@ -413,6 +419,7 @@ function UpdateBadgeText(){
     }
 }
 
+// TODO -- Move to toast handler
 // A function to display a toast notification if the track has changed
 function ToastIfNecessary(){
     // First, validate we have a track and artist and we are playing
@@ -451,6 +458,7 @@ function ToastIfNecessary(){
     } // Nothing to do no else
 }
 
+// TODO -- Move to helper functions class
 // Determine if a tab exists
 function DoesTabExist(tabId, callback){
     // Use the chrome API to check
@@ -465,6 +473,7 @@ function DoesTabExist(tabId, callback){
     });
 }
 
+// TODO -- Move to player handler
 // A helper function to prevent duplication of code in the UpdateInformation function
 function lookForPlayingTabHelper(){
     // Start by resetting the focused player and player details
@@ -507,6 +516,7 @@ function lookForPlayingTabHelper(){
     });
 }
 
+// TODO -- Move to player handler
 // Populate the actual extension given the particular tab id
 function PopulateInformation(tabId){
 
@@ -751,6 +761,7 @@ function PopulateInformation(tabId){
     }
 }
 
+// TODO -- Move to helper functions
 // A function to convert a millisecond value into a string
 function GetTimeStringForMilliseconds(milliseconds){
     // Get the current time overall seconds
@@ -779,6 +790,7 @@ function GetTimeStringForMilliseconds(milliseconds){
     return sTotalHours +  sTotalMins + ":" + sTotalSecs;
 }
 
+// TODO -- Move to helper functions
 // A function to parse a time string into milliseconds
 function GetMillisecondsFromTimeString(timeString) {
 
@@ -811,6 +823,7 @@ function GetMillisecondsFromTimeString(timeString) {
     return seconds * 1000 * factor;
 }
 
+// TODO -- Move to scrobble handler
 // A function to interact with the scrobbler
 function DoLastFmWork(){
     // Ensure we have a track and artist and are playing
@@ -932,6 +945,7 @@ function DoLastFmWork(){
     }
 }
 
+// TODO -- Move to player handler
 // Function to determine if a given tab is playing music
 function IsPlayingMusic(tabId, playerDetails, callback){
     // Only check if the tabId > 0
@@ -952,6 +966,7 @@ function IsPlayingMusic(tabId, playerDetails, callback){
     return false;
 }
 
+// TODO -- Move to player handler
 // Function to determine if a given tab is paused, and could play music
 function IsPaused(tabId, playerDetails, callback){
     // Only check if the tabId > 0
@@ -969,6 +984,7 @@ function IsPaused(tabId, playerDetails, callback){
     }
 }
 
+// TODO -- Move to player handler
 // Function to send a request to the player. Callback the response.
 function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
     // Check if we have the player details
@@ -1014,6 +1030,7 @@ function SendPlayerRequest(tabId, playerDetails, whatIsNeeded, callback){
     }
 }
 
+// TODO -- Move to player handler
 // General method for dealing with a button in the background being clicked.
 function ClickSomething(clickWhat){
     // First, ensure that something is playing
@@ -1025,6 +1042,7 @@ function ClickSomething(clickWhat){
     }
 }
 
+// TODO -- Find a place to put the badge text. Badge text handler?
 // A function to check if the badge text is enabled
 function IsBadgeTextEnabled(callback){
     // Check if we've already looked in storage within the last 5 seconds
@@ -1049,6 +1067,7 @@ function IsBadgeTextEnabled(callback){
     }
 }
 
+// TODO -- Move to toast notifications handler
 // A function to check if the notification toast is enabled
 function AreToastNotificationsEnabled(callback){
     // Check if we've already looked in storage within the last 5 seconds
@@ -1073,6 +1092,7 @@ function AreToastNotificationsEnabled(callback){
     }
 }
 
+// TODO -- Should remain in main, but ObjO this
 // A function to do some processing if this is the first run
 function ProcessFirstRun(){
     // Query local storage for an init value
@@ -1103,6 +1123,7 @@ function ProcessFirstRun(){
     });
 }
 
+// TODO -- Move to tab handler [DONE]
 // A function to switch the users tab to the current player
 function GoToNowPlayingTab(){
     // Update the winow to be focused
