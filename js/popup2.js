@@ -73,10 +73,10 @@ function PopulateInformation(){
     var playPauseElement = $("#playPauseButton");
     var nextTrackElement = $("#nextButton");
     var prevTrackElement = $("#previousButton");
-    var shuffleButtonElement = $("#shuffle_button");
-    var repeatButtonElement = $("#repeat_button");
-    var thumbsUpButtonElement = $("#thumbs_up_button");
-    var thumbsDownButtonElement = $("#thumbs_down_button");
+    var shuffleButtonElement = $("#shuffleButton");
+    var repeatButtonElement = $("#repeatButton");
+    var thumbsUpButtonElement = $("#thumbsUpButton");
+    var thumbsDownButtonElement = $("#thumbsDownButton");
     var playerNameElement = $("#player_name");
     var trackElement = $("#track");
     var artistElement = $("#artist");
@@ -248,11 +248,9 @@ function PopulateInformation(){
         }
 
         if (shuffled){
-            shuffleButtonElement.removeClass("shuffle_off");
-            shuffleButtonElement.addClass("shuffle_on");
+            shuffleButtonElement.addClass("active");
         }else{
-            shuffleButtonElement.removeClass("shuffle_on");
-            shuffleButtonElement.addClass("shuffle_off");
+            shuffleButtonElement.removeClass("active");
         }
         
         // Get whether or not repeat is off
@@ -265,9 +263,9 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_off){
-            repeatButtonElement.removeClass("repeat_all");
-            repeatButtonElement.removeClass("repeat_one");
-            repeatButtonElement.addClass("repeat_off");
+            repeatButtonElement.addClass("glyphicon-repeat");
+            repeatButtonElement.removeClass("active");
+            repeatButtonElement.removeClass("glyphicon-refresh");
         }
 
         // Get whether or not repeat is on (1)
@@ -280,9 +278,9 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_one){
-            repeatButtonElement.removeClass("repeat_all");
-            repeatButtonElement.removeClass("repeat_off");
-            repeatButtonElement.addClass("repeat_one");
+            repeatButtonElement.addClass("glyphicon-refresh");
+            repeatButtonElement.addClass("active");
+            repeatButtonElement.removeClass("glyphicon-repeat");
         }
 
         // Get whether or not it's repeat all
@@ -295,9 +293,9 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_all){
-            repeatButtonElement.removeClass("repeat_one");
-            repeatButtonElement.removeClass("repeat_off");
-            repeatButtonElement.addClass("repeat_all");
+            repeatButtonElement.addClass("active");
+            repeatButtonElement.addClass("glyphicon-repeat");
+            repeatButtonElement.removeClass("glyphicon-refresh");
         }
 
         // Get the thumbs up state
@@ -310,11 +308,9 @@ function PopulateInformation(){
 
         // Toggle the thumbs up button
         if (thumbed_up){
-            thumbsUpButtonElement.removeClass("thumbs_up_off");
-            thumbsUpButtonElement.addClass("thumbs_up_on");
+            thumbsUpButtonElement.addClass("active");
         }else{
-            thumbsUpButtonElement.removeClass("thumbs_up_on");
-            thumbsUpButtonElement.addClass("thumbs_up_off");
+            thumbsUpButtonElement.removeClass("active");
         }
 
         // Get the thumbed down state
@@ -327,11 +323,9 @@ function PopulateInformation(){
 
         // Toggle the thumbs down button
         if (thumbed_down){
-            thumbsDownButtonElement.removeClass("thumbs_down_off");
-            thumbsDownButtonElement.addClass("thumbs_down_on");
+            thumbsDownButtonElement.addClass("active");
         }else{
-            thumbsDownButtonElement.removeClass("thumbs_down_on");
-            thumbsDownButtonElement.addClass("thumbs_down_off");
+            thumbsDownButtonElement.removeClass("active");
         }
     }else{
         // Looks like we have to disable some buttons
@@ -468,12 +462,12 @@ $(function(){
     // Get the clickable elements ready!
 
     // Shuffle button
-    $("#shuffle_button").bind('click', function(){
+    $("#shuffleButton").bind('click', function(){
         ShuffleClick();
     });
 
     // Repeat button
-    $("#repeat_button").bind('click', function(){
+    $("#repeatButton").bind('click', function(){
         RepeatClick();
     });
     
@@ -503,12 +497,12 @@ $(function(){
     });
 
     // Thumbs up
-    $("#thumbs_up_button").bind('click', function(){
+    $("#thumbsUpButton").bind('click', function(){
         ThumbsUpClick();
     });
 
     // Thumbs down
-    $("#thumbs_down_button").bind('click', function(){
+    $("#thumbsDownButton").bind('click', function(){
         ThumbsDownClick();
     });
 
