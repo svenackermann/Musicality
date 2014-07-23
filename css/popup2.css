@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Open Sans'), local('OpenSans'), url('../fonts/OpenSans.woff');
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: lighter;
+  src: local('Open Sans'), local('OpenSansLight'), url('../fonts/OpenSansLight.woff');
+}
+
 body{
 	width: 225px;
 	height: 364px;
@@ -33,7 +47,7 @@ span{
 
 .blurryImage{
 	position: absolute;
-	left: -10px;
+	left: -15px;
 	width: 255px;
 	height: 255px;
 	-webkit-filter: blur(10px);
