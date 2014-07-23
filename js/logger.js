@@ -59,7 +59,7 @@ var Logger = (function(){
    	            	// Check if it matches the filter (if enabled)
    	            	if (this.filter.length == 0 ||
    	            		   (this.filter.length > 0 &&
-   	            			stringToLog.indexOf(this.filter) > -1)
+   	            			stringToLog.toLowerCase().indexOf(this.filter.toLowerCase()) > -1)
    	            		   ){
 
                 		// Get an error object to determine the file and line

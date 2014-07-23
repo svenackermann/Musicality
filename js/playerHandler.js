@@ -46,6 +46,8 @@ function PlayerHandler(){
 	 * @param  {Function} callback
 	 */
 	this.sendPlayerStaticRequest = function(tabId, playerDetails, whatIsNeeded, callback){
+		this.logger.log("SendPlayerRequest for " + whatIsNeeded);
+
   		// Check if we have the player details
   		if (playerDetails != null){
             // Now ensure we have a content script already running
@@ -59,41 +61,56 @@ function PlayerHandler(){
                     		"scriptKey" : whatIsNeeded
                     	},
                     	$.proxy(function(result){
-                    		this.logger.log("SendPlayerRequest(" +
-                    			tabId + "," + whatIsNeeded + "," + result + ")");
+                    		this.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
 
                     		if (callback){
                     			callback(result);
                     		}
                     	}, this));
                 }else{
-                    // Need to re-inject everything. Either new install or update.
-                    this.logger.log("No contentscript detected on tab " + tabId + ". Re-injecting...");
-
-                    // Get the manifest
-                    chrome.manifest = chrome.app.getDetails();
-                    var scripts = chrome.manifest.content_scripts[0].js;
-                    for (var i = 0; i < scripts.length; i++){
-                    	this.logger.log("Injecting " +
-                    		scripts[i] + " into tab " + tabId);
-                    
-                    	chrome.tabs.executeScript(tabId,
-                    	{
-                    		file: scripts[i],
-                    		allFrames: false,
-                    		runAt: "document_start"
-                    	}, $.proxy(function(){
-                    		// Re-try the call
-                    		this.sendPlayerStaticRequest(
-                    			tabId,
-                    			playerDetails,
-                    			whatIsNeeded,
-                    			callback);
-                    	}, this));
-                    }
+                	// Inject an re-request information
+                	this.reinjectContentScript(
+                		tabId,
+                		playerDetails,
+                		whatIsNeeded,
+                		callback);
                 }
             }, this));
 	    }
+	}
+
+	/**
+	 * Reinject content script into the provided tab
+	 * @param  {int}   tabId
+	 * @param  {Object}   playerDetails
+	 * @param  {String}   whatIsNeeded
+	 * @param  {Function} callback
+	 */
+	this.reinjectContentScript = function(tabId, playerDetails, whatIsNeeded, callback){
+        // Need to re-inject everything. Either new install or update.
+        this.logger.log("No contentscript detected on tab " + tabId + ". Re-injecting...");
+
+        // Get the manifest
+        chrome.manifest = chrome.app.getDetails();
+        var scripts = chrome.manifest.content_scripts[0].js;
+        for (var i = 0; i < scripts.length; i++){
+        	this.logger.log("Injecting " +
+        		scripts[i] + " into tab " + tabId);
+        
+        	chrome.tabs.executeScript(tabId,
+        	{
+        		file: scripts[i],
+        		allFrames: false,
+        		runAt: "document_start"
+        	}, $.proxy(function(){
+        		// Re-try the call
+        		this.sendPlayerStaticRequest(
+        			tabId,
+        			playerDetails,
+        			whatIsNeeded,
+        			callback);
+        	}, this));
+        }
 	}
 
 	/**
@@ -266,13 +283,21 @@ PlayerHandler.prototype.IsPaused = function(tabId, playerDetails, callback){
  * @param {string} clickWhat is what to click
  */
 PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
+	this.logger.log("ClickSomething() -- " + clickWhat);
     // First, ensure that something is playing
     if (this.playerDetails != null && this.lastPlayingTabId > 0){
         // Cool. Let's do it
         this.sendPlayerRequest(clickWhat, $.proxy(function(result){
+        	this.logger.log("ClickSomething callback -- " + result);
         	// Reset last update and immediately re-populate
         	this.lastPopulateTime = 0;
-        	this.PopulateInformation();
+
+        	// Wait just a tenth of a second before populating
+        	window.setTimeout(
+        		(function(self){
+        			self.PopulateInformation();
+        		})(this),
+    		100);
 
         	// Callback with the result
         	if(callback){

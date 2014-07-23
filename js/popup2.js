@@ -398,8 +398,15 @@ function ThumbsDownClick(){
 // General method for dealing with clicking anything
 function ClickSomething(clickWhat){
     // Tell the background to take care of this
-    mMusicality.ClickSomething(clickWhat, function(){
-        UpdateInformation();
+    mMusicality.ClickSomething(clickWhat, function(result){
+        if (mDebug){
+            console.log("ClickSomething callback with " + result);
+        }
+
+        // Wait a tenth of a second and update
+        window.setTimeout(function(){
+            UpdateInformation();
+        }, 100);
     });
 }
 
@@ -471,7 +478,7 @@ $(function(){
 
     // Play/pause
 
-    // Get the elemtn
+    // Get the element
     var playPauseElement = $("#playPauseButton");
     playPauseElement.bind('click', function(handler){
         // Be smart about what we are clicking

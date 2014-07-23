@@ -49,9 +49,18 @@ chrome.runtime.onMessage.addListener(
                     console.log("contentscript.js -- Eval yielded \"" + result + "\"");
                 }
             }
-            
-            // Return whatever was requested
-            sendResponse(result);
+
+            try{
+                // Return whatever was requested
+                sendResponse(result);
+            }catch (e){
+                if(mDebug){
+                    console.log(e.message);
+                    console.log(e);
+                }
+                // Send something back
+                sendResponse("");
+            }
         }
     });
 
