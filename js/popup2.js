@@ -23,10 +23,10 @@ var VISIBLE_BUTTON_CLASS = "visible_button";
 var mDebug = false;
 
 // The background page
-var mBackground = chrome.extension.getBackgroundPage();
+var mMusicality = chrome.extension.getBackgroundPage().Musicality;
 
 // The player details
-var mPlayerDetails = mBackground.mPlayerDetails;
+var mPlayerDetails = mMusicality.GetPlayerDetails();
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -40,30 +40,30 @@ function UpdateInformation(){
     }
 
     // Tell the background to update too
-    mBackground.UpdateInformation();
+    var info = mMusicality.GetPlaybackInfo();
 
     // Re-grab the player details in case they changed
-    mPlayerDetails = mBackground.mPlayerDetails;
+    mPlayerDetails = mMusicality.GetPlayerDetails();
 
     // Populate the information
-    PopulateInformation();
+    PopulateInformation(info);
 }
 
 // Populate the actual extension contents
-function PopulateInformation(){
+function PopulateInformation(info){
 
     // Grab the player details again
-    mPlayerDetails = mBackground.mPlayerDetails;
+    mPlayerDetails = mMusicality.GetPlayerDetails();
     
     // Get the artist from the background
-    var artist = mBackground.mArtist;
+    var artist = info.artist;
     
     if (mDebug){
         console.log("popup.js::PopulateInfo -- artist: " + artist);
     }
 
     // Get the track from the background
-    var track = mBackground.mTrack;
+    var track = info.track;
 
     if (mDebug){
         console.log("popup.js::PopulateInfo -- track: " + track);
@@ -167,7 +167,7 @@ function PopulateInformation(){
         }
 
         // Get the album art from the background
-        var art_url = mBackground.mArtUrl;
+        var art_url = info.artUrl;
         
         // Log it if we've found the art
         if (mDebug){
@@ -184,7 +184,7 @@ function PopulateInformation(){
         }
 
         // Get the current time from the player
-        var current_time = mBackground.GetTimeStringForMilliseconds(mBackground.mCurrentTime);
+        var current_time = Helper.MsToTime(info.currentTime);
         
         // Log it if we've found the current time
         if (mDebug){
@@ -192,14 +192,14 @@ function PopulateInformation(){
         }
 
         // Update the info
-        if (current_time != null && current_time != "" && mBackground.mCurrentTime > 0){
+        if (current_time != null && current_time != "" && current_time > 0){
             curTimeElement.text(current_time + "/");
         }else{
             curTimeElement.text("");
         }
 
         // Get the total time
-        var total_time = mBackground.GetTimeStringForMilliseconds(mBackground.mTotalTime);
+        var total_time = Helper.MsToTime(info.totalTime);
 
         // Log it if we've found the total time
         if (mDebug){
@@ -207,7 +207,7 @@ function PopulateInformation(){
         }
 
         // Update the info
-        if (total_time != null && total_time != "" && mBackground.mTotalTime > 0 &&
+        if (total_time != null && total_time != "" && total_time > 0 &&
             curTimeElement.text() != ""){
             totalTimeElement.text(total_time);
         }else{
@@ -215,7 +215,7 @@ function PopulateInformation(){
         }
 
         // Get is playing from background
-        var playing = mBackground.mIsPlaying;
+        var playing = info.isPlaying;
 
         // Log whatever we have got
         if (mDebug){
@@ -232,7 +232,7 @@ function PopulateInformation(){
         }
 
         // Get whether or not it's shuffled
-        var shuffled = mBackground.mIsShuffled;
+        var shuffled = info.isShuffled;
 
         // Log whatever we have got
         if (mDebug){
@@ -246,7 +246,7 @@ function PopulateInformation(){
         }
         
         // Get whether or not repeat is off
-        var repeat_off = mBackground.mIsRepeatOff;
+        var repeat_off = info.isRepeatOff;
         
         // Log whatever we have got
         if (mDebug){
@@ -261,7 +261,7 @@ function PopulateInformation(){
         }
 
         // Get whether or not repeat is on (1)
-        var repeat_one = mBackground.mIsRepeatOne;
+        var repeat_one = info.isRepeatOne;
 
         // Log whatever we have got
         if (mDebug){
@@ -276,7 +276,7 @@ function PopulateInformation(){
         }
 
         // Get whether or not it's repeat all
-        var repeat_all = mBackground.mIsRepeatAll;
+        var repeat_all = info.isRepeatAll;
 
         // Log whatever we have got
         if (mDebug){
@@ -291,7 +291,7 @@ function PopulateInformation(){
         }
 
         // Get the thumbs up state
-        var thumbed_up = mBackground.mIsThumbedUp;
+        var thumbed_up = info.isThumbedUp;
         
         // Log whatever we have got
         if (mDebug){
@@ -306,7 +306,7 @@ function PopulateInformation(){
         }
 
         // Get the thumbed down state
-        var thumbed_down = mBackground.mIsThumbedDown;
+        var thumbed_down = info.isThumbedDown;
 
         // Log whatever we have got
         if (mDebug){
@@ -398,7 +398,9 @@ function ThumbsDownClick(){
 // General method for dealing with clicking anything
 function ClickSomething(clickWhat){
     // Tell the background to take care of this
-    mBackground.ClickSomething(clickWhat);
+    mMusicality.ClickSomething(clickWhat, function(){
+        UpdateInformation();
+    });
 }
 
 // A function to start the marquee when hovered over
@@ -445,7 +447,7 @@ $(function(){
     // Immediately update our information
     UpdateInformation();
     
-    //Update our information once every quarter second.
+    //Update our information once second.
     window.setInterval(function() {
         UpdateInformation();
     }, 1000)
@@ -499,12 +501,12 @@ $(function(){
 
     // Player name
     $('#art').bind('click', function(){
-        mBackground.GoToNowPlayingTab();
+        mMusicality.GoToNowPlayingTab();
     });
 
     // Register all marquee items to marquee
     $(".marqueeItem").hover(startMarquee, stopMarquee);
 
     // Tell background to open the default player, if there is one set
-    mBackground.OpenDefaultPlayer();
+    mMusicality.OpenDefaultPlayer();
 });

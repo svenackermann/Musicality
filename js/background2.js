@@ -14,13 +14,15 @@
  * limitations under the License.
 **/
 
+// Global variable, accessed by popup
+var Musicality = undefined;
 
 /**
  * Start of execution. Runs immediately after everything is loaded
  */
 $(function(){
-	var musicality = new Musicality();
+	Musicality = new Musicality();
 
 	// Start the execution loop
-	musicality.Run();
+	Musicality.Run();
 });

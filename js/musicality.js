@@ -162,3 +162,41 @@ Musicality.prototype.Run = function(){
 
 	this.startExecutionLoop();
 }
+
+/**
+ * Popup needs to know info about the player to know what to display
+ */
+Musicality.prototype.GetPlayerDetails = function(){
+    return this.playerHandler.GetPlayerDetails();
+}
+
+/**
+ * Request from popup to retrieve updated information
+ */
+Musicality.prototype.GetPlaybackInfo = function(){
+    // Since we'll probably be called again, request to update information
+    this.updateInformation(); // async, so will not finish prior to return
+
+    return this.playerHandler.GetPlaybackInfo();
+}
+
+/**
+ * Request from the popup to perform an action
+ */
+Musicality.prototype.ClickSomething = function(whatToClick, callback){
+    this.playerHandler.ClickSomething(whatToClick, callback);
+}
+
+/**
+ * Request from the popup to open the default player
+ */
+Musicality.prototype.OpenDefaultPlayer = function(){
+    this.tabHandler.OpenDefaultPlayer();
+}
+
+/**
+ * Request from the popup to go the the now playing tab
+ */
+Musicality.prototype.GoToNowPlayingTab = function(){
+    this.tabHandler.GoToNowPlayingTab();
+}

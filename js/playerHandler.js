@@ -21,19 +21,8 @@ function PlayerHandler(){
 	this.logger = Logger.getInstance();
 	this.lastPlayingTabId = -1;
 	this.playerDetails = null;
-	this.isPlaying = false;
-	this.isPaused = false;
-	this.artist = null;
-	this.track = null;
-	this.artUrl = null;
-	this.currentTime = null;
-	this.totalTime = null;
-	this.isShuffled = false;
-	this.isRepeatOne = false;
-	this.isRepeatAll = false;
-	this.isRepeatOff = false;
-	this.isThumbedUp = false;
-	this.isThumbedDown = false;
+	this.currentInfo = {}; // contains track information
+	this.lastPopulateTime = 0;
 
 	/**
 	 * Send a particular request to the player using members.
@@ -106,21 +95,102 @@ function PlayerHandler(){
 	    	callback(false);
 	    }
 	}
+
+	/**
+	 * Helper method for determining and saving an individual detail from the player
+	 * @param  {String}   whatToGet
+	 * @param  {String}   key to store in our details as
+	 * @param  {function} callback (optional)
+	 */
+	this.getValueFromPlayer = function(whatToGet, key, callback){
+		this.sendPlayerRequest(whatToGet, $.proxy(function(result){
+			if (result != this.currentInfo[key]){
+				this.currentInfo[key] = result;
+			}
+		}, this));
+	}
 }
 
 /**
  * Set the tab and details for the player handler
  */
 PlayerHandler.prototype.SetTabAndDetails = function(tabId, playerDetails){
-	this.lastPlayingTabId = tabId;
-	this.playerDetails = playerDetails;
+	if (this.lastPlayingTabId != tabId ||
+		this.playerDetails != playerDetails){
+
+		// Save new data and reset fields
+		this.lastPlayingTabId = tabId;
+	    this.playerDetails = playerDetails;
+
+	    // We know nothing about the new information.
+	    this.currentInfo = {};
+	}
 }
 
 /**
  * Populate everything we can find out about the player
  */
 PlayerHandler.prototype.PopulateInformation = function(){
-	// TODO
+	if (this.lastPlayingTabId < 0 || this.playerDetails == undefined){
+		return;
+	}
+
+	// To prevent spamming the DOM too much, prevent calls to populate more
+	// than once every quarter second
+   	var curTime = Date.now();
+   	if((curTime - this.lastPopulateTime) >= 250){
+   		this.lastPopulateTime = curTime;
+
+   		// Get all the data!
+   		this.getValueFromPlayer("get_track", "track");
+   		this.getValueFromPlayer("get_artist", "artist");
+   		this.getValueFromPlayer("get_album_art", "artUrl");
+   		this.getValueFromPlayer("is_playing", "isPlaying");
+   		this.getValueFromPlayer("is_paused", "isPaused");
+   		this.getValueFromPlayer("is_shuffled", "isShuffled");
+   		this.getValueFromPlayer("is_repeat_off", "isRepeatOff");
+   		this.getValueFromPlayer("is_repeat_all", "isRepeatAll");
+   		this.getValueFromPlayer("is_repeat_one", "isRepeatOne");
+   		this.getValueFromPlayer("is_thumbed_up", "isThumbedUp");
+   		this.getValueFromPlayer("is_thumbed_down", "isThumbedDown");
+
+   		// Times are a little more finicky to deal with
+   		var hasTimeInMs = this.playerDetails.has_time_in_ms;
+   		if (this.playerDetails.has_current_track_time){
+   			this.getValueFromPlayer(
+   				"get_current_time",
+   				"currentTime",
+   				$.proxy(function(result){
+   					if (!hasTimeInMs){
+   						this.currentInfo.currentTime = Helper.TimeToMs(result);
+   					}
+   				}, this));
+   		}
+
+   		if (this.playerDetails.has_total_track_time){
+   			this.getValueFromPlayer(
+   				"get_total_time",
+   				"totalTime",
+   				$.proxy(function(result){
+   					if (!hasTimeInMs){
+   						this.currentInfo.totalTime = Helper.TimeToMs(result);
+   					}
+   				}, this));
+   		}else if (this.playerDetails.has_remaining_track_time){
+   			this.getValueFromPlayer(
+   				"get_remaining_time",
+   				"remainigTime",
+   				$.proxy(function(result){
+   					var remainingMillis = result;
+   					if (!hasTimeInMs){
+   						remainingMillis = Helper.TimeToMs(remainingMillis);
+   					}
+
+   					// Update total time
+   					this.currentInfo.totalTime = this.currentInfo.totalTime + Math.abs(remainingMillis);
+   				}, this));
+   		}
+   	}
 }
 
 /**
@@ -191,8 +261,28 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
     // First, ensure that something is playing
     if (this.playerDetails != null && this.lastPlayingTabId > 0){
         // Cool. Let's do it
-        this.sendPlayerRequest(clickWhat, function(result){
+        this.sendPlayerRequest(clickWhat, $.proxy(function(result){
+        	// Reset last update and immediately re-populate
+        	this.lastPopulateTime = 0;
+        	this.PopulateInformation();
+
+        	// Callback with the result
         	callback(result);
-        });
+        }, this));
     }
+}
+
+/**
+ * Retrieve the current track information
+ * @return {Object} Current track/playback information
+ */
+PlayerHandler.prototype.GetPlaybackInfo = function(){
+	return this.currentInfo;
+}
+
+/**
+ * Retrieve the player details
+ */
+PlayerHandler.prototype.GetPlayerDetails = function(){
+	return this.playerDetails;
 }
