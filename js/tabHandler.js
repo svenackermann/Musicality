@@ -29,11 +29,11 @@ function TabHandler(playerHandler){
     $.ajaxSetup({ async : false });
 
     // Deserialize the individual players JSON
-    $.getJSON(ALL_PLAYERS_JSON, function(data) {
+    $.getJSON(ALL_PLAYERS_JSON, $.proxy(function(data){
         this.allPlayers = data;
 
-        this.logger.log(allPlayers);
-    });
+        this.logger.log(this.allPlayers);
+    }, this));
 
     // Turn async back on
     $.ajaxSetup({ async : true });
@@ -46,7 +46,7 @@ function TabHandler(playerHandler){
      * @param  {Array}   pausedTabs
      * @param  {Function} callback
      */
-    var returnPausedTabHelper = function(asyncsRunning, pausedTabs, callback){
+    this.returnPausedTabHelper = function(asyncsRunning, pausedTabs, callback){
     	this.logger.log("returnPausedTabHelper() -- asyncsRunning = " +
     		(asyncsRunning.count - 1) + ", pausedTabs = " + pausedTabs);
 
@@ -54,13 +54,14 @@ function TabHandler(playerHandler){
         if (--asyncsRunning.count == 0){
             // All done with the asyncs. Check if there were any paused tabs
             if (pausedTabs.length > 0){
-                pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
-                mLastPlayingWindowId = pausedTabs[0].windowId;
+                pausedTabs.sort(this.pausedTabCompare); // We want consistent returns on which is selected
+                this.lastPlayingWindowId = pausedTabs[0].windowId;
                 callback(pausedTabs[0].id, pausedTabs[0].details);
                 return;
             }else{
                 // Nothing has been found. Sad!
                 callback(-1, null);
+                return;
             }
         }else if (asyncsRunning.count < 0){
             // Found nothing. Not a good sign.
@@ -75,7 +76,7 @@ function TabHandler(playerHandler){
 	 * @param  {Object:tab} tabB
 	 * @return {int} -1 if tabA > tabB, 1 if vice-versa, 0 if equal
 	 */
-    var pausedTabCompare = function(tabA, tabB){
+    this.pausedTabCompare = function(tabA, tabB){
     	if (tabA.id > tabB.id){
     		return -1;
     	}else if (tabA.id < tabB.id){
@@ -83,6 +84,119 @@ function TabHandler(playerHandler){
     	}else{
     		return 0;
     	}
+    }
+
+    /**
+     * Given a tab and window, iterate through players and see if any match
+     * @param  {int} windowId
+     * @param  {Object} curTab
+     * @param  {Object} asyncsRunning Object for keeping track of asyncs running
+     * @param  {Array} pausedTabs
+     * @param  {function} callback
+     */
+    this.checkCurrentTabForPlayers = function(windowId, curTab, asyncsRunning, pausedTabs, callback){
+        // Now iterate through our patterns, checking if
+        // this is a valid music player
+        for (var curPlayer in this.allPlayers){
+            if (curTab.url.match(this.allPlayers[curPlayer].pattern)){
+                // We have found one of our players at this point
+                
+                // Save some information off
+                var curPlayer = this.allPlayers[curPlayer];
+
+                // A flag to ensure we know we already have seen a player
+                this.playerOpen = true;
+
+                this.logger.log("checkCurrentTabForPlayers() -- Found " +
+                                curPlayer.name + " at tab " + curTab.id);
+
+                asyncsRunning.count++;
+
+                // Pass it along to check the current player for status
+                this.checkCurrentPlayerForStatus(curPlayer, windowId, curTab.id, asyncsRunning, pausedTabs, callback);
+            }
+        }
+    }
+
+    /**
+     * Helper method that checks the current player for it's playback status
+     * @param  {Object}   curPlayer
+     * @param  {int}   windowId
+     * @param  {int}   tabId
+     * @param  {Object}   asyncsRunning
+     * @param  {Array}   pausedTabs
+     * @param  {Function} callback
+     */
+    this.checkCurrentPlayerForStatus = function(curPlayer, windowId, tabId, asyncsRunning, pausedTabs, callback){
+        // Increment asyncs
+        asyncsRunning.count++;
+        
+        // Load the details for this player type into memory
+        $.getJSON(curPlayer.json_loc, $.proxy(function(playerDetails) {
+            this.logger.log("checkCurrentPlayerForStatus() -- details = " + playerDetails.name);
+
+            // A flag to see if we have already returned a player
+            var alreadyReturned = false;
+
+            // Increment asyncs running
+            asyncsRunning.count++;
+
+            // Is it currently playing music?
+            this.playerHandler.IsPlayingMusic(tabId, playerDetails, $.proxy(function(isPlaying){
+                if (isPlaying){
+                    // Sweet. Found one we wanted.
+                    this.logger.log("checkCurrentPlayerForStatus() -- Tab " + tabId + " is playing music!");
+                    
+                    if (!alreadyReturned){
+                        alreadyReturned = true;
+                        this.lastPlayingWindowId = windowId;
+                        callback(tabId, playerDetails);
+                        return;
+                    }
+                }else{
+                    // Increment the number of asyncs we have running.
+                    asyncsRunning.count++;
+                    
+                    // Check if it was paused instead.
+                    this.playerHandler.IsPaused(tabId, playerDetails, $.proxy(function(isPaused){
+                        if (isPaused){
+                            this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
+                            
+                            // Found a paused tab. Save it off
+                            pausedTabs.push(
+                                {
+                                    "id" : tabId,
+                                    "windowId" : windowId,
+                                    "details" : playerDetails
+                                });
+                        }else{
+                            this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
+                        }
+                        // If everything's done,
+                        // returned a paused tab
+                        this.returnPausedTabHelper(asyncsRunning,
+                        	pausedTabs,
+                        	callback);
+
+                    }, this));
+                }
+                // Decrement our asyncs running. See if we are
+                // done or not.
+                this.returnPausedTabHelper(asyncsRunning,
+                	pausedTabs,
+                	callback);
+            }, this));
+            // Decrement our asyncs running. See if we are
+            // done or not.
+            this.returnPausedTabHelper(asyncsRunning,
+            	pausedTabs,
+            	callback);
+        }, this));
+        // Decrement our asyncs running. See if we are
+        // done or not.
+        this.returnPausedTabHelper(asyncsRunning,
+        	pausedTabs,
+        	callback);
     }
 }
 
@@ -100,113 +214,30 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
     var asyncsRunning = { "count" : 1 };
     
     // Cycle through each tab
-    chrome.windows.getAll({populate: true}, function(windows){
+    chrome.windows.getAll({populate: true}, $.proxy(function(windows){
         for (var window=0; window<windows.length; window++){
             for (var i=0; i<windows[window].tabs.length; i++){
-                // Get the current tab
-                var curTab = windows[window].tabs[i];
-
-                // Get the current window id
+            	// Get the window and tab ids
                 var windowId = windows[window].id;
-
-                // Now iterate through our patterns, checking if
-                // this is a valid music player
-                for (var curPlayer in mAllPlayers){
-                    if (curTab.url.match(mAllPlayers[curPlayer]["pattern"])){
-                        // We have found one of our players at this point
-                        
-                        // Save some information off
-                        var curPlayer = mAllPlayers[curPlayer];
-
-                        // A flag to ensure we know we already have seen a player
-                        this.playerOpen = true;
-
-                        this.logger.log("FindTabPlayingMusic() -- Found " +
-                                        curPlayer + " at tab " + curTab.id);
-
-                        // Increment the number of asyncs we have running
-                        asyncsRunning.count++;
-
-                        // We want some closure to preserve the tabId for all callbacks.
-                        (function (tabId, curWindowId){
-                            // Increment asyncs again
-                            asyncsRunning.count++;
-                            
-                            // Load the details for this player type into memory
-                            $.getJSON(curPlayer.json_loc, function(playerDetails) {
-                                this.logger.log("FindTabPlayingMusic() -- details = " + playerDetails);
-
-                                // A flag to see if we have already returned a player
-                                var alreadyReturned = false;
-
-                                // Increment asyncs running
-                                asyncsRunning.count++;
-
-                                // Is it currently playing music?
-                                IsPlayingMusic(tabId, playerDetails, function(isPlaying){
-                                    if (isPlaying){
-                                        // Sweet. Found one we wanted.
-                                        this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is playing music!");
-                                        
-                                        if (!alreadyReturned){
-                                            alreadyReturned = true;
-                                            mLastPlayingWindowId = curWindowId;
-                                            callback(tabId, playerDetails);
-                                            return;
-                                        }
-                                    }else{
-                                        // Increment the number of asyncs we have running.
-                                        asyncsRunning.count++;
-                                        
-                                        // Check if it was paused instead.
-                                        IsPaused(tabId, playerDetails, function(isPaused){
-                                            if (isPaused){
-                                                this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
-                                                
-                                                // Found a paused tab. Save it off
-                                                pausedTabs.push(
-                                                    {
-                                                        "id" : tabId,
-                                                        "windowId" : curWindowId,
-                                                        "details" : playerDetails
-                                                    });
-                                            }else{
-                                                this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
-                                            }
-                                            // If everything's done,
-                                            // returned a paused tab
-                                            returnPausedTabHelper(asyncsRunning,
-                                                                  pausedTabs,
-                                                                  callback);
-
-                                        });
-                                    }
-                                    // Decrement our asyncs running. See if we are
-                                    // done or not.
-                                    returnPausedTabHelper(asyncsRunning,
-                                                          pausedTabs,
-                                                          callback);
-                                });
-                                // Decrement our asyncs running. See if we are
-                                // done or not.
-                                returnPausedTabHelper(asyncsRunning,
-                                                      pausedTabs,
-                                                      callback);
-                            });
-                            // Decrement our asyncs running. See if we are
-                            // done or not.
-                            returnPausedTabHelper(asyncsRunning,
-                                                  pausedTabs,
-                                                  callback);
-                        })(curTab.id, windowId)
-                    }
-                }
+                var curTab = windows[window].tabs[i];
+                
+                // Hand off to checkCurrentTabForPlayers
+                this.checkCurrentTabForPlayers(
+                	windowId,
+                	curTab,
+                	asyncsRunning,
+                	pausedTabs,
+                	callback
+                );
             }
         }
-        returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
-    });
+        this.returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
+    }, this));
 }
 
+/**
+ * Opens the deafult player
+ */
 TabHandler.prototype.OpenDefaultPlayer = function(){
     // Grab the value from storage, if it's there
     chrome.storage.local.get('default_open', function(data){
@@ -226,6 +257,9 @@ TabHandler.prototype.OpenDefaultPlayer = function(){
     });
 }
 
+/**
+ * Re-directs the window/tab focus to whatever player is playing
+ */
 TabHandler.prototype.GoToNowPlayingTab = function(){
     // Update the winow to be focused
     chrome.windows.update(this.lastPlayingWindowId,
@@ -236,5 +270,23 @@ TabHandler.prototype.GoToNowPlayingTab = function(){
     // Change the current tab to the current player
     chrome.tabs.update(this.lastPlayingTabId, {
         selected: true
+    });
+}
+
+/**
+ * Determine if the provided tab exists
+ * @param {int}   tabId
+ * @param {Function} callback
+ */
+TabHandler.prototype.DoesTabExist = function(tabId, callback){
+    // Use the chrome API to check
+    chrome.tabs.get(tabId, function(tab){
+        if (!tab){
+            callback(false);
+            return;
+        }else{
+            callback(true);
+            return;
+        }
     });
 }

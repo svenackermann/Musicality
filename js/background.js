@@ -337,7 +337,7 @@ function OpenDefaultPlayer(){
     });
 }
 
-// TODO -- Move to player handler
+// TODO -- Should be high level part of Musicality class
 // Update the information displayed within the extension
 function UpdateInformation(){
 
@@ -473,7 +473,7 @@ function DoesTabExist(tabId, callback){
     });
 }
 
-// TODO -- Move to player handler
+// TODO -- Should remain with Musicality?
 // A helper function to prevent duplication of code in the UpdateInformation function
 function lookForPlayingTabHelper(){
     // Start by resetting the focused player and player details
