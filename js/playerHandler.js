@@ -61,8 +61,10 @@ function PlayerHandler(){
                     	$.proxy(function(result){
                     		this.logger.log("SendPlayerRequest(" +
                     			tabId + "," + whatIsNeeded + "," + result + ")");
-                    		callback(result);
-                    		return;
+
+                    		if (callback){
+                    			callback(result);
+                    		}
                     	}, this));
                 }else{
                     // Need to re-inject everything. Either new install or update.
@@ -91,8 +93,6 @@ function PlayerHandler(){
                     }
                 }
             }, this));
-	    }else{
-	    	callback(false);
 	    }
 	}
 
@@ -275,7 +275,9 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
         	this.PopulateInformation();
 
         	// Callback with the result
-        	callback(result);
+        	if(callback){
+        		callback(result);
+        	}
         }, this));
     }
 }

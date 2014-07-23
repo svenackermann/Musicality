@@ -22,10 +22,6 @@ var Logger = (function(){
 	var instance;
 
 	function init(){
-
-		// Logger can be toggled to write out or not
-		var enabled = false;
-
 		/**
 		 * Get an error object for additional logging information
 		 * @return {Error}
@@ -45,6 +41,14 @@ var Logger = (function(){
    	    	},
 
    	    	/**
+   	    	 * Set a string filter to limit what's output
+   	    	 * @param {String} filterString
+   	    	 */
+   	    	setFilter: function(filterString){
+   	    		this.filter = filterString;
+   	    	},
+
+   	    	/**
    	    	 * Log the input to file, along with filename and line number,
    	    	 * but only if the logger is enabled.
    	    	 * @param  {String} The string to log out
@@ -52,13 +56,20 @@ var Logger = (function(){
    	    	log: function(stringToLog){
    	            // Check if enabled
    	            if (this.enabled){
-            		// Get an error object to determine the file and line
-            		var err = getErrorObject();
-            		var caller_line = err.stack.split("\n")[4];
-            		var index = caller_line.indexOf("at ");
-            		var clean = caller_line.slice(index+2, caller_line.length);
+   	            	// Check if it matches the filter (if enabled)
+   	            	if (this.filter.length == 0 ||
+   	            		   (this.filter.length > 0 &&
+   	            			stringToLog.indexOf(this.filter) > -1)
+   	            		   ){
 
-            		console.log(clean + ' -- ' + stringToLog);
+                		// Get an error object to determine the file and line
+                	    var err = getErrorObject();
+                	    var caller_line = err.stack.split("\n")[4];
+                	    var index = caller_line.indexOf("at ");
+                	    var clean = caller_line.slice(index+2, caller_line.length);
+
+                	    console.log(clean + ' -- ' + stringToLog);
+                	}
             	}
    	    	}
    	    };
@@ -72,6 +83,8 @@ var Logger = (function(){
 		getInstance: function(){
   		    if (!instance){
   		    	instance = init();
+  		    	instance.setEnabled(false);
+  		    	instance.setFilter("");
   		    }
 
   		    return instance;
