@@ -77,10 +77,9 @@ function PopulateInformation(){
     var repeatButtonElement = $("#repeatButton");
     var thumbsUpButtonElement = $("#thumbsUpButton");
     var thumbsDownButtonElement = $("#thumbsDownButton");
-    var playerNameElement = $("#player_name");
     var trackElement = $("#track");
     var artistElement = $("#artist");
-    var artElement = $("#art");
+    var artClass = $(".art");
     var playbackControlsImgElement = $("#playbackControlsBackgroundImage");
     var trackInfoImgElement = $("#trackInfoBackgroundImage");
     var totalTimeElement = $("#totalTime");
@@ -145,9 +144,6 @@ function PopulateInformation(){
         var playerName = mPlayerDetails.name;
         if (playerName != null && playerName != ""){
  
-           // Set the text appropriately
-           playerNameElement.text(playerName);
-
            // Let's push the player name as a custom GA variable
            _gaq.push(['_setCustomVar',
             1,
@@ -181,14 +177,10 @@ function PopulateInformation(){
         // Check if we have art        
         if (art_url && art_url != null && art_url != ""){
             // Update the art to display the now playing art
-            artElement.attr("src", art_url);
-
-            // Update the inverted blurrty art container as well
-            playbackControlsImgElement.attr('src', art_url);
-            trackInfoImgElement.attr('src', art_url);
+            artClass.attr("src", art_url);
         }else{
             // Not found, so revert it to the empty art
-            artElement.attr("src", "/images/empty.png");
+            artClass.attr("src", "/images/empty.png");
         }
 
         // Get the current time from the player
@@ -336,14 +328,13 @@ function PopulateInformation(){
         UpdateButton(repeatButtonElement, DIM_BUTTON_CLASS);
         UpdateButton(thumbsUpButtonElement, DIM_BUTTON_CLASS);
         UpdateButton(thumbsDownButtonElement, DIM_BUTTON_CLASS);
-        playerNameElement.text("");
 
         // Tell the user nothing is playing
         trackElement.text("Play a song.");
 
         // Empty the other pieces as well
         artistElement.text("");
-        artElement.attr("src", "/images/empty.png");
+        artClass.attr("src", "/images/empty.png");
         curTimeElement.text("");
         totalTimeElement.text("");
     }
@@ -507,7 +498,7 @@ $(function(){
     });
 
     // Player name
-    $('#player_name').bind('click', function(){
+    $('#art').bind('click', function(){
         mBackground.GoToNowPlayingTab();
     });
 
