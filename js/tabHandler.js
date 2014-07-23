@@ -17,12 +17,12 @@
 /**
  * Class for handling finding a tab playing music (or paused)
  * as well as any other tab operations.
- * @param {Object} logger for logging
  */
 function TabHandler(){
 	this.logger = Logger.getInstance();
 	this.lastPlayingWindowId = -1;
 	this.lastPlayingTabId = -1;
+	this.playerOpen = false;
 
 	// Temporarily turn off async to load the JSON in
     $.ajaxSetup({ async : false });
@@ -31,11 +31,58 @@ function TabHandler(){
     $.getJSON(ALL_PLAYERS_JSON, function(data) {
         this.allPlayers = data;
 
-        logger.log(allPlayers);
+        this.logger.log(allPlayers);
     });
 
     // Turn async back on
     $.ajaxSetup({ async : true });
+
+    //// Private methods ////
+
+    /**
+     * Helper method for returning a paused tab
+     * @param  {Object}   asyncsRunning
+     * @param  {Array}   pausedTabs
+     * @param  {Function} callback
+     */
+    var returnPausedTabHelper = function(asyncsRunning, pausedTabs, callback){
+    	this.logger.log("returnPausedTabHelper() -- asyncsRunning = " +
+    		(asyncsRunning.count - 1) + ", pausedTabs = " + pausedTabs);
+
+        // Decrement asyncsRunning and check if we are done
+        if (--asyncsRunning.count == 0){
+            // All done with the asyncs. Check if there were any paused tabs
+            if (pausedTabs.length > 0){
+                pausedTabs.sort(pausedTabCompare); // We want consistent returns on which is selected
+                mLastPlayingWindowId = pausedTabs[0].windowId;
+                callback(pausedTabs[0].id, pausedTabs[0].details);
+                return;
+            }else{
+                // Nothing has been found. Sad!
+                callback(-1, null);
+            }
+        }else if (asyncsRunning.count < 0){
+            // Found nothing. Not a good sign.
+            callback(-1, null);
+            return;
+        }
+    }
+
+	/**
+	 * Compare two tabs for sorting (by id)
+	 * @param  {Object:tab} tabA
+	 * @param  {Object:tab} tabB
+	 * @return {int} -1 if tabA > tabB, 1 if vice-versa, 0 if equal
+	 */
+    var pausedTabCompare = function(tabA, tabB){
+    	if (tabA.id > tabB.id){
+    		return -1;
+    	}else if (tabA.id < tabB.id){
+    		return 1;
+    	}else{
+    		return 0;
+    	}
+    }
 }
 
 /**
@@ -43,9 +90,7 @@ function TabHandler(){
  * @param callback with the tab id upon completion
  */
 TabHandler.prototype.FindTabPlayingMusic = function(callback){
-	logger.log("FindTabPlayingMusic");
-
-	// TODO -- clean this up. Figure out a better way.
+	this.logger.log("FindTabPlayingMusic");
 
     // An array of tabs currently paused
     var pausedTabs = [];
@@ -73,9 +118,9 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
                         var curPlayer = mAllPlayers[curPlayer];
 
                         // A flag to ensure we know we already have seen a player
-                        mPlayerOpen = true;
+                        this.playerOpen = true;
 
-                        mLogger.log("FindTabPlayingMusic() -- Found " +
+                        this.logger.log("FindTabPlayingMusic() -- Found " +
                                         curPlayer + " at tab " + curTab.id);
 
                         // Increment the number of asyncs we have running
@@ -88,7 +133,7 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
                             
                             // Load the details for this player type into memory
                             $.getJSON(curPlayer.json_loc, function(playerDetails) {
-                                mLogger.log("FindTabPlayingMusic() -- details = " + playerDetails);
+                                this.logger.log("FindTabPlayingMusic() -- details = " + playerDetails);
 
                                 // A flag to see if we have already returned a player
                                 var alreadyReturned = false;
@@ -100,7 +145,7 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
                                 IsPlayingMusic(tabId, playerDetails, function(isPlaying){
                                     if (isPlaying){
                                         // Sweet. Found one we wanted.
-                                        mLogger.log("FindTabPlayingMusic() -- Tab " + tabId + " is playing music!");
+                                        this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is playing music!");
                                         
                                         if (!alreadyReturned){
                                             alreadyReturned = true;
@@ -115,7 +160,7 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
                                         // Check if it was paused instead.
                                         IsPaused(tabId, playerDetails, function(isPaused){
                                             if (isPaused){
-                                                mLogger.log("FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
+                                                this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is paused!");
                                                 
                                                 // Found a paused tab. Save it off
                                                 pausedTabs.push(
@@ -125,7 +170,7 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
                                                         "details" : playerDetails
                                                     });
                                             }else{
-                                                mLogger.log("FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
+                                                this.logger.log("FindTabPlayingMusic() -- Tab " + tabId + " is not playing or paused.");
                                             }
                                             // If everything's done,
                                             // returned a paused tab
