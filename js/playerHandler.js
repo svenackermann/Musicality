@@ -136,16 +136,21 @@ function PlayerHandler(){
  * Set the tab and details for the player handler
  */
 PlayerHandler.prototype.SetTabAndDetails = function(tabId, playerDetails){
+	this.logger.log("SetTabAndDetails " + tabId + " " + playerDetails.name);
 	if (this.lastPlayingTabId != tabId ||
 		this.playerDetails != playerDetails){
 
 		// Save new data and reset fields
 		this.lastPlayingTabId = tabId;
 	    this.playerDetails = playerDetails;
-
-	    // We know nothing about the new information.
-	    this.currentInfo = {};
 	}
+}
+
+/**
+ * Clear info. Only to be called when nothing is playing or paused.
+ */
+PlayerHandler.prototype.ClearInfo = function(){
+	this.currentInfo = {};
 }
 
 /**
@@ -212,7 +217,7 @@ PlayerHandler.prototype.PopulateInformation = function(){
    					}
 
    					// Update total time
-   					this.currentInfo.totalTime = this.currentInfo.totalTime + Math.abs(remainingMillis);
+   					this.currentInfo.totalTime = this.currentInfo.currentTime + Math.abs(remainingMillis);
    				}, this));
    		}
    	}

@@ -363,6 +363,9 @@ function UpdateInformation(){
                     lookForPlayingTabHelper();
                 }
             }else{
+                // Clear the info, since the tab is non-existant
+                this.playerHandler.ClearInfo();
+                
                 // Need to look for a tab playing music
                 lookForPlayingTabHelper();
             }

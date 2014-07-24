@@ -101,6 +101,9 @@ function Musicality(){
                         }
                     }, this));
                 }else{
+                    // Clear the info in player handler, since it's gone
+                    this.playerHandler.ClearInfo();
+
                     // Need to look for a tab playing music
                     this.lookForPlayingTabHelper();
                 }

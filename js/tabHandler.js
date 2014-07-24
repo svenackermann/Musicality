@@ -21,7 +21,6 @@
 function TabHandler(playerHandler){
 	this.logger = Logger.getInstance();
 	this.lastPlayingWindowId = -1;
-	this.lastPlayingTabId = -1;
 	this.playerOpen = false;
 	this.playerHandler = playerHandler;
 
@@ -268,7 +267,7 @@ TabHandler.prototype.GoToNowPlayingTab = function(){
     });
 
     // Change the current tab to the current player
-    chrome.tabs.update(this.lastPlayingTabId, {
+    chrome.tabs.update(this.playerHandler.GetLastPlayingTabId(), {
         selected: true
     });
 }

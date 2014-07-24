@@ -417,7 +417,7 @@ function startMarquee(){
     var parentWidth = $(this).parent().width();
 
     // Check if we are overflowing
-    if(width > parentWidth) {
+    if(width > parentWidth - 10) {
 
         // Get the distance to scroll (10 pixel buffer)
         var scrollDistance = width - parentWidth + 10;
