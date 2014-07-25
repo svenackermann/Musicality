@@ -136,13 +136,14 @@ function PlayerHandler(){
  * Set the tab and details for the player handler
  */
 PlayerHandler.prototype.SetTabAndDetails = function(tabId, playerDetails){
-	this.logger.log("SetTabAndDetails " + tabId + " " + playerDetails.name);
 	if (this.lastPlayingTabId != tabId ||
-		this.playerDetails != playerDetails){
+		this.playerDetails.name != playerDetails.name){
 
 		// Save new data and reset fields
 		this.lastPlayingTabId = tabId;
 	    this.playerDetails = playerDetails;
+
+	    this.currentInfo = {};
 	}
 }
 
