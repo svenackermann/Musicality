@@ -301,7 +301,9 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
         	// Wait just a tenth of a second before populating
         	window.setTimeout(
         		(function(self){
-        			self.PopulateInformation();
+        			return function(){
+        				self.PopulateInformation();
+        			}
         		})(this),
     		100);
 

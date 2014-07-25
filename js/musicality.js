@@ -19,13 +19,10 @@
  */
 function Musicality(){
 	this.logger = Logger.getInstance();
-
-	// For temporary debugging purposed, enable logging
-	this.logger.setEnabled(true);
-
 	this.playerHandler = new PlayerHandler();
 	this.tabHandler = new TabHandler(this.playerHandler);
-	// todo -- more
+    this.toaster = new Toaster(this.playerHandler);
+
 
 	// Private functions //
 
