@@ -3,16 +3,16 @@
 /////////////////////////////////////////////////////////////////////////////
 
 // Class name for hidden button
-var HIDDEN_BUTTON_CLASS = "hidden_button";
+var HIDDEN_BUTTON_CLASS = "hiddenButton";
 
 // Class name for subdued button
-var SUBDUED_BUTTON_CLASS = "subdued_button";
+var SUBDUED_BUTTON_CLASS = "subduedButton";
 
 // Class name for dim button
-var DIM_BUTTON_CLASS = "dim_button";
+var DIM_BUTTON_CLASS = "dimButton";
 
 // Class name for visible button
-var VISIBLE_BUTTON_CLASS = "visible_button";
+var VISIBLE_BUTTON_CLASS = "visibleButton";
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -239,3 +239,13 @@ span{
 	color: #BBB;
 	cursor: default;
 }
+
+.hiddenButton{
+	opacity: 0;
+	cursor: default;
+}
+
+.dimButton{
+	opacity: 0.2;
+	cursor: default;
+}
