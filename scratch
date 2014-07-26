@@ -1,0 +1,28 @@
+Notes
+
+- Disparate parts
+  - Storage Handler (singleton)
+    - Handles interacting with storage variables
+  - Tab Handler (using all_players.json)
+    - Finds tab playing music.
+  - Player Handler (using it's player)
+    - Used after tab handler to manager a player
+    - Update information and more
+    - Update badge text too
+  - Toast handler
+    - Handles toasting
+  - Helper functions
+    - Static one-off methods that have no home
+  - Scrobble manager
+    - Handles scrobbling logic
+  - Main (Musicality)
+    - Main controller. Ties it all together
+  - Also, change scrobbler to be Object Oriented
+
+- Other random items
+  - Code cleanup and apache headers
+  - Grunt tasks for packaging up and minifying/uglifying
+
+[DONE]
+  - Logger (singleton)
+    - Simply logs

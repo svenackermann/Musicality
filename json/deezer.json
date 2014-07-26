@@ -16,21 +16,21 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('#player_control_play').css('display') == 'none'",
-    "is_paused" : "$('#player_control_pause').css('display') == 'none'",
-    "is_shuffled" : "$('#player_option_shuffle').hasClass('selected')",
-    "is_repeat_off" : "!$('#player_option_repeat').hasClass('selected')",
-    "is_repeat_one" : "var a=$('#player_option_repeat'); a.hasClass('selected') && a.hasClass('option-repeat-one')",
-    "is_repeat_all" : "var a=$('#player_option_repeat'); a.hasClass('selected') && !a.hasClass('option-repeat-one')",
-    "is_thumbed_up" : "$('#player_action_love').hasClass('selected')",
+    "isPlaying" : "$('#player_control_play').css('display') == 'none'",
+    "isPaused" : "$('#player_control_pause').css('display') == 'none'",
+    "isShuffled" : "$('#player_option_shuffle').hasClass('selected')",
+    "isRepeatOff" : "!$('#player_option_repeat').hasClass('selected')",
+    "isRepeatOne" : "var a=$('#player_option_repeat'); a.hasClass('selected') && a.hasClass('option-repeat-one')",
+    "isRepeatAll" : "var a=$('#player_option_repeat'); a.hasClass('selected') && !a.hasClass('option-repeat-one')",
+    "isThumbedUp" : "$('#player_action_love').hasClass('selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('#naboo_menu_infos_cover').attr('src')",
-    "get_artist" : "$('#player_track_artist').text()",
-    "get_track" : "$('#player_track_title').text()",
-    "get_current_time" : "$('#player_track_position').text()",
-    "get_total_time" : "$('#player_track_length').text()",
+    "artUrl" : "$('#naboo_menu_infos_cover').attr('src')",
+    "artist" : "$('#player_track_artist').text()",
+    "track" : "$('#player_track_title').text()",
+    "currentTime" : "$('#player_track_position').text()",
+    "totalTime" : "$('#player_track_length').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

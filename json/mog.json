@@ -17,16 +17,16 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\"#play\").attr(\"class\") == \"control pause\"",
-    "is_paused" : "$(\"#play\").attr(\"class\") == \"control\"",
+    "isPlaying" : "$(\"#play\").attr(\"class\") == \"control pause\"",
+    "isPaused" : "$(\"#play\").attr(\"class\") == \"control\"",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "\"http:\" + $(\"#album_cover .album_pic\").attr(\"src\")",
-    "get_artist" : "$(\"#status .artist_name\").text()",
-    "get_track" : "$(\"#status .track_name\").text()",
-    "get_current_time" : "$(\"#elapsed_time\").text()",
-    "get_remaining_time" : "$(\"#remaining_time\").text()",
+    "artUrl" : "\"http:\" + $(\"#album_cover .album_pic\").attr(\"src\")",
+    "artist" : "$(\"#status .artist_name\").text()",
+    "track" : "$(\"#status .track_name\").text()",
+    "currentTime" : "$(\"#elapsed_time\").text()",
+    "remainingTime" : "$(\"#remainingTime\").text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

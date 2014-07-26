@@ -15,18 +15,18 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\"#radioControlPlay\").css(\"display\") == \"none\"",
-    "is_paused" : "$(\"#radioControlPause\").css(\"display\") == \"none\"",
-    "is_thumbed_up" : "$(\"#radioPlayer.loved\").length > 0",
-    "is_thumbed_down" : "$(\"#radioPlayer.banned\").length > 0",
+    "isPlaying" : "$(\"#radioControlPlay\").css(\"display\") == \"none\"",
+    "isPaused" : "$(\"#radioControlPause\").css(\"display\") == \"none\"",
+    "isThumbedUp" : "$(\"#radioPlayer.loved\").length > 0",
+    "isThumbedDown" : "$(\"#radioPlayer.banned\").length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\"#nowPlayingMeta .metadataHeader img\").attr(\"src\")",
-    "get_artist" : "$(\".artist\").children().text()",
-    "get_track" : "$(\".track\").children().text()",
-    "get_current_time" : "$(\"#trackPlayed\").text()",
-    "get_remaining_time" : "$(\"#trackRemaining\").text()",
+    "artUrl" : "$(\"#nowPlayingMeta .metadataHeader img\").attr(\"src\")",
+    "artist" : "$(\".artist\").children().text()",
+    "track" : "$(\".track\").children().text()",
+    "currentTime" : "$(\"#trackPlayed\").text()",
+    "remainingTime" : "$(\"#trackRemaining\").text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

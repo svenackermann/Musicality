@@ -16,19 +16,19 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('*[playeraction=togglePlay]').hasClass('icon-pause')",
-    "is_paused" : "$('*[playeraction=togglePlay]').hasClass('icon-play')",
-    "is_shuffled" : "$('*[playeraction=toggleShuffle]').hasClass('shuffled')",
-    "is_repeat_off" : "!$('*[playeraction=toggleRepeat]').hasClass('repeated')",
-    "is_repeat_all" : "$('*[playeraction=toggleRepeat]').hasClass('repeated')",
+    "isPlaying" : "$('*[playeraction=togglePlay]').hasClass('icon-pause')",
+    "isPaused" : "$('*[playeraction=togglePlay]').hasClass('icon-play')",
+    "isShuffled" : "$('*[playeraction=toggleShuffle]').hasClass('shuffled')",
+    "isRepeatOff" : "!$('*[playeraction=toggleRepeat]').hasClass('repeated')",
+    "isRepeatAll" : "$('*[playeraction=toggleRepeat]').hasClass('repeated')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src')",
-    "get_artist" : "$($('.currentSongAdditionalDetails span')[0]).text()",
-    "get_track" : "$('.currentSongDetails .title').text()",
-    "get_current_time" : "$('#currentTime').text()",
-    "get_total_time" : "$('#currentDuration').text()",
+    "artUrl" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src')",
+    "artist" : "$($('.currentSongAdditionalDetails span')[0]).text()",
+    "track" : "$('.currentSongDetails .title').text()",
+    "currentTime" : "$('#currentTime').text()",
+    "totalTime" : "$('#currentDuration').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

@@ -16,20 +16,20 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('*[data-original-title=Pause]').length > 0",
-    "is_paused" : "$('#footer').hasClass('paused')",
-    "is_shuffled" : "$('#footer').hasClass('shuffled')",
-    "is_repeat_off" : "var a = $('#footer'); (!a.hasClass('repeatAll') && !a.hasClass('repeatOne'))",
-    "is_repeat_one" : "$('#footer').hasClass('repeatOne')",
-    "is_repeat_all" : "$('#footer').hasClass('repeatAll')",
+    "isPlaying" : "$('*[data-original-title=Pause]').length > 0",
+    "isPaused" : "$('#footer').hasClass('paused')",
+    "isShuffled" : "$('#footer').hasClass('shuffled')",
+    "isRepeatOff" : "var a = $('#footer'); (!a.hasClass('repeatAll') && !a.hasClass('repeatOne'))",
+    "isRepeatOne" : "$('#footer').hasClass('repeatOne')",
+    "isRepeatAll" : "$('#footer').hasClass('repeatAll')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.selected img').attr('src')",
-    "get_artist" : "$('.track .artist').text()",
-    "get_track" : "$('.track .title').text()",
-    "get_current_time" : "$('time .time').text()",
-    "get_total_time" : "$('time .duration').text().split('/')[1].trim()",
+    "artUrl" : "$('.selected img').attr('src')",
+    "artist" : "$('.track .artist').text()",
+    "track" : "$('.track .title').text()",
+    "currentTime" : "$('time .time').text()",
+    "totalTime" : "$('time .duration').text().split('/')[1].trim()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

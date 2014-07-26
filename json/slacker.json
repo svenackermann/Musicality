@@ -14,16 +14,16 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('#mini-play').hasClass('pause')",
-    "is_paused" : "!$('#mini-play').hasClass('pause')",
-    "is_thumbed_up" : "$('#mini-heart').hasClass('active')",
-    "is_thumbed_down" : "$('#mini-ban').hasClass('active')",
+    "isPlaying" : "$('#mini-play').hasClass('pause')",
+    "isPaused" : "!$('#mini-play').hasClass('pause')",
+    "isThumbedUp" : "$('#mini-heart').hasClass('active')",
+    "isThumbedDown" : "$('#mini-ban').hasClass('active')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('#mini-track-art-current-img').attr('src')",
-    "get_artist" : "$('#mini-artist-name').text()",
-    "get_track" : "$('#mini-track-name').text()",
+    "artUrl" : "$('#mini-track-art-current-img').attr('src')",
+    "artist" : "$('#mini-artist-name').text()",
+    "track" : "$('#mini-track-name').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

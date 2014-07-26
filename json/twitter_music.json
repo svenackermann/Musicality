@@ -17,14 +17,14 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('.cd-controls a').hasClass('playing')",
-    "is_paused" : "!$('.cd-controls a').hasClass('playing') && $('span.track-title').attr('title') != null",
+    "isPlaying" : "$('.cd-controls a').hasClass('playing')",
+    "isPaused" : "!$('.cd-controls a').hasClass('playing') && $('span.track-title').attr('title') != null",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.artist-tile.artist-tile-cover.playing a img').css('background-image').substring(4).split(')')[0]",
-    "get_artist" : "$('a.track-artist span').attr('title')",
-    "get_track" : "$('span.track-title').attr('title')",
+    "artUrl" : "$('.artist-tile.artist-tile-cover.playing a img').css('background-image').substring(4).split(')')[0]",
+    "artist" : "$('a.track-artist span').attr('title')",
+    "track" : "$('span.track-title').attr('title')",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

@@ -59,12 +59,12 @@ function TabHandler(playerHandler){
                 return;
             }else{
                 // Nothing has been found. Sad!
-                callback(-1, null);
+                callback(-1, {});
                 return;
             }
         }else if (asyncsRunning.count < 0){
             // Found nothing. Not a good sign.
-            callback(-1, null);
+            callback(-1, {});
             return;
         }
     }

@@ -20,7 +20,7 @@
 function PlayerHandler(){
 	this.logger = Logger.getInstance();
 	this.lastPlayingTabId = -1;
-	this.playerDetails = null;
+	this.playerDetails = {};
 	this.currentInfo = {}; // contains track information
 	this.lastPopulateTime = 0;
 
@@ -115,12 +115,11 @@ function PlayerHandler(){
 
 	/**
 	 * Helper method for determining and saving an individual detail from the player
-	 * @param  {String}   whatToGet
-	 * @param  {String}   key to store in our details as
+	 * @param  {String}   key to lookup AND key to store in our details as
 	 * @param  {function} callback (optional)
 	 */
-	this.getValueFromPlayer = function(whatToGet, key, callback){
-		this.sendPlayerRequest(whatToGet, $.proxy(function(result){
+	this.getValueFromPlayer = function(key, callback){
+		this.sendPlayerRequest(key, $.proxy(function(result){
 			if (result != this.currentInfo[key]){
 				this.currentInfo[key] = result;
 			}
@@ -169,24 +168,23 @@ PlayerHandler.prototype.PopulateInformation = function(){
    		this.lastPopulateTime = curTime;
 
    		// Get all the data!
-   		this.getValueFromPlayer("get_track", "track");
-   		this.getValueFromPlayer("get_artist", "artist");
-   		this.getValueFromPlayer("get_album_art", "artUrl");
-   		this.getValueFromPlayer("is_playing", "isPlaying");
-   		this.getValueFromPlayer("is_paused", "isPaused");
-   		this.getValueFromPlayer("is_shuffled", "isShuffled");
-   		this.getValueFromPlayer("is_repeat_off", "isRepeatOff");
-   		this.getValueFromPlayer("is_repeat_all", "isRepeatAll");
-   		this.getValueFromPlayer("is_repeat_one", "isRepeatOne");
-   		this.getValueFromPlayer("is_thumbed_up", "isThumbedUp");
-   		this.getValueFromPlayer("is_thumbed_down", "isThumbedDown");
+   		this.getValueFromPlayer("track");
+   		this.getValueFromPlayer("artist");
+   		this.getValueFromPlayer("artUrl");
+   		this.getValueFromPlayer("isPlaying");
+   		this.getValueFromPlayer("isPaused");
+   		this.getValueFromPlayer("isShuffled");
+   		this.getValueFromPlayer("isRepeatOff");
+   		this.getValueFromPlayer("isRepeatAll");
+   		this.getValueFromPlayer("isRepeatOne");
+   		this.getValueFromPlayer("isThumbedUp");
+   		this.getValueFromPlayer("isThumbedDown");
 
    		// Times are a little more finicky to deal with
    		var hasTimeInMs = this.playerDetails.has_time_in_ms;
    		if (this.playerDetails.has_current_track_time){
    			this.getValueFromPlayer(
-   				"get_current_time",
-   				"ignore",
+   				"currentTime",
    				$.proxy(function(result){
    					if (!hasTimeInMs){
    						this.currentInfo.currentTime = Helper.TimeToMs(result);
@@ -198,8 +196,7 @@ PlayerHandler.prototype.PopulateInformation = function(){
 
    		if (this.playerDetails.has_total_track_time){
    			this.getValueFromPlayer(
-   				"get_total_time",
-   				"ignore",
+   				"totalTime",
    				$.proxy(function(result){
    					if (!hasTimeInMs){
    						this.currentInfo.totalTime = Helper.TimeToMs(result);
@@ -209,8 +206,7 @@ PlayerHandler.prototype.PopulateInformation = function(){
    				}, this));
    		}else if (this.playerDetails.has_remaining_track_time){
    			this.getValueFromPlayer(
-   				"get_remaining_time",
-   				"ignore",
+   				"remainingTime",
    				$.proxy(function(result){
    					var remainingMillis = result;
    					if (!hasTimeInMs){
@@ -245,7 +241,7 @@ PlayerHandler.prototype.IsPlayingMusic = function(tabId, playerDetails, callback
         this.sendPlayerStaticRequest(
         	tabId,
         	playerDetails,
-            "is_playing",
+            "isPlaying",
             callback);
     }else{
     	callback(false);
@@ -277,7 +273,7 @@ PlayerHandler.prototype.IsPaused = function(tabId, playerDetails, callback){
         this.sendPlayerStaticRequest(
         	tabId,
         	playerDetails,
-            "is_paused",
+            "isPaused",
             callback);
     }else{
     	callback(false);

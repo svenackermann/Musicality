@@ -17,18 +17,18 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('#ctl-play .icon').hasClass('icon-stop')",
-    "is_paused" : "$('#ctl-play .icon').hasClass('icon-play')",
-    "is_thumbed_up" : "$($('.vote-btn.up')[0]).hasClass('voted')",
-    "is_thumbed_down" : "$($('.vote-btn.down')[0]).hasClass('voted')",
+    "isPlaying" : "$('#ctl-play .icon').hasClass('icon-stop')",
+    "isPaused" : "$('#ctl-play .icon').hasClass('icon-play')",
+    "isThumbedUp" : "$($('.vote-btn.up')[0]).hasClass('voted')",
+    "isThumbedDown" : "$($('.vote-btn.down')[0]).hasClass('voted')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('#art img').attr('data-src')",
-    "get_artist" : "$('#now-playing .title').text().split('-')[0].trim()",
-    "get_track" : "var a=$('#now-playing .title').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
-    "get_current_time" : "$('.timestamps .elapsed').text()",
-    "get_remaining_time" : "$('.timestamps .remaining').text()",
+    "artUrl" : "$('#art img').attr('data-src')",
+    "artist" : "$('#now-playing .title').text().split('-')[0].trim()",
+    "track" : "var a=$('#now-playing .title').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
+    "currentTime" : "$('.timestamps .elapsed').text()",
+    "remainingTime" : "$('.timestamps .remaining').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

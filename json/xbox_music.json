@@ -17,19 +17,19 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\".iconPlayerPause\").length > 0",
-    "is_paused" : "$(\".iconPlayerPlay\").length > 0",
-    "is_shuffled" : "$(\".playerControls .iconPlayerShuffleActive\").length > 0",
-    "is_repeat_off" : "$(\".playerControls .iconPlayerRepeat\").length > 0",
-    "is_repeat_all" : "$(\".playerControls .iconPlayerRepeatActive\").length > 0",
+    "isPlaying" : "$(\".iconPlayerPause\").length > 0",
+    "isPaused" : "$(\".iconPlayerPlay\").length > 0",
+    "isShuffled" : "$(\".playerControls .iconPlayerShuffleActive\").length > 0",
+    "isRepeatOff" : "$(\".playerControls .iconPlayerRepeat\").length > 0",
+    "isRepeatAll" : "$(\".playerControls .iconPlayerRepeatActive\").length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\".playerNowPlayingImg .imgWrapper .img\").attr(\"src\")",
-    "get_artist" : "$(\".playerNowPlayingMetadata .secondaryMetadata a\")[0].text",
-    "get_track" : "$(\".playerNowPlayingMetadata .primaryMetadata a\").text()",
-    "get_current_time" : "$(\".playerDurationTextOnGoing\").text()",
-    "get_total_time" : "$(\".playerDurationTextRemaining\").text()",
+    "artUrl" : "$(\".playerNowPlayingImg .imgWrapper .img\").attr(\"src\")",
+    "artist" : "$(\".playerNowPlayingMetadata .secondaryMetadata a\")[0].text",
+    "track" : "$(\".playerNowPlayingMetadata .primaryMetadata a\").text()",
+    "currentTime" : "$(\".playerDurationTextOnGoing\").text()",
+    "totalTime" : "$(\".playerDurationTextRemaining\").text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

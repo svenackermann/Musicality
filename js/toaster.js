@@ -73,7 +73,7 @@ Toaster.prototype.Toast = function(info){
 				iconUrl: "/images/preSprite/pause.png"
 			},{
 				title: "Skip",
-				iconUrl: "/images/preSprite/play.png"
+				iconUrl: "/images/preSprite/next.png"
 			}]
 		}, $.proxy(function(id){
 			// Timeout

@@ -16,15 +16,15 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('#player_play_button').css('display') == 'none'",
-    "is_paused" : "$('#player_pause_button').css('display') == 'none'",
-    "is_thumbed_up" : "$('.mix_like.player_button.active').length > 0",
+    "isPlaying" : "$('#player_play_button').css('display') == 'none'",
+    "isPaused" : "$('#player_pause_button').css('display') == 'none'",
+    "isThumbedUp" : "$('.mix_like.player_button.active').length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('#mix_player_details .cover').attr('src')",
-    "get_artist" : "$('#now_playing .title_container .title_artist .a').text()",
-    "get_track" : "$('#now_playing .title_container .title_artist .t').text()",
+    "artUrl" : "$('#mix_player_details .cover').attr('src')",
+    "artist" : "$('#now_playing .title_container .title_artist .a').text()",
+    "track" : "$('#now_playing .title_container .title_artist .t').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

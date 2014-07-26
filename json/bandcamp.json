@@ -16,16 +16,16 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('div.playbutton').hasClass('playing')",
-    "is_paused" : "!$('div.playbutton').hasClass('playing')",
+    "isPlaying" : "$('div.playbutton').hasClass('playing')",
+    "isPaused" : "!$('div.playbutton').hasClass('playing')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('div#tralbumArt').find('img').attr('src')",
-    "get_artist" : "$('span[itemprop=byArtist]').text().trim()",
-    "get_track" : "$('div.desktop-view').find('span.title').text().trim()",
-    "get_current_time" : "$('div.track_info').find('span.time_elapsed').text()",
-    "get_total_time" : "$('div.track_info').find('span.time_total').text()",
+    "artUrl" : "$('div#trartUrl').find('img').attr('src')",
+    "artist" : "$('span[itemprop=byArtist]').text().trim()",
+    "track" : "$('div.desktop-view').find('span.title').text().trim()",
+    "currentTime" : "$('div.track_info').find('span.time_elapsed').text()",
+    "totalTime" : "$('div.track_info').find('span.time_total').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
