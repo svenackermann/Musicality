@@ -161,6 +161,8 @@ Musicality.prototype.Run = function(){
 	this.processFirstRun();
 
 	this.startExecutionLoop();
+
+    this.toaster.Run();
 }
 
 /**

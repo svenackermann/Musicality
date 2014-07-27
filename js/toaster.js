@@ -21,6 +21,9 @@
 function Toaster(playerHandler){
 	this.playerHandler = playerHandler;
 	this.timeToLeaveUpToast = 5000;
+	// TODO -- Change to be event driven
+	this.toastPollTime = 2000;
+	this.oldInfo = {};
 
 	// Immediately check if toasting is enabled in storage
 	chrome.storage.local.get('toaster_enabled', $.proxy(function(data){
@@ -38,6 +41,25 @@ function Toaster(playerHandler){
         }
         this.playerHandler.PopulateInformation();
     }, this));
+
+    /**
+     * Toast if necessary.
+     */
+    this.toastIfNecessary = function(){
+    	if (this.enabled){
+    		var info = this.playerHandler.GetPlaybackInfo();
+
+    		if (info.isPlaying &&
+    			(this.oldInfo.artist != info.artist ||
+    			 this.oldInfo.track != info.track ||
+    			 this.oldInfo.artUrl != info.artUrl)){
+
+    			// Update our saved info for the next comparison
+    			this.oldInfo = info;
+    			this.Toast(info);
+    		}
+    	}
+    }
 }
 
 /**
@@ -84,4 +106,19 @@ Toaster.prototype.Toast = function(info){
 			}
 		}, this)
 	);
+}
+
+/**
+ * Tell the toaster to run after construction
+ */
+Toaster.prototype.Run = function(){
+	this.toastIfNecessary();
+
+	window.setInterval(
+		(function(self){
+			return function(){
+				self.toastIfNecessary();
+			}
+		})(this),
+	this.toastPollTime);
 }
