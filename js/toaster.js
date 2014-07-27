@@ -55,7 +55,7 @@ function Toaster(playerHandler){
     			 this.oldInfo.artUrl != info.artUrl)){
 
     			// Update our saved info for the next comparison
-    			this.oldInfo = info;
+    			this.oldInfo = $.extend(true, {}, info);
     			this.Toast(info);
     		}
     	}
