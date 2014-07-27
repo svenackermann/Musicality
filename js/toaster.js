@@ -76,6 +76,10 @@ Toaster.prototype.IsEnabled = function(){
  */
 Toaster.prototype.SetEnabled = function(enabled){
 	this.enabled = enabled;
+
+	if (enabled){
+		this.toastIfNecessary();
+	}
 }
 
 /**

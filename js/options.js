@@ -10,7 +10,8 @@
 // Member Variables
 /////////////////////////////////////////////////////////////////////////////
 
-// None
+// The core
+var mMusicality = chrome.extension.getBackgroundPage().Musicality;
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -136,6 +137,9 @@ function SetToastNotificationsEnabled(isEnabled, callback){
         // Callback success
         callback(true);
     });
+
+    // Update the running instance as well
+    mMusicality.toaster.SetEnabled(isEnabled);
 }
 
 // A function to update the buttons to display the correct info
