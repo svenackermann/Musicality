@@ -28,7 +28,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "('http:' + $('#playingartUrl').attr('src'))",
+    "artUrl" : "('http:' + $('#playingAlbumArt').attr('src'))",
     "artist" : "$('#player-artist').text()",
     "track" : "$('#playerSongTitle').text()",
     "currentTime" : "$('#time_container_current').text()",
