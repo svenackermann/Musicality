@@ -22,6 +22,7 @@ function Musicality(){
 	this.playerHandler = new PlayerHandler();
 	this.tabHandler = new TabHandler(this.playerHandler);
     this.toaster = new Toaster(this.playerHandler);
+    this.iconHandler = new IconHandler(this.playerHandler);
 
 
 	// Private functions //
@@ -163,6 +164,8 @@ Musicality.prototype.Run = function(){
 	this.startExecutionLoop();
 
     this.toaster.Run();
+
+    this.iconHandler.Run();
 }
 
 /**
