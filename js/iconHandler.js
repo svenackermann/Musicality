@@ -94,3 +94,13 @@ IconHandler.prototype.Run = function(){
 		})(this),
 	this.scrollDelayTime);
 }
+
+/**
+ * Set whether or not the badge text is enabledn
+ * @param {Boolean} isEnabled
+ */
+IconHandler.prototype.SetEnabled = function(isEnabled){
+	this.enabled = isEnabled;
+
+	this.updateBadgeText();
+}

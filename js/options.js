@@ -122,7 +122,7 @@ function SetBadgeTextEnabled(isEnabled, callback){
     });
 
     // Update the running instance
-    mMusicality.iconHandler.setEnabled(isEnabled);
+    mMusicality.iconHandler.SetEnabled(isEnabled);
 }
 
 // A function to check if the toast notifications is enabled
