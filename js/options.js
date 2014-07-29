@@ -148,12 +148,12 @@ function SetToastNotificationsEnabled(isEnabled, callback){
 // A function to update the buttons to display the correct info
 function UpdateButtons(){
     // Check if we are already authenticated
-    AlreadyAuthenticated(function(result){
+    mMusicality.scrobbler.AlreadyAuthenticated(function(result){
         SetLastFmAuthenticationButton(result);
     });
 
     // Check if last.fm is disabled
-    IsScrobblingEnabled(function(result){
+    mMusicality.scrobbler.IsScrobblingEnabled(function(result){
         SetScrobblingStateButton(result);
     });
 
@@ -262,13 +262,13 @@ $(function(){
     // We want to bind the click button to do everything it needs to for authentication
     $("#authenticate").bind('click', function(){
         // Authenticate is in scrobbler.js
-        AuthenticateWithLastFm();
+        mMusicality.scrobbler.AuthenticateWithLastFm();
     });
 
     // Bind the click of the button to flip the state of scrobbling
     $("#scrobbling_toggle").bind('click', function(){
-        IsScrobblingEnabled(function(result){
-            SetScrobblingState(!result, function(){
+        mMusicality.scrobbler.IsScrobblingEnabled(function(result){
+            mMusicality.scrobbler.SetScrobblingState(!result, function(){
                 SetScrobblingStateButton(!result);
             });
         });
