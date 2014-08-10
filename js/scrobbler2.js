@@ -258,7 +258,7 @@ Scrobbler.prototype.Run = function(){
     }, this));
 
     // Finally, start the execution loop
-    window.setTimeout(
+    window.setInterval(
     	(function(self){
     		return function(){
     			self.talkToLastFm();
