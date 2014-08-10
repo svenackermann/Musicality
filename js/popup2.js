@@ -176,16 +176,7 @@ function PopulateInformation(info){
 
         // Check if we have art        
         if (art_url && art_url != null && art_url != ""){
-            // Check if the art was actually updated
-            if (artClass.attr("src") != art_url){
-                // Fade in the new art
-                artClass.fadeOut(function(){
-                    $(this).load(function(){
-                        $(this).fadeIn();
-                    });
-                    $(this).attr("src", art_url);
-                });
-            }
+            artClass.attr("src", art_url);
         }else{
             // Not found, so revert it to the empty art
             artClass.attr("src", "/images/empty.png");

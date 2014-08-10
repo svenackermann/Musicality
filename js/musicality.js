@@ -24,6 +24,7 @@ function Musicality(){
     this.toaster = new Toaster(this.playerHandler);
     this.iconHandler = new IconHandler(this.playerHandler);
     this.scrobbler = new Scrobbler(this.playerHandler);
+    this.shortcutHandler = new ShortcutHandler(this.playerHandler);
 
 
 	// Private functions //
