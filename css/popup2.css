@@ -75,8 +75,12 @@ span{
 	margin-left: 22px;
 }
 
-#previousButton:hover{
-	opacity: 0.8;
+.playbackControl:hover{
+	opacity: 0.7;
+}
+
+.playbackControl.hiddenButton:hover{
+	opacity: 0.125;
 }
 
 #playPauseButton{
@@ -88,25 +92,13 @@ span{
 	background-image: url('/images/preSprite/play.png');
 }
 
-.play:hover{
-	opacity: 0.8;
-}
-
 .pause{
 	background-image: url('/images/preSprite/pause.png');
-}
-
-.pause:hover{
-	opacity: 0.8;
 }
 
 #nextButton{
 	background-image: url('/images/preSprite/next.png');
 	margin-right: 22px;
-}
-
-#nextButton:hover{
-	opacity: 0.8;
 }
 
 #albumArtContainer{
@@ -209,6 +201,10 @@ span{
 	opacity: 1;
 }
 
+.smallIcon.hiddenButton:hover{
+	opacity: 0.125;
+}
+
 .smallIcon:hover{
 	opacity: 0.65;
 }
@@ -241,8 +237,12 @@ span{
 }
 
 .hiddenButton{
-	opacity: 0;
+	opacity: 0.125;
 	cursor: default;
+}
+
+.hiddenButton:hover{
+	opacity: 0.125;	
 }
 
 .dimButton{
