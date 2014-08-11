@@ -43,6 +43,9 @@ function Musicality(){
                 	'toaster_enabled' : true}, $.proxy(function(){
                 		this.logger.log("Init now completed");
                 	}, this));
+
+                this.iconHandler.SetEnabled(true);
+                this.toaster.SetEnabled(true);
             }else{
                 // We're good.
                 this.logger.log("Init already completed.");
