@@ -21,7 +21,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('div#trartUrl').find('img').attr('src')",
+    "artUrl" : "$('div#tralbumArt').find('img').attr('src')",
     "artist" : "$('span[itemprop=byArtist]').text().trim()",
     "track" : "$('div.desktop-view').find('span.title').text().trim()",
     "currentTime" : "$('div.track_info').find('span.time_elapsed').text()",

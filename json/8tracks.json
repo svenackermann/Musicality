@@ -22,7 +22,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#mix_player_details .cover').attr('src')",
+    "artUrl" : "$('#mix_player_details .cover').attr('src').split('&w=')[0]",
     "artist" : "$('#now_playing .title_container .title_artist .a').text()",
     "track" : "$('#now_playing .title_container .title_artist .t').text()",
 
