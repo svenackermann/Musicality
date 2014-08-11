@@ -301,7 +301,7 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
         				self.PopulateInformation();
         			}
         		})(this),
-    		100);
+        		100);
 
         	// Callback with the result
         	if(callback){

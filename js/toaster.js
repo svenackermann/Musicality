@@ -51,9 +51,7 @@ function Toaster(playerHandler){
 
     		if (info.isPlaying &&
     			(this.oldInfo.artist != info.artist ||
-    			 this.oldInfo.track != info.track ||
-    			 this.oldInfo.artUrl != info.artUrl)){
-
+    			 this.oldInfo.track != info.track){
     			// Update our saved info for the next comparison
     			this.oldInfo = $.extend(true, {}, info);
     			this.Toast(info);
