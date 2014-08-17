@@ -25,9 +25,10 @@
     "description": "Supports Google Music, Soundcloud, Pandora, Bandcamp, Spotify, Grooveshark, Rdio, Deezer, Slacker, Songza and more!",
     "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
     "icons": {
+        "250": "/images/icon250.png",
         "128": "/images/icon128.png",
-        "16": "/images/icon16.png",
-        "48": "/images/icon48.png"
+        "48": "/images/icon48.png",
+        "16": "/images/icon16.png"
     },
     "name": "Musicality Music Player",
     "permissions":

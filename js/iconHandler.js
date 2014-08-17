@@ -77,19 +77,38 @@ function IconHandler(playerHandler){
 			}
 		})
 	}
+
+	/**
+	 * Update the current icon
+	 */
+	this.updateIcon = function(){
+		var info = playerHandler.GetPlaybackInfo();
+
+		if (info.isPaused){
+			chrome.browserAction.setIcon({
+				path : "/images/icon48paused.png"
+			});
+		}else{
+			// Default icon. Not playing or paused.
+			chrome.browserAction.setIcon({
+				path : "/images/icon48.png"
+			});
+		}
+	}
 }
 
 /**
  * Start the icon handler execution loop
  */
 IconHandler.prototype.Run = function(){
-	// todo -- interval code
 	this.updateBadgeText();
+	this.updateIcon();
 
 	window.setInterval(
 		(function(self){
 			return function(){
 				self.updateBadgeText();
+				self.updateIcon();
 			}
 		})(this),
 	this.scrollDelayTime);
