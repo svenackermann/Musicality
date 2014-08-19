@@ -22,6 +22,10 @@ function IconHandler(playerHandler){
 	this.lastScrollTime = 0;
 	this.scrollDelayTime = 250;
 	this.playerHandler = playerHandler;
+	this.pausedIcon = new Image();
+	this.pausedIcon.src = "/images/icon48paused.png";
+	this.defaultIcon = new Image();
+	this.defaultIcon.src = "/images/icon48.png";
 
 	// Immediately find out if badge text is enabled
 	chrome.storage.local.get('badge_text_enabled', $.proxy(function(data){
@@ -85,15 +89,33 @@ function IconHandler(playerHandler){
 		var info = playerHandler.GetPlaybackInfo();
 
 		if (info.isPaused){
-			chrome.browserAction.setIcon({
-				path : "/images/icon48paused.png"
-			});
+			this.drawNewIcon(this.pausedIcon);
 		}else{
-			// Default icon. Not playing or paused.
-			chrome.browserAction.setIcon({
-				path : "/images/icon48.png"
-			});
+			this.drawNewIcon(this.defaultIcon);
 		}
+	}
+
+	/**
+	 * Draw a new icon onto the chrome icon data
+	 */
+	this.drawNewIcon = function(image){
+		var canvas;
+		var existingCanvas = document.getElementById('canvas');
+		if (existingCanvas == undefined){
+			canvas = document.createElement('canvas');
+		}else{
+			canvas = existingCanvas;
+		}
+
+		var context = canvas.getContext('2d');
+		context.clearRect(0, 0, 19, 19);
+		context.drawImage(image, 0, 0, 19, 19);
+		var imageData = context.getImageData(0, 0, 19, 19);
+
+		// Draw the new icon
+		chrome.browserAction.setIcon({
+			imageData: imageData
+		});
 	}
 }
 
