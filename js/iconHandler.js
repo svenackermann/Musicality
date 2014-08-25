@@ -29,7 +29,12 @@ function IconHandler(playerHandler){
 
 	// Immediately find out if badge text is enabled
 	chrome.storage.local.get('badge_text_enabled', $.proxy(function(data){
-		this.enabled = data.badge_text_enabled;
+		this.badgeTextEnabled = data.badge_text_enabled;
+	}, this));
+
+	// Immediately find out if icon progress is enabled
+	chrome.storage.local.get('icon_progress_enabled', $.proxy(function(data){
+		this.iconProgressEnabled = data.icon_progress_enabled;
 	}, this));
 
 	// Set the color of the icon's badge text background
@@ -39,7 +44,7 @@ function IconHandler(playerHandler){
 	 * Update the current state of the badge text
 	 */
 	this.updateBadgeText = function(){
-		if (this.enabled){
+		if (this.badgeTextEnabled){
 			// Get an update on the info
 			var info = playerHandler.GetPlaybackInfo();
 
@@ -88,17 +93,23 @@ function IconHandler(playerHandler){
 	this.updateIcon = function(){
 		var info = playerHandler.GetPlaybackInfo();
 
+		// If the user wants progress bar, calculate percentage
+		var percentage = -1;
+		if (this.iconProgressEnabled){
+			percentage = info.currentTime/info.totalTime;
+		}
+
 		if (info.isPaused){
-			this.drawNewIcon(this.pausedIcon);
+			this.drawNewIcon(this.pausedIcon, percentage);
 		}else{
-			this.drawNewIcon(this.defaultIcon);
+			this.drawNewIcon(this.defaultIcon, percentage);
 		}
 	}
 
 	/**
 	 * Draw a new icon onto the chrome icon data
 	 */
-	this.drawNewIcon = function(image){
+	this.drawNewIcon = function(image, percentage){
 		var canvas;
 		var existingCanvas = document.getElementById('canvas');
 		if (existingCanvas == undefined){
@@ -110,6 +121,17 @@ function IconHandler(playerHandler){
 		var context = canvas.getContext('2d');
 		context.clearRect(0, 0, 19, 19);
 		context.drawImage(image, 0, 0, 19, 19);
+
+		if (percentage >= 0.0){
+			var percentageToIcons = (percentage*19);
+			// Need to draw the percentage since it was provided
+			context.fillStyle = '#CCCCCC';
+			context.fillRect(0, 17, 19, 19);
+
+			context.fillStyle = '#000000';
+			context.fillRect(0, 17, percentageToIcons, 19);
+		}
+
 		var imageData = context.getImageData(0, 0, 19, 19);
 
 		// Draw the new icon
@@ -140,8 +162,18 @@ IconHandler.prototype.Run = function(){
  * Set whether or not the badge text is enabledn
  * @param {Boolean} isEnabled
  */
-IconHandler.prototype.SetEnabled = function(isEnabled){
-	this.enabled = isEnabled;
+IconHandler.prototype.SetBadgeTextEnabled = function(isEnabled){
+	this.badgeTextEnabled = isEnabled;
 
 	this.updateBadgeText();
+}
+
+/**
+ * Set whether or not the icon progress is enabledn
+ * @param {Boolean} isEnabled
+ */
+IconHandler.prototype.SetIconProgressEnabled = function(isEnabled){
+	this.iconProgressEnabled = isEnabled;
+
+	this.updateIcon();
 }

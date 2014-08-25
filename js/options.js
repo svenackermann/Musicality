@@ -84,6 +84,27 @@ function SetBadgeTextButton(isEnabled){
     }
 }
 
+// A function to set the icon progress button information
+function SetIconProgressButton(isEnabled){
+    // Get the button
+    $iconProgressBtn = $("#icon_progress");
+    $iconProgressLbl = $("#icon_progress_label");
+
+    if (isEnabled){
+        // Set the button to say disable
+        $iconProgressBtn.text("Disable Icon Progress Bar");
+        $iconProgressBtn.removeClass("btn-fail");
+        $iconProgressBtn.addClass("btn-success");
+        $iconProgressLbl.text("Disable the progress bar on the Musicality icon");
+    }else{
+        // Set the button to say enable
+        $iconProgressBtn.text("Enable Icon Progress Bar");
+        $iconProgressBtn.removeClass("btn-success");
+        $iconProgressBtn.addClass("btn-fail");
+        $iconProgressLbl.text("Enable the progress bar on the Musicality icon");
+    }
+}
+
 // A function to set the toaster notification information
 function SetToastNotificationsButton(isEnabled){
     // Get the button
@@ -113,6 +134,14 @@ function IsBadgeTextEnabled(callback){
     });
 }
 
+// A function to check if the icon progress is enabled
+function IsIconProgressEnabled(callback){
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('icon_progress_enabled', function(data){
+        callback(data.icon_progress_enabled);
+    });
+}
+
 // A function to set if badge text should be enabled or not
 function SetBadgeTextEnabled(isEnabled, callback){
     // Set the value in local storage
@@ -122,7 +151,19 @@ function SetBadgeTextEnabled(isEnabled, callback){
     });
 
     // Update the running instance
-    mMusicality.iconHandler.SetEnabled(isEnabled);
+    mMusicality.iconHandler.SetBadgeTextEnabled(isEnabled);
+}
+
+// A function to set if icon progress bar should be enabled or not
+function SetIconProgressEnabled(isEnabled, callback){
+    // Set the value in local storage
+    chrome.storage.local.set({'icon_progress_enabled' : isEnabled}, function(){
+        // Callback success
+        callback(true);
+    });
+
+    // Update the running instance
+    mMusicality.iconHandler.SetIconProgressEnabled(isEnabled);
 }
 
 // A function to check if the toast notifications is enabled
@@ -161,6 +202,11 @@ function UpdateButtons(){
     IsBadgeTextEnabled(function(result){
         SetBadgeTextButton(result);
     });
+
+    // Check if icon progress is enabled
+    IsIconProgressEnabled(function(result){
+        SetIconProgressButton(result);
+    })
 
     // Check if toast notifications are enabled
     AreToastNotificationsEnabled(function(result){
@@ -280,6 +326,16 @@ $(function(){
         IsBadgeTextEnabled(function(result){
             SetBadgeTextEnabled(!result, function(){
                 SetBadgeTextButton(!result);
+            });
+        });
+    });
+
+    // Bind the click of the icon progress button to flip the state of the icon text
+    $("#icon_progress").bind('click', function(){
+        // Check if badge text is enabled
+        IsIconProgressEnabled(function(result){
+            SetIconProgressEnabled(!result, function(){
+                SetIconProgressButton(!result);
             });
         });
     });
