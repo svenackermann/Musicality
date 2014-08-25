@@ -96,7 +96,7 @@ function IconHandler(playerHandler){
 		}
 
 		if (info.isPaused){
-			this.drawNewIcon(this.icons.paused, percentage);
+			this.drawNewIcon(this.icons.paused, -1); // No progress when paused
 		}else{
 			this.drawNewIcon(this.icons.playing, percentage);
 		}
@@ -141,14 +141,16 @@ function IconHandler(playerHandler){
 		context.clearRect(0, 0, width, width);
 		context.drawImage(image, 0, 0, width, width);
 
+
 		if (percentage >= 0.0){
+			var prog = 0.85;
 			var percentageToIcons = (percentage*width);
 			// Need to draw the percentage since it was provided
-			context.fillStyle = '#CCCCCC';
-			context.fillRect(0, 0.9*width, width, width);
-
 			context.fillStyle = '#000000';
-			context.fillRect(0, 0.9*width, percentageToIcons, width);
+			context.fillRect(0, (prog * width), width, width - (prog * width));
+
+			context.fillStyle = '#8fc7e7';
+			context.fillRect(1, (prog * width) + 1, percentageToIcons, width - (prog * width) - 2);
 		}
 
 		return context.getImageData(0, 0, width, width);
