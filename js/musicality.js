@@ -21,7 +21,7 @@ function Musicality(){
 	this.logger = Logger.getInstance();
 	this.playerHandler = new PlayerHandler();
 	this.tabHandler = new TabHandler(this.playerHandler);
-    this.toaster = new Toaster(this.playerHandler);
+    this.toaster = new Toaster(this.playerHandler, this.tabHandler);
     this.iconHandler = new IconHandler(this.playerHandler);
     this.scrobbler = new Scrobbler(this.playerHandler);
     this.shortcutHandler = new ShortcutHandler(this.playerHandler);

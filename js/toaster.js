@@ -18,8 +18,9 @@
  * Toaster is the class responsible for handling notifications on track
  * changes.
  */
-function Toaster(playerHandler){
+function Toaster(playerHandler, tabHandler){
 	this.playerHandler = playerHandler;
+	this.tabHandler = tabHandler;
 	this.timeToLeaveUpToast = 5000;
 	// TODO -- Change to be event driven
 	this.toastPollTime = 2000;
@@ -40,6 +41,11 @@ function Toaster(playerHandler){
             this.playerHandler.ClickSomething(CLICK_NEXT_TRACK);
         }
         this.playerHandler.PopulateInformation();
+    }, this));
+
+    // Bind the click event for the entire notification
+    chrome.notifications.onClicked.addListener($.proxy(function(){
+    	this.tabHandler.GoToNowPlayingTab();
     }, this));
 
     /**
