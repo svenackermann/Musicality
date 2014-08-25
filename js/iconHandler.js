@@ -22,10 +22,6 @@ function IconHandler(playerHandler){
 	this.lastScrollTime = 0;
 	this.scrollDelayTime = 250;
 	this.playerHandler = playerHandler;
-	this.pausedIcon = new Image();
-	this.pausedIcon.src = "/images/icon48paused.png";
-	this.defaultIcon = new Image();
-	this.defaultIcon.src = "/images/icon48.png";
 
 	// Immediately find out if badge text is enabled
 	chrome.storage.local.get('badge_text_enabled', $.proxy(function(data){
@@ -100,16 +96,39 @@ function IconHandler(playerHandler){
 		}
 
 		if (info.isPaused){
-			this.drawNewIcon(this.pausedIcon, percentage);
+			this.drawNewIcon(this.icons.paused, percentage);
 		}else{
-			this.drawNewIcon(this.defaultIcon, percentage);
+			this.drawNewIcon(this.icons.playing, percentage);
 		}
 	}
 
 	/**
 	 * Draw a new icon onto the chrome icon data
 	 */
-	this.drawNewIcon = function(image, percentage){
+	this.drawNewIcon = function(icons, percentage){
+		// Get the image data for non-retina displays
+		var imageData = this.getImageData(icons.regular, percentage, 19);
+
+		// And retina displays
+		var imageDataRetina = this.getImageData(icons.retina, percentage, 38);
+
+		// Draw the new icon
+		chrome.browserAction.setIcon({
+			imageData: {
+				19: imageData,
+				38: imageDataRetina
+			}
+		});
+	}
+
+	/**
+	 * Get the actual image data given the image path, percentage, and width
+	 * @param  {String} imagePath  The path to the image
+	 * @param  {float} percentage Percentage of the way through the song
+	 * @param  {int} width      Width of the icon
+	 * @return {Object}            ImageData object
+	 */
+	this.getImageData = function(image, percentage, width){
 		var canvas;
 		var existingCanvas = document.getElementById('canvas');
 		if (existingCanvas == undefined){
@@ -119,26 +138,49 @@ function IconHandler(playerHandler){
 		}
 
 		var context = canvas.getContext('2d');
-		context.clearRect(0, 0, 19, 19);
-		context.drawImage(image, 0, 0, 19, 19);
+		context.clearRect(0, 0, width, width);
+		context.drawImage(image, 0, 0, width, width);
 
 		if (percentage >= 0.0){
-			var percentageToIcons = (percentage*19);
+			var percentageToIcons = (percentage*width);
 			// Need to draw the percentage since it was provided
 			context.fillStyle = '#CCCCCC';
-			context.fillRect(0, 17, 19, 19);
+			context.fillRect(0, 0.9*width, width, width);
 
 			context.fillStyle = '#000000';
-			context.fillRect(0, 17, percentageToIcons, 19);
+			context.fillRect(0, 0.9*width, percentageToIcons, width);
 		}
 
-		var imageData = context.getImageData(0, 0, 19, 19);
-
-		// Draw the new icon
-		chrome.browserAction.setIcon({
-			imageData: imageData
-		});
+		return context.getImageData(0, 0, width, width);
 	}
+
+	/**
+	 * Get an Image object for the provided path
+	 * @param  {String} path to the object
+	 * @return {Image}  image object
+	 */
+	this.getImageObject = function(path){
+		var image = new Image();
+		image.src = path;
+		return image;
+	}
+
+	// Need to buffer the icons so they don't load every time
+	var pausedRegular = this.getImageObject("/images/icon19paused.png");
+	var pausedRetina = this.getImageObject("/images/icon76paused.png");
+	var playingRegular = this.getImageObject("/images/icon19.png");
+	var playingRetina = this.getImageObject("/images/icon76.png");
+
+	this.icons = {
+		paused: {
+			regular: pausedRegular,
+			retina : pausedRetina
+		},
+		playing: {
+			regular: playingRegular,
+			retina : playingRetina
+		}
+	};
 }
 
 /**
