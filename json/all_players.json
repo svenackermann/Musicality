@@ -42,6 +42,13 @@
         "open_page" : "http://www.deezer.com"
     },
 
+    "Earbits" : {
+        "simple_name" : "earbits",
+        "pattern" : "https?:\\/\\/www.earbits.com\\/*",
+        "json_loc" : "/json/earbits.json",
+        "open_page" : "http://www.earbits.com"
+    },
+
     "Google Music" : {
         "simple_name" : "google_music",
         "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",

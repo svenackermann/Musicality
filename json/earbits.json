@@ -1,0 +1,41 @@
+{
+
+    "name" : "Earbits",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_current_track_time" : false,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('.btn.btn-playpause').attr('title') === 'Pause'",
+    "is_paused" : "$('.btn.btn-playpause').attr('title') === 'Play'",
+    "is_thumbed_up" : "$('.track-actions .btn.btn-like').length == 0",
+    "is_thumbed_down" : "false",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('.track-info .album-cover img').attr('src')",
+    "get_artist" : "$('.name-slider .artist-name').text().split('-')[1].trim()",
+    "get_track" : "$('.name-slider .track-name').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('.btn.btn-playpause').click()",
+    "click_pause" : "$('.btn.btn-playpause').click()",
+    "click_next_track" : "$('.btn.btn-skip').click()",
+    "click_prev_track" : "$('.btn.btn-rewind').click()",
+    "click_thumbs_up" : "$('.like-icon').click()",
+    "click_thumbs_down" : "$('.ban-song .btn.btn-ban').click()",
+
+"COMMENT_5" : "Earbits is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
+
+    "scrobbleOnChange" : true
+}
