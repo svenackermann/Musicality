@@ -109,7 +109,7 @@
         "simple_name" : "sky_fm",
         "pattern" : "https?:\\/\\/(.*?)\\.sky\\.fm\\/*",
         "json_loc" : "/json/sky_fm.json",
-        "open_page" : "http://www.ski.fm"
+        "open_page" : "http://www.sky.fm"
     },
 
 
