@@ -1,0 +1,38 @@
+{
+
+    "name" : "22tracks",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "is_playing" : "$('.player__button-group .icon-play').length == 0",
+    "is_paused" : "$('.player__button-group .icon-pause').length == 0",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "get_album_art" : "$('.info__portrait div').attr('soft-load')",
+    "get_artist" : "$('.player__progress__title').text().split('-')[0].trim()",
+    "get_track" : "$('.player__progress__title').text().split('-')[1].trim()",
+    "get_current_time" : "$('.player__progress__time.player__progress__time--current').text()",
+    "get_total_time" : "$('.player__progress__time.player__progress__time--duration').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('.player__button-group .icon-play').click()",
+    "click_pause" : "$('.player__button-group .icon-pause').click()",
+    "click_next_track" : "$('.player__button .icon-next').click()",
+    "click_prev_track" : "$('.player__button .icon-previous').click()"
+
+}
