@@ -1,5 +1,12 @@
 {
 
+    "22tracks" : {
+        "simple_name" : "22tracks",
+        "pattern" : "https?\\:\\/\\/22tracks\\.com\\/*",
+        "json_loc" : "/json/22tracks.json",
+        "open_page" : "http://22tracks.com"
+    },
+    
     "8tracks" : {
         "simple_name" : "8tracks",
         "pattern" : "https?\\:\\/\\/8tracks\\.com\\/*",
