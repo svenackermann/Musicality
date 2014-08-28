@@ -96,9 +96,13 @@ function IconHandler(playerHandler){
 		}
 
 		if (info.isPaused){
-			this.drawNewIcon(this.icons.paused, -1); // No progress when paused
+			if (!this.previousDrawPaused){
+ 			    this.drawNewIcon(this.icons.paused, -1); // No progress when paused
+ 			    this.previousDrawPaused = true;
+ 			}
 		}else{
 			this.drawNewIcon(this.icons.playing, percentage);
+			this.previousDrawPaused = false;
 		}
 	}
 
