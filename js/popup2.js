@@ -255,7 +255,7 @@ function PopulateInformation(info){
         // Get the element
         if (repeat_off){
             repeatButtonElement.addClass("glyphicon-refresh");
-            repeatButtonElement.removeClass("glyphicon-repeat");
+            repeatButtonElement.removeClass("repeat-one");
             repeatButtonElement.removeClass("active");
         }
 
@@ -270,8 +270,8 @@ function PopulateInformation(info){
         // Get the element
         if (repeat_one){
             repeatButtonElement.addClass("active");
-            repeatButtonElement.addClass("glyphicon-repeat");
-            repeatButtonElement.removeClass("glyphicon-refresh");
+            repeatButtonElement.addClass("glyphicon-refresh");
+            repeatButtonElement.addClass("repeat-one");
         }
 
         // Get whether or not it's repeat all
@@ -286,7 +286,7 @@ function PopulateInformation(info){
         if (repeat_all){
             repeatButtonElement.addClass("active");
             repeatButtonElement.addClass("glyphicon-refresh");
-            repeatButtonElement.removeClass("glyphicon-repeat");
+            repeatButtonElement.removeClass("repeat-one");
         }
 
         // Get the thumbs up state
