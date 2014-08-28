@@ -17,16 +17,16 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('.player__button-group .icon-play').length == 0",
-    "is_paused" : "$('.player__button-group .icon-pause').length == 0",
+    "isPlaying" : "$('.player__button-group .icon-play').length == 0",
+    "isPaused" : "$('.player__button-group .icon-pause').length == 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.info__portrait div').attr('soft-load')",
-    "get_artist" : "$('.player__progress__title').text().split('-')[0].trim()",
-    "get_track" : "$('.player__progress__title').text().split('-')[1].trim()",
-    "get_current_time" : "$('.player__progress__time.player__progress__time--current').text()",
-    "get_total_time" : "$('.player__progress__time.player__progress__time--duration').text()",
+    "artUrl" : "$('.info__portrait div').attr('soft-load')",
+    "artist" : "$('.player__progress__title').text().split('-')[0].trim()",
+    "track" : "$('.player__progress__title').text().split('-')[1].trim()",
+    "currentTime" : "$('.player__progress__time.player__progress__time--current').text()",
+    "totalTime" : "$('.player__progress__time.player__progress__time--duration').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
