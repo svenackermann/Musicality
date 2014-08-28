@@ -239,21 +239,21 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
  */
 TabHandler.prototype.OpenDefaultPlayer = function(){
     // Grab the value from storage, if it's there
-    chrome.storage.local.get('default_open', function(data){
+    chrome.storage.local.get('default_open', $.proxy(function(data){
         // Check if it's set
         if (data.default_open){
             // Default mPlayerOpen to false before we check again
-            mPlayerOpen = false;
+            this.playerOpen = false;
 
             // Check if we have a player
-            FindTabPlayingMusic(function(tabId, playerDetails){
-                if (!mPlayerOpen){
+            this.FindTabPlayingMusic($.proxy(function(tabId, playerDetails){
+                if (!this.playerOpen){
                     // Nothing open. Open one up
                     chrome.tabs.create({'url' : data.default_open});
                 }
-            });
+            }, this));
         }
-    });
+    }, this));
 }
 
 /**
