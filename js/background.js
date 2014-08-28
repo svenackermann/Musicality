@@ -1157,6 +1157,8 @@ function ProcessFirstRun(){
         }
     });
 
+    chrome.storage.local.set({'had_v2' : true}, function(){});
+
     // Check if we've shown the user the current welcome page
     chrome.storage.local.get('welcome_shown', function(result){
         if (!result.welcome_shown){
