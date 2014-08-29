@@ -4,7 +4,7 @@
 
 "COMMENT_1" : "This block contiains all of the things a player may or may not have",
 
-    "has_thumbs_up" : false,
+    "has_thumbs_up" : true,
     "has_thumbs_down" : false,
     "has_next_track" : true,
     "has_prev_track" : true,
@@ -20,12 +20,13 @@
 
     "is_playing" : "$('button.playControl.playing').length > 0",
     "is_paused" : "$('button.playControl.playing').length == 0",
+    "is_thumbed_up" : "$('.sound.streamContext.playing .sc-button-like').hasClass('sc-button-selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.image__full')[0].src",
+    "get_album_art" : "$('.sound.streamContext.playing img').attr('src')",
     "get_track" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[1].trim(); else a[0].trim();",
-    "get_artist" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[0].trim(); else 'Unknown'",
+    "get_artist" : "var a = $('.sound.streamContext.playing .soundTitle__username').text().trim();var b = $('.playbackTitle__link').text().split('-');if(b.length>1)b[0].trim();else if (a.length>1)a;else 'Unknown'",
     "get_current_time" : "$('.progressSmall').attr('aria-valuenow')",
     "get_total_time" : "$('.progressSmall').attr('aria-valuemax')",
 
@@ -34,5 +35,6 @@
     "click_play" : "$('button.playControl').click()",
     "click_pause" : "$('button.playControl').click()",
     "click_next_track" : "$('button.skipControl.skipControl__next').click()",
-    "click_prev_track" : "$('button.skipControl.skipControl__previous').click()"
+    "click_prev_track" : "$('button.skipControl.skipControl__previous').click()",
+    "click_thumbs_up" : "$('.sound.streamContext.playing .sc-button-like').click()"
 }
