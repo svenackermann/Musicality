@@ -187,6 +187,24 @@ function IconHandler(playerHandler){
 			retina : playingRetina
 		}
 	};
+
+	/**
+	 * Update the tooltip to contain what is now playing
+	 */
+	this.updateToolTip = function(){
+		var nowPlayingInfo = playerHandler.GetPlaybackInfo();
+
+		var title = "Musicality";
+		if (nowPlayingInfo.isPlaying){
+			// Add on the track and artist
+			title += ":\n    " + nowPlayingInfo.track;
+			title += "\n    by " + nowPlayingInfo.artist; 
+		}
+
+		chrome.browserAction.setTitle({
+			title: title
+		});
+	}
 }
 
 /**
@@ -195,12 +213,14 @@ function IconHandler(playerHandler){
 IconHandler.prototype.Run = function(){
 	this.updateBadgeText();
 	this.updateIcon();
+	this.updateToolTip();
 
 	window.setInterval(
 		(function(self){
 			return function(){
 				self.updateBadgeText();
 				self.updateIcon();
+				self.updateToolTip();
 			}
 		})(this),
 	this.scrollDelayTime);
