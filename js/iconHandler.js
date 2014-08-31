@@ -149,12 +149,13 @@ function IconHandler(playerHandler){
 		if (percentage >= 0.0){
 			var prog = 0.85;
 			var percentageToIcons = (percentage*width);
-			// Need to draw the percentage since it was provided
+
+			// Draw the black background
 			context.fillStyle = '#000000';
 			context.fillRect(0, (prog * width), width, width - (prog * width));
 
 			context.fillStyle = '#8fc7e7';
-			context.fillRect(1, (prog * width) + 1, percentageToIcons, width - (prog * width) - 3);
+			context.fillRect(1, (prog * width) + 1, percentageToIcons - 1, width - (prog * width) - 2);
 		}
 
 		return context.getImageData(0, 0, width, width);
