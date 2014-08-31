@@ -217,8 +217,12 @@ span{
 	float: left;
 }
 
-.repeat-one{
-	
+.repeat-one::after{
+	position: absolute;
+	content: "1";
+	font-size: 8px;
+	left: 7px;
+	top: 4px;
 }
 
 #thumbsUpButton{
