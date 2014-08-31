@@ -44,16 +44,21 @@
             <label id="scrobbling_toggle_label" class="subtle">Loading...</label>
             
             <br/><br/><hr/>
+
+            <h2>Icon Options</h2>
+            <p>The icon can display scrolling now playing information, have a progress bar, or do nothing special at all.</p>
             
-            <h2>Icon Text</h2>
-            <button id="icon_text" class="btn btn-large btn-fail">Loading...</button>
-            <label id="icon_text_label" class="subtle">Loading...</label>
-
-            <br/><br/><hr/>
-
-            <h2>Icon Progress Bar</h2>
-            <button id="icon_progress" class="btn btn-large btn-fail">Loading...</button>
-            <label id="icon_progress_label" class="subtle">Loading...</label>
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-large btn-success" id="icon_none">
+                <input type="radio" name="icon"> None
+              </label>
+              <label class="btn btn-large btn-success" id="icon_text">
+                <input type="radio" name="icon"> Scrolling Info
+              </label>
+              <label class="btn btn-large btn-success" id="icon_progress">
+                <input type="radio" name="icon"> Progress Bar
+              </label>
+            </div>
 
             <br/><br/><hr/>
             

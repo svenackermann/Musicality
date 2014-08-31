@@ -63,48 +63,6 @@ function SetScrobblingStateButton(isEnabled){
     }
 }
 
-// A function to set the badge text button information
-function SetBadgeTextButton(isEnabled){
-    // Get the button
-    $iconTextBtn = $("#icon_text");
-    $iconTextLbl = $("#icon_text_label");
-
-    if (isEnabled){
-        // Set the button to say disable
-        $iconTextBtn.text("Disable Icon Text");
-        $iconTextBtn.removeClass("btn-fail");
-        $iconTextBtn.addClass("btn-success");
-        $iconTextLbl.text("Disable the scrolling text on the Musicality icon");
-    }else{
-        // Set the button to say enable
-        $iconTextBtn.text("Enable Icon Text");
-        $iconTextBtn.removeClass("btn-success");
-        $iconTextBtn.addClass("btn-fail");
-        $iconTextLbl.text("Enable the scrolling text on the Musicality icon");
-    }
-}
-
-// A function to set the icon progress button information
-function SetIconProgressButton(isEnabled){
-    // Get the button
-    $iconProgressBtn = $("#icon_progress");
-    $iconProgressLbl = $("#icon_progress_label");
-
-    if (isEnabled){
-        // Set the button to say disable
-        $iconProgressBtn.text("Disable Icon Progress Bar");
-        $iconProgressBtn.removeClass("btn-fail");
-        $iconProgressBtn.addClass("btn-success");
-        $iconProgressLbl.text("Disable the progress bar on the Musicality icon");
-    }else{
-        // Set the button to say enable
-        $iconProgressBtn.text("Enable Icon Progress Bar");
-        $iconProgressBtn.removeClass("btn-success");
-        $iconProgressBtn.addClass("btn-fail");
-        $iconProgressLbl.text("Enable the progress bar on the Musicality icon");
-    }
-}
-
 // A function to set the toaster notification information
 function SetToastNotificationsButton(isEnabled){
     // Get the button
@@ -142,6 +100,14 @@ function IsIconProgressEnabled(callback){
     });
 }
 
+// A function to check if the icon is set to none (no scrolling or progress)
+function AreIconOptionsDisabled(callback){
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('icon_options_disabled', function(data){
+        callback(data.icon_options_disabled);
+    });
+}
+
 // A function to set if badge text should be enabled or not
 function SetBadgeTextEnabled(isEnabled, callback){
     // Set the value in local storage
@@ -164,6 +130,21 @@ function SetIconProgressEnabled(isEnabled, callback){
 
     // Update the running instance
     mMusicality.iconHandler.SetIconProgressEnabled(isEnabled);
+}
+
+// A function to disable icon progress and scrolling text
+function SetIconOptionsDisabled(isDisabled, callback){
+    // Set the value in local storage
+    chrome.storage.local.set({'icon_options_disabled' : isDisabled}, function(){
+        // Callback success
+        callback(true);
+    });
+
+    // Update the running instance (if we are disabling)
+    if (isDisabled){
+        mMusicality.iconHandler.SetIconProgressEnabled(false);
+        mMusicality.iconHandler.SetBadgeTextEnabled(false);
+    }
 }
 
 // A function to check if the toast notifications is enabled
@@ -200,13 +181,24 @@ function UpdateButtons(){
 
     // Check if badge text is enabled
     IsBadgeTextEnabled(function(result){
-        SetBadgeTextButton(result);
+        if(result){
+            $("#icon_text").addClass("active");
+        }
     });
 
     // Check if icon progress is enabled
     IsIconProgressEnabled(function(result){
-        SetIconProgressButton(result);
-    })
+        if(result){
+            $("#icon_progress").addClass("active");
+        }
+    });
+
+    // Check if icon changes are set to none
+    AreIconOptionsDisabled(function(result){
+        if(result){
+            $("#icon_none").addClass("active");
+        }
+    });
 
     // Check if toast notifications are enabled
     AreToastNotificationsEnabled(function(result){
@@ -322,22 +314,26 @@ $(function(){
 
     // Bind the click of the icon text button to flip the state of the icon text
     $("#icon_text").bind('click', function(){
-        // Check if badge text is enabled
-        IsBadgeTextEnabled(function(result){
-            SetBadgeTextEnabled(!result, function(){
-                SetBadgeTextButton(!result);
-            });
-        });
+        SetBadgeTextEnabled(true);
+
+        // Disable icon progress
+        SetIconProgressEnabled(false);
+        SetIconOptionsDisabled(false);
     });
 
     // Bind the click of the icon progress button to flip the state of the icon text
     $("#icon_progress").bind('click', function(){
-        // Check if badge text is enabled
-        IsIconProgressEnabled(function(result){
-            SetIconProgressEnabled(!result, function(){
-                SetIconProgressButton(!result);
-            });
-        });
+        SetIconProgressEnabled(true);
+
+        // Disable badge text and disabled icon options
+        SetBadgeTextEnabled(false);
+        SetIconOptionsDisabled(false);
+    });
+
+    $("#icon_none").bind('click', function(){
+        SetIconOptionsDisabled(true);
+        SetIconProgressEnabled(false);
+        SetBadgeTextEnabled(false);
     });
 
     // Bind the click of the toast notifications button to flip the state
