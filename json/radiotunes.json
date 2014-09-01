@@ -24,7 +24,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "'http:' + $('#art img').attr('data-src').split('?size')[0] + '?size=225x225'",
+    "artUrl" : "'http:' + $('#art img').attr('data-src').split('?size')[0]",
     "artist" : "$('#now-playing .title').text().split('-')[0].trim()",
     "track" : "var a=$('#now-playing .title').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
     "currentTime" : "$('.timestamps .elapsed').text()",
