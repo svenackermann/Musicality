@@ -17,14 +17,14 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('.play.js-play.pause').length > 0",
-    "isPaused" : "$('.play.js-play.pause').length == 0",
+    "isPlaying" : "$('button.play-toggle').hasClass('pause')",
+    "isPaused" : "!$('button.play-toggle').hasClass('pause')",
     "isThumbedUp" : "$('.action.js-thumbs-up.active').length > 0",
     "isThumbedDown" : "$('.action.js-thumbs-down.active').length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('.header-controls-album-cover').css('background-image').split('(')[1].split(')')[0]",
+    "artUrl" : "$('.header-controls-album-cover.js-song-art').css('background-image').split('url(\\'')[1].split('?')[0]",
     "artist" : "$('.artist-name.js-artist-name').text().trim()",
     "track" : "$('.name.js-track-name').text().trim()",
     "currentTime" : "$('.js-duration.action').text().split('/')[0].trim()",
