@@ -6,7 +6,7 @@
 
     "has_thumbs_up" : true,
     "has_thumbs_down" : false,
-    "has_next_track" : true,
+    "has_next_track" : false,
     "has_prev_track" : false,
     "has_play_pause" : true,
     "has_shuffle" : false,
@@ -17,24 +17,23 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('#player-play').hasClass('playing')",
-    "isPaused" : "!$('#player-play').hasClass('playing')",
-    "isThumbedUp" : "$('#cc-favorite-btn').hasClass('unfavorite-btn')",
+    "isPlaying" : "$('.player-control').hasClass('pause-state')",
+    "isPaused" : "!$('.player-control').hasClass('pause-state')",
+    "isThumbedUp" : "$('.icon-favorite-inner.ng-scope').attr('m-tooltip') == 'Favorited'",
     
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "('http:' + $('#cloudcast-image').attr('src'))",
-    "artist" : "$('span.js-artist').text().trim()",
-    "track" : "$('span.js-title').text().trim()",
-    "currentTime" : "$('div#player-current-time').text().trim()",
-	"remainingTime": "$('div#player-total-time').text().trim()",
+    "artUrl" : "'http:' + $('.player-cloudcast-image img').attr('src').split('w/60/h/60').join('w/225/h/225')",
+    "artist" : "$('span[ng-bind=\"player.nowPlaying.currentDisplayTrack.artist\"]').text()",
+    "track" : "$('span[ng-bind=\"player.nowPlaying.currentDisplayTrack.title\"]').text()",
+    "currentTime" : "$('.player-time.ng-binding').text()",
+	"remainingTime": "$('.player-time.end-time').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$('span#player-play').click()",
-    "click_pause" : "$('span#player-play').click()",
-    "click_next_track" : "$('#cloudcast-up-next li').click()",
-    "click_thumbs_up" : "$('#cc-favorite-btn').click()",
+    "click_play" : "$('.player-control').click()",
+    "click_pause" : "$('.player-control').click()",
+    "click_thumbs_up" : "$('.icon-favorite-inner.ng-scope').click()",
 
 "COMMENT_5" : "Mixcloud is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
 
