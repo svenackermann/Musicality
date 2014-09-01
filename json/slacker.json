@@ -21,7 +21,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#mini-track-art-current-img').attr('src')",
+    "artUrl" : "$('#mini-track-art-current-img').attr('src').split('50.jpg')[0] + '225.jpg'",
     "artist" : "$('#mini-artist-name').text()",
     "track" : "$('#mini-track-name').text()",
 
