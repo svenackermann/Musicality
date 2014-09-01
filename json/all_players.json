@@ -154,13 +154,6 @@
         "open_page" : "http://tunein.com"
     },
 
-    "Twitter Music" : {
-        "simple_name" : "twitter_music",
-        "pattern" : "https?\\:\\/\\/music\\.twitter\\.com\\/*",
-        "json_loc" : "/json/twitter_music.json",
-        "open_page" : "https://music.twitter.com"
-    },
-
     "Xbox Music" : {
         "simple_name" : "xbox_music",
         "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
