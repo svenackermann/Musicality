@@ -34,10 +34,10 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "location.assign('javascript:$('#play-pause').click()')",
-    "click_pause" : "location.assign('javascript:$('#play-pause').click()')",
-    "click_next_track" : "location.assign('javascript:$('#play-next').click()')",
-    "click_prev_track" : "location.assign('javascript:$('#play-prev').click()')",
-    "click_shuffle" : "location.assign('javascript:$('#shuffle').click()')",
-    "click_repeat" : "location.assign('javascript:$('#repeat').click()')"
+    "click_play" : "location.assign('javascript:$(\"#play-pause\").click()')",
+    "click_pause" : "location.assign('javascript:$(\"#play-pause\").click()')",
+    "click_next_track" : "location.assign('javascript:$(\"#play-next\").click()')",
+    "click_prev_track" : "location.assign('javascript:$(\"#play-prev\").click()')",
+    "click_shuffle" : "location.assign('javascript:$(\"#shuffle\").click()')",
+    "click_repeat" : "location.assign('javascript:$(\"#repeat\").click()')"
 }
