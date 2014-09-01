@@ -18,7 +18,7 @@
 
     "isPlaying" : "$('#player_play_button').css('display') == 'none'",
     "isPaused" : "$('#player_pause_button').css('display') == 'none'",
-    "isThumbedUp" : "$('.mix_like.player_button.active').length > 0",
+    "isThumbedUp" : "$($('.track.now_playing a.fav.inactive')[0]).hasClass('active')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
@@ -31,7 +31,7 @@
     "click_play" : "$('#player_play_button').click()",
     "click_pause" : "$('#player_pause_button').click()",
     "click_next_track" : "$('#player_skip_button').click()",
-    "click_thumbs_up" : "$('#mix_player_details .mix_like.player_button .i-like').click()",
+    "click_thumbs_up" : "$('.track.now_playing .fav .i-favorite')[0].click()",
 
 "COMMENT_5" : "8tracks is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
 

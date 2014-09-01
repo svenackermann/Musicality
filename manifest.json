@@ -2,7 +2,7 @@
     "browser_action": {
         "default_icon": "/images/icon48.png",
         "default_title": "Musicality",
-        "default_popup": "/html/popup2.html"
+        "default_popup": "/html/popup.html"
     },
     "content_scripts": [
         {
