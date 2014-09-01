@@ -44,7 +44,7 @@ function Musicality(){
                 		this.logger.log("Init now completed");
                 	}, this));
 
-                this.iconHandler.SetEnabled(true);
+                this.iconHandler.SetBadgeTextEnabled(true);
                 this.toaster.SetEnabled(true);
             }else{
                 // We're good.

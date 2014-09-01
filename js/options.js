@@ -109,12 +109,9 @@ function AreIconOptionsDisabled(callback){
 }
 
 // A function to set if badge text should be enabled or not
-function SetBadgeTextEnabled(isEnabled, callback){
+function SetBadgeTextEnabled(isEnabled){
     // Set the value in local storage
-    chrome.storage.local.set({'badge_text_enabled' : isEnabled}, function(){
-        // Callback success
-        callback(true);
-    });
+    chrome.storage.local.set({'badge_text_enabled' : isEnabled});
 
     // Update the running instance
     mMusicality.iconHandler.SetBadgeTextEnabled(isEnabled);
@@ -123,10 +120,7 @@ function SetBadgeTextEnabled(isEnabled, callback){
 // A function to set if icon progress bar should be enabled or not
 function SetIconProgressEnabled(isEnabled, callback){
     // Set the value in local storage
-    chrome.storage.local.set({'icon_progress_enabled' : isEnabled}, function(){
-        // Callback success
-        callback(true);
-    });
+    chrome.storage.local.set({'icon_progress_enabled' : isEnabled});
 
     // Update the running instance
     mMusicality.iconHandler.SetIconProgressEnabled(isEnabled);
@@ -135,10 +129,7 @@ function SetIconProgressEnabled(isEnabled, callback){
 // A function to disable icon progress and scrolling text
 function SetIconOptionsDisabled(isDisabled, callback){
     // Set the value in local storage
-    chrome.storage.local.set({'icon_options_disabled' : isDisabled}, function(){
-        // Callback success
-        callback(true);
-    });
+    chrome.storage.local.set({'icon_options_disabled' : isDisabled});
 
     // Update the running instance (if we are disabling)
     if (isDisabled){
