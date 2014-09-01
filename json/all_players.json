@@ -104,21 +104,20 @@
         "json_loc" : "/json/pandora.json",
         "open_page" : "http://www.pandora.com"
     },
-    
+
+    "RadioTunes" : {
+        "simple_name" : "radio_tunes",
+        "pattern" : "https?:\\/\\/(.*?)\\.radiotunes\\.com\\/*",
+        "json_loc" : "/json/radiotunes.json",
+        "open_page" : "http://www.radiotunes.com"
+    },
+
     "Rdio" : {
         "simple_name" : "rdio",
         "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
         "json_loc" : "/json/rdio.json",
         "open_page" : "http://www.rdio.com"
     },
-
-    "Sky.FM" : {
-        "simple_name" : "sky_fm",
-        "pattern" : "https?:\\/\\/(.*?)\\.sky\\.fm\\/*",
-        "json_loc" : "/json/sky_fm.json",
-        "open_page" : "http://www.sky.fm"
-    },
-
 
     "Slacker" : {
         "simple_name" : "slacker",
