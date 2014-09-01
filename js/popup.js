@@ -3,16 +3,16 @@
 /////////////////////////////////////////////////////////////////////////////
 
 // Class name for hidden button
-var HIDDEN_BUTTON_CLASS = "hidden_button";
+var HIDDEN_BUTTON_CLASS = "hiddenButton";
 
 // Class name for subdued button
-var SUBDUED_BUTTON_CLASS = "subdued_button";
+var SUBDUED_BUTTON_CLASS = "subduedButton";
 
 // Class name for dim button
-var DIM_BUTTON_CLASS = "dim_button";
+var DIM_BUTTON_CLASS = "dimButton";
 
 // Class name for visible button
-var VISIBLE_BUTTON_CLASS = "visible_button";
+var VISIBLE_BUTTON_CLASS = "visibleButton";
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -23,10 +23,10 @@ var VISIBLE_BUTTON_CLASS = "visible_button";
 var mDebug = false;
 
 // The background page
-var mBackground = chrome.extension.getBackgroundPage();
+var mMusicality = chrome.extension.getBackgroundPage().Musicality;
 
 // The player details
-var mPlayerDetails = mBackground.mPlayerDetails;
+var mPlayerDetails = mMusicality.GetPlayerDetails();
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -40,49 +40,50 @@ function UpdateInformation(){
     }
 
     // Tell the background to update too
-    mBackground.UpdateInformation();
+    var info = mMusicality.GetPlaybackInfo();
 
     // Re-grab the player details in case they changed
-    mPlayerDetails = mBackground.mPlayerDetails;
+    mPlayerDetails = mMusicality.GetPlayerDetails();
 
     // Populate the information
-    PopulateInformation();
+    PopulateInformation(info);
 }
 
 // Populate the actual extension contents
-function PopulateInformation(){
+function PopulateInformation(info){
 
     // Grab the player details again
-    mPlayerDetails = mBackground.mPlayerDetails;
+    mPlayerDetails = mMusicality.GetPlayerDetails();
     
     // Get the artist from the background
-    var artist = mBackground.mArtist;
+    var artist = info.artist;
     
     if (mDebug){
         console.log("popup.js::PopulateInfo -- artist: " + artist);
     }
 
     // Get the track from the background
-    var track = mBackground.mTrack;
+    var track = info.track;
 
     if (mDebug){
         console.log("popup.js::PopulateInfo -- track: " + track);
     }
 
     // Get handles to different elements we need
-    var playPauseElement = $("#play_pause");
-    var nextTrackElement = $("#next_track");
-    var prevTrackElement = $("#previous_track");
-    var shuffleButtonElement = $("#shuffle_button");
-    var repeatButtonElement = $("#repeat_button");
-    var thumbsUpButtonElement = $("#thumbs_up_button");
-    var thumbsDownButtonElement = $("#thumbs_down_button");
-    var playerNameElement = $("#player_name");
+    var playPauseElement = $("#playPauseButton");
+    var nextTrackElement = $("#nextButton");
+    var prevTrackElement = $("#previousButton");
+    var shuffleButtonElement = $("#shuffleButton");
+    var repeatButtonElement = $("#repeatButton");
+    var thumbsUpButtonElement = $("#thumbsUpButton");
+    var thumbsDownButtonElement = $("#thumbsDownButton");
     var trackElement = $("#track");
     var artistElement = $("#artist");
-    var artElement = $("#art");
-    var totalTimeElement = $("#total_time");
-    var curTimeElement = $("#cur_time");
+    var artClass = $(".art");
+    var playbackControlsImgElement = $("#playbackControlsBackgroundImage");
+    var trackInfoImgElement = $("#trackInfoBackgroundImage");
+    var totalTimeElement = $("#totalTime");
+    var curTimeElement = $("#currentTime");
     
     if (track && track != null && track != "" && mPlayerDetails){
         trackElement.text(track);
@@ -143,9 +144,6 @@ function PopulateInformation(){
         var playerName = mPlayerDetails.name;
         if (playerName != null && playerName != ""){
  
-           // Set the text appropriately
-           playerNameElement.text(playerName);
-
            // Let's push the player name as a custom GA variable
            _gaq.push(['_setCustomVar',
             1,
@@ -169,7 +167,7 @@ function PopulateInformation(){
         }
 
         // Get the album art from the background
-        var art_url = mBackground.mArtUrl;
+        var art_url = info.artUrl;
         
         // Log it if we've found the art
         if (mDebug){
@@ -178,15 +176,14 @@ function PopulateInformation(){
 
         // Check if we have art        
         if (art_url && art_url != null && art_url != ""){
-            // Update the art to display the now playing art
-            artElement.attr("src", art_url);
+            artClass.attr("src", art_url);
         }else{
             // Not found, so revert it to the empty art
-            artElement.attr("src", "/images/empty.png");
+            artClass.attr("src", "/images/empty.png");
         }
 
         // Get the current time from the player
-        var current_time = mBackground.GetTimeStringForMilliseconds(mBackground.mCurrentTime);
+        var current_time = Helper.MsToTime(info.currentTime);
         
         // Log it if we've found the current time
         if (mDebug){
@@ -194,14 +191,14 @@ function PopulateInformation(){
         }
 
         // Update the info
-        if (current_time != null && current_time != "" && mBackground.mCurrentTime > 0){
+        if (current_time != null && current_time != "" && info.currentTime > 0){
             curTimeElement.text(current_time + "/");
         }else{
             curTimeElement.text("");
         }
 
         // Get the total time
-        var total_time = mBackground.GetTimeStringForMilliseconds(mBackground.mTotalTime);
+        var total_time = Helper.MsToTime(info.totalTime);
 
         // Log it if we've found the total time
         if (mDebug){
@@ -209,7 +206,7 @@ function PopulateInformation(){
         }
 
         // Update the info
-        if (total_time != null && total_time != "" && mBackground.mTotalTime > 0 &&
+        if (total_time != null && total_time != "" && info.totalTime > 0 &&
             curTimeElement.text() != ""){
             totalTimeElement.text(total_time);
         }else{
@@ -217,7 +214,7 @@ function PopulateInformation(){
         }
 
         // Get is playing from background
-        var playing = mBackground.mIsPlaying;
+        var playing = info.isPlaying;
 
         // Log whatever we have got
         if (mDebug){
@@ -234,7 +231,7 @@ function PopulateInformation(){
         }
 
         // Get whether or not it's shuffled
-        var shuffled = mBackground.mIsShuffled;
+        var shuffled = info.isShuffled;
 
         // Log whatever we have got
         if (mDebug){
@@ -242,15 +239,13 @@ function PopulateInformation(){
         }
 
         if (shuffled){
-            shuffleButtonElement.removeClass("shuffle_off");
-            shuffleButtonElement.addClass("shuffle_on");
+            shuffleButtonElement.addClass("active");
         }else{
-            shuffleButtonElement.removeClass("shuffle_on");
-            shuffleButtonElement.addClass("shuffle_off");
+            shuffleButtonElement.removeClass("active");
         }
         
         // Get whether or not repeat is off
-        var repeat_off = mBackground.mIsRepeatOff;
+        var repeat_off = info.isRepeatOff;
         
         // Log whatever we have got
         if (mDebug){
@@ -259,13 +254,13 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_off){
-            repeatButtonElement.removeClass("repeat_all");
-            repeatButtonElement.removeClass("repeat_one");
-            repeatButtonElement.addClass("repeat_off");
+            repeatButtonElement.addClass("glyphicon-refresh");
+            repeatButtonElement.removeClass("repeat-one");
+            repeatButtonElement.removeClass("active");
         }
 
         // Get whether or not repeat is on (1)
-        var repeat_one = mBackground.mIsRepeatOne;
+        var repeat_one = info.isRepeatOne;
 
         // Log whatever we have got
         if (mDebug){
@@ -274,13 +269,13 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_one){
-            repeatButtonElement.removeClass("repeat_all");
-            repeatButtonElement.removeClass("repeat_off");
-            repeatButtonElement.addClass("repeat_one");
+            repeatButtonElement.addClass("active");
+            repeatButtonElement.addClass("glyphicon-refresh");
+            repeatButtonElement.addClass("repeat-one");
         }
 
         // Get whether or not it's repeat all
-        var repeat_all = mBackground.mIsRepeatAll;
+        var repeat_all = info.isRepeatAll;
 
         // Log whatever we have got
         if (mDebug){
@@ -289,13 +284,13 @@ function PopulateInformation(){
 
         // Get the element
         if (repeat_all){
-            repeatButtonElement.removeClass("repeat_one");
-            repeatButtonElement.removeClass("repeat_off");
-            repeatButtonElement.addClass("repeat_all");
+            repeatButtonElement.addClass("active");
+            repeatButtonElement.addClass("glyphicon-refresh");
+            repeatButtonElement.removeClass("repeat-one");
         }
 
         // Get the thumbs up state
-        var thumbed_up = mBackground.mIsThumbedUp;
+        var thumbed_up = info.isThumbedUp;
         
         // Log whatever we have got
         if (mDebug){
@@ -304,15 +299,13 @@ function PopulateInformation(){
 
         // Toggle the thumbs up button
         if (thumbed_up){
-            thumbsUpButtonElement.removeClass("thumbs_up_off");
-            thumbsUpButtonElement.addClass("thumbs_up_on");
+            thumbsUpButtonElement.addClass("active");
         }else{
-            thumbsUpButtonElement.removeClass("thumbs_up_on");
-            thumbsUpButtonElement.addClass("thumbs_up_off");
+            thumbsUpButtonElement.removeClass("active");
         }
 
         // Get the thumbed down state
-        var thumbed_down = mBackground.mIsThumbedDown;
+        var thumbed_down = info.isThumbedDown;
 
         // Log whatever we have got
         if (mDebug){
@@ -321,11 +314,9 @@ function PopulateInformation(){
 
         // Toggle the thumbs down button
         if (thumbed_down){
-            thumbsDownButtonElement.removeClass("thumbs_down_off");
-            thumbsDownButtonElement.addClass("thumbs_down_on");
+            thumbsDownButtonElement.addClass("active");
         }else{
-            thumbsDownButtonElement.removeClass("thumbs_down_on");
-            thumbsDownButtonElement.addClass("thumbs_down_off");
+            thumbsDownButtonElement.removeClass("active");
         }
     }else{
         // Looks like we have to disable some buttons
@@ -336,14 +327,13 @@ function PopulateInformation(){
         UpdateButton(repeatButtonElement, DIM_BUTTON_CLASS);
         UpdateButton(thumbsUpButtonElement, DIM_BUTTON_CLASS);
         UpdateButton(thumbsDownButtonElement, DIM_BUTTON_CLASS);
-        playerNameElement.text("");
 
         // Tell the user nothing is playing
         trackElement.text("Play a song.");
 
         // Empty the other pieces as well
         artistElement.text("");
-        artElement.attr("src", "/images/empty.png");
+        artClass.attr("src", "/images/empty.png");
         curTimeElement.text("");
         totalTimeElement.text("");
     }
@@ -407,7 +397,16 @@ function ThumbsDownClick(){
 // General method for dealing with clicking anything
 function ClickSomething(clickWhat){
     // Tell the background to take care of this
-    mBackground.ClickSomething(clickWhat);
+    mMusicality.ClickSomething(clickWhat, function(result){
+        if (mDebug){
+            console.log("ClickSomething callback with " + result);
+        }
+
+        // Wait a tenth of a second and update
+        window.setTimeout(function(){
+            UpdateInformation();
+        }, 100);
+    });
 }
 
 // A function to start the marquee when hovered over
@@ -417,10 +416,10 @@ function startMarquee(){
     var parentWidth = $(this).parent().width();
 
     // Check if we are overflowing
-    if(width > parentWidth) {
+    if(width > parentWidth - 10) {
 
-        // Get the distance to scroll
-        var scrollDistance = width - parentWidth;
+        // Get the distance to scroll (10 pixel buffer)
+        var scrollDistance = width - parentWidth + 10;
 
         // Get the item to scroll
         var itemToScroll = $(this).parent();
@@ -454,7 +453,7 @@ $(function(){
     // Immediately update our information
     UpdateInformation();
     
-    //Update our information once every quarter second.
+    //Update our information once second.
     window.setInterval(function() {
         UpdateInformation();
     }, 1000)
@@ -462,24 +461,24 @@ $(function(){
     // Get the clickable elements ready!
 
     // Shuffle button
-    $("#shuffle_button").bind('click', function(){
+    $("#shuffleButton").bind('click', function(){
         ShuffleClick();
     });
 
     // Repeat button
-    $("#repeat_button").bind('click', function(){
+    $("#repeatButton").bind('click', function(){
         RepeatClick();
     });
     
     // Previous track
-    $("#previous_track").bind('click', function(){
+    $("#previousButton").bind('click', function(){
        PrevTrackClick();
     });
 
     // Play/pause
 
-    // Get the elemtn
-    var playPauseElement = $("#play_pause");
+    // Get the element
+    var playPauseElement = $("#playPauseButton");
     playPauseElement.bind('click', function(handler){
         // Be smart about what we are clicking
         if (playPauseElement.hasClass("play")){
@@ -492,28 +491,28 @@ $(function(){
     });
 
     // Next track
-    $("#next_track").bind('click', function(){
+    $("#nextButton").bind('click', function(){
         NextTrackClick();
     });
 
     // Thumbs up
-    $("#thumbs_up_button").bind('click', function(){
+    $("#thumbsUpButton").bind('click', function(){
         ThumbsUpClick();
     });
 
     // Thumbs down
-    $("#thumbs_down_button").bind('click', function(){
+    $("#thumbsDownButton").bind('click', function(){
         ThumbsDownClick();
     });
 
     // Player name
-    $('#player_name').bind('click', function(){
-        mBackground.GoToNowPlayingTab();
+    $('#art').bind('click', function(){
+        mMusicality.GoToNowPlayingTab();
     });
 
     // Register all marquee items to marquee
-    $(".marquee_item").hover(startMarquee, stopMarquee);
+    $(".marqueeItem").hover(startMarquee, stopMarquee);
 
     // Tell background to open the default player, if there is one set
-    mBackground.OpenDefaultPlayer();
+    mMusicality.OpenDefaultPlayer();
 });

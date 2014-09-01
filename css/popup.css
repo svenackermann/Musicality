@@ -1,260 +1,259 @@
-@font-face {
-  font-family: 'Droid Sans';
+@font-face{
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: normal;
-  src: local('Droid Sans'), local('DroidSans'), url('../fonts/DroidSans.woff');
+  src: local('Open Sans'), local('OpenSans'), url('../fonts/OpenSans.woff');
+}
+
+@font-face{
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: lighter;
+  src: local('Open Sans Light'), local('OpenSansLight'), url('../fonts/OpenSansLight.woff');
 }
 
 body{
-    font-family: 'Droid Sans';
-    margin: 0;
-    width: 250px;
-    height: 115px;
-    background-image: url('../images/dark_gray_tile.jpg');
+	width: 225px;
+	height: 364px;
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	border: 0px;
 }
 
-#container{
-    width: auto;
-    height: 66px;
-    padding: 0;
-    margin: 0;
-    background-image: url('../images/light_gray_tile.jpg');
-    border: solid;
-    border-width: 3px;
-    bottom: 0;
-    position: absolute;
-    border-color: #89b7d4;
-}
-
-#album_art{
-    width: 60px;
-    height: 60px;
-    float: left;
-    margin: 2px;
-    padding: 0;
-    background: url('../images/sprite.png') 0px 0px;
-    border: solid;
-    border-width: 1px;
-    border-color: black;
-}
-
-#track_info{
-    margin: 2px;
-    width: 172px;
-    height: 72px;
-    float: left;
-}
-
-.marquee_wrapper{
-    overflow: hidden;
-    width: inherit;
-    padding: 0;
-    margin: 0;
-}
-
-#artist{
-    height: 20px;
-    font-weight: bold;
-    font-size: 14px;        
-}
-
-#track{
-    font-size: 14px;        
-}
-
-#time_info{
-    margin: 0;
-    margin-top: 8px;
-    padding: 0;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 12px;  
-    max-width: 92px;
-}
-
-#cur_time{
-    height: 14px;
-    padding: 0;
-    margin: 0;
-    float: left;
-}
-
-#total_time{
-    height: 14px;
-    padding: 0;
-    margin: 0;
-    float: left;
-}
-
-#shuffle_button{
-    width: 30px;
-    height: 20px;   
-    position: absolute;
-    top: 2px;
-    left: 2px; 
-}
-
-.marquee_item{
-    white-space: nowrap;
-    height: 20px;
-    padding: 0;
+div{
+	overflow: hidden;
+	position: relative;
 }
 
 span{
     display: inline-block;
-    float: left;
 }
 
-#shuffle_button:hover{
-    background-position: -240px -30px;
+.container{
+	margin: 0px;
+	padding: 5px;
+	border: 0px;
 }
 
-.shuffle_off{
-    background: url('../images/sprite.png') -240px 0px;
-}
-.shuffle_on{
-    background: url('../images/sprite.png') -240px -60px;
-}
-
-#repeat_button{
-    width: 30px;
-    height: 20px;
-    position: absolute;
-    top: 22px;
-    left: 2px;  
-}
-.repeat_off{
-    background: url('../images/sprite.png') -180px 0px; 
-}
-.repeat_off:hover{
-    background-position: -180px -30px;
-}
-.repeat_all{
-    background: url('../images/sprite.png') -180px -60px;   
-}
-.repeat_all:hover{
-    background-position: -180px -30px;
-}
-.repeat_one{
-    background: url('../images/sprite.png') -210px -60px;
-}
-.repeat_one:hover{
-    background-position: -210px -30px;
+#playbackControlsContainer{
+	width: 100%;
+	height: 50px;
+	z-index: 1;
+	box-shadow: 0px 10px 15px 0px rgba(50, 50, 50, 0.3);
+	padding: 0px;
+	-webkit-transform: translate3d(0, 0, 0);
 }
 
-#previous_track{
-    width: 30px;
-    height: 30px;
-    background: url('../images/sprite.png') -150px 0px; 
-    position: absolute;
-    top: 7px;
-    left: 70px; 
-}
-#previous_track:hover{
-    background-position: -150px -30px;
+.blurryImage{
+	position: absolute;
+	left: -15px;
+	width: 255px;
+	height: 255px;
+	-webkit-filter: blur(10px);
+	-webkit-transform: scaleY(-1);
+	opacity: 0.5;
 }
 
-#play_pause{    
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    top: 7px;
-    left: 112px;
+#playbackControlsBackgroundImage{
+	bottom: -10px;
+}
+
+.playbackControl{
+	width: 50px;
+	height: 50px;
+	padding: 0px;
+	margin: 0px;
+	cursor: pointer;
+	background-size: 50px 50px;
+	background-repeat: no-repeat;
+	float: left;
+}
+
+#previousButton{
+	background-image: url('/images/preSprite/prev.png');
+	margin-left: 22px;
+}
+
+.playbackControl:hover{
+	opacity: 0.7;
+}
+
+.playbackControl.hiddenButton:hover{
+	opacity: 0.125;
+}
+
+#playPauseButton{
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 .play{
-    background: url('../images/sprite.png') -60px 0px;  
+	background-image: url('/images/preSprite/play.png');
 }
 
 .pause{
-    background: url('../images/sprite.png') -90px 0px;  
+	background-image: url('/images/preSprite/pause.png');
 }
 
-.play:hover{
-    background-position: -60px -30px;
+#nextButton{
+	background-image: url('/images/preSprite/next.png');
+	margin-right: 22px;
 }
 
-.pause:hover{
-    background-position: -90px -30px;
+#albumArtContainer{
+	width: 100%;
+	height: 225px;
+	padding: 0px;
 }
 
-#next_track{    
-    width: 30px;
-    height: 30px;
-    background: url('../images/sprite.png') -120px 0px; 
-    position: absolute;
-    top: 7px;
-    left: 150px;
-}   
-#next_track:hover{
-    background-position: -120px -30px;
+#art{
+	width: 225px;
+	height: 225px;
+	cursor: pointer;
 }
 
-#thumbs_up_button{
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 2px;
-    right: 2px; 
-}  
-#thumbs_up_button:hover{
-    background-position: -270px -30px;
-}
-.thumbs_up_off{
-    background: url('../images/sprite.png') -270px 0px; 
+#trackInfoContainer{
+	padding: 0;
+	width: 100%;
+	height: 69px;
+	box-shadow: 0px -10px 15px 0px rgba(50, 50, 50, 0.3);
 }
 
-.thumbs_up_on{
-    background: url('../images/sprite.png') -270px -60px;   
+#trackInfoBackgroundImage{
+	top: -10px;
 }
 
-#thumbs_down_button{
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    top: 22px;
-    right: 2px; 
+#trackInfo{
+	z-index: 1;
+	width: 100%;
 }
 
-#thumbs_down_button:hover{
-    background-position: -300px -30px;
-}
-.thumbs_down_off{
-    background: url('../images/sprite.png') -300px 0px;
-}
-.thumbs_down_on{
-    background: url('../images/sprite.png') -300px -60px;
-}
-
-#player_name{
-    margin: 0;
-    margin-top: 8px;
-    padding: 0;
-    text-align: right;
-    font-size: 12px;
-    text-transform: uppercase;
-    float: right;
+.marqueeWrapper{
     overflow: hidden;
-    opacity: 0.1;
-    cursor: pointer;
+    width: inherit;
+    padding: 0;
+    margin: 0;
+    float: left;
 }
 
-.hidden_button{
-    opacity: 0;
-    cursor: default;
+.marqueeItem{
+    white-space: nowrap;
+    padding: 0;
 }
 
-.subdued_button{
-    opacity: 0.85;
-    cursor: pointer;
+.info{
+	margin: 0px;
+	padding: 0px 0px 0px 10px;
+	text-shadow: 0px 0px 0.75em rgba(255,255,255,0.2);
+	cursor: default;
+	display: inline-block;
 }
 
-.dim_button{
-    opacity: 0.1;
-    cursor: default;
+#artist{
+	font-family: 'Open Sans';
+	font-weight: lighter;
+	font-size: 17px;
+	padding-top: 8px;
+	height: 23px;
 }
 
-.visible_button{
-    opacity: 1;
-    cursor: pointer;
+#track{
+	padding-top: 3px;
+	font-family: 'Open Sans';
+	font-size: 20px;
+	height: 27px;
+}
+
+#lowerInfoContainer{
+	width: 100%;
+	height: 20px;
+	background:
+    	radial-gradient(black 15%, transparent 16%) 0 0,
+    	radial-gradient(black 15%, transparent 16%) 4px 4px,
+    	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 0.5px,
+    	radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 4px 4.5px;
+    background-color:#282828;
+    background-size:8px 8px;
+	color: #e6e6e6;
+	font-family: 'Open Sans';
+	font-weight: lighter;
+	font-size: 12px;
+	padding: 0;
+}
+
+.smallIcon{
+	width: 19px;
+	height: 19px;
+	padding: 2px;
+	margin: 0px 2px 0px 2px;
+	color: #FFF;
+	font-size: 14px;
+	opacity: 0.5;
+	cursor: pointer;
+}
+
+.smallIcon.active{
+	opacity: 0.8;
+}
+
+.smallIcon.active:hover{
+	opacity: 1;
+}
+
+.smallIcon.hiddenButton:hover{
+	opacity: 0.125;
+}
+
+.smallIcon:hover{
+	opacity: 0.65;
+}
+
+#shuffleButton{
+	float: left;
+}
+
+#repeatButton{
+	float: left;
+}
+
+.repeat-one::after{
+	position: absolute;
+	content: "1";
+	font-size: 8px;
+	left: 7px;
+	top: 4px;
+}
+
+#thumbsUpButton{
+	float: right;
+}
+
+#thumbsDownButton{
+	float: right;
+}
+
+#trackTimings{
+	position: absolute;
+	text-align: center;
+	left: 73px;
+	width: 80px;
+	margin-top: 3px;
+	font-size: 10px;
+	color: #BBB;
+	cursor: default;
+}
+
+.hiddenButton{
+	opacity: 0.125;
+	cursor: default;
+}
+
+.hiddenButton:hover{
+	opacity: 0.125;	
+}
+
+.dimButton{
+	opacity: 0.2;
+	cursor: default;
 }
