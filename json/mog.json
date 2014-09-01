@@ -17,21 +17,21 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$(\"#play\").attr(\"class\") == \"control pause\"",
-    "isPaused" : "$(\"#play\").attr(\"class\") == \"control\"",
+    "isPlaying" : "$('#play').attr('class') == 'control pause'",
+    "isPaused" : "$('#play').attr('class') == 'control'",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "\"http:\" + $(\"#album_cover .album_pic\").attr(\"src\")",
-    "artist" : "$(\"#status .artist_name\").text()",
-    "track" : "$(\"#status .track_name\").text()",
-    "currentTime" : "$(\"#elapsed_time\").text()",
-    "remainingTime" : "$(\"#remainingTime\").text()",
+    "artUrl" : "'http:' + $('#album_cover .album_pic').attr('src')",
+    "artist" : "$('#status .artist_name').text()",
+    "track" : "$('#status .track_name').text()",
+    "currentTime" : "$('#elapsed_time').text()",
+    "remainingTime" : "$('#remainingTime').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$(\"#play\")[0].click()",
-    "click_pause" : "$(\"#play\")[0].click()",
-    "click_next_track" : "$(\"#next\")[0].click()",
-    "click_prev_track" : "$(\"#previous\")[0].click()"
+    "click_play" : "$('#play')[0].click()",
+    "click_pause" : "$('#play')[0].click()",
+    "click_next_track" : "$('#next')[0].click()",
+    "click_prev_track" : "$('#previous')[0].click()"
 }

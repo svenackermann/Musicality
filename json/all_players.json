@@ -91,13 +91,6 @@
         "open_page" : "http://www.mixcloud.com"
     },
 
-    "MOG" : {
-        "simple_name" : "mog",
-        "pattern" : "https?:\\/\\/mog.com\\/*",
-        "json_loc" : "/json/mog.json",
-        "open_page" : "http://mog.com"
-    },
-
     "Myspace" : {
         "simple_name" : "myspace",
         "pattern" : "https?:\\/\\/myspace\\.com\\/*",
