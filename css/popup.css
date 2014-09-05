@@ -107,6 +107,35 @@ span{
 	padding: 0px;
 }
 
+#hiddenPopup{
+	position: absolute;
+	top: 0px;
+	width: 201px;
+	height: 201px;
+	margin: 12px;
+	padding: 10px;
+	box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.3);
+	background-color: white;
+}
+
+#hiddenPopupBackgroundImage{
+	top: -22px;
+	left: -22px;
+	-webkit-transform: scaleY(1);
+}
+
+#hiddenPopupTitle{
+	margin: 8px;
+}
+
+#hiddenPopupDivider{
+	margin: 8px;
+}
+
+#hiddenPopupContents{
+	margin: 8px;
+}
+
 #art{
 	width: 225px;
 	height: 225px;
