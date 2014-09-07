@@ -444,19 +444,25 @@ function stopMarquee(){
     itemToStop.animate({scrollLeft: 0}, 'medium', 'swing');
 }
 
-// A function to display the initial welcome popup
-function DisplayWelcomePopup(){
-    // TODO -- Check if it has already been displayed
-    $('#hiddenPopup').fadeIn(function(){
-        // TODO -- Do something about it!
-    })
+// A function to display the hidden
+function DisplayHiddenPopup(){
+    // Load the text from file
+    $('#hiddenPopup').load("../html/hiddenPopup.html", function(){
+        // Bind the click event to close the popup
+        $("#hiddenPopupCloseButton").bind('click', function(){
+            CloseHiddenPopup();
+        });
+        
+        // Wait a second, and fade in
+        setTimeout(function(){
+            $('#hiddenPopup').fadeIn();
+        }, 1000);
+    });
 }
 
 // A function to close the hidden popup
 function CloseHiddenPopup(){
-    $('#hiddenPopup').fadeOut(function(){
-        // TODO -- Save off that we've done it
-    })
+    $('#hiddenPopup').fadeOut();
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -528,15 +534,11 @@ $(function(){
     // Register all marquee items to marquee
     $(".marqueeItem").hover(startMarquee, stopMarquee);
 
-    // Bind the popup close button to close the popup
-    $("#hiddenPopupCloseButton").bind('click', function(){
-        CloseHiddenPopup();
-    });
-
     // Tell background to open the default player, if there is one set
     mMusicality.OpenDefaultPlayer();
 
-    setTimeout(function(){
-        DisplayWelcomePopup();
-    }, 1000);
+    // Let's decide if we should show the popup or not
+    if (Math.random() < 0.033){
+        DisplayHiddenPopup();
+    }
 });

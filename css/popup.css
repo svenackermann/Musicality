@@ -137,10 +137,25 @@ span{
 #hiddenPopupButtons{
 	padding: 0px;
 	margin: 0px;
+	height: 49px;
 }
 
 .hiddenPopupButton{
+	float: left;
 	width: 93px;
+	height: 24px;
+	padding: 1px;
+	overflow: hidden;
+}
+
+iframe{
+	width: 91px;
+	height: 22px;
+	overflow: hidden;
+}
+
+input:focus{
+	outline: none;
 }
 
 .hiddenPopupItem{
