@@ -329,7 +329,8 @@ function PopulateInformation(info){
         UpdateButton(thumbsDownButtonElement, DIM_BUTTON_CLASS);
 
         // Tell the user nothing is playing
-        trackElement.text("Play a song.");
+        artistElement.text("Nothing detected to be playing");
+        trackElement.text("Play a song!");
 
         // Empty the other pieces as well
         artistElement.text("");
@@ -537,8 +538,8 @@ $(function(){
     // Tell background to open the default player, if there is one set
     mMusicality.OpenDefaultPlayer();
 
-    // Let's decide if we should show the popup or not
-    if (Math.random() < 0.033){
+    // Let's decide if we should show the popup or not (1/50 chance)
+    if (Math.random() < 0.02){
         DisplayHiddenPopup();
     }
 });
