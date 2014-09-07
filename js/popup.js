@@ -444,6 +444,21 @@ function stopMarquee(){
     itemToStop.animate({scrollLeft: 0}, 'medium', 'swing');
 }
 
+// A function to display the initial welcome popup
+function DisplayWelcomePopup(){
+    // TODO -- Check if it has already been displayed
+    $('#hiddenPopup').fadeIn(function(){
+        // TODO -- Do something about it!
+    })
+}
+
+// A function to close the hidden popup
+function CloseHiddenPopup(){
+    $('#hiddenPopup').fadeOut(function(){
+        // TODO -- Save off that we've done it
+    })
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
 /////////////////////////////////////////////////////////////////////////////
@@ -513,6 +528,15 @@ $(function(){
     // Register all marquee items to marquee
     $(".marqueeItem").hover(startMarquee, stopMarquee);
 
+    // Bind the popup close button to close the popup
+    $("#hiddenPopupCloseButton").bind('click', function(){
+        CloseHiddenPopup();
+    });
+
     // Tell background to open the default player, if there is one set
     mMusicality.OpenDefaultPlayer();
+
+    setTimeout(function(){
+        DisplayWelcomePopup();
+    }, 1000);
 });

@@ -113,9 +113,19 @@ span{
 	width: 201px;
 	height: 201px;
 	margin: 12px;
-	padding: 10px;
+	padding: 5px;
 	box-shadow: 0px 0px 30px 0px rgba(50, 50, 50, 0.3);
 	background-color: white;
+	display: none;
+}
+
+#hiddenPopupCloseButton{
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	font-size: 10px;
+	font-color: black;
+	cursor: pointer;
 }
 
 #hiddenPopupBackgroundImage{
@@ -124,16 +134,26 @@ span{
 	-webkit-transform: scaleY(1);
 }
 
-#hiddenPopupTitle{
+#hiddenPopupButtons{
+	padding: 0px;
+	margin: 0px;
+}
+
+.hiddenPopupButton{
+	width: 93px;
+}
+
+.hiddenPopupItem{
 	margin: 8px;
 }
 
-#hiddenPopupDivider{
-	margin: 8px;
+#hiddenPopupTitle{
+	font-size: 14px;
+	font-color: black;
 }
 
 #hiddenPopupContents{
-	margin: 8px;
+	font-size: 12px;
 }
 
 #art{
