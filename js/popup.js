@@ -329,12 +329,11 @@ function PopulateInformation(info){
         UpdateButton(thumbsDownButtonElement, DIM_BUTTON_CLASS);
 
         // Tell the user nothing is playing
-        artistElement.text("Nothing detected to be playing");
+        artistElement.text("Nothing is playing");
         trackElement.text("Play a song!");
 
         // Empty the other pieces as well
-        artistElement.text("");
-        artClass.attr("src", "/images/empty.png");
+        artClass.attr("src", "/images/art.jpg");
         curTimeElement.text("");
         totalTimeElement.text("");
     }
