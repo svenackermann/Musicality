@@ -32,6 +32,15 @@ function TabHandler(playerHandler){
         this.allPlayers = data;
 
         this.logger.log(this.allPlayers);
+
+        // Immediately iterate through each and save off it's json
+        this.players = {};
+        for(var curPlayerName in this.allPlayers){
+            var curPlayer = this.allPlayers[curPlayerName];
+            $.getJSON(curPlayer.json_loc, $.proxy(function(playerDetails) {
+                this.players[curPlayerName] = playerDetails;
+            }, this));
+        }
     }, this));
 
     // Turn async back on
@@ -101,37 +110,33 @@ function TabHandler(playerHandler){
                 // We have found one of our players at this point
                 
                 // Save some information off
-                var curPlayer = this.allPlayers[curPlayer];
+                var curPlayerDetails = this.players[curPlayer];
 
                 // A flag to ensure we know we already have seen a player
                 this.playerOpen = true;
 
                 this.logger.log("checkCurrentTabForPlayers() -- Found " +
-                                curPlayer.name + " at tab " + curTab.id);
+                                curPlayerDetails.name + " at tab " + curTab.id);
 
                 asyncsRunning.count++;
 
                 // Pass it along to check the current player for status
-                this.checkCurrentPlayerForStatus(curPlayer, windowId, curTab.id, asyncsRunning, pausedTabs, callback);
+                this.checkCurrentPlayerForStatus(curPlayerDetails, windowId, curTab.id, asyncsRunning, pausedTabs, callback);
             }
         }
     }
 
     /**
      * Helper method that checks the current player for it's playback status
-     * @param  {Object}   curPlayer
+     * @param  {Object}   playerDetails
      * @param  {int}   windowId
      * @param  {int}   tabId
      * @param  {Object}   asyncsRunning
      * @param  {Array}   pausedTabs
      * @param  {Function} callback
      */
-    this.checkCurrentPlayerForStatus = function(curPlayer, windowId, tabId, asyncsRunning, pausedTabs, callback){
-        // Increment asyncs
-        asyncsRunning.count++;
-        
-        // Load the details for this player type into memory
-        $.getJSON(curPlayer.json_loc, $.proxy(function(playerDetails) {
+    this.checkCurrentPlayerForStatus = function(playerDetails, windowId, tabId, asyncsRunning, pausedTabs, callback){
+        if (playerDetails != undefined){
             this.logger.log("checkCurrentPlayerForStatus() -- details = " + playerDetails.name);
 
             // A flag to see if we have already returned a player
@@ -190,12 +195,7 @@ function TabHandler(playerHandler){
             this.returnPausedTabHelper(asyncsRunning,
             	pausedTabs,
             	callback);
-        }, this));
-        // Decrement our asyncs running. See if we are
-        // done or not.
-        this.returnPausedTabHelper(asyncsRunning,
-        	pausedTabs,
-        	callback);
+        }
     }
 }
 
