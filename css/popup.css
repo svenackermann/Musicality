@@ -71,7 +71,7 @@ span{
 }
 
 #previousButton{
-	background-image: url('/images/preSprite/prev.png');
+	background-image: url('/images/popup/prev.png');
 	margin-left: 22px;
 }
 
@@ -89,15 +89,15 @@ span{
 }
 
 .play{
-	background-image: url('/images/preSprite/play.png');
+	background-image: url('/images/popup/play.png');
 }
 
 .pause{
-	background-image: url('/images/preSprite/pause.png');
+	background-image: url('/images/popup/pause.png');
 }
 
 #nextButton{
-	background-image: url('/images/preSprite/next.png');
+	background-image: url('/images/popup/next.png');
 	margin-right: 22px;
 }
 

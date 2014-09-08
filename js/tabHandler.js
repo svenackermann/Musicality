@@ -150,6 +150,20 @@ function TabHandler(playerHandler){
                 if (isPlaying){
                     // Sweet. Found one we wanted.
                     this.logger.log("checkCurrentPlayerForStatus() -- Tab " + tabId + " is playing music!");
+
+                    // Keep track of what players users are using in order to
+                    // know which are the most important to support.
+                    _gaq.push(['_setCustomVar',
+                        1,
+                        'Player Name',
+                        playerDetails.name,
+                        3]);
+                    
+                    // Track the event
+                    _gaq.push(['_trackEvent',
+                        'Found Player',
+                        'Background'
+                        ]);
                     
                     if (!alreadyReturned){
                         alreadyReturned = true;
