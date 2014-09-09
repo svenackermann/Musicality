@@ -100,10 +100,10 @@ Toaster.prototype.Toast = function(info){
 			message: info.artist,
 			buttons: [{
 				title: "Pause",
-				iconUrl: "/images/preSprite/pause.png"
+				iconUrl: "/images/popup/pause.png"
 			},{
 				title: "Skip",
-				iconUrl: "/images/preSprite/next.png"
+				iconUrl: "/images/popup/next.png"
 			}]
 		}, $.proxy(function(id){
 			// Timeout
