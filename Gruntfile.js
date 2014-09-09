@@ -2,7 +2,7 @@ module.exports = function(grunt) {
     // Do grunt-related things in here
     grunt.initConfig({
     	pkg: grunt.file.readJSON('package.json'),
-    	clean: ['build'],
+    	clean: ['build', 'Musicality.zip'],
     	jshint: {
     		files: ['Gruntfile.js', 'js/background/*.js', 'js/popup/*.js', 'js/options/*.js', 'js/contentscript/contentscript.js'],
     		options: {
@@ -59,6 +59,19 @@ module.exports = function(grunt) {
     			    }
     			]
     		}
+    	},
+    	compress: {
+    		dist: {
+    			options: {
+    				archive: 'Musicality.zip'
+    			},
+    			files: [
+    			    {
+    			    	src: ['build/**'],
+    			    	dest: ''
+    			    }
+    			]
+    		}
     	}
     });
 
@@ -76,6 +89,7 @@ module.exports = function(grunt) {
     	'jsonlint',
     	'uglify',
     	'cssmin',
-    	'copy'
+    	'copy',
+    	'compress'
     	]);
 };
