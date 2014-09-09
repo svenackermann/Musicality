@@ -59,7 +59,7 @@ var Helper = {
         // Get the current time overall seconds
         var totalSeconds = milliseconds / 1000;
 
-        var totalHours = Math.floor(totalSeconds/3600)
+        var totalHours = Math.floor(totalSeconds/3600);
         var totalMins = Math.floor(totalSeconds/60) % 60;
         var totalSecs = Math.floor(totalSeconds) % 60;
 
@@ -75,7 +75,7 @@ var Helper = {
         	if (totalMins < 10){
         		sTotalMins = "0" + totalMins;
         	}
-        	sTotalHours = "" + totalHours + ":"
+        	sTotalHours = "" + totalHours + ":";
         }
 
         // Return the total time value

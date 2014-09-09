@@ -15,7 +15,7 @@
 **/
 
 // Global variable, accessed by popup
-var Musicality = undefined;
+var Musicality;
 
 /**
  * Start of execution. Runs immediately after everything is loaded

@@ -44,7 +44,7 @@ function IconHandler(playerHandler){
 			// Get an update on the info
 			var info = playerHandler.GetPlaybackInfo();
 
-			if (info.isPlaying && info.track && info.track != ""){
+			if (info.isPlaying && info.track && info.track !== ""){
 				var curTime = Date.now();
 				if ((curTime - this.lastScrollTime) < (this.scrollDelayTime - 5)){
 					// Scrolled too recently. Exit.
@@ -54,7 +54,7 @@ function IconHandler(playerHandler){
 				this.lastScrollTime = curTime;
 
 				var badgeText = "        ";
-				if (info.artist && info.artist != ""){
+				if (info.artist && info.artist !== ""){
 					badgeText += info.artist + " - ";
 				}
 				badgeText += info.track + "        ";
@@ -77,11 +77,11 @@ function IconHandler(playerHandler){
 
 		// Clear the badge text (if it isn't already)
 		chrome.browserAction.getBadgeText({}, function(result){
-			if (result != ""){
+			if (result !== ""){
 				chrome.browserAction.setBadgeText({text: ""});
 			}
-		})
-	}
+		});
+	};
 
 	/**
 	 * Update the current icon
@@ -104,7 +104,7 @@ function IconHandler(playerHandler){
 			this.drawNewIcon(this.icons.playing, percentage);
 			this.previousDrawPaused = false;
 		}
-	}
+	};
 
 	/**
 	 * Draw a new icon onto the chrome icon data
@@ -123,7 +123,7 @@ function IconHandler(playerHandler){
 				38: imageDataRetina
 			}
 		});
-	}
+	};
 
 	/**
 	 * Get the actual image data given the image path, percentage, and width
@@ -135,7 +135,7 @@ function IconHandler(playerHandler){
 	this.getImageData = function(image, percentage, width){
 		var canvas;
 		var existingCanvas = document.getElementById('canvas');
-		if (existingCanvas == undefined){
+		if (existingCanvas === undefined){
 			canvas = document.createElement('canvas');
 		}else{
 			canvas = existingCanvas;
@@ -159,7 +159,7 @@ function IconHandler(playerHandler){
 		}
 
 		return context.getImageData(0, 0, width, width);
-	}
+	};
 
 	/**
 	 * Get an Image object for the provided path
@@ -170,7 +170,7 @@ function IconHandler(playerHandler){
 		var image = new Image();
 		image.src = path;
 		return image;
-	}
+	};
 
 	// Need to buffer the icons so they don't load every time
 	var pausedRegular = this.getImageObject("/images/icon19paused.png");
@@ -205,7 +205,7 @@ function IconHandler(playerHandler){
 		chrome.browserAction.setTitle({
 			title: title
 		});
-	}
+	};
 }
 
 /**
@@ -222,10 +222,10 @@ IconHandler.prototype.Run = function(){
 				self.updateBadgeText();
 				self.updateIcon();
 				self.updateToolTip();
-			}
+			};
 		})(this),
 	this.scrollDelayTime);
-}
+};
 
 /**
  * Set whether or not the badge text is enabledn
@@ -235,7 +235,7 @@ IconHandler.prototype.SetBadgeTextEnabled = function(isEnabled){
 	this.badgeTextEnabled = isEnabled;
 
 	this.updateBadgeText();
-}
+};
 
 /**
  * Set whether or not the icon progress is enabledn
@@ -245,4 +245,4 @@ IconHandler.prototype.SetIconProgressEnabled = function(isEnabled){
 	this.iconProgressEnabled = isEnabled;
 
 	this.updateIcon();
-}
+};

@@ -27,7 +27,7 @@ var Logger = (function(){
 		 * @return {Error}
 		 */
    	    function getErrorObject(){
-   	    	try { throw Error('') } catch(err) { return err; }
+   	    	try { throw Error(''); } catch(err) { return err; }
    	    }
 
    	    // Public methods returned out
@@ -57,7 +57,7 @@ var Logger = (function(){
    	            // Check if enabled
    	            if (this.enabled){
    	            	// Check if it matches the filter (if enabled)
-   	            	if (this.filter.length == 0 ||
+   	            	if (this.filter.length === 0 ||
    	            		   (this.filter.length > 0 &&
    	            			stringToLog.toLowerCase().indexOf(this.filter.toLowerCase()) > -1)
    	            		   ){
@@ -73,7 +73,7 @@ var Logger = (function(){
             	}
    	    	}
    	    };
-	};
+	}
 
 	return {
 		/**

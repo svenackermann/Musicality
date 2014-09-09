@@ -33,7 +33,7 @@ function Toaster(playerHandler, tabHandler){
 
 	// Bind click events on the toasters buttons
     chrome.notifications.onButtonClicked.addListener( $.proxy(function(id, btnIdx){
-        if (btnIdx == 0){
+        if (btnIdx === 0){
             // Pause
             this.playerHandler.ClickSomething(CLICK_PAUSE);
         }else if (btnIdx == 1){
@@ -63,7 +63,7 @@ function Toaster(playerHandler, tabHandler){
     			this.Toast(info);
     		}
     	}
-    }
+    };
 }
 
 /**
@@ -72,7 +72,7 @@ function Toaster(playerHandler, tabHandler){
  */
 Toaster.prototype.IsEnabled = function(){
 	return this.enabled;
-}
+};
 
 /**
  * Set whether or not the toaster should be enabled
@@ -84,7 +84,7 @@ Toaster.prototype.SetEnabled = function(enabled){
 	if (enabled){
 		this.toastIfNecessary();
 	}
-}
+};
 
 /**
  * Toast with the provided info
@@ -114,7 +114,7 @@ Toaster.prototype.Toast = function(info){
 			}
 		}, this)
 	);
-}
+};
 
 /**
  * Tell the toaster to run after construction
@@ -126,7 +126,7 @@ Toaster.prototype.Run = function(){
 		(function(self){
 			return function(){
 				self.toastIfNecessary();
-			}
+			};
 		})(this),
 	this.toastPollTime);
-}
+};

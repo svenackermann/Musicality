@@ -51,7 +51,7 @@ function Musicality(){
                 this.logger.log("Init already completed.");
             }
         }, this));
-    }
+    };
 
     /**
      * Initialize the execution loop
@@ -65,10 +65,10 @@ function Musicality(){
             (function(self){
                 return function(){
                     self.updateInformation();
-                }
+                };
             })(this),
     	5000);
-    }
+    };
 
 	/**
 	 * Update information method. Called periodically by the execution loop
@@ -103,7 +103,7 @@ function Musicality(){
         }else{
             this.lookForPlayingTabHelper();
         }
-	}
+	};
 
     /**
      * Helper function called by updateInformation when we need to look again
@@ -112,7 +112,7 @@ function Musicality(){
         this.tabHandler.FindTabPlayingMusic($.proxy(function(tabId, playerDetails){
             this.playerHandler.SetTabAndDetails(tabId, playerDetails);
 
-            if (tabId != null && playerDetails != null){
+            if (tabId !== null && playerDetails !== null){
                 // We've got one. Populate if displayed
                 this.playerHandler.PopulateInformation();
 
@@ -141,8 +141,7 @@ function Musicality(){
                 });
             }
         }, this));
-    }
-
+    };
 
 	this.logger.log("Musicality done initializing");
 }
@@ -162,14 +161,14 @@ Musicality.prototype.Run = function(){
     this.iconHandler.Run();
 
     this.scrobbler.Run();
-}
+};
 
 /**
  * Popup needs to know info about the player to know what to display
  */
 Musicality.prototype.GetPlayerDetails = function(){
     return this.playerHandler.GetPlayerDetails();
-}
+};
 
 /**
  * Request from popup to retrieve updated information
@@ -179,25 +178,25 @@ Musicality.prototype.GetPlaybackInfo = function(){
     this.updateInformation(); // async, so will not finish prior to return
 
     return this.playerHandler.GetPlaybackInfo();
-}
+};
 
 /**
  * Request from the popup to perform an action
  */
 Musicality.prototype.ClickSomething = function(whatToClick, callback){
     this.playerHandler.ClickSomething(whatToClick, callback);
-}
+};
 
 /**
  * Request from the popup to open the default player
  */
 Musicality.prototype.OpenDefaultPlayer = function(){
     this.tabHandler.OpenDefaultPlayer();
-}
+};
 
 /**
  * Request from the popup to go the the now playing tab
  */
 Musicality.prototype.GoToNowPlayingTab = function(){
     this.tabHandler.GoToNowPlayingTab();
-}
+};

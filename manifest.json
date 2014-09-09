@@ -8,7 +8,7 @@
         {
             "js":
             [
-                "/js/jquery.js", "/js/contentscript.js"
+                "/js/tp/jquery.js", "/js/contentscript/contentscript.js"
             ],
             "matches":
             [

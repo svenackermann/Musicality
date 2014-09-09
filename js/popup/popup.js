@@ -85,7 +85,7 @@ function PopulateInformation(info){
     var totalTimeElement = $("#totalTime");
     var curTimeElement = $("#currentTime");
     
-    if (track && track != null && track != "" && mPlayerDetails){
+    if (track && track !== null && track !== "" && mPlayerDetails){
         trackElement.text(track);
 
         // Set the play/pause opacity
@@ -142,7 +142,7 @@ function PopulateInformation(info){
 
         // Display the name of the player that is playing
         var playerName = mPlayerDetails.name;
-        if (playerName != null && playerName != ""){
+        if (playerName !== null && playerName !== ""){
  
            // Let's push the player name as a custom GA variable
            _gaq.push(['_setCustomVar',
@@ -155,11 +155,11 @@ function PopulateInformation(info){
            _gaq.push(['_trackEvent',
             'Found Player',
             'Popup'
-            ])
+            ]);
        }
 
         // Check the artist information and populate
-        if (artist != null && artist != ""){
+        if (artist !== null && artist !== ""){
             artistElement.text(artist);
         }else{
             // No artist. Update text appropriately
@@ -175,7 +175,7 @@ function PopulateInformation(info){
         }
 
         // Check if we have art        
-        if (art_url && art_url != null && art_url != ""){
+        if (art_url && art_url !== null && art_url !== ""){
             artClass.attr("src", art_url);
         }else{
             // Not found, so revert it to the empty art
@@ -191,7 +191,7 @@ function PopulateInformation(info){
         }
 
         // Update the info
-        if (current_time != null && current_time != "" && info.currentTime > 0){
+        if (current_time !== null && current_time !== "" && info.currentTime > 0){
             curTimeElement.text(current_time + "/");
         }else{
             curTimeElement.text("");
@@ -206,8 +206,8 @@ function PopulateInformation(info){
         }
 
         // Update the info
-        if (total_time != null && total_time != "" && info.totalTime > 0 &&
-            curTimeElement.text() != ""){
+        if (total_time !== null && total_time !== "" && info.totalTime > 0 &&
+            curTimeElement.text() !== ""){
             totalTimeElement.text(total_time);
         }else{
             totalTimeElement.text("");
@@ -477,7 +477,7 @@ $(function(){
     //Update our information once second.
     window.setInterval(function() {
         UpdateInformation();
-    }, 1000)
+    }, 1000);
 
     // Get the clickable elements ready!
 

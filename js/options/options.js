@@ -231,7 +231,7 @@ function BuildDefaultPlayerDropdown(){
             console.log("Binding " + curPlayer + " to click open " + openPage);
             (function (player, page){
                 newElement.bind('click', function(){
-                    SaveDefaultPlayer(player, page)
+                    SaveDefaultPlayer(player, page);
                 });
             })(curPlayer, openPage);
         }

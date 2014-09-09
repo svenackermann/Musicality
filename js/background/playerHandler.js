@@ -36,7 +36,7 @@ function PlayerHandler(){
 			this.playerDetails,
 			whatIsNeeded,
 			callback);
-	}
+	};
 
 	/**
 	 * Statically send the player a request and callback results
@@ -49,7 +49,7 @@ function PlayerHandler(){
 		this.logger.log("SendPlayerRequest for " + whatIsNeeded);
 
   		// Check if we have the player details
-  		if (playerDetails != null){
+  		if (playerDetails !== null){
             // Now ensure we have a content script already running
             chrome.tabs.sendMessage(tabId, { ping : "ping" }, $.proxy(function(response){
             	if (response){
@@ -77,7 +77,7 @@ function PlayerHandler(){
                 }
             }, this));
 	    }
-	}
+	};
 
 	/**
 	 * Reinject content script into the provided tab
@@ -111,7 +111,7 @@ function PlayerHandler(){
         			callback);
         	}, this));
         }
-	}
+	};
 
 	/**
 	 * Helper method for determining and saving an individual detail from the player
@@ -128,7 +128,7 @@ function PlayerHandler(){
 				callback(result);
 			}
 		}, this));
-	}
+	};
 }
 
 /**
@@ -144,20 +144,20 @@ PlayerHandler.prototype.SetTabAndDetails = function(tabId, playerDetails){
 
 	    this.currentInfo = {};
 	}
-}
+};
 
 /**
  * Clear info. Only to be called when nothing is playing or paused.
  */
 PlayerHandler.prototype.ClearInfo = function(){
 	this.currentInfo = {};
-}
+};
 
 /**
  * Populate everything we can find out about the player
  */
 PlayerHandler.prototype.PopulateInformation = function(){
-	if (this.lastPlayingTabId < 0 || this.playerDetails == undefined){
+	if (this.lastPlayingTabId < 0 || this.playerDetails === undefined){
 		return;
 	}
 
@@ -218,14 +218,14 @@ PlayerHandler.prototype.PopulateInformation = function(){
    				}, this));
    		}
    	}
-}
+};
 
 /**
  * Get the last known tab id that was playing
  */
 PlayerHandler.prototype.GetLastPlayingTabId = function(){
 	return this.lastPlayingTabId;
-}
+};
 
 /**
  * Statically determine if the given tab is playing music
@@ -246,7 +246,7 @@ PlayerHandler.prototype.IsPlayingMusic = function(tabId, playerDetails, callback
     }else{
     	callback(false);
     }
-}
+};
 
 /**
  * Determine if the player is still playing music
@@ -257,7 +257,7 @@ PlayerHandler.prototype.IsStillPlayingMusic = function(callback){
 		this.lastPlayingTabId,
 		this.playerDetails,
 		callback);
-}
+};
 
 /**
  * Statically determine if the tab is paused
@@ -278,7 +278,7 @@ PlayerHandler.prototype.IsPaused = function(tabId, playerDetails, callback){
     }else{
     	callback(false);
     }
-}
+};
 
 /**
  * Perform an action, such as clicking play or next
@@ -287,7 +287,7 @@ PlayerHandler.prototype.IsPaused = function(tabId, playerDetails, callback){
 PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
 	this.logger.log("ClickSomething() -- " + clickWhat);
     // First, ensure that something is playing
-    if (this.playerDetails != null && this.lastPlayingTabId > 0){
+    if (this.playerDetails !== null && this.lastPlayingTabId > 0){
         // Cool. Let's do it
         this.sendPlayerRequest(clickWhat, $.proxy(function(result){
         	this.logger.log("ClickSomething callback -- " + result);
@@ -299,7 +299,7 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
         		(function(self){
         			return function(){
         				self.PopulateInformation();
-        			}
+        			};
         		})(this),
         		100);
 
@@ -309,7 +309,7 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
         	}
         }, this));
     }
-}
+};
 
 /**
  * Retrieve the current track information
@@ -317,11 +317,11 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
  */
 PlayerHandler.prototype.GetPlaybackInfo = function(){
 	return this.currentInfo;
-}
+};
 
 /**
  * Retrieve the player details
  */
 PlayerHandler.prototype.GetPlayerDetails = function(){
 	return this.playerDetails;
-}
+};

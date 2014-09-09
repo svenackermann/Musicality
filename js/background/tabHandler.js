@@ -59,7 +59,7 @@ function TabHandler(playerHandler){
     		(asyncsRunning.count - 1) + ", pausedTabs = " + pausedTabs);
 
         // Decrement asyncsRunning and check if we are done
-        if (--asyncsRunning.count == 0){
+        if (--asyncsRunning.count === 0){
             // All done with the asyncs. Check if there were any paused tabs
             if (pausedTabs.length > 0){
                 pausedTabs.sort(this.pausedTabCompare); // We want consistent returns on which is selected
@@ -76,7 +76,7 @@ function TabHandler(playerHandler){
             callback(-1, {});
             return;
         }
-    }
+    };
 
 	/**
 	 * Compare two tabs for sorting (by id)
@@ -92,7 +92,7 @@ function TabHandler(playerHandler){
     	}else{
     		return 0;
     	}
-    }
+    };
 
     /**
      * Given a tab and window, iterate through players and see if any match
@@ -124,7 +124,7 @@ function TabHandler(playerHandler){
                 this.checkCurrentPlayerForStatus(curPlayerDetails, windowId, curTab.id, asyncsRunning, pausedTabs, callback);
             }
         }
-    }
+    };
 
     /**
      * Helper method that checks the current player for it's playback status
@@ -136,7 +136,7 @@ function TabHandler(playerHandler){
      * @param  {Function} callback
      */
     this.checkCurrentPlayerForStatus = function(playerDetails, windowId, tabId, asyncsRunning, pausedTabs, callback){
-        if (playerDetails != undefined){
+        if (playerDetails !== undefined){
             this.logger.log("checkCurrentPlayerForStatus() -- details = " + playerDetails.name);
 
             // A flag to see if we have already returned a player
@@ -210,7 +210,7 @@ function TabHandler(playerHandler){
             	pausedTabs,
             	callback);
         }
-    }
+    };
 }
 
 /**
@@ -246,7 +246,7 @@ TabHandler.prototype.FindTabPlayingMusic = function(callback){
         }
         this.returnPausedTabHelper(asyncsRunning, pausedTabs, callback);
     }, this));
-}
+};
 
 /**
  * Opens the deafult player
@@ -268,7 +268,7 @@ TabHandler.prototype.OpenDefaultPlayer = function(){
             }, this));
         }
     }, this));
-}
+};
 
 /**
  * Re-directs the window/tab focus to whatever player is playing
@@ -284,7 +284,7 @@ TabHandler.prototype.GoToNowPlayingTab = function(){
     chrome.tabs.update(this.playerHandler.GetLastPlayingTabId(), {
         selected: true
     });
-}
+};
 
 /**
  * Determine if the provided tab exists
@@ -302,4 +302,4 @@ TabHandler.prototype.DoesTabExist = function(tabId, callback){
             return;
         }
     });
-}
+};

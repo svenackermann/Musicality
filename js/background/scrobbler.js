@@ -69,7 +69,7 @@ function Scrobbler(playerHandler){
 
 	    // Return the signature
 	    callback(sig);
-	}
+	};
 
 	/**
 	 * Definitely needs cleaning up, but this function runs if 
@@ -211,7 +211,7 @@ function Scrobbler(playerHandler){
 			    }
 			}
 		}, this));
-	}
+	};
 }
 
 /**
@@ -262,11 +262,10 @@ Scrobbler.prototype.Run = function(){
     	(function(self){
     		return function(){
     			self.talkToLastFm();
-    		}
+    		};
     	})(this),
     this.workDelay);
-
-}
+};
 
 /**
  * Authenticate client with last fm
@@ -310,7 +309,7 @@ Scrobbler.prototype.AuthenticateWithLastFm = function(){
         // Open a window containing that URL. Hopefully the user approves.
         window.open(authUrl);
     }, this));
-}
+};
 
 /**
  * Method to check if we have already been authenticated
@@ -319,7 +318,7 @@ Scrobbler.prototype.AuthenticateWithLastFm = function(){
 Scrobbler.prototype.AlreadyAuthenticated = function(callback){
     // Attempt to get the last_fm_session_key from storage
     chrome.storage.local.get('lastfm_session_key', $.proxy(function(data){
-        if (!data.lastfm_session_key || data.lastfm_session_key == ''){
+        if (!data.lastfm_session_key || data.lastfm_session_key === ''){
             // Hmmm. Try requesting a session key in case we authed
             this.GetLastFmSession(function(result){
                 if (result){
@@ -332,7 +331,7 @@ Scrobbler.prototype.AlreadyAuthenticated = function(callback){
             callback(true);
         }
     }, this));
-}
+};
 
 /**
  * Method to check if scrobbling is already enabled
@@ -352,7 +351,7 @@ Scrobbler.prototype.IsScrobblingEnabled = function(callback){
             });    
         }
     });
-}
+};
 
 /**
  * Method to set scrobbling state
@@ -368,7 +367,7 @@ Scrobbler.prototype.SetScrobblingState = function(isEnabled, callback){
         // Callback success
         callback(true);
     }, this));
-}
+};
 
 /**
  * Method to get the session id for a user
@@ -377,7 +376,7 @@ Scrobbler.prototype.SetScrobblingState = function(isEnabled, callback){
 Scrobbler.prototype.GetLastFmSession = function(callback){
     // First, check if we have anything stored locally
     chrome.storage.local.get('lastfm_session_key', $.proxy(function(data){
-        if (data.lastfm_session_key && data.lastfm_session_key != ''){
+        if (data.lastfm_session_key && data.lastfm_session_key !== ''){
             // Save it off
             this.sessionKey = data.lastfm_session_key;
             callback(this.sessionKey);
@@ -392,7 +391,7 @@ Scrobbler.prototype.GetLastFmSession = function(callback){
                 this.logger.log("Token is " + this.token);
                 
                 // Check if we have a token
-                if (this.token == undefined){
+                if (this.token === undefined){
                     // We don't have a token yet. Callback false
                     callback(false);
                 }
@@ -406,16 +405,16 @@ Scrobbler.prototype.GetLastFmSession = function(callback){
                         // Ok. Now get the session and username
                         if (data.session){
                             // Store it in memory too
-                            this.sessionKey = data.session["key"];
+                            this.sessionKey = data.session.key;
                             
-                            this.logger.log("Session key = " + data.session["key"]);
-                            this.logger.log("Username = " + data.session["name"]);
+                            this.logger.log("Session key = " + data.session.key);
+                            this.logger.log("Username = " + data.session.name);
                             
                             // Save the information off
                             chrome.storage.local.set(
                                 {
-                                    lastfm_session_key: data.session["key"],
-                                    lastfm_username: data.session["name"]
+                                    lastfm_session_key: data.session.key,
+                                    lastfm_username: data.session.name
                                 }, $.proxy(function(){
                                     // Save successful.
                                     this.logger.log("Successfully saved session and username");
@@ -429,7 +428,7 @@ Scrobbler.prototype.GetLastFmSession = function(callback){
             }, this));
         }
     }, this));
-}
+};
 
 /**
  * Run a particular last.fm query. Don't include key in parameters
@@ -493,7 +492,7 @@ Scrobbler.prototype.RunLastFmQuery = function(parameters, get, callback){
             });
         }
     }, this));
-}
+};
 
 /**
  * Get the signature for a query
@@ -502,16 +501,16 @@ Scrobbler.prototype.RunLastFmQuery = function(parameters, get, callback){
  */
 Scrobbler.prototype.GetLastFmQuerySignature = function(parameters, callback){
     // We need to add our api_key and token to the parameters
-    parameters["api_key"] = this.KEY;
+    parameters.api_key = this.KEY;
 
     // If the method isn't auth.getSession, we need to add the session key too
-    if (parameters["method"] != "auth.getSession"){
+    if (parameters.method != "auth.getSession"){
         this.GetLastFmSession($.proxy(function(){
-            parameters["sk"] = this.sessionKey;
+            parameters.sk = this.sessionKey;
             this.getSignatureHelper(parameters, callback);
         }, this));
     }else{
     	this.getSignatureHelper(parameters, callback);
     }
-}
+};
 
