@@ -135,7 +135,7 @@ function IconHandler(playerHandler){
 	this.getImageData = function(image, percentage, width){
 		var canvas;
 		var existingCanvas = document.getElementById('canvas');
-		if (existingCanvas === undefined){
+		if (existingCanvas === null){
 			canvas = document.createElement('canvas');
 		}else{
 			canvas = existingCanvas;
