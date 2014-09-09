@@ -333,7 +333,7 @@ function PopulateInformation(info){
         trackElement.text("Play a song!");
 
         // Empty the other pieces as well
-        artClass.attr("src", "/images/art.jpg");
+        artClass.attr("src", "/images/art.png");
         curTimeElement.text("");
         totalTimeElement.text("");
     }
