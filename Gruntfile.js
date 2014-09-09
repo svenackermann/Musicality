@@ -8,7 +8,7 @@ module.exports = function(grunt) {
     		},
     		background: {
     			src: ['js/background/*.js'],
-    			dest: 'build/<%= pkg.name %>.background.js'
+    			dest: 'build/temp/<%= pkg.name %>.background.js'
     		}
     	},
     	uglify: {
@@ -17,10 +17,10 @@ module.exports = function(grunt) {
     		},
     		dist: {
     			files: {
-    				'build/<%= pkg.name %>.background.min.js' : ['<%= concat.background.dest %>'],
-    				'build/popup.min.js' : ['js/popup/popup.js'],
-    				'build/options.min.js' : ['js/options/options.js'],
-    				'build/contentscript.min.js' : ['js/contentscript/contentscript.js']
+    				'build/js/background.min.js' : ['<%= concat.background.dest %>'],
+    				'build/js/popup.min.js' : ['js/popup/popup.js'],
+    				'build/js/options.min.js' : ['js/options/options.js'],
+    				'build/js/contentscript.min.js' : ['js/contentscript/contentscript.js']
     			}
     		}
     	},
@@ -34,12 +34,20 @@ module.exports = function(grunt) {
     				console: true
     			}
     		}
+    	},
+    	jsonlint: {
+    		players: {
+    			src: ['json/*.json']
+    		}
     	}
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-jsonlint');
 
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'jsonlint', 'concat', 'uglify']);
 };
