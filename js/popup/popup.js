@@ -86,7 +86,7 @@ function PopulateInformation(info){
     var curTimeElement = $("#currentTime");
     
     if (track && track !== null && track !== "" && mPlayerDetails){
-        trackElement.text(track);
+        UpdateElementText(trackElement, track);
 
         // Set the play/pause opacity
         if (mPlayerDetails.has_play_pause){
@@ -160,10 +160,10 @@ function PopulateInformation(info){
 
         // Check the artist information and populate
         if (artist !== null && artist !== ""){
-            artistElement.text(artist);
+            UpdateElementText(artistElement, artist);
         }else{
             // No artist. Update text appropriately
-            artistElement.text("");
+            UpdateElementText(artistElement, "");
         }
 
         // Get the album art from the background
@@ -179,7 +179,7 @@ function PopulateInformation(info){
             artClass.attr("src", art_url);
         }else{
             // Not found, so revert it to the empty art
-            artClass.attr("src", "/images/empty.png");
+            artClass.attr("src", "/images/art.png");
         }
 
         // Get the current time from the player
@@ -192,7 +192,7 @@ function PopulateInformation(info){
 
         // Update the info
         if (current_time !== null && current_time !== "" && info.currentTime > 0){
-            curTimeElement.text(current_time + "/");
+            UpdateElementText(curTimeElement, current_time + "/");
         }else{
             curTimeElement.text("");
         }
@@ -208,7 +208,7 @@ function PopulateInformation(info){
         // Update the info
         if (total_time !== null && total_time !== "" && info.totalTime > 0 &&
             curTimeElement.text() !== ""){
-            totalTimeElement.text(total_time);
+            UpdateElementText(totalTimeElement, total_time);
         }else{
             totalTimeElement.text("");
         }
@@ -329,13 +329,25 @@ function PopulateInformation(info){
         UpdateButton(thumbsDownButtonElement, DIM_BUTTON_CLASS);
 
         // Tell the user nothing is playing
-        artistElement.text("Nothing is playing");
-        trackElement.text("Play a song!");
+        UpdateElementText(artistElement, "");
+        UpdateElementText(trackElement, "Play a song!");
+
+        // Check if the hidden popup is already visible
+        if (!$('#hiddenPopup').is(':visible')){
+            DisplayHiddenPopupWithContentsOf("../html/instructions.html");
+        }
 
         // Empty the other pieces as well
-        artClass.attr("src", "/images/art.png");
+        artClass.attr("src", "../images/art.png");
         curTimeElement.text("");
         totalTimeElement.text("");
+    }
+}
+
+// A function to update the element text (if unchanged)
+function UpdateElementText(element, text){
+    if (element.text() != text){
+        element.text(text);
     }
 }
 
@@ -444,19 +456,21 @@ function stopMarquee(){
     itemToStop.animate({scrollLeft: 0}, 'medium', 'swing');
 }
 
-// A function to display the hidden
-function DisplayHiddenPopup(){
-    // Load the text from file
-    $('#hiddenPopup').load("../html/hiddenPopup.html", function(){
+// A function to display specific text in the popup
+function DisplayHiddenPopupWithContentsOf(path){
+    $('#hiddenPopup').load(path, function(){
+
         // Bind the click event to close the popup
         $("#hiddenPopupCloseButton").bind('click', function(){
             CloseHiddenPopup();
         });
-        
-        // Wait a second, and fade in
+
+        UpdateInformation();
+
+        // Wait a short amoutn of time, and fade in
         setTimeout(function(){
             $('#hiddenPopup').fadeIn();
-        }, 1000);
+        }, 250);
     });
 }
 
@@ -539,6 +553,6 @@ $(function(){
 
     // Let's decide if we should show the popup or not (1/50 chance)
     if (Math.random() < 0.02){
-        DisplayHiddenPopup();
+        DisplayHiddenPopupWithContentsOf("../html/hiddenPopup.html");
     }
 });
