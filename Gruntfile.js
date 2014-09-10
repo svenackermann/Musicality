@@ -41,6 +41,21 @@ module.exports = function(grunt) {
     			}
     		}
     	},
+    	htmlmin: {
+    		dist: {
+    			options: {
+    			  removeComments: true,
+    			  collapseWhitespace: true
+    			},
+    			files: [
+    			    {
+    			    	expand: true,
+    			    	src: ['html/**/*.html'],
+    			    	dest: 'build/'
+    			    }
+    			]
+    		}
+    	},
     	copy: {
     		everything: {
     			files: [
@@ -52,8 +67,7 @@ module.exports = function(grunt) {
     			    	    'js/tp/*.js',
     			    	    'fonts/*',
     			    	    'manifest.json',
-    			    	    'json/*.json',
-    			    	    'html/*.html'
+    			    	    'json/*.json'
     			    	],
     			    	dest: 'build/'
     			    }
@@ -80,6 +94,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jsonlint');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-compress');
 
@@ -89,6 +104,7 @@ module.exports = function(grunt) {
     	'jsonlint',
     	'uglify',
     	'cssmin',
+    	'htmlmin',
     	'copy',
     	'compress'
     	]);
