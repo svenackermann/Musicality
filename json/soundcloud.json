@@ -18,17 +18,17 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('button.playControl.playing').length > 0",
-    "is_paused" : "$('button.playControl.playing').length == 0",
-    "is_thumbed_up" : "$('.sound.streamContext.playing .sc-button-like').hasClass('sc-button-selected')",
+    "isPlaying" : "$('button.playControl.playing').length > 0",
+    "isPaused" : "$('button.playControl.playing').length == 0",
+    "isThumbedUp" : "$('.sound.streamContext.playing .sc-button-like').hasClass('sc-button-selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.sound.streamContext.playing img').attr('src')",
-    "get_track" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[1].trim(); else a[0].trim();",
-    "get_artist" : "var a = $('.sound.streamContext.playing .soundTitle__username').text().trim();var b = $('.playbackTitle__link').text().split('-');if(b.length>1)b[0].trim();else if (a.length>1)a;else 'Unknown'",
-    "get_current_time" : "$('.progressSmall').attr('aria-valuenow')",
-    "get_total_time" : "$('.progressSmall').attr('aria-valuemax')",
+    "artUrl" : "$('.sound.streamContext.playing img').attr('src')",
+    "track" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[1].trim(); else a[0].trim();",
+    "artist" : "var a = $('.sound.streamContext.playing .soundTitle__username').text().trim();var b = $('.playbackTitle__link').text().split('-');if(b.length>1)b[0].trim();else if (a.length>1)a;else 'Unknown'",
+    "currentTime" : "$('.progressSmall').attr('aria-valuenow')",
+    "totalTime" : "$('.progressSmall').attr('aria-valuemax')",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

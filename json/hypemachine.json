@@ -17,17 +17,17 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\"#playerPlay\").attr(\"class\") == \"play-ctrl haarp-play-ctrl icon-play pause\"",
-    "is_paused" : "$(\"#playerPlay\").attr(\"class\") == \"play-ctrl haarp-play-ctrl icon-play play\"",
-    "is_thumbed_up" : "$(\"#playerFav\").attr(\"class\") == \"icon-heart haarp-fav-ctrl fav-on\"",
+    "isPlaying" : "$(\"#playerPlay\").attr(\"class\") == \"play-ctrl haarp-play-ctrl icon-play pause\"",
+    "isPaused" : "$(\"#playerPlay\").attr(\"class\") == \"play-ctrl haarp-play-ctrl icon-play play\"",
+    "isThumbedUp" : "$(\"#playerFav\").attr(\"class\") == \"icon-heart haarp-fav-ctrl fav-on\"",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\".haarp-active .section-player .thumb\").attr(\"style\").substring(15).replace(\");\", \"\")",
-    "get_artist" : "$(\"#player-nowplaying\").text().split(\"-\")[0].trim()",
-    "get_track" : "$(\"#player-nowplaying\").text().split(\"-\")[1].split(\"Read Post\")[0].trim()",
-    "get_current_time" : "$(\"#player-time-position\").text()",
-    "get_total_time" : "$(\"#player-time-total\").text()",
+    "artUrl" : "$(\".haarp-active .section-player .thumb\").attr(\"style\").substring(15).replace(\");\", \"\")",
+    "artist" : "$(\"#player-nowplaying\").text().split(\"-\")[0].trim()",
+    "track" : "$(\"#player-nowplaying\").text().split(\"-\")[1].split(\"Read Post\")[0].trim()",
+    "currentTime" : "$(\"#player-time-position\").text()",
+    "totalTime" : "$(\"#player-time-total\").text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

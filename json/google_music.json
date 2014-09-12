@@ -17,22 +17,22 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('*[data-id=play-pause]').hasClass('playing')",
-    "is_paused" : "(!$('*[data-id=play-pause]').hasClass('playing') && $('#playerSongTitle').length > 0)",
-    "is_shuffled" : "$('.player-middle *[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
-    "is_repeat_off" : "$('*[data-id=repeat]').attr('value') == 'NO_REPEAT'",
-    "is_repeat_one" : "$('*[data-id=repeat]').attr('value') == 'SINGLE_REPEAT'",
-    "is_repeat_all" : "$('*[data-id=repeat]').attr('value') == 'LIST_REPEAT'",
-    "is_thumbed_up" : "$('*[data-rating=5]').hasClass('selected')",
-    "is_thumbed_down" : "$('*[data-rating=1]').hasClass('selected')",
+    "isPlaying" : "$('*[data-id=play-pause]').hasClass('playing')",
+    "isPaused" : "(!$('*[data-id=play-pause]').hasClass('playing') && $('#playerSongTitle').length > 0)",
+    "isShuffled" : "$('.player-middle *[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
+    "isRepeatOff" : "$('*[data-id=repeat]').attr('value') == 'NO_REPEAT'",
+    "isRepeatOne" : "$('*[data-id=repeat]').attr('value') == 'SINGLE_REPEAT'",
+    "isRepeatAll" : "$('*[data-id=repeat]').attr('value') == 'LIST_REPEAT'",
+    "isThumbedUp" : "$('*[data-rating=5]').hasClass('selected')",
+    "isThumbedDown" : "$('*[data-rating=1]').hasClass('selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "('http:' + $('#playingAlbumArt').attr('src'))",
-    "get_artist" : "$('#player-artist').text()",
-    "get_track" : "$('#playerSongTitle').text()",
-    "get_current_time" : "$('#time_container_current').text()",
-    "get_total_time" : "$('#time_container_duration').text()",
+    "artUrl" : "('http:' + $('#playingAlbumArt').attr('src'))",
+    "artist" : "$('#player-artist').text()",
+    "track" : "$('#playerSongTitle').text()",
+    "currentTime" : "$('#time_container_current').text()",
+    "totalTime" : "$('#time_container_duration').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

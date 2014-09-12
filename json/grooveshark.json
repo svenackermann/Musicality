@@ -17,20 +17,20 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\"#play-pause\").attr(\"class\") == \"player-btn player-icon playing\"",
-    "is_paused" : "$(\"#play-pause\").attr(\"class\") == \"player-btn player-icon paused\"",
-    "is_shuffled" : "$(\"#shuffle\").attr(\"class\") == \"player-option active\"",
-    "is_repeat_off" : "$(\"#repeat\").attr(\"class\") == \"player-option\"",
-    "is_repeat_one" : "$(\"#repeat\").attr(\"class\") == \"player-option active one\"",
-    "is_repeat_all" : "$(\"#repeat\").attr(\"class\") == \"player-option active\"",
+    "isPlaying" : "$('#play-pause').attr('class') == 'player-btn player-icon playing'",
+    "isPaused" : "$('#play-pause').attr('class') == 'player-btn player-icon paused'",
+    "isShuffled" : "$('#shuffle').attr('class') == 'player-option active'",
+    "isRepeatOff" : "$('#repeat').attr('class') == 'player-option'",
+    "isRepeatOne" : "$('#repeat').attr('class') == 'player-option active one'",
+    "isRepeatAll" : "$('#repeat').attr('class') == 'player-option active'",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\"#now-playing-image\").attr(\"src\")",
-    "get_artist" : "$(\".now-playing-link.artist.no-title-tooltip.show-artist-tooltip\")[0].text",
-    "get_track" : "$(\".now-playing-link.song.no-title-tooltip.song-link.show-song-tooltip\")[0].text",
-    "get_current_time" : "$(\"#time-elapsed\").text()",
-    "get_total_time" : "$(\"#time-total\").text()",
+    "artUrl" : "var a=$('#now-playing-image').attr('src').split('40_'); a[0]+a[1]",
+    "artist" : "$('.now-playing-link.artist.no-title-tooltip.show-artist-tooltip')[0].text",
+    "track" : "$('.now-playing-link.song.no-title-tooltip.song-link.show-song-tooltip')[0].text",
+    "currentTime" : "$('#time-elapsed').text()",
+    "totalTime" : "$('#time-total').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

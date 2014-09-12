@@ -17,16 +17,16 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('.player-wrapper.player-state-song').hasClass('player-state-play')",
-    "is_paused" : "$('.player-wrapper.player-state-song').hasClass('player-state-pause')",
-    "is_thumbed_up" : "$('.miniplayer-track-action.thumb-up').hasClass('voted')",
-    "is_thumbed_down" : "$('.miniplayer-track-action.thumb-down').hasClass('voted')",
+    "isPlaying" : "$('.player-wrapper.player-state-song').hasClass('player-state-play')",
+    "isPaused" : "$('.player-wrapper.player-state-song').hasClass('player-state-pause')",
+    "isThumbedUp" : "$('.miniplayer-track-action.thumb-up').hasClass('voted')",
+    "isThumbedDown" : "$('.miniplayer-track-action.thumb-down').hasClass('voted')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.miniplayer-album-art').attr('src')",
-    "get_artist" : "$('.miniplayer-info-artist-name').text().split('by ')[1]",
-    "get_track" : "$('.miniplayer-info-track-title').text()",
+    "artUrl" : "$('.fullplayer-album-art').last().attr('src')",
+    "artist" : "$('.miniplayer-info-artist-name').text().split('by ')[1]",
+    "track" : "$('.miniplayer-info-track-title').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

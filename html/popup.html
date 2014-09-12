@@ -1,35 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>        
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/popup.js"></script>
-    <script type="text/javascript" src="/js/constants.js"></script>
-    <link rel="stylesheet" href="/css/popup.css"/>
+    <script type='text/javascript' src='/js/tp/jquery.js'></script>
+    <script type='text/javascript' src='/js/popup/popup.js'></script>
+    <script type='text/javascript' src='/js/background/constants.js'></script>
+    <script type='text/javascript' src='/js/background/helper.js'></script>
+    <link rel='stylesheet' href='/css/popup.css'/>
+    <link rel='stylesheet' href='/css/bootstrap-glyphicons.css'/>
   </head>
   <body>    
-    <span id="shuffle_button" class="shuffle_off dim_button"></span>
-    <span id="repeat_button" class="repeat_off dim_button"></span>
-    <span id="previous_track" class="dim_button"></span>
-    <span id="play_pause" class="play dim_button"></span>
-    <span id="next_track" class="dim_button"></span>    
-    <span id="thumbs_up_button" class="thumbs_up_off dim_button"></span>
-    <span id="thumbs_down_button" class="thumbs_down_off dim_button"></span>   
-    <span id="container">
-      <span id="album_art"><img id="art" src="../images/art.jpg" width="60" height="60" /></span>
-      <span id="track_info">
-        <span class="marquee_wrapper">
-          <span id="artist" class="marquee_item"></span>
+  	<div id='playbackControlsContainer' class='container'>
+  		<img id="playbackControlsBackgroundImage" class="art blurryImage" src=""/>
+  		<div id='previousButton' class='playbackControl'></div>
+  		<div id='playPauseButton' class='playbackControl play'></div>
+  		<div id='nextButton' class='playbackControl'></div>
+  	</div>
+  	<div id='albumArtContainer' class='container'>
+      <div id='hiddenPopup'>
+        <!-- To be populated programmatically -->
+      </div>
+  		<img id='art' class='art'/>
+  	</div>
+  	<div id='trackInfoContainer' class='container'>
+      <img id="trackInfoBackgroundImage" class="art blurryImage" src=""/>
+      <div id='trackInfo'>
+        <span class='marqueeWrapper'>
+          <span id='artist' class='info marqueeItem'></span>
         </span>
-        <span class="marquee_wrapper">
-          <span id="track" class="marquee_item">Play a song.</span>
+        <span class='marqueeWrapper'>
+          <span id='track' class='info marqueeItem'></span>
         </span>
-        <span id="time_info">
-          <span id="cur_time"></span>
-          <span id="total_time"></span>
-        </span>
-        <span id="player_name"></span>
-      </span>
-    </span>
-    <script type="text/javascript" src="../js/ga.js"></script>
+      </div>
+  	</div>
+  	<div id='lowerInfoContainer' class='container'>
+      <div id='repeatButton' class='glyphicon glyphicon-refresh smallIcon'></div>
+      <div id='shuffleButton' class='glyphicon glyphicon-random smallIcon'></div>
+  		<div id='trackTimings'>
+        <span id='currentTime'></span>
+        <span id='totalTime'></span>
+      </div>
+      <div id='thumbsDownButton' class='glyphicon glyphicon-thumbs-down smallIcon'></div>
+      <div id='thumbsUpButton' class='glyphicon glyphicon-thumbs-up smallIcon'></div>
+  	</div>
+    <script type='text/javascript' src='../js/tp/ga.js'></script>
   </body>
 </html>

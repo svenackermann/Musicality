@@ -17,18 +17,18 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$(\".playButton\").attr(\"style\") == \"display: none;\"",
-    "is_paused" : "$(\".pauseButton\").attr(\"style\") == \"display: none;\"",
-    "is_thumbed_up" : "$(\".thumbUpButton.indicator\").length > 0",
-    "is_thumbed_down" : "$(\".thumbDownButton.indicator\").length > 0",
+    "isPlaying" : "$(\".playButton\").attr(\"style\") == \"display: none;\"",
+    "isPaused" : "$(\".pauseButton\").attr(\"style\") == \"display: none;\"",
+    "isThumbedUp" : "$(\".thumbUpButton.indicator\").length > 0",
+    "isThumbedDown" : "$(\".thumbDownButton.indicator\").length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$(\".playerBarArt\").attr(\"src\")",
-    "get_artist" : "$(\".playerBarArtist\").text()",
-    "get_track" : "$(\".playerBarSong\").text()",
-    "get_current_time" : "$(\".elapsedTime\").text()",
-    "get_remaining_time" : "$(\".remainingTime\").text()",
+    "artUrl" : "$(\".playerBarArt\").attr(\"src\")",
+    "artist" : "$(\".playerBarArtist\").text()",
+    "track" : "$(\".playerBarSong\").text()",
+    "currentTime" : "$(\".elapsedTime\").text()",
+    "remainingTime" : "$(\".remainingTime\").text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

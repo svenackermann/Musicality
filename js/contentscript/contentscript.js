@@ -34,7 +34,7 @@ chrome.runtime.onMessage.addListener(
                 console.log("contentscript.js -- Receieved request: " + scriptKey);
             }
 
-            if (playerDetails != null && scriptKey != null){
+            if (playerDetails !== null && scriptKey !== null){
                 var toEval = playerDetails[scriptKey];
 
                 // Debug info
@@ -42,16 +42,25 @@ chrome.runtime.onMessage.addListener(
                     console.log("contentscript.js -- About to eval \"" + toEval + "\"");
                 }
                 
-                var result = eval(toEval);
+                result = eval(toEval);
 
                 // Log some information, if wanted
                 if (mDebug){
                     console.log("contentscript.js -- Eval yielded \"" + result + "\"");
                 }
             }
-            
-            // Return whatever was requested
-            sendResponse(result);
+
+            try{
+                // Return whatever was requested
+                sendResponse(result);
+            }catch (e){
+                if(mDebug){
+                    console.log(e.message);
+                    console.log(e);
+                }
+                // Send something back
+                sendResponse("");
+            }
         }
     });
 

@@ -91,13 +91,6 @@
         "open_page" : "http://www.mixcloud.com"
     },
 
-    "MOG" : {
-        "simple_name" : "mog",
-        "pattern" : "https?:\\/\\/mog.com\\/*",
-        "json_loc" : "/json/mog.json",
-        "open_page" : "http://mog.com"
-    },
-
     "Myspace" : {
         "simple_name" : "myspace",
         "pattern" : "https?:\\/\\/myspace\\.com\\/*",
@@ -111,7 +104,14 @@
         "json_loc" : "/json/pandora.json",
         "open_page" : "http://www.pandora.com"
     },
-    
+
+    "RadioTunes" : {
+        "simple_name" : "radio_tunes",
+        "pattern" : "https?:\\/\\/(.*?)\\.radiotunes\\.com\\/*",
+        "json_loc" : "/json/radiotunes.json",
+        "open_page" : "http://www.radiotunes.com"
+    },
+
     "Rdio" : {
         "simple_name" : "rdio",
         "pattern" : "https?\\:\\/\\/www.rdio.com\\/*",
@@ -160,13 +160,6 @@
         "pattern" : "https?\\:\\/\\/tunein\\.com\\/*",
         "json_loc" : "/json/tunein.json",
         "open_page" : "http://tunein.com"
-    },
-
-    "Twitter Music" : {
-        "simple_name" : "twitter_music",
-        "pattern" : "https?\\:\\/\\/music\\.twitter\\.com\\/*",
-        "json_loc" : "/json/twitter_music.json",
-        "open_page" : "https://music.twitter.com"
     },
 
     "Xbox Music" : {

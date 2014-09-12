@@ -16,15 +16,15 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "var a = $('#tuner'); a.hasClass('playing') || a.hasClass('buffering')",
-    "is_paused" : "$('#tuner').hasClass('stopped')",
-    "is_thumbed_up" : "$('.favorite_song ._favoriteItem.favorite.in').length > 0",
+    "isPlaying" : "var a = $('#tuner'); a.hasClass('playing') || a.hasClass('buffering')",
+    "isPaused" : "$('#tuner').hasClass('stopped')",
+    "isThumbedUp" : "$('.favorite_song ._favoriteItem.favorite.in').length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.artwork.col img').attr('src')",
-    "get_artist" : "var a = $('.line1._navigateNowPlaying').text().split(' - '); if (a.length > 1){a[1];}else{$('.line2._navigateNowPlaying').text();}",
-    "get_track" : "$('.line1._navigateNowPlaying').text().split(' - ')[0]",
+    "artUrl" : "$('.artwork.col img').attr('src')",
+    "artist" : "var a = $('.line1._navigateNowPlaying').text().split(' - '); if (a.length > 1){a[1];}else{$('.line2._navigateNowPlaying').text();}",
+    "track" : "$('.line1._navigateNowPlaying').text().split(' - ')[0]",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

@@ -8,7 +8,7 @@
         {
             "js":
             [
-                "/js/jquery.js", "/js/contentscript.js"
+                "/js/tp/jquery.js", "/js/contentscript/contentscript.js"
             ],
             "matches":
             [
@@ -25,9 +25,13 @@
     "description": "Supports Google Music, Soundcloud, Pandora, Bandcamp, Spotify, Grooveshark, Rdio, Deezer, Slacker, Songza and more!",
     "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
     "icons": {
+        "250": "/images/icon250.png",
         "128": "/images/icon128.png",
-        "16": "/images/icon16.png",
-        "48": "/images/icon48.png"
+        "76": "/iamges/icon/76.png",
+        "48": "/images/icon48.png",
+        "38": "/images/icon76.png",
+        "19": "/images/icon19.png",
+        "16": "/images/icon16.png"
     },
     "name": "Musicality Music Player",
     "permissions":
@@ -71,7 +75,7 @@
         }
     },
     "update_url": "http://clients2.google.com/service/update2/crx",
-    "version": "2.0.31",
+    "version": "3.0.0",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "author": "Kyle Kamperschroer",

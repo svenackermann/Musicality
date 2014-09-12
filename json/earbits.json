@@ -15,16 +15,16 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "is_playing" : "$('.btn.btn-playpause').attr('title') === 'Pause'",
-    "is_paused" : "$('.btn.btn-playpause').attr('title') === 'Play'",
-    "is_thumbed_up" : "$('.track-actions .btn.btn-like').length == 0",
-    "is_thumbed_down" : "false",
+    "isPlaying" : "$('.btn.btn-playpause').attr('title') === 'Pause'",
+    "isPaused" : "$('.btn.btn-playpause').attr('title') === 'Play'",
+    "isThumbedUp" : "$('.track-actions .btn.btn-like').length == 0",
+    "isThumbedDown" : "false",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "get_album_art" : "$('.track-info .album-cover img').attr('src')",
-    "get_artist" : "$('.name-slider .artist-name').text().split('-')[1].trim()",
-    "get_track" : "$('.name-slider .track-name').text()",
+    "artUrl" : "$('.track-info .album-cover img').attr('src')",
+    "artist" : "$('.name-slider .artist-name').text().split('-')[1].trim()",
+    "track" : "$('.name-slider .track-name').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

@@ -10,7 +10,8 @@
 // Member Variables
 /////////////////////////////////////////////////////////////////////////////
 
-// None
+// The core
+var mMusicality = chrome.extension.getBackgroundPage().Musicality;
 
 /////////////////////////////////////////////////////////////////////////////
 // Functions
@@ -62,27 +63,6 @@ function SetScrobblingStateButton(isEnabled){
     }
 }
 
-// A function to set the badge text button information
-function SetBadgeTextButton(isEnabled){
-    // Get the button
-    $iconTextBtn = $("#icon_text");
-    $iconTextLbl = $("#icon_text_label");
-
-    if (isEnabled){
-        // Set the button to say disable
-        $iconTextBtn.text("Disable Icon Text");
-        $iconTextBtn.removeClass("btn-fail");
-        $iconTextBtn.addClass("btn-success");
-        $iconTextLbl.text("Disable the scrolling text on the Musicality icon");
-    }else{
-        // Set the button to say enable
-        $iconTextBtn.text("Enable Icon Text");
-        $iconTextBtn.removeClass("btn-success");
-        $iconTextBtn.addClass("btn-fail");
-        $iconTextLbl.text("Enable the scrolling text on the Musicality icon");
-    }
-}
-
 // A function to set the toaster notification information
 function SetToastNotificationsButton(isEnabled){
     // Get the button
@@ -112,13 +92,50 @@ function IsBadgeTextEnabled(callback){
     });
 }
 
-// A function to set if badge text should be enabled or not
-function SetBadgeTextEnabled(isEnabled, callback){
-    // Set the value in local storage
-    chrome.storage.local.set({'badge_text_enabled' : isEnabled}, function(){
-        // Callback success
-        callback(true);
+// A function to check if the icon progress is enabled
+function IsIconProgressEnabled(callback){
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('icon_progress_enabled', function(data){
+        callback(data.icon_progress_enabled);
     });
+}
+
+// A function to check if the icon is set to none (no scrolling or progress)
+function AreIconOptionsDisabled(callback){
+    // Query the local storage for the value we are looking for
+    chrome.storage.local.get('icon_options_disabled', function(data){
+        callback(data.icon_options_disabled);
+    });
+}
+
+// A function to set if badge text should be enabled or not
+function SetBadgeTextEnabled(isEnabled){
+    // Set the value in local storage
+    chrome.storage.local.set({'badge_text_enabled' : isEnabled});
+
+    // Update the running instance
+    mMusicality.iconHandler.SetBadgeTextEnabled(isEnabled);
+}
+
+// A function to set if icon progress bar should be enabled or not
+function SetIconProgressEnabled(isEnabled, callback){
+    // Set the value in local storage
+    chrome.storage.local.set({'icon_progress_enabled' : isEnabled});
+
+    // Update the running instance
+    mMusicality.iconHandler.SetIconProgressEnabled(isEnabled);
+}
+
+// A function to disable icon progress and scrolling text
+function SetIconOptionsDisabled(isDisabled, callback){
+    // Set the value in local storage
+    chrome.storage.local.set({'icon_options_disabled' : isDisabled});
+
+    // Update the running instance (if we are disabling)
+    if (isDisabled){
+        mMusicality.iconHandler.SetIconProgressEnabled(false);
+        mMusicality.iconHandler.SetBadgeTextEnabled(false);
+    }
 }
 
 // A function to check if the toast notifications is enabled
@@ -136,23 +153,42 @@ function SetToastNotificationsEnabled(isEnabled, callback){
         // Callback success
         callback(true);
     });
+
+    // Update the running instance as well
+    mMusicality.toaster.SetEnabled(isEnabled);
 }
 
 // A function to update the buttons to display the correct info
 function UpdateButtons(){
     // Check if we are already authenticated
-    AlreadyAuthenticated(function(result){
+    mMusicality.scrobbler.AlreadyAuthenticated(function(result){
         SetLastFmAuthenticationButton(result);
     });
 
     // Check if last.fm is disabled
-    IsScrobblingEnabled(function(result){
+    mMusicality.scrobbler.IsScrobblingEnabled(function(result){
         SetScrobblingStateButton(result);
     });
 
     // Check if badge text is enabled
     IsBadgeTextEnabled(function(result){
-        SetBadgeTextButton(result);
+        if(result){
+            $("#icon_text").addClass("active");
+        }
+    });
+
+    // Check if icon progress is enabled
+    IsIconProgressEnabled(function(result){
+        if(result){
+            $("#icon_progress").addClass("active");
+        }
+    });
+
+    // Check if icon changes are set to none
+    AreIconOptionsDisabled(function(result){
+        if(result){
+            $("#icon_none").addClass("active");
+        }
     });
 
     // Check if toast notifications are enabled
@@ -195,7 +231,7 @@ function BuildDefaultPlayerDropdown(){
             console.log("Binding " + curPlayer + " to click open " + openPage);
             (function (player, page){
                 newElement.bind('click', function(){
-                    SaveDefaultPlayer(player, page)
+                    SaveDefaultPlayer(player, page);
                 });
             })(curPlayer, openPage);
         }
@@ -255,13 +291,13 @@ $(function(){
     // We want to bind the click button to do everything it needs to for authentication
     $("#authenticate").bind('click', function(){
         // Authenticate is in scrobbler.js
-        AuthenticateWithLastFm();
+        mMusicality.scrobbler.AuthenticateWithLastFm();
     });
 
     // Bind the click of the button to flip the state of scrobbling
     $("#scrobbling_toggle").bind('click', function(){
-        IsScrobblingEnabled(function(result){
-            SetScrobblingState(!result, function(){
+        mMusicality.scrobbler.IsScrobblingEnabled(function(result){
+            mMusicality.scrobbler.SetScrobblingState(!result, function(){
                 SetScrobblingStateButton(!result);
             });
         });
@@ -269,12 +305,26 @@ $(function(){
 
     // Bind the click of the icon text button to flip the state of the icon text
     $("#icon_text").bind('click', function(){
-        // Check if badge text is enabled
-        IsBadgeTextEnabled(function(result){
-            SetBadgeTextEnabled(!result, function(){
-                SetBadgeTextButton(!result);
-            });
-        });
+        SetBadgeTextEnabled(true);
+
+        // Disable icon progress
+        SetIconProgressEnabled(false);
+        SetIconOptionsDisabled(false);
+    });
+
+    // Bind the click of the icon progress button to flip the state of the icon text
+    $("#icon_progress").bind('click', function(){
+        SetIconProgressEnabled(true);
+
+        // Disable badge text and disabled icon options
+        SetBadgeTextEnabled(false);
+        SetIconOptionsDisabled(false);
+    });
+
+    $("#icon_none").bind('click', function(){
+        SetIconOptionsDisabled(true);
+        SetIconProgressEnabled(false);
+        SetBadgeTextEnabled(false);
     });
 
     // Bind the click of the toast notifications button to flip the state
