@@ -80,7 +80,7 @@ function Musicality(){
         var lastPlayingTabId = this.playerHandler.GetLastPlayingTabId();
         if (lastPlayingTabId != -1){
             // Check if the tab still exists
-            this.tabHandler.DoesTabExist(lastPlayingTabId, $.proxy(function(exists){
+            Helper.DoesTabExist(lastPlayingTabId, $.proxy(function(exists){
             	if (exists){
                     // Is it still playing music?
                     this.playerHandler.IsStillPlayingMusic( $.proxy(function(isPlaying){

@@ -98,32 +98,26 @@ function PlayerHandler(){
       this.logger.log("Injecting " + curScript + " into tab " + tabId);
 
       // Verify the tab exists before injecting
-      try{
-        chrome.tabs.get(tabId, $.proxy(function(tab){
-          if (!tab){
-            // Tab doesn't exist anymore. Need to re-find one
-            this.SetTabAndDetails(-1, undefined);
-          }else{
-            chrome.tabs.executeScript(tabId,
-            {
-              file: curScript,
-              allFrames: false,
-              runAt: "document_start"
-            }, $.proxy(function(){
-              // Re-try the call
-              this.sendPlayerStaticRequest(
-                tabId,
-                playerDetails,
-                whatIsNeeded,
-                callback);
-            }, this));
-          }
-        },this));
-      }catch(err){
-        // Something went horribly wrong
-        this.logger.log("Exception thrown: " + err.message);
-        this.SetTabAndDetails(-1, undefined);
-      }
+      Helper.DoesTabExist(tabId, $.proxy(function(exists){
+        if (!exists){
+          // Tab doesn't exist anymore. Need to re-find one
+          this.SetTabAndDetails(-1, undefined);
+        }else{
+          chrome.tabs.executeScript(tabId,
+          {
+            file: curScript,
+            allFrames: false,
+            runAt: "document_start"
+          }, $.proxy(function(){
+            // Re-try the call
+            this.sendPlayerStaticRequest(
+              tabId,
+              playerDetails,
+              whatIsNeeded,
+              callback);
+          }, this));
+        }
+      },this));
     }, this));
   };
 

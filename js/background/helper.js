@@ -80,6 +80,30 @@ var Helper = {
 
         // Return the total time value
         return sTotalHours +  sTotalMins + ":" + sTotalSecs;
+    },
+
+    /**
+     * Determine if the provided tab exists
+     * @param {int}   tabId
+     * @param {Function} callback
+     */
+     DoesTabExist: function(tabId, callback){
+        // Use the chrome API to check
+        try{
+            chrome.tabs.get(tabId, function(tab){
+                if (!tab){
+                    callback(false);
+                    return;
+                }else{
+                    callback(true);
+                    return;
+                }
+            });
+        }catch(err){
+            // Nope nope nope
+            callback(false);
+            return;
+        }
     }
 };
 
