@@ -28,18 +28,18 @@
         "open_page" : "http://www.bandcamp.com"
     },
 
-    "DI.FM" : {
-        "simple_name" : "di_fm",
-        "pattern" : "https?:\\/\\/(.*?)\\.di\\.fm\\/*",
-        "json_loc" : "/json/di_fm.json",
-        "open_page" : "http://www.di.fm"
-    },
-
     "Deezer" : {
         "simple_name" : "deezer",
         "pattern" : "https?:\\/\\/www.deezer.com\\/*",
         "json_loc" : "/json/deezer.json",
         "open_page" : "http://www.deezer.com"
+    },
+
+    "DI.FM" : {
+        "simple_name" : "di_fm",
+        "pattern" : "https?:\\/\\/(.*?)\\.di\\.fm\\/*",
+        "json_loc" : "/json/di_fm.json",
+        "open_page" : "http://www.di.fm"
     },
 
     "Earbits" : {
@@ -49,7 +49,7 @@
         "open_page" : "http://www.earbits.com"
     },
 
-    "Google Music" : {
+    "Google Play Music" : {
         "simple_name" : "google_music",
         "pattern" : "https?\\:\\/\\/play\\.google\\.com\\/music\\/listen.*",
         "json_loc" : "/json/google_music.json",
@@ -86,8 +86,8 @@
     
     "Mixcloud" : {
         "simple_name" : "mixcloud",
-	"pattern" : "https?:\\/\\/www.mixcloud.com\\/*",
-	"json_loc" : "/json/mixcloud.json",
+        "pattern" : "https?:\\/\\/www.mixcloud.com\\/*",
+        "json_loc" : "/json/mixcloud.json",
         "open_page" : "http://www.mixcloud.com"
     },
 

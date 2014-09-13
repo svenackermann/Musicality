@@ -196,7 +196,7 @@ function IconHandler(playerHandler){
 		var nowPlayingInfo = playerHandler.GetPlaybackInfo();
 
 		var title = "Musicality";
-		if (nowPlayingInfo.isPlaying){
+		if (nowPlayingInfo.isPlaying || nowPlayingInfo.isPaused){
 			// Add on the track and artist
 			title += ":\n    " + nowPlayingInfo.track;
 			title += "\n    by " + nowPlayingInfo.artist; 
