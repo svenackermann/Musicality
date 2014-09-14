@@ -22,8 +22,8 @@
         "page" : "/html/background.html"
     },
     "options_page" : "/html/options.html",
-    "description": "Supports Google Music, Soundcloud, Pandora, Bandcamp, Spotify, Grooveshark, Rdio, Deezer, Slacker, Songza and more!",
-    "homepage_url": "https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US",
+    "description": "Enhance your music experience across the web! Easy access to controls, keyboard shortcuts and much more!",
+    "homepage_url": "https://chrome.google.com/webstore/detail/musicality-music-player/fjiolbglibkahkipcdgeepdfdgfkdbee",
     "icons": {
         "250": "/images/icon250.png",
         "128": "/images/icon128.png",
@@ -47,19 +47,22 @@
             "suggested_key" : {
                 "default" : "MediaPlayPause"
             },
-            "description" : "Toggle Play/Pause"
+            "description" : "Toggle Play/Pause",
+            "global": true
         },
         "toggle-feature-next-track" : {
             "suggested_key" : {
                 "default" : "MediaNextTrack"
             },
-            "description" : "Next Track"
+            "description" : "Next Track",
+            "global": true
         },
         "toggle-feature-prev-track" : {
             "suggested_key" : {
                 "default" : "MediaPrevTrack"
             },
-            "description" : "Previous Track"
+            "description" : "Previous Track",
+            "global": true
         },
         "toggle-feature-thumbs-up" : {
             "description" : "Toggle Thumbs Up"
@@ -75,7 +78,7 @@
         }
     },
     "update_url": "http://clients2.google.com/service/update2/crx",
-    "version": "3.0.1",
+    "version": "3.0.3",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
     "author": "Kyle Kamperschroer",
