@@ -32,7 +32,7 @@
 
     "click_play" : "$('.player__button-group .icon-play').click()",
     "click_pause" : "$('.player__button-group .icon-pause').click()",
-    "click_next_track" : "$('.player__button .icon-next').click()",
-    "click_prev_track" : "$('.player__button .icon-previous').click()"
+    "click_next_track" : "$('.player__button .icon-next')[0].click()",
+    "click_prev_track" : "$('.player__button .icon-previous')[0].click()"
 
 }
