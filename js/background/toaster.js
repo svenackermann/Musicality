@@ -91,6 +91,15 @@ Toaster.prototype.SetEnabled = function(enabled){
  * @param {Object} track info
  */
 Toaster.prototype.Toast = function(info){
+	if (info.artUrl === undefined || info.artUrl == ""){
+		info.artUrl = "/images/art.png";
+	}
+	if (info.track === undefined){
+		info.track = "";
+	}
+	if (info.artist === undefined){
+		info.artist = "";
+	}
 	chrome.notifications.create(
 		"",
 		{
