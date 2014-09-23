@@ -91,7 +91,7 @@ Toaster.prototype.SetEnabled = function(enabled){
  * @param {Object} track info
  */
 Toaster.prototype.Toast = function(info){
-	if (info.artUrl === undefined || info.artUrl == ""){
+	if (info.artUrl === undefined || info.artUrl === ""){
 		info.artUrl = "/images/art.png";
 	}
 	if (info.track === undefined){
