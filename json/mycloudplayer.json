@@ -24,7 +24,6 @@
     "isRepeatOne" : "$('.repeat.active').length > 0",
     "isRepeatAll" : "$('.repeat.active[orig-title*=All]').length > 0",
     "isThumbedUp" : "$('#trackInfos .favs.favorited').length > 0",
-    "isThumbedDown" : "$('#trackInfos .favs.favorited').length == 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
@@ -39,9 +38,8 @@
     "click_play" : "$('.playtoggle').click()",
     "click_pause" : "$('.playtoggle').click()",
     "click_next_track" : "$('.html5player_padding .next').click()",
-    "click_prev_track" : "$('html5player_padding .prev').click()",
-    "click_shuffle" : "$('.html5player_padding .shuffle').click()",
-    "click_repeat" : "$('.html5player_padding .repeat').click()",
-    "click_thumbs_up" : "$('.html5player_padding .gfavorite').click()",
-    "click_thumbs_down" : "$('.html5player_padding .gfavorite').click()"
+    "click_prev_track" : "$('.html5player_padding .prev').click()",
+    "click_shuffle" : "$('.html5player_padding .shuffle')[0].click()",
+    "click_repeat" : "$('.html5player_padding .repeat')[0].click()",
+    "click_thumbs_up" : "$('.html5player_padding .gfavorite')[0].click()"
 }
