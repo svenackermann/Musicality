@@ -91,6 +91,13 @@
         "open_page" : "http://www.mixcloud.com"
     },
 
+    "My Cloud Player" : {
+        "simple_name" : "mycloudplayer",
+        "pattern" : "https?\\:\\/\\/mycloudplayers\\.com\\/*",
+        "json_loc" : "/json/mycloudplayer.json",
+        "open_page" : "http://mycloudplayers.com"
+    },
+    
     "Myspace" : {
         "simple_name" : "myspace",
         "pattern" : "https?:\\/\\/myspace\\.com\\/*",
