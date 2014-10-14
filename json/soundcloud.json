@@ -24,7 +24,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('.sound.streamContext.playing img').attr('src')",
+    "artUrl" : "$('.sound.streamContext.playing .image__full').css('background-image').split('url(')[1].split(')')[0]",
     "track" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[1].trim(); else a[0].trim();",
     "artist" : "var a = $('.sound.streamContext.playing .soundTitle__username').text().trim();var b = $('.playbackTitle__link').text().split('-');if(b.length>1)b[0].trim();else if (a.length>1)a;else 'Unknown'",
     "currentTime" : "$('.progressSmall').attr('aria-valuenow')",
