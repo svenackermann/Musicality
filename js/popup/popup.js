@@ -551,8 +551,8 @@ $(function(){
     // Tell background to open the default player, if there is one set
     mMusicality.OpenDefaultPlayer();
 
-    // Let's decide if we should show the popup or not (1/25 chance)
-    if (Math.random() < 0.04){
+    // Let's decide if we should show the popup or not (1/15 chance)
+    if (Math.random() < 0.067){
         DisplayHiddenPopupWithContentsOf("../html/hiddenPopup.html");
     }
 });
