@@ -26,3 +26,4 @@ Please don't hesitate to contact me if you have any questions.
   - Marc-Andre Decoste
   - Michael Hart
   - Francsico Salvador (Bandcamp support, and more)
+  - cucko (MyCloudPlayers support)
