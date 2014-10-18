@@ -24,6 +24,7 @@ function Toaster(playerHandler, tabHandler){
 	this.timeToLeaveUpToast = 5000;
 	// TODO -- Change to be event driven
 	this.toastPollTime = 2000;
+	this.skipNextToast = false;
 	this.oldInfo = {};
 
 	// Immediately check if toasting is enabled in storage
@@ -60,7 +61,12 @@ function Toaster(playerHandler, tabHandler){
     			 this.oldInfo.track != info.track)){
     			// Update our saved info for the next comparison
     			this.oldInfo = $.extend(true, {}, info);
-    			this.Toast(info);
+
+    			if(!this.skipNextToast){
+    				this.Toast(info);
+    			}else{
+    				this.skipNextToast = false;
+    			}
     		}
     	}
     };
@@ -85,6 +91,14 @@ Toaster.prototype.SetEnabled = function(enabled){
 		this.toastIfNecessary();
 	}
 };
+
+/**
+ * Set a flag to skip the next toast. Used when the popup is
+ * up since there is no need to toast in those situations.
+ */
+Toaster.prototype.SkipNextToast = function(){
+	this.skipNextToast = true;
+}
 
 /**
  * Toast with the provided info
