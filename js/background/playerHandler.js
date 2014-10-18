@@ -53,7 +53,7 @@ function PlayerHandler(){
     this.logger.log("SendPlayerRequest for " + whatIsNeeded);
 
     // Check if we have the player details
-    if (playerDetails !== null){
+    if (playerDetails !== null && playerDetails[whatIsNeeded] !== undefined){
       // Now ensure we have a content script already running
       chrome.tabs.sendMessage(tabId, { ping : "ping" }, $.proxy(function(response){
         if (response){
@@ -208,7 +208,10 @@ PlayerHandler.prototype.PopulateInformation = function(){
 
     // Now, only query this stuff if the track or artist are different
     if ((curTrack === undefined || this.currentInfo.track != curTrack) ||
-        (curArtist === undefined || this.currentInfo.artist != curArtist)){
+        (curArtist === undefined || this.currentInfo.artist != curArtist) ||
+        (this.currentInfo.artUrl === undefined) ||
+        (this.currentInfo.totalTime === undefined)){
+
       // Necessary to grab everything else
 
       this.getValueFromPlayer("artUrl");
