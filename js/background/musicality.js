@@ -18,6 +18,16 @@
  * The master controller, the one and only; Musicality!
  */
 function Musicality(){
+    /**
+     * Musicality needs to be a singleton. Hopefully fixes some
+     * weird issues users have been seeing. (Thanks Jenny Li!)
+     */
+    if (arguments.callee._singletonInstance){
+        return arguments.callee._singletonInstance;
+    }
+    arguments.callee._singletonInstance = this;
+
+    this.running = false;
 	this.logger = Logger.getInstance();
 	this.playerHandler = new PlayerHandler();
 	this.tabHandler = new TabHandler(this.playerHandler);
@@ -150,17 +160,21 @@ function Musicality(){
  * The primary entry point to be called after construction.
  */
 Musicality.prototype.Run = function(){
-	this.logger.log("Musicality started");
+    if (!this.running){
+        this.running = true;
+        
+        this.logger.log("Musicality started");
 
-	this.processFirstRun();
+        this.processFirstRun();
 
-	this.startExecutionLoop();
+        this.startExecutionLoop();
 
-    this.toaster.Run();
+        this.toaster.Run();
 
-    this.iconHandler.Run();
+        this.iconHandler.Run();
 
-    this.scrobbler.Run();
+        this.scrobbler.Run();
+    }
 };
 
 /**
