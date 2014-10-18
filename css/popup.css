@@ -321,3 +321,7 @@ input:focus{
 	opacity: 0.2;
 	cursor: default;
 }
+
+.gc-bubbleDefault{
+	display: none;
+}
