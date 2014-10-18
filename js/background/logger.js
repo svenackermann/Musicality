@@ -59,16 +59,16 @@ var Logger = (function(){
    	            	// Check if it matches the filter (if enabled)
    	            	if (this.filter.length === 0 ||
    	            		   (this.filter.length > 0 &&
-   	            			stringToLog.toLowerCase().indexOf(this.filter.toLowerCase()) > -1)
+                        stringToLog.toLowerCase().indexOf(this.filter.toLowerCase()) > -1)
    	            		   ){
 
-                		// Get an error object to determine the file and line
-                	    var err = getErrorObject();
-                	    var caller_line = err.stack.split("\n")[4];
-                	    var index = caller_line.indexOf("at ");
-                	    var clean = caller_line.slice(index+2, caller_line.length);
-
-                	    console.log(clean + ' -- ' + stringToLog);
+                	  // Get an error object to determine the file and line
+                    var err = getErrorObject();
+                    var caller_line = err.stack.split("\n")[4];
+                    var index = caller_line.indexOf("at ");
+                    var clean = caller_line.slice(index+2, caller_line.length);
+                    
+                    console.log(clean + ' -- ' + stringToLog);
                 	}
             	}
    	    	}
