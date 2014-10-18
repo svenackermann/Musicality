@@ -98,7 +98,7 @@ Toaster.prototype.SetEnabled = function(enabled){
  */
 Toaster.prototype.SkipNextToast = function(){
 	this.skipNextToast = true;
-}
+};
 
 /**
  * Toast with the provided info

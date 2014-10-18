@@ -216,20 +216,6 @@ PlayerHandler.prototype.PopulateInformation = function(){
 
       this.getValueFromPlayer("artUrl");
 
-      // Times are a little more finicky to deal with
-      var hasTimeInMs = this.playerDetails.has_time_in_ms;
-      if (this.playerDetails.has_current_track_time){
-        this.getValueFromPlayer(
-          "currentTime",
-          $.proxy(function(result){
-            if (!hasTimeInMs){
-              this.currentInfo.currentTime = Helper.TimeToMs(result);
-            }else{
-              this.currentInfo.currentTime = result;
-            }
-          }, this));
-      }
-
       if (this.playerDetails.has_total_track_time){
         this.getValueFromPlayer(
           "totalTime",
