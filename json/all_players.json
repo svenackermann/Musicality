@@ -28,6 +28,13 @@
         "open_page" : "http://www.bandcamp.com"
     },
 
+    "Bop.fm" : {
+        "simple_name" : "bop_fm",
+        "pattern" : "https?:\\/\\/bop\\.fm\\/*",
+        "json_loc" : "/json/bop_fm.json",
+        "open_page" : "http://bop.fm"
+    },
+
     "Deezer" : {
         "simple_name" : "deezer",
         "pattern" : "https?:\\/\\/www.deezer.com\\/*",
