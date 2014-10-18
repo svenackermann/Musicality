@@ -171,22 +171,47 @@ PlayerHandler.prototype.PopulateInformation = function(){
 
   // To prevent spamming the DOM too much, prevent calls to populate more
   // than once every quarter second
-    var curTime = Date.now();
-    if((curTime - this.lastPopulateTime) >= 250){
-      this.lastPopulateTime = curTime;
+  var curTime = Date.now();
+  if((curTime - this.lastPopulateTime) >= 250){
+    this.lastPopulateTime = curTime;
 
-      // Get all the data!
-      this.getValueFromPlayer("track");
-      this.getValueFromPlayer("artist");
+    // Save off the current track and artist
+    var curTrack = this.currentInfo.track;
+    var curArtist = this.currentInfo.artist;
+
+    // Grab the pieces that could have changed since last time
+    // NOTE: All getValueFromPlayer commands are asynchronous
+    this.getValueFromPlayer("track");
+    this.getValueFromPlayer("artist");
+    this.getValueFromPlayer("isPlaying");
+    this.getValueFromPlayer("isPaused");
+    this.getValueFromPlayer("isShuffled");
+    this.getValueFromPlayer("isRepeatOff");
+    this.getValueFromPlayer("isRepeatAll");
+    this.getValueFromPlayer("isRepeatOne");
+    this.getValueFromPlayer("isThumbedUp");
+    this.getValueFromPlayer("isThumbedDown");
+
+    // Times are a little more finicky to deal with
+    var hasTimeInMs = this.playerDetails.has_time_in_ms;
+    if (this.playerDetails.has_current_track_time){
+      this.getValueFromPlayer(
+        "currentTime",
+        $.proxy(function(result){
+          if (!hasTimeInMs){
+            this.currentInfo.currentTime = Helper.TimeToMs(result);
+          }else{
+            this.currentInfo.currentTime = result;
+          }
+        }, this));
+    }
+
+    // Now, only query this stuff if the track or artist are different
+    if ((curTrack === undefined || this.currentInfo.track != curTrack) ||
+        (curArtist === undefined || this.currentInfo.artist != curArtist)){
+      // Necessary to grab everything else
+
       this.getValueFromPlayer("artUrl");
-      this.getValueFromPlayer("isPlaying");
-      this.getValueFromPlayer("isPaused");
-      this.getValueFromPlayer("isShuffled");
-      this.getValueFromPlayer("isRepeatOff");
-      this.getValueFromPlayer("isRepeatAll");
-      this.getValueFromPlayer("isRepeatOne");
-      this.getValueFromPlayer("isThumbedUp");
-      this.getValueFromPlayer("isThumbedDown");
 
       // Times are a little more finicky to deal with
       var hasTimeInMs = this.playerDetails.has_time_in_ms;
@@ -225,7 +250,10 @@ PlayerHandler.prototype.PopulateInformation = function(){
             this.currentInfo.totalTime = this.currentInfo.currentTime + Math.abs(remainingMillis);
           }, this));
       }
+    }else{
+      this.logger.log("Artist and track unchanged. Not requesting art or current time");
     }
+  }
 };
 
 /**
