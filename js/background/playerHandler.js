@@ -191,6 +191,7 @@ PlayerHandler.prototype.PopulateInformation = function(){
     this.getValueFromPlayer("isRepeatOne");
     this.getValueFromPlayer("isThumbedUp");
     this.getValueFromPlayer("isThumbedDown");
+    this.getValueFromPlayer("artUrl");
 
     // Times are a little more finicky to deal with
     var hasTimeInMs = this.playerDetails.has_time_in_ms;
@@ -206,42 +207,31 @@ PlayerHandler.prototype.PopulateInformation = function(){
         }, this));
     }
 
-    // Now, only query this stuff if the track or artist are different
-    if ((curTrack === undefined || this.currentInfo.track != curTrack) ||
-        (curArtist === undefined || this.currentInfo.artist != curArtist) ||
-        (this.currentInfo.artUrl === undefined) ||
-        (this.currentInfo.totalTime === undefined)){
-
-      // Necessary to grab everything else
-
-      this.getValueFromPlayer("artUrl");
-
-      if (this.playerDetails.has_total_track_time){
-        this.getValueFromPlayer(
-          "totalTime",
-          $.proxy(function(result){
-            if (!hasTimeInMs){
-              this.currentInfo.totalTime = Helper.TimeToMs(result);
-            }else{
-              this.currentInfo.totalTime = result;
-            }
-          }, this));
-      }else if (this.playerDetails.has_remaining_track_time){
-        this.getValueFromPlayer(
-          "remainingTime",
-          $.proxy(function(result){
-            var remainingMillis = result;
-            if (!hasTimeInMs){
-              remainingMillis = Helper.TimeToMs(remainingMillis);
-            }
+    if (this.playerDetails.has_total_track_time){
+      this.getValueFromPlayer(
+        "totalTime",
+        $.proxy(function(result){
+          if (!hasTimeInMs){
+            this.currentInfo.totalTime = Helper.TimeToMs(result);
+          }else{
+            this.currentInfo.totalTime = result;
+          }
+        }, this));
+    }else if (this.playerDetails.has_remaining_track_time){
+      this.getValueFromPlayer(
+        "remainingTime",
+        $.proxy(function(result){
+          var remainingMillis = result;
+          if (!hasTimeInMs){
+            remainingMillis = Helper.TimeToMs(remainingMillis);
+          }
 
             // Update total time
             this.currentInfo.totalTime = this.currentInfo.currentTime + Math.abs(remainingMillis);
           }, this));
-      }
-    }else{
-      this.logger.log("Artist and track unchanged. Not requesting art or current time");
     }
+  }else{
+    this.logger.log("Artist and track unchanged. Not requesting art or current time");
   }
 };
 
