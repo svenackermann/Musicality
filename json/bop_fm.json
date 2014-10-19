@@ -27,7 +27,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "",
+    "artUrl" : "$('.album-art').css('background-image').split('url(')[1].split(')')[0]",
     "artist" : "$('#bop-player .artist').text()",
     "track" : "$('#bop-player .title').text()",
     "currentTime" : "$('#bop-player .time').text()",
