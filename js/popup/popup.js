@@ -182,32 +182,32 @@ function PopulateInformation(info){
             artClass.attr("src", "/images/art.png");
         }
 
-        // Get the current time from the player
+        // Get the current time and total time from the player
         var current_time = Helper.MsToTime(info.currentTime);
+        var total_time = Helper.MsToTime(info.totalTime);
         
         // Log it if we've found the current time
         if (mDebug){
             console.log("popup.js::PopulateInfo -- current time: " + current_time);
+            console.log("popup.js::PopulateInfo -- total time: " + total_time);
         }
+
+        var totalTimeSet = total_time !== null && total_time !== "" && info.totalTime > 0 && curTimeElement.text() !== "";
 
         // Update the info
         if (current_time !== null && current_time !== "" && info.currentTime > 0){
-            UpdateElementText(curTimeElement, current_time + "/");
+            // Only add the '/' if total time is present
+            if (totalTimeSet){
+                UpdateElementText(curTimeElement, current_time + "/");
+            }else{
+                UpdateElementText(curTimeElement, current_time);
+            }
         }else{
             curTimeElement.text("");
         }
 
-        // Get the total time
-        var total_time = Helper.MsToTime(info.totalTime);
-
-        // Log it if we've found the total time
-        if (mDebug){
-            console.log("popup.js::PopulateInfo -- total time: " + total_time);
-        }
-
-        // Update the info
-        if (total_time !== null && total_time !== "" && info.totalTime > 0 &&
-            curTimeElement.text() !== ""){
+        // Update the info for total time
+        if (totalTimeSet){
             UpdateElementText(totalTimeElement, total_time);
         }else{
             totalTimeElement.text("");

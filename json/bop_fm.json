@@ -12,7 +12,7 @@
     "has_shuffle" : true,
     "has_repeat" : true,
     "has_current_track_time" : true,
-    "has_total_track_time" : true,
+    "has_total_track_time" : false,
     "has_remaining_track_time" : false,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
@@ -31,7 +31,6 @@
     "artist" : "$('#bop-player .artist').text()",
     "track" : "$('#bop-player .title').text()",
     "currentTime" : "$('#bop-player .time').text()",
-    "totalTime" : "var c=$('#bop-player .time').text(); var p=parseFloat($('.bar b').attr('style').split(' ')[1].split('%')[0]); var t=c.split(':'); var s=parseInt(t[0])*60 + parseInt(t[1]); var ts=s/(p/100.0); parseInt(ts/60) + ':' + parseInt(ts%60)",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
