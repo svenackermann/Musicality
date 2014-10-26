@@ -1,0 +1,44 @@
+{
+
+    "name" : "Bop.fm",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "isPlaying" : "$('body.song-playing #bop-player .controls .play-pause').length > 0",
+    "isPaused" : "$('body.song-playing #bop-player .controls .play-pause').length == 0",
+    "isShuffled" : "$('body.player-shuffle-true #bop-player').length > 0",
+    "isRepeatOff" : "$('body.player-repeat-2 #bop-player').length + $('body.player-repeat-1 #bop-player').length == 0",
+    "isRepeatOne" : "$('body.player-repeat-2 #bop-player').length > 0",
+    "isRepeatAll" : "$('body.player-repeat-1 #bop-player').length > 0",
+    "isThumbedUp" : "$('#bop-player.song-liked').length > 0",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "artUrl" : "$('.album-art').css('background-image').split('url(')[1].split(')')[0]",
+    "artist" : "$('#bop-player .artist').text()",
+    "track" : "$('#bop-player .title').text()",
+    "currentTime" : "$('#bop-player .time').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "location.assign('javascript:Bop.Player.play()')",
+    "click_pause" : "location.assign('javascript:Bop.Player.pause()')",
+    "click_next_track" : "location.assign('javascript:Bop.Player.next()')",
+    "click_prev_track" : "location.assign('javascript:Bop.Player.prev()')",
+    "click_shuffle" : "$('.shuffle').click()",
+    "click_repeat" : "$('.repeat').click()",
+    "click_thumbs_up" : "$('.favorite.favorite-player-button').click()"
+}
