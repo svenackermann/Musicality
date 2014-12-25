@@ -4,7 +4,7 @@ There are specific config keys that are expected for the primary two configurati
 
 ## all_players.json
 
-When adding a new player you'll need to add some values to the [all_players.json](json/all_players.json). The structure of this block you will be adding looks something like this:
+When adding a new player you'll need to add some values to the [all_players.json](/json/all_players.json). The structure of this block you will be adding looks something like this:
 
 ````JSON
 "Google Play Music" : {

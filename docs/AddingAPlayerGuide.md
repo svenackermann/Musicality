@@ -8,7 +8,7 @@ Obviously in order to test out your changes you'll need to be able to run Musica
 
 ## 1) Adding to all_players.json
 
-Open up [all_players.json](json/all_players.json) found in the [json](json/) directory. Here you will find a simple definition of the players supported in alphabetical order. In this example we are adding support for Google Play Music, so we would add a block similar to the following:
+Open up [all_players.json](/json/all_players.json) found in the [json](/json/) directory. Here you will find a simple definition of the players supported in alphabetical order. In this example we are adding support for Google Play Music, so we would add a block similar to the following:
 
 ````JSON
 "Google Play Music" : {
@@ -63,7 +63,7 @@ Now we need to tell Musicality what pieces of information and interactive elemen
 
 Awesome. These key/value pairs are not arbitrary, though you can leave out values if they are false. Musicality will see a particular value is undefined and assume false. When determining what it should and should not attempt to query/do with the player, Musicality will look at these values. For exmaple, if `"has_repeat"` is set to `false`, Musicality will not attempt to get the repeat information from the player.
 
-All of the exact valid keys can be found in the [Valid Player Config Keys](docs/ValidPlayerConfigKeys.md) document. Feel free to read through that later, or if you believe there are other keys you need/do not need.
+All of the exact valid keys can be found in the [Valid Player Config Keys](ValidPlayerConfigKeys.md) document. Feel free to read through that later, or if you believe there are other keys you need/do not need.
 
 ## 4) Defining How to Get Data
 
@@ -89,7 +89,7 @@ You'll see it returns `true` when Google Play Music is playing, and returns `fal
 
 We'll now need to repeat the same process for each possible field. This is far easier for some players than others depending on the complexity of their DOM.
 
-Once again, you can find what each of the valid keys are in the [Valid Player Config Keys](docs/ValidPlayerConfigKeys.md) document, found in the [docs](docs/) folder.
+Once again, you can find what each of the valid keys are in the [Valid Player Config Keys](ValidPlayerConfigKeys.md) document, found in the [docs](/docs/) folder.
 
 Populating the rest of the getters should result with something that looks like this:
 
@@ -226,7 +226,7 @@ contentscript.js -- Eval yielded "3:39"
 
 Here you can clearly see what the contentscript attempted to execute, along with the result it obtained. With some players it can be tricky to obtain the information you want, so you'll have to play around with different ways of obtaining that information by reverse engineering.
 
-If you aren't getting any output from the contentscript this is a sign that Musicality for some reason is not sending commands to your player. This could be something wrong with the pattern you defined in [all_players.json](json/all_players.json) which doesn't truly match the URL. It could also be a problem with the config file itself that may be solvable by simply linting the file.
+If you aren't getting any output from the contentscript this is a sign that Musicality for some reason is not sending commands to your player. This could be something wrong with the pattern you defined in [all_players.json](/json/all_players.json) which doesn't truly match the URL. It could also be a problem with the config file itself that may be solvable by simply linting the file.
 
 ### 8) I'm Still Stuck
 
