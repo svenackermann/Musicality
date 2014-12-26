@@ -11,27 +11,31 @@
     "has_play_pause" : true,
     "has_shuffle" : false,
     "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_remaining_track_time" : true,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('#mini-play').hasClass('pause')",
-    "isPaused" : "!$('#mini-play').hasClass('pause')",
-    "isThumbedUp" : "$('#mini-heart').hasClass('active')",
-    "isThumbedDown" : "$('#mini-ban').hasClass('active')",
+    "isPlaying" : "$('li.playpause').hasClass('play')",
+    "isPaused" : "$('li.playpause').hasClass('pause')",
+    "isThumbedUp" : "$('#tuning li.love').last().children('a').first().hasClass('hearted')",
+    "isThumbedDown" : "$('#tuning li.banning').last().children('a').first().hasClass('banned')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#mini-track-art-current-img').attr('src').split('50.jpg')[0] + '550.jpg'",
-    "artist" : "$('#mini-artist-name').text()",
-    "track" : "$('#mini-track-name').text()",
+    "artUrl" : "$('td.art img').attr('src').replace('300', '550')",
+    "artist" : "$($('td.fullwidth .metadata span')[0]).text()",
+    "track" : "$($('td.fullwidth .metadata span')[2]).text()",
+    "currentTime" : "$($('#progressContainer span')[0]).text()",
+    "remainingTime" : "$($('#progressContainer span')[1]).text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "location.assign('javascript:playPause()')",
-    "click_pause" : "location.assign('javascript:playPause()')",
-    "click_next_track" : "location.assign('javascript:skip()')",
-    "click_thumbs_up" : "location.assign('javascript:handleHeartAction()')",
-    "click_thumbs_down" : "location.assign('javascript:skip(\"ban\")')",
+    "click_play" : "location.assign('javascript:$(\"a.play\").click()')",
+    "click_pause" : "location.assign('javascript:$(\"a.play\").click()')",
+    "click_next_track" : "location.assign('javascript:$(\"li.skip-forward a\").click()')",
+    "click_thumbs_up" : "location.assign('javascript:$(\"#tuning li.love\").last().children(\"a\").first().click()')",
+    "click_thumbs_down" : "location.assign('javascript:$(\"#tuning li.banning\").last().children(\"a\").first().click();$($(\"#actionsMenu .menuitems ul li\")[0]).click()')",
 
 "COMMENT_5" : "Slacker is special since we can't get individual track progress for scrobbling. Simply scrobble on track changes.",
 
