@@ -17,26 +17,26 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('button.play-toggle').hasClass('pause')",
-    "isPaused" : "!$('button.play-toggle').hasClass('pause')",
-    "isThumbedUp" : "$('.action.js-thumbs-up.active').length > 0",
-    "isThumbedDown" : "$('.action.js-thumbs-down.active').length > 0",
+    "isPlaying" : "$('.playing.btn-circle.medium.play').length > 0",
+    "isPaused" : "$('.idle.btn-circle.medium.play').length > 0",
+    "isThumbedUp" : "$('.icon-thumb-up-filled').length > 0",
+    "isThumbedDown" : "$('.icon-thumb-down-filled').length > 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('.header-controls-album-cover.js-song-art').css('background-image').split('url(\\'')[1].split('?')[0]",
-    "artist" : "$('.artist-name.js-artist-name').text().trim()",
-    "track" : "$('.name.js-track-name').text().trim()",
-    "currentTime" : "$('.js-duration.action').text().split('/')[0].trim()",
-    "totalTime" : "$('.js-duration.action').text().split('/')[1].trim()",
+    "artUrl" : "'http:' + $('.player-art img').attr('src').replace('75%2C75', '550%2C550')",
+    "artist" : "$('.player-artist').text()",
+    "track" : "$('.player-song').text()",
+    "currentTime" : "$($('.player-duration span')[0]).text()",
+    "totalTime" : "$($('.player-duration span')[1]).text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$('.play.js-play').click()",
-    "click_pause" : "$('.play.js-play').click()",
-    "click_next_track" : "$('.text.js-next.next').click()",
-    "click_thumbs_up" : "$('.action.js-thumbs-up').click()",
-    "click_thumbs_down" : "$('.action.js-thumbs-down').click()",
+    "click_play" : "$('.idle.btn-circle.medium.play').click()",
+    "click_pause" : "$('.playing.btn-circle.medium.play').click()",
+    "click_next_track" : "$('button i.icon-skip').click()",
+    "click_thumbs_up" : "$('.player-controls *[aria-label=\"Thumb Up\"]').click()",
+    "click_thumbs_down" : "$('.player-controls *[aria-label=\"Thumb Down\"]').click()",
 
     "COMMENT_5" : "iHeart is special since we can't necessarily get individual track progress for scrobbling. Simply scrobble on track changes.",
 
