@@ -1,0 +1,46 @@
+{
+	"name" : "Youtube",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "isPlaying" : "var a=$('*[aria-label=\"Pause\"]'); a!=null && a.hasClass('ytp-button-pause')",
+    "isPaused" : "var a=$('*[aria-label=\"Play\"]'); a!=null && a.hasClass('ytp-button-play')",
+    "isShuffled" : "$('*[title=\"Shuffle\"]').attr('aria-pressed') == 'true'",
+    "isRepeatOff" : "$('*[title=\"Repeat playlist\"]').attr('aria-pressed') == 'false'",
+    "isRepeatAll" : "$('*[title=\"Repeat playlist\"]').attr('aria-pressed') == 'true'",
+    "isThumbedUp" : "$('#watch-like').hasClass('yt-uix-button-toggled')",
+    "isThumbedDown" : "$('#watch-dislike').hasClass('yt-uix-button-toggled')",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "artUrl" : "$('#watch-header .video-thumb .yt-thumb-square .yt-thumb-clip img').attr('src').replace('s88', 's550')",
+    "artist" : "$('#eow-title').text().trim().split('-')[0].trim()",
+    "track" : "$('#eow-title').text().trim().split('-')[1].trim()",
+    "currentTime" : "$('.ytp-time-current').text()",
+    "totalTime" : "$('.ytp-time-duration').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('div.ytp-button-play').click()",
+    "click_pause" : "$('div.ytp-button-pause').click()",
+    "click_next_track" : "$('div.ytp-button-next').click()",
+    "click_prev_track" : "$('div.ytp-button-prev').click()",
+    "click_shuffle" : "$('*[title=\"Shuffle\"]').click()",
+    "click_repeat" : "$('*[title=\"Repeat playlist\"]').click()",
+    "click_thumbs_up" : "$('#watch-like').click()",
+    "click_thumbs_down" : "$('#watch-dislike').click()"
+
+}

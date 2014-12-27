@@ -173,5 +173,12 @@
         "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
         "json_loc" : "/json/xbox_music.json",
         "open_page" : "http://music.xbox.com"
+    },
+
+    "Youtube" : {
+        "simple_name" : "youtube",
+        "pattern" : "https?\\:\\/\\/www\\.youtube\\.com\\/watch*",
+        "json_loc" : "/json/youtube.json",
+        "open_page" : "http://www.youtube.com/music"
     }
 }
