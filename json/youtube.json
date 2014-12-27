@@ -27,8 +27,8 @@
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
     "artUrl" : "$('#watch-header .video-thumb .yt-thumb-square .yt-thumb-clip img').attr('src').replace('s88', 's550')",
-    "artist" : "$('#eow-title').text().trim().split('-')[0].trim()",
-    "track" : "$('#eow-title').text().trim().split('-')[1].trim()",
+    "artist" : "$('#eow-title').text().trim().split(/[-:]/)[0].trim()",
+    "track" : "$('#eow-title').text().trim().split(/[-:]/)[1].trim()",
     "currentTime" : "$('.ytp-time-current').text()",
     "totalTime" : "$('.ytp-time-duration').text()",
 
