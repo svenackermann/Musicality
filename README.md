@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/kkamperschroer/Musicality.svg?branch=master)](https://travis-ci.org/kkamperschroer/Musicality)
+
 # Musicality
 
 Musicality is a [Chrome Extension](https://chrome.google.com/webstore/detail/fjiolbglibkahkipcdgeepdfdgfkdbee?hl=en-US) which provides playback controls, now playing information, keyboard shortcuts, Scrobbling and more for a number of online music services such as Pandora™, Google Music™ and more.
