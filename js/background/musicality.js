@@ -29,8 +29,9 @@ function Musicality(){
 
     this.running = false;
 	this.logger = Logger.getInstance();
+    this.blacklistHandler = new BlacklistHandler();
 	this.playerHandler = new PlayerHandler();
-	this.tabHandler = new TabHandler(this.playerHandler);
+	this.tabHandler = new TabHandler(this.playerHandler, this.blacklistHandler);
     this.toaster = new Toaster(this.playerHandler, this.tabHandler);
     this.iconHandler = new IconHandler(this.playerHandler);
     this.scrobbler = new Scrobbler(this.playerHandler);
@@ -94,7 +95,12 @@ function Musicality(){
             	if (exists){
                     // Is it still playing music?
                     this.playerHandler.IsStillPlayingMusic( $.proxy(function(isPlaying){
-                    	if (isPlaying){
+                        if (this.blacklistHandler.IsPlayerBlacklisted(this.playerHandler.GetPlayerSimpleName())) {
+                            this.logger.log("This player was blacklisted. Looking for a new player.");
+
+                            this.playerHandler.SetTabAndDetails(-1, undefined);
+                            this.lookForPlayingTabHelper();
+                        }else if (isPlaying){
                             this.logger.log("Same player is still playing. Populating...");
                             // Grab the different pieces from that tab, if we are displaying
                             this.playerHandler.PopulateInformation();
@@ -192,6 +198,30 @@ Musicality.prototype.GetPlaybackInfo = function(){
     this.updateInformation(); // async, so will not finish prior to return
 
     return this.playerHandler.GetPlaybackInfo();
+};
+
+/**
+ * Determine if a specific player is blacklisted
+ * @param {strin} This simple name of the player to check
+ */
+Musicality.prototype.IsPlayerBlacklisted = function(simpleName){
+    return this.blacklistHandler.IsPlayerBlacklisted(simpleName);
+};
+
+/**
+ * Update the player blacklist by blacklisting the provided player
+ * @param {string} The simple name of the player to blacklist
+ */
+Musicality.prototype.BlacklistPlayer = function(simpleName){
+    this.blacklistHandler.BlacklistPlayer(simpleName);
+};
+
+/**
+ * Update the player blacklist by un-blacklisting the provided player
+ * @param {string} simpleName for the player to enable
+ */
+Musicality.prototype.EnablePlayer = function(simpleName){
+    this.blacklistHandler.EnablePlayer(simpleName);
 };
 
 /**

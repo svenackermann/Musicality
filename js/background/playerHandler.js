@@ -340,3 +340,10 @@ PlayerHandler.prototype.GetPlaybackInfo = function(){
 PlayerHandler.prototype.GetPlayerDetails = function(){
   return this.playerDetails;
 };
+
+/**
+ * Get the simple name of the player
+ */
+PlayerHandler.prototype.GetPlayerSimpleName = function(){
+  return this.playerDetails.simple_name;
+}

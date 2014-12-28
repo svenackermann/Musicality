@@ -17,12 +17,14 @@
 /**
  * Class for handling finding a tab playing music (or paused)
  * @param {Object} playerHandler for dealing with the players
+ * @param {Object} blacklistHandler for checking if players are blacklisted
  */
-function TabHandler(playerHandler){
+function TabHandler(playerHandler, blacklistHandler){
 	this.logger = Logger.getInstance();
 	this.lastPlayingWindowId = -1;
 	this.playerOpen = false;
 	this.playerHandler = playerHandler;
+    this.blacklistHandler = blacklistHandler;
 
 	// Temporarily turn off async to load the JSON in
     $.ajaxSetup({ async : false });
@@ -107,10 +109,20 @@ function TabHandler(playerHandler){
         // this is a valid music player
         for (var curPlayer in this.allPlayers){
             if (curTab.url.match(this.allPlayers[curPlayer].pattern)){
-                // We have found one of our players at this point
+                var simpleName = this.allPlayers[curPlayer].simple_name;
+
+                if (this.blacklistHandler.IsPlayerBlacklisted(simpleName)){
+                    // This player is disabled. Ignore it!
+                    continue;
+                }
+
+                // We have found one of our players at this point and it's enabled
                 
                 // Save some information off
                 var curPlayerDetails = this.players[curPlayer];
+
+                // Save off the simple name as well
+                curPlayerDetails.simple_name = simpleName;
 
                 // A flag to ensure we know we already have seen a player
                 this.playerOpen = true;

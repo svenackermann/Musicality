@@ -198,70 +198,67 @@ function UpdateButtons(){
 }
 
 // Function to build the default player for the dropdown
-function BuildDefaultPlayerDropdown(){
+function BuildDefaultPlayerDropdown(playerList){
     // Get the element we will be populating
     var playersList = $("#players-list");
 
     // We want to build a mapping so we know which player is already selected
     var pagePlayerMap = {};
     
-    // Start by loading the all_players ajax
-    $.getJSON(ALL_PLAYERS_JSON, function(all_players){
-        // Iterate through each of the players
-        for (var curPlayer in all_players){
-            // Get the open_page
-            var openPage = all_players[curPlayer].open_page;
+    // Iterate through each of the players
+    for (var curPlayer in playerList){
+        // Get the open_page
+        var openPage = playerList[curPlayer].open_page;
 
-            // Get the simple name
-            var simpleName = all_players[curPlayer].simple_name;
+        // Get the simple name
+        var simpleName = playerList[curPlayer].simple_name;
 
-            // Save it in our inverse mapping
-            pagePlayerMap[openPage] = curPlayer;
+        // Save it in our inverse mapping
+        pagePlayerMap[openPage] = curPlayer;
 
-            // Build the string to add
-            var htmlToAdd = "<li id=" + simpleName + "><a href='#'>" + curPlayer + "</a></li>";
-            
-            // Now add the string to our list
-            playersList.append(htmlToAdd);
+        // Build the string to add
+        var htmlToAdd = "<li id='default-dropdown-" + simpleName + "''><a href='#'>" + curPlayer + "</a></li>";
+        
+        // Now add the string to our list
+        playersList.append(htmlToAdd);
 
-            // Grab the newly created element
-            var newElement = $("#" + simpleName);
+        // Grab the newly created element
+        var newElement = $("#default-dropdown-" + simpleName);
 
-            // Now bind the element to a new click event
-            console.log("Binding " + curPlayer + " to click open " + openPage);
-            (function (player, page){
-                newElement.bind('click', function(){
-                    SaveDefaultPlayer(player, page);
-                });
-            })(curPlayer, openPage);
-        }
+        // Now bind the element to a new click event
+        console.log("Binding " + curPlayer + " to click open " + openPage);
+        (function (player, page){
+            newElement.bind('click', function(){
+                SaveDefaultPlayer(player, page);
+            });
+        })(curPlayer, openPage);
+    }
 
-        // Grab the players-list-button
-        var playersListButton = $("#players-list-button");
+    // Grab the players-list-button
+    var playersListButton = $("#players-list-button");
 
-        // Update the button to reflect which one is already stored (if any)
-        chrome.storage.local.get('default_open', function(data){
-            // Check it's value
-            if (data.default_open){
-                // Use our map to set the player text, if it exists
-                var playerName = pagePlayerMap[data.default_open];
-                if (playerName){
-                    // Set the button to this players name
-                    playersListButton.text(playerName);
+    // Update the button to reflect which one is already stored (if any)
+    chrome.storage.local.get('default_open', function(data){
+        // Check it's value
+        if (data.default_open){
+            // Use our map to set the player text, if it exists
+            var playerName = pagePlayerMap[data.default_open];
+            if (playerName){
+                // Set the button to this players name
+                playersListButton.text(playerName);
 
-                    // Append the caret within the button
-                    playersListButton.append("  <span class='caret'></span>");
-                }else{
-                    // A players URL may have changed. Leave it unset.
-                    playersListButton.text("None");
-                    playersListButton.append("  <span class='caret'></span>");
-                }
+                // Append the caret within the button
+                playersListButton.append("  <span class='caret'></span>");
             }else{
-                // Undefined. Leave it unset.
+                // A players URL may have changed. Leave it unset.
                 playersListButton.text("None");
                 playersListButton.append("  <span class='caret'></span>");
             }
-        });
+        }else{
+            // Undefined. Leave it unset.
+            playersListButton.text("None");
+            playersListButton.append("  <span class='caret'></span>");
+        }
     });
 }
 
@@ -279,6 +276,65 @@ function SaveDefaultPlayer(playerName, openPage){
     // We also need to make sure this player is the one selected in the dropdown
     playersListButton.text(playerName);
     playersListButton.append("  <span class='caret'></span>");
+}
+
+// This function build the table for enabling/disabling specific players
+function BuildDisabledPlayersList(playerList){
+    // Empty the table so there's no "Loading..." there.
+    $('#loading-row').remove();
+
+    var tableElement = $("#enabled-players-table");
+
+    for(var curPlayer in playerList){
+        var simpleName = playerList[curPlayer].simple_name;
+        var playerDisabled = mMusicality.IsPlayerBlacklisted(simpleName);
+        var checkedStr = "";
+        if (!playerDisabled){
+            checkedStr = "checked";
+        }
+
+        var newElementId = "#player-enabler-" + simpleName;
+
+        var htmlToAdd = "<tr><td>" +
+                        curPlayer +
+                        "</td><td>" +
+                        "<input type='checkbox' " +
+                        checkedStr +
+                        " id='" +
+                        newElementId +
+                        "' class='blacklist-checkbox'/></td></tr>";
+
+        tableElement.append(htmlToAdd);
+
+        var newElement = $(newElementId);
+    }
+
+    BindNewBlacklistElements();
+}
+
+// This function is used to bind all of the new blacklist checkboxes
+function BindNewBlacklistElements(){
+    $('.blacklist-checkbox').click(function(){
+        var element = $(this);
+
+        var simpleName = element.attr('id').split('#player-enabler-')[1];
+
+        if (element.attr("checked")){
+            console.log("Blacklisting player " + simpleName);
+
+            mMusicality.BlacklistPlayer(simpleName);
+
+            // Remove the attribute
+            element.removeAttr("checked");
+        }else{
+            console.log("Enabling player " + simpleName);
+
+            mMusicality.EnablePlayer(simpleName);
+
+            // Add the checked attribute
+            element.attr("checked", "");
+        }
+    });
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -337,8 +393,14 @@ $(function(){
         });
     });
 
-    // Build the dropdown for the default player
-    BuildDefaultPlayerDropdown();
+    // Start by loading the all_players ajax
+    $.getJSON(ALL_PLAYERS_JSON, function(all_players){
+        // Build the dropdown for the default player
+        BuildDefaultPlayerDropdown(all_players);
+
+        // Build the player blacklist
+        BuildDisabledPlayersList(all_players);
+    });
 
     // Immediately update the buttons
     UpdateButtons();

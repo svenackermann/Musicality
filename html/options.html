@@ -32,64 +32,79 @@
       <div class='tab-content'>
         <div class='tab-pane active' id='options'>
           <div class='container'>
-            <h2>Last.FM</h2>
-            <p>
-              Musicality supports scrobbling to Last.FM!
-            </p>
-            <br/>
-            <button id="authenticate" class="btn btn-large btn-success">Loading...</button>
-            <label id="authenticate_label" class="subtle">Loading...</label>
-            <br/><br/>
-            <button id="scrobbling_toggle" class="btn btn-large btn-fail">Loading...</button>
-            <label id="scrobbling_toggle_label" class="subtle">Loading...</label>
-            
-            <br/><br/><hr/>
+            <div class='col-md-6'>
+              <h2>Last.FM</h2>
+              <p>
+                Musicality supports scrobbling to Last.FM!
+              </p>
+              <br/>
+              <button id="authenticate" class="btn btn-large btn-success">Loading...</button>
+              <label id="authenticate_label" class="subtle">Loading...</label>
+              <br/><br/>
+              <button id="scrobbling_toggle" class="btn btn-large btn-fail">Loading...</button>
+              <label id="scrobbling_toggle_label" class="subtle">Loading...</label>
+              
+              <br/><br/><hr/>
 
-            <h2>Icon Options</h2>
-            <p>The icon can display scrolling now playing information, have a progress bar, or do nothing special at all.</p>
-            
-            <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-large btn-success" id="icon_none">
-                <input type="radio" name="icon"> None
-              </label>
-              <label class="btn btn-large btn-success" id="icon_text">
-                <input type="radio" name="icon"> Scrolling Info
-              </label>
-              <label class="btn btn-large btn-success" id="icon_progress">
-                <input type="radio" name="icon"> Progress Bar
-              </label>
+              <h2>Icon Options</h2>
+              <p>The icon can display scrolling now playing information, have a progress bar, or do nothing special at all.</p>
+              
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-large btn-success" id="icon_none">
+                  <input type="radio" name="icon"> None
+                </label>
+                <label class="btn btn-large btn-success" id="icon_text">
+                  <input type="radio" name="icon"> Scrolling Info
+                </label>
+                <label class="btn btn-large btn-success" id="icon_progress">
+                  <input type="radio" name="icon"> Progress Bar
+                </label>
+              </div>
+
+              <br/><br/><hr/>
+              
+              <h2>Toast Notifications</h2>
+              <button id="toast_notifications" class="btn btn-large btn-fail">Loading...</button>
+              <label id="toast_notifications_label" class="subtle">Loading...</label>
+
+            </div><div class='col-md-6'>
+
+              <h2>Default Player</h2>
+              <p>
+                When no players are playing, which would you like to open when clicking the icon?
+              </p>
+              <div class="btn-group">
+                <button id="players-list-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                  Loading...  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" id="players-list">
+                  <!-- Populated by JS -->
+                </ul>
+              </div>
+
+              <br/><br/><hr/>
+
+              <h2>Keyboard Shortcuts</h2>
+              <p>
+                This extension supports keyboard shortcuts for every action performable in the popup. You can set them at the bottom-right of the Chrome page at Menu->More Tools->Extensions.
+              </p>
+
+              <br/><hr/>
+
+              <h2>Disable Players</h2>
+              <p>
+                You can turn of Musicality for specific players that you don't care to see information about. For example, many users don't want Youtube support. Uncheck the players you don't want Musicality to do anything with. This list is scrollable.
+              </p>
+
+              <br/>
+              
+              <div id="enabled-players-list" class="pre-scrollable">
+                <table id="enabled-players-table" class="table table-striped">
+                  <tr id='loading-row'><td>Loading...</td></tr>
+                </table>
+              </div>
+
             </div>
-
-            <br/><br/><hr/>
-            
-            <h2>Toast Notifications</h2>
-            <button id="toast_notifications" class="btn btn-large btn-fail">Loading...</button>
-            <label id="toast_notifications_label" class="subtle">Loading...</label>
-
-            <br/><br/><hr/>
-
-            <h2>Default Player</h2>
-            <p>
-              When no players are playing, which would you like to open when clicking the icon?
-            </p>
-            <div class="btn-group">
-              <button id="players-list-button" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                Loading...  <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" id="players-list">
-                <!-- Populated by JS -->
-              </ul>
-            </div>
-
-            <br/><br/><hr/>
-
-            <h2>Keyboard Shortcuts</h2>
-            <p>
-              This extension supports keyboard shortcuts for every action
-              performable in the popup. <br/> You can set them at the bottom-right of
-              the Chrome page at Menu->Tools->Extensions.
-            </p>
-            
           </div>
         </div>
         <div class='tab-pane' id='support'>

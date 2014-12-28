@@ -10,3 +10,8 @@
 label{
 	margin-left: 10px;
 }
+
+#enabled-players-list{
+	width: 80%;
+	height: 400px;
+}
