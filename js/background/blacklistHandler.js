@@ -30,8 +30,8 @@ function BlacklistHandler(){
 	this.updateStorage = function(blacklist){
 		var joinedList = blacklist.join(',');
 		chrome.storage.local.set({'disabled_players_list' : joinedList });
-	}
-};
+	};
+}
 
 /**
  * Check if a specific player is blacklisted

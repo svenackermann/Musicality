@@ -346,4 +346,4 @@ PlayerHandler.prototype.GetPlayerDetails = function(){
  */
 PlayerHandler.prototype.GetPlayerSimpleName = function(){
   return this.playerDetails.simple_name;
-}
+};
