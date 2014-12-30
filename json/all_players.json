@@ -133,6 +133,13 @@
         "open_page" : "http://www.rdio.com"
     },
 
+    "Saavn" : {
+        "simple_name" : "saavn",
+        "pattern" : "https?:\\/\\/www\\.saavn.com\\/*",
+        "json_loc" : "/json/saavn.json",
+        "open_page" : "http://www.saavn.com"
+    },
+
     "Slacker" : {
         "simple_name" : "slacker",
         "pattern" : "https?:\\/\\/(.*?)\\.slacker.com\\/*",

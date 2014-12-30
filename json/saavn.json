@@ -1,0 +1,46 @@
+{
+
+    "name" : "Saavn",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : true,
+    "has_repeat" : true,
+    "has_current_track_time" : true,
+    "has_total_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "isPlaying" : "$('#play').hasClass('hide')",
+    "isPaused" : "$('#pause').hasClass('hide')",
+    "isShuffled" : "$('#shuffle').hasClass('on')",
+    "isRepeatOff" : "var e=$('#repeat'); !(e.hasClass('on') || e.hasClass('single'))",
+    "isRepeatOne" : "$('#repeat').hasClass('single')",
+    "isRepeatAll" : "$('#repeat').hasClass('on')",
+    "isThumbedUp" : "$('#like').hasClass('on')",
+    "isThumbedDown" : "$('#dislike').hasClass('on')",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "artUrl" : "$('#now-playing div.key-art').attr('style').split('url(')[1].split(')')[0].replace('80x80', '500x500')",
+    "artist" : "$('#player-album-name').text()",
+    "track" : "$('#player-track-name').text()",
+    "currentTime" : "$('#track-elapsed').text()",
+    "totalTime" : "$('#track-time').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('#play').click()",
+    "click_pause" : "$('#pause').click()",
+    "click_next_track" : "$('#fwd').click()",
+    "click_prev_track" : "$('#rew').click()",
+    "click_shuffle" : "$('#shuffle').click()",
+    "click_repeat" : "$('#repeat').click()",
+    "click_thumbs_up" : "$('#like').click()",
+    "click_thumbs_down" : "$('#dislike').click()"
+}
