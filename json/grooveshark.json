@@ -4,8 +4,8 @@
 
 "COMMENT_1" : "This block contiains all of the things a player may or may not have",
 
-    "has_thumbs_up" : false,
-    "has_thumbs_down" : false,
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
     "has_next_track" : true,
     "has_prev_track" : true,
     "has_play_pause" : true,
@@ -23,9 +23,12 @@
     "isRepeatOff" : "$('#repeat').attr('class') == 'player-option'",
     "isRepeatOne" : "$('#repeat').attr('class') == 'player-option active one'",
     "isRepeatAll" : "$('#repeat').attr('class') == 'player-option active'",
+    "isThumbedUp" : "$('.queue-item-active .queue-radio-options.active .queue-radio-option.smile:visible').hasClass('active')",
+    "isThumbedDown" : "$('.queue-item-active .queue-radio-options.active .queue-radio-option.frown:visible').hasClass('active')",
+
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
-    
+
     "artUrl" : "var a=$('#now-playing-image').attr('src').split('40_'); a[0]+a[1]",
     "artist" : "$('.now-playing-link.artist.no-title-tooltip.show-artist-tooltip')[0].text",
     "track" : "$('.now-playing-link.song.no-title-tooltip.song-link.show-song-tooltip')[0].text",
@@ -39,5 +42,7 @@
     "click_next_track" : "location.assign('javascript:$(\"#play-next\").click()')",
     "click_prev_track" : "location.assign('javascript:$(\"#play-prev\").click()')",
     "click_shuffle" : "location.assign('javascript:$(\"#shuffle\").click()')",
-    "click_repeat" : "location.assign('javascript:$(\"#repeat\").click()')"
+    "click_repeat" : "location.assign('javascript:$(\"#repeat\").click()')",
+    "click_thumbs_up" : "location.assign('javascript:$(\".queue-item-active .queue-radio-options.active .queue-radio-option.smile:visible\").click()')",
+    "click_thumbs_down" : "location.assign('javascript:$(\".queue-item-active .queue-radio-options.active .queue-radio-option.frown:visible\").click()')"
 }
