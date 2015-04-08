@@ -338,19 +338,19 @@ Scrobbler.prototype.AlreadyAuthenticated = function(callback){
  * @param {Function} callback
  */
 Scrobbler.prototype.IsScrobblingEnabled = function(callback){
-    // First check if we are even authenticated
-    this.AlreadyAuthenticated(function(result){
-        if (!result){
-            // Not authenticated, so scrobbling can't be enabled
+    chrome.storage.local.get('scrobbling_enabled', $.proxy(function(data){
+        if (data.scrobbling_enabled) {
+            this.AlreadyAuthenticated(function(result){
+                if (!result) {
+                    callback(false);
+                } else {
+                    callback(true);
+                }
+            });
+        } else {
             callback(false);
-        }else{
-            // Get the scrobbling_enabled boolean from storage
-            chrome.storage.local.get('scrobbling_enabled', function(data){
-                // Callback with the boolean value
-                callback(data.scrobbling_enabled);
-            });    
         }
-    });
+    }, this));
 };
 
 /**
