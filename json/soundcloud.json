@@ -14,21 +14,20 @@
     "has_current_track_time" : true,
     "has_total_track_time" : true,
     "has_remaining_track_time" : false,
-    "has_time_in_ms" : true,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
     "isPlaying" : "$('button.playControl.playing').length > 0",
-    "isPaused" : "$('button.playControl.playing').length == 0",
-    "isThumbedUp" : "$('.sound.streamContext.playing .sc-button-like').hasClass('sc-button-selected')",
+    "isPaused" : "$('.playControls').hasClass('visible') && $('button.playControl').attr('title').indexOf('Play') >= 0",
+    "isThumbedUp" : "$('.playControls button.sc-button-like').hasClass('sc-button-selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('.sound.streamContext.playing .image__full').css('background-image').split('url(')[1].split(')')[0]",
-    "track" : "var a = $('.playbackTitle__link').text().split('-'); if(a.length>1) a[1].trim(); else a[0].trim();",
-    "artist" : "var a = $('.sound.streamContext.playing .soundTitle__username').text().trim();var b = $('.playbackTitle__link').text().split('-');if(b.length>1)b[0].trim();else if (a.length>1)a;else 'Unknown'",
-    "currentTime" : "$('.playbackTitle__progress').attr('aria-valuenow')",
-    "totalTime" : "$('.playbackTitle__progress').attr('aria-valuemax')",
+    "artUrl" : "$('.playControls .image span').attr('style').split('background-image: url(')[1].split(');')[0].replace('120x120','500x500')",
+    "track" : "var a=$('.playControls .playbackSoundBadge__title').text(); var b=a.indexOf('-'); a.substring(0, b).trim();",
+    "artist" : "var a=$('.playControls .playbackSoundBadge__title').text(); var b=a.indexOf('-'); a.substring(b+1).trim();",
+    "currentTime" : "$('.playControls .playbackTimeline__timePassed').text()",
+    "totalTime" : "$('.playControls .playbackTimeline__duration').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
@@ -36,5 +35,5 @@
     "click_pause" : "$('button.playControl').click()",
     "click_next_track" : "$('button.skipControl.skipControl__next').click()",
     "click_prev_track" : "$('button.skipControl.skipControl__previous').click()",
-    "click_thumbs_up" : "$('.sound.streamContext.playing .sc-button-like').click()"
+    "click_thumbs_up" : "$('.playControls button.sc-button-like').click()"
 }
