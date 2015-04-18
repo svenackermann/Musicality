@@ -50,16 +50,16 @@ function SetScrobblingStateButton(isEnabled){
 
     if (isEnabled){
         // Set the text and class
-        $scrobBtn.text("Disable Scrobbling");
+        $scrobBtn.text("Scrobbling enabled");
         $scrobBtn.removeClass("btn-fail");
         $scrobBtn.addClass("btn-success");
-        $scrobLbl.text("Disable scrobbling to stop sending tracks to Last.FM.");
+        $scrobLbl.text("Your tracks are being sent to last.fm");
     }else{
         // Set the text and class
-        $scrobBtn.text("Enable Scrobbling");
+        $scrobBtn.text("Scrobbling disabled");
         $scrobBtn.removeClass("btn-success");
         $scrobBtn.addClass("btn-fail");
-        $scrobLbl.text("Enable scrobbling to resume sending tracks to Last.FM.");
+        $scrobLbl.text("Your tracks are currently not being sent to last.fm");
     }
 }
 
@@ -70,17 +70,17 @@ function SetToastNotificationsButton(isEnabled){
     $toasterNotificationLbl = $("#toast_notifications_label");
 
     if (isEnabled){
-        // Set the button to say disable
-        $toasterNotificationBtn.text("Disable Toast Notifications");
+        // Set the button to say toasts are enabled
+        $toasterNotificationBtn.text("Toast notifications enabled");
         $toasterNotificationBtn.removeClass("btn-fail");
         $toasterNotificationBtn.addClass("btn-success");
-        $toasterNotificationLbl.text("Disable the toast notification popup on track changes.");
+        $toasterNotificationLbl.text("Toast notification will be shown on track changes.");
     }else{
-        // Set the button to say enable
-        $toasterNotificationBtn.text("Enable Toast Notifications");
+        // Set the button to say toasts are disabled
+        $toasterNotificationBtn.text("Toast notifications disabled");
         $toasterNotificationBtn.removeClass("btn-success");
         $toasterNotificationBtn.addClass("btn-fail");
-        $toasterNotificationLbl.text("Enable the toast notification popup on track changes.");
+        $toasterNotificationLbl.text("Toast notification is not shown on track changes.");
     }
 }
 
