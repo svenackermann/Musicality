@@ -12,28 +12,28 @@
     "has_shuffle" : false,
     "has_repeat" : false,
     "has_current_track_time" : true,
-    "has_total_track_time" : false,
-    "has_remaining_track_time" : true,
+    "has_total_track_time" : true,
+    "has_remaining_track_time" : false,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('#ctl-play .icon').hasClass('icon-stop')",
-    "isPaused" : "$('#ctl-play .icon').hasClass('icon-play')",
-    "isThumbedUp" : "$($('.vote-btn.up')[0]).hasClass('voted')",
-    "isThumbedDown" : "$($('.vote-btn.down')[0]).hasClass('voted')",
+    "isPlaying" : "$('.controls .ico').hasClass('icon-pause')",
+    "isPaused" : "$('.controls .ico').hasClass('icon-play')",
+    "isThumbedUp" : "$('.vote-buttons .up').hasClass('icon-thumbs-up-filled')",
+    "isThumbedDown" : "$('.vote-buttons .down').hasClass('icon-thumbs-down-filled')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "'http:' + $('#art img').attr('data-src').split('?size')[0]",
-    "artist" : "$('#now-playing .title').text().split('-')[0].trim()",
-    "track" : "var a=$('#now-playing .title').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
-    "currentTime" : "$('.timestamps .elapsed').text()",
-    "remainingTime" : "$('.timestamps .remaining').text()",
+    "artUrl" : "'http:' + $('#webplayer-region .artwork img').attr('src')",
+    "artist" : "$('#webplayer-region .artist-name').text().split('-')[0].trim()",
+    "track" : "var a=$('#webplayer-region .track-name').text().split('-'); if(a.length > 1){a[1].trim();}else{'';}",
+    "currentTime" : "$('#webplayer-region .timecode').text().split(' / ')[0].trim()",
+    "totalTime" : "var a=$('#webplayer-region .timecode').text().split(' / '); if(a.length > 1){a[1].trim();}else{'';}",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$('#ctl-play').click()",
-    "click_pause" : "$('#ctl-play').click()",
-    "click_thumbs_up" : "$($('.vote-btn.up')[0]).click()",
-    "click_thumbs_down" : "$($('.vote-btn.down')[0]).click()"
+    "click_play" : "$('.icon-play').click()",
+    "click_pause" : "$('.icon-pause').click()",
+    "click_thumbs_up" : "$('.vote-buttons .up').click()",
+    "click_thumbs_down" : "$('.vote-buttons .down').click()"
 }
