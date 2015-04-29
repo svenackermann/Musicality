@@ -3,8 +3,8 @@
 
 "COMMENT_1" : "This block contiains all of the things a player may or may not have",
 
-    "has_thumbs_up" : false,
-    "has_thumbs_down" : false,
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
     "has_next_track" : true,
     "has_prev_track" : true,
     "has_play_pause" : true,
@@ -21,11 +21,13 @@
     "isShuffled" : "$('*[playeraction=toggleShuffle]').hasClass('shuffled')",
     "isRepeatOff" : "!$('*[playeraction=toggleRepeat]').hasClass('repeated')",
     "isRepeatAll" : "$('*[playeraction=toggleRepeat]').hasClass('repeated')",
+    "isThumbedUp" : "$('#thumbsUp .thumbsUpIcon').hasClass('selected')",
+    "isThumbedDown" : "$('#thumbsDown .thumbsDownIcon').hasClass('selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src')",
-    "artist" : "$($('.currentSongAdditionalDetails span')[0]).text()",
+    "artUrl" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src').replace('64', '500')",
+    "artist" : "$('.artistName .artistLink').text()",
     "track" : "$('.currentSongDetails .title').text()",
     "currentTime" : "$('#currentTime').text()",
     "totalTime" : "$('#currentDuration').text()",
@@ -37,6 +39,8 @@
     "click_next_track" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"next\", null, null)')",
     "click_prev_track" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"previous\", null, null)')",
     "click_shuffle" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleShuffle\")')",
-    "click_repeat" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleRepeat\")')"
+    "click_repeat" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleRepeat\")')",
+    "click_thumbs_up" : "$('#thumbsUp .thumbsUpIcon').click()",
+    "click_thumbs_down" : "$('#thumbsDown .thumbsDownIcon').click()"
 }
 
