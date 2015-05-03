@@ -119,6 +119,13 @@
         "open_page" : "http://www.pandora.com"
     },
 
+    "Pocketcasts" : {
+        "simple_name": "pocketcasts",
+        "pattern": "https?\\:\\/\\/play\\.pocketcasts\\.com/.*",
+        "json_loc": "/json/pocketcasts.json",
+        "open_page": "https://play.pocketcasts.com"
+    },
+
     "RadioTunes" : {
         "simple_name" : "radio_tunes",
         "pattern" : "https?:\\/\\/(.*?)\\.radiotunes\\.com\\/*",

@@ -1,0 +1,37 @@
+{
+
+    "name" : "Pocketcasts",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
+    "has_next_track" : true,
+    "has_prev_track" : true,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "isPlaying" : "$('#audio_player .player_controls .play_pause_button').hasClass('pause_button')",
+    "isPaused" : "$('#audio_player .player_controls .play_pause_button').hasClass('play_button')",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+    
+    "artUrl" : "$('#audio_player .player_artwork img').attr('src')",
+    "artist" : "$('#audio_player .player_podcast_title').text()",
+    "track" : "$('#audio_player .player_episode').text()",
+    "currentTime" : "$('#audio_player .current_time').text()",
+    "remainingTime" : "$('#audio_player .remaining_time').text()",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('#audio_player .player_controls .play_pause_button').click()",
+    "click_pause" : "$('#audio_player .player_controls .play_pause_button').click()",
+    "click_next_track" : "$('#audio_player .skip_forward_button').click()",
+    "click_prev_track" : "$('#audio_player .skip_back_button').click()"
+}
