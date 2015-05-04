@@ -1,5 +1,11 @@
 # Musicality Changelog
 
+## v3.0.20
++ Added a slightly improved short description.
+
+## v3.0.19
++ Added support for Pocketcasts
+
 ## v3.0.18
 + Fixes and improvements for Amazon Prime Music Player
 + Fixes for TuneIn
