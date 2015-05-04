@@ -22,7 +22,7 @@
         "page" : "/html/background.html"
     },
     "options_page" : "/html/options.html",
-    "description": "Enhance your music experience across the web! Easy access to controls, keyboard shortcuts and much more!",
+    "description": "Easy access to playback controls, keyboard shortcuts and more for music across the web",
     "homepage_url": "https://chrome.google.com/webstore/detail/musicality-music-player/fjiolbglibkahkipcdgeepdfdgfkdbee",
     "icons": {
         "250": "/images/icon250.png",
@@ -78,7 +78,7 @@
         }
     },
     "update_url": "http://clients2.google.com/service/update2/crx",
-    "version": "3.0.19",
+    "version": "3.0.20",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://apis.google.com; object-src 'self'",
     "author": "Kyle Kamperschroer",
