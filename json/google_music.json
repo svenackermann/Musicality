@@ -17,31 +17,31 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('*[data-id=play-pause]').hasClass('playing')",
-    "isPaused" : "(!$('*[data-id=play-pause]').hasClass('playing') && $('#playerSongTitle').length > 0)",
-    "isShuffled" : "$('.player-middle *[data-id=shuffle]')[0].value == 'ALL_SHUFFLE'",
-    "isRepeatOff" : "$('*[data-id=repeat]').attr('value') == 'NO_REPEAT'",
-    "isRepeatOne" : "$('*[data-id=repeat]').attr('value') == 'SINGLE_REPEAT'",
-    "isRepeatAll" : "$('*[data-id=repeat]').attr('value') == 'LIST_REPEAT'",
-    "isThumbedUp" : "$('*[data-rating=5]').hasClass('selected')",
-    "isThumbedDown" : "$('*[data-rating=1]').hasClass('selected')",
+    "isPlaying" : "$('[data-id=play-pause').hasClass('playing')",
+    "isPaused" : "!$('[data-id=play-pause').hasClass('playing')",
+    "isShuffled" : "$('[data-id=shuffle]').attr('value') === 'ALL_SHUFFLE'",
+    "isRepeatOff" : "$('[data-id=repeat]').attr('value') === 'NO_REPEAT'",
+    "isRepeatOne" : "$('[data-id=repeat]').attr('value') === 'SINGLE_REPEAT'",
+    "isRepeatAll" : "$('[data-id=repeat]').attr('value') === 'LIST_REPEAT'",
+    "isThumbedUp" : "$('.rating-container [data-rating=5]').attr('aria-label').indexOf('Undo') === 0",
+    "isThumbedDown" : "$('.rating-container [data-rating=1]').attr('aria-label').indexOf('Undo') === 0",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#playingAlbumArt').attr('src').replace('s130', 's550')",
+    "artUrl" : "$('#playingAlbumArt').attr('src').replace('s180','s550')",
     "artist" : "$('#player-artist').text()",
-    "track" : "$('#playerSongTitle').text()",
+    "track" : "$('#player-song-title').text()",
     "currentTime" : "$('#time_container_current').text()",
     "totalTime" : "$('#time_container_duration').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$('*[data-id=play-pause]').click()",
-    "click_pause" : "$('*[data-id=play-pause]').click()",
-    "click_next_track" : "$('*[data-id=forward]').click()",
-    "click_prev_track" : "$('*[data-id=rewind]').click()",
-    "click_shuffle" : "$('*[data-id=\"shuffle\"]').click()",
-    "click_repeat" : "$('*[data-id=\"repeat\"]').click()",
-    "click_thumbs_up" : "$('*[data-rating=5]').click()",
-    "click_thumbs_down" : "$('*[data-rating=1]').click()"
+    "click_play" : "$('[data-id=play-pause').click()",
+    "click_pause" : "$('[data-id=play-pause').click()",
+    "click_next_track" : "$('[data-id=forward').click()",
+    "click_prev_track" : "$('[data-id=rewind').click()",
+    "click_shuffle" : "$('[data-id=shuffle').click()",
+    "click_repeat" : "$('[data-id=repeat').click()",
+    "click_thumbs_up" : "$('.rating-container [data-rating=5]')[0].click()",
+    "click_thumbs_down" : "$('.rating-container [data-rating=1]')[0].click()"
 }
