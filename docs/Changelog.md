@@ -1,7 +1,10 @@
 # Musicality Changelog
 
+## v3.0.21
++ Fix for new Google Play Music
+
 ## v3.0.20
-+ Added a slightly improved short description.
++ Fix issues with description being too vague to be approved
 
 ## v3.0.19
 + Added support for Pocketcasts
