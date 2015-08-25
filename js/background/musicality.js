@@ -48,7 +48,8 @@ function Musicality(){
         chrome.storage.local.get('init_complete', $.proxy(function(result){
         	if (!result.init_complete){
                 // Do some init processing
-                chrome.storage.local.set({'scrobbling_enabled' : true,
+                chrome.storage.local.set({
+                    'scrobbling_enabled' : false,
                 	'badge_text_enabled' : true,
                 	'init_complete' : true,
                 	'toaster_enabled' : true}, $.proxy(function(){
