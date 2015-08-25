@@ -16,13 +16,13 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "var a=$('*[aria-label=\"Pause\"]'); a!=null && a.hasClass('ytp-button-pause')",
-    "isPaused" : "var a=$('*[aria-label=\"Play\"]'); a!=null && a.hasClass('ytp-button-play')",
-    "isShuffled" : "$('*[title=\"Shuffle\"]').attr('aria-pressed') == 'true'",
-    "isRepeatOff" : "$('*[title=\"Repeat playlist\"]').attr('aria-pressed') == 'false'",
-    "isRepeatAll" : "$('*[title=\"Repeat playlist\"]').attr('aria-pressed') == 'true'",
-    "isThumbedUp" : "$('#watch-like').hasClass('yt-uix-button-toggled')",
-    "isThumbedDown" : "$('#watch-dislike').hasClass('yt-uix-button-toggled')",
+    "isPlaying" : "$('*[aria-label=Pause]').length > 0",
+    "isPaused" : "$('*[aria-label=Play]').length > 0",
+    "isShuffled" : "$('.shuffle-playlist').attr('aria-pressed') === 'true'",
+    "isRepeatOff" : "$('.toggle-loop').attr('aria-pressed') !== 'true'",
+    "isRepeatAll" : "$('.toggle-loop').attr('aria-pressed') === 'true'",
+    "isThumbedUp" : "$('.like-button-renderer-like-button').first().hasClass('hid')",
+    "isThumbedDown" : "$('.like-button-renderer-dislike-button').first().hasClass('hid')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
@@ -34,13 +34,13 @@
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "$('div.ytp-button-play').click()",
-    "click_pause" : "$('div.ytp-button-pause').click()",
-    "click_next_track" : "$('div.ytp-button-next').click()",
-    "click_prev_track" : "$('div.ytp-button-prev').click()",
-    "click_shuffle" : "$('*[title=\"Shuffle\"]').click()",
-    "click_repeat" : "$('*[title=\"Repeat playlist\"]').click()",
-    "click_thumbs_up" : "$('#watch-like').click()",
-    "click_thumbs_down" : "$('#watch-dislike').click()"
+    "click_play" : "$('*[aria-label=Play]').click()",
+    "click_pause" : "$('*[aria-label=Pause]').click()",
+    "click_next_track" : "$('a.ytp-next-button')[0].click()",
+    "click_prev_track" : "$('a.ytp-prev-button')[0].click()",
+    "click_shuffle" : "$('.shuffle-playlist').click()",
+    "click_repeat" : "$('.toggle-loop').click()",
+    "click_thumbs_up" : "$('.like-button-renderer-like-button:not(.hid)').click()",
+    "click_thumbs_down" : "$('.like-button-renderer-dislike-button:not(.hid)').click()"
 
 }
