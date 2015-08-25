@@ -37,6 +37,6 @@
     "click_pause" : "$('.playerControls .iconPlayerPause').click()",
     "click_next_track" : "$('.playerControls .iconPlayerNext').click()",
     "click_prev_track" : "$('.playerControls .iconPlayerPrevious').click()",
-    "click_shuffle" : "$('.playerControls button')[6].click()",
-    "click_repeat" : "$('.playerControls button')[5].click()"
+    "click_shuffle" : "$('.playerControls button')[5].click()",
+    "click_repeat" : "$('.playerControls button')[6].click()"
 }

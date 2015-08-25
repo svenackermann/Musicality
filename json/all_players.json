@@ -70,6 +70,13 @@
         "open_page" : "http://www.grooveshark.com"
     },
 
+    "Groove Music" : {
+        "simple_name" : "groove_music",
+        "pattern" : "https?\\:\\/\\/music.microsoft.com\\/*",
+        "json_loc" : "/json/xbox_music.json",
+        "open_page" : "http://music.microsoft.com"
+    },
+
     "HypeMachine" : {
         "simple_name" : "hypem",
         "pattern" : "https?:\\/\\/hypem.com\\/*",
@@ -180,13 +187,6 @@
         "pattern" : "https?\\:\\/\\/tunein\\.com\\/*",
         "json_loc" : "/json/tunein.json",
         "open_page" : "http://tunein.com"
-    },
-
-    "Xbox Music" : {
-        "simple_name" : "xbox_music",
-        "pattern" : "https?\\:\\/\\/music.xbox.com\\/*",
-        "json_loc" : "/json/xbox_music.json",
-        "open_page" : "http://music.xbox.com"
     },
 
     "Youtube" : {
