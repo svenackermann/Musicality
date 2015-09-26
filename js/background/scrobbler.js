@@ -401,6 +401,13 @@ Scrobbler.prototype.GetLastFmSession = function(callback){
                     if (data.error){
                         // Yikes. We have an error.
                         this.logger.log("Query returned an error: " + data.message);
+
+                        // Clear the token to be safe
+                        chrome.storage.local.set({'lastfm_token': undefined}, function() {
+                            callback(false);
+                        });
+
+                        callback(false);
                     }else{
                         // Ok. Now get the session and username
                         if (data.session){
