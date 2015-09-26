@@ -344,6 +344,21 @@ function PopulateInformation(info){
     }
 }
 
+// A function to determine if we should show the popup
+function ShouldDisplayPopup(callback) {
+    if (Math.random() < 0.067) {
+        chrome.storage.local.get('donate_clicked', function(data){
+            if (data && data.donate_clicked) {
+                callback(false);
+            } else {
+                callback(true);
+            }
+        });
+    }
+
+    callback(false);
+}
+
 // A function to update the element text (if unchanged)
 function UpdateElementText(element, text){
     if (element.text() != text){
@@ -552,7 +567,9 @@ $(function(){
     mMusicality.OpenDefaultPlayer();
 
     // Let's decide if we should show the popup or not (1/15 chance)
-    if (Math.random() < 0.067){
-        DisplayHiddenPopupWithContentsOf("../html/hiddenPopup.html");
+    ShouldDisplayPopup(function(result)) {
+        if (result) {
+            DisplayHiddenPopupWithContentsOf("../html/hiddenPopup.html");
+        }
     }
 });
