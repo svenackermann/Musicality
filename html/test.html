@@ -1,30 +1,25 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Musicality Test</title>
-    <!-- Include the jasmine scripts -->
-    <link rel="shortcut icon" type="image/png" href="/test/lib/jasmine-2.0.0/jasmine_favicon.png">
-    <link rel="stylesheet" type="text/css" href="/test/lib/jasmine-2.0.0/jasmine.css">
+    <head>
+      <meta charset="utf-8">
+      <title>Mocha Tests</title>
+      <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet" />
+    </head>
+    <body>
+      <div id="mocha"></div>
 
-    <script type="text/javascript" src="/test/lib/jasmine-2.0.0/jasmine.js"></script>
-    <script type="text/javascript" src="/test/lib/jasmine-2.0.0/jasmine-html.js"></script>
-    <script type="text/javascript" src="/test/lib/jasmine-2.0.0/boot.js"></script>
+      <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
+      <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
+      <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
 
-    <!-- Include all JS files -->
-    <script type="text/javascript" src="/js/jquery.js"></script>
-    <script type="text/javascript" src="/js/jquery.md5.js"></script>
-    <script type="text/javascript" src="/js/constants.js"></script>
-    <script type="text/javascript" src="/js/options.js"></script>
-    <script type="text/javascript" src="/js/scrobbler.js"></script>
-    <script type="text/javascript" src="/js/ga.js"></script>
-    <script type="text/javascript" src="/js/background.js"></script>
-
-    <!-- Finally, include our test specs and helper -->
-    <script type="text/javascript" src="/test/spec/playersSpec.js"></script>
-    <script type="text/javascript" src="/test/spec/testHelper.js"></script>
-    
-  </head>
-  <body>
-  </body>
+      <script>mocha.setup('bdd')</script>
+      <script src="test.array.js"></script>
+      <script src="test.object.js"></script>
+      <script src="test.xhr.js"></script>
+      <script>
+        mocha.checkLeaks();
+        mocha.globals(['jQuery']);
+        mocha.run();
+      </script>
+    </body>
 </html>
-    
