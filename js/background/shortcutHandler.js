@@ -17,8 +17,9 @@
 /**
  * A class to handle keyboard shortcuts
  */
-function ShortcutHandler(playerHandler){
+function ShortcutHandler(playerHandler, toaster){
 	this.playerHandler = playerHandler;
+	this.toaster = toaster;
 	this.logger = Logger.getInstance();
 
 	// Register immediately with the chrome api
@@ -49,6 +50,8 @@ function ShortcutHandler(playerHandler){
 	    	this.playerHandler.ClickSomething(CLICK_SHUFFLE);
 	    }else if (command == "toggle-feature-repeat"){
 	    	this.playerHandler.ClickSomething(CLICK_REPEAT);
+	    }else if (command == "toggle-feature-toast"){
+	    	this.toaster.Toast(this.playerHandler.GetPlaybackInfo());
 	    }
 	}, this));
 }
