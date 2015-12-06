@@ -10,24 +10,26 @@
     "has_prev_track" : true,
     "has_play_pause" : true,
     "has_shuffle" : false,
-    "has_repeat" : false,
+    "has_repeat" : true,
     "has_current_track_time" : true,
     "has_total_track_time" : true,
     "has_remaining_track_time" : false,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('button.playControl.playing').length > 0",
-    "isPaused" : "$('.playControls').hasClass('visible') && $('button.playControl').attr('title').indexOf('Play') >= 0",
+    "isPlaying" : "$('button.playControl').hasClass('playing')",
+    "isPaused" : "$('.playControls').hasClass('m-visible') && !$('button.playControl').hasClass('playing')",
+    "isRepeatOff" : "!$('button.repeatControl').hasClass('m-active')",
+    "isRepeatOne" : "$('button.repeatControl').hasClass('m-active')",
     "isThumbedUp" : "$('.playControls button.sc-button-like').hasClass('sc-button-selected')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
     "artUrl" : "$('.playControls .image span').attr('style').split('background-image: url(')[1].split(');')[0].replace('120x120','500x500')",
-    "track" : "var a=$('.playControls .playbackSoundBadge__title').text(); var b=a.indexOf('-'); a.substring(0, b).trim();",
-    "artist" : "var a=$('.playControls .playbackSoundBadge__title').text(); var b=a.indexOf('-'); a.substring(b+1).trim();",
-    "currentTime" : "$('.playControls .playbackTimeline__timePassed').text()",
-    "totalTime" : "$('.playControls .playbackTimeline__duration').text()",
+    "track" : "$('.playControls .playbackSoundBadge__title [aria-hidden]').text();",
+    "artist" : "''",
+    "currentTime" : "$('.playControls .playbackTimeline__timePassed [aria-hidden]').text()",
+    "totalTime" : "$('.playControls .playbackTimeline__duration [aria-hidden]').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
@@ -35,5 +37,6 @@
     "click_pause" : "$('button.playControl').click()",
     "click_next_track" : "$('button.skipControl.skipControl__next').click()",
     "click_prev_track" : "$('button.skipControl.skipControl__previous').click()",
+    "click_repeat" : "$('button.repeatControl').click()",
     "click_thumbs_up" : "$('.playControls button.sc-button-like').click()"
 }
