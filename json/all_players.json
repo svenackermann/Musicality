@@ -14,6 +14,13 @@
         "open_page" : "http://8tracks.com"
     },
     
+    "Accuradio" : {
+        "simple_name" : "accuradio",
+        "pattern" : "http\\:\\/\\/www\\.accuradio\\.com\\/*",
+        "json_loc" : "/json/accuradio.json",
+        "open_page" : "http://www.accuradio.com"
+    },
+
     "Amazon Cloud Player" : {
         "simple_name" : "amazon",
         "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/*",
