@@ -54,3 +54,4 @@ Please don't hesitate to contact me if you have any questions.
   - Michael Hart
   - Francsico Salvador (Bandcamp support, and more)
   - cucko (MyCloudPlayers support)
+  - NasaGeek (Soundcloud support)
