@@ -1,0 +1,40 @@
+{
+    "name" : "Accuradio",
+
+"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+
+    "has_thumbs_up" : true,
+    "has_thumbs_down" : true,
+    "has_next_track" : true,
+    "has_prev_track" : false,
+    "has_play_pause" : true,
+    "has_shuffle" : false,
+    "has_repeat" : false,
+    "has_current_track_time" : true,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
+
+"COMMENT_2" : "This block contains all boolean values we can get back from the player",
+
+    "isPlaying" : "!$('#playerWrapper').hasClass('closed') && $('#playerPauseButton').length == 1",
+    "isPaused" : "!$('#playerWrapper').hasClass('closed') && $('#playerPlayButton').length == 1",
+    "isThumbedUp" : "$('#ratingStarsWrapper .ui-stars-star-on').length >= 4",
+    "isThumbedDown" : "$('#ratingStarsWrapper .ui-stars-star-on').length >= 1 && $('#ratingStarsWrapper .ui-stars-star-on').length <= 2",
+
+"COMMENT_3" : "This block contains all string values we can get back from the player",
+
+    "artUrl" : "$('#playerArt a img').attr('src')",
+    "artist" : "$('#songartist').text()",
+    "track" : "$('#songtitle').text()",
+    "currentTime" : "$('#progressLabel').text()",
+    "remainingTime" : "$('#durationLabel').text().substring(1)",
+
+"COMMENT_4" : "Finally, this block contains info on how to perform actions",
+
+    "click_play" : "$('#playerPlayButton').get(0).click()",
+    "click_pause" : "$('#playerPauseButton').get(0).click()",
+    "click_next_track" : "$('#playerSkipButton').get(0).click()",
+    "click_thumbs_up" : "$('#ratingStarsWrapper div:nth-child(6) a').get(0).click()",
+    "click_thumbs_down" : "$('#ratingStarsWrapper div:nth-child(2) a').get(0).click()"
+}
+
