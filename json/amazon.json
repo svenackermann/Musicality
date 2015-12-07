@@ -16,8 +16,8 @@
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
-    "isPlaying" : "$('*[playeraction=togglePlay]').hasClass('icon-pause')",
-    "isPaused" : "$('*[playeraction=togglePlay]').hasClass('icon-play')",
+    "isPlaying" : "$('.button.playerIcon.playButton').hasClass('playerIconPause')",
+    "isPaused" : "!$('.button.playerIcon.playButton').hasClass('disabled') && $('.button.playerIcon.playButton').hasClass('playerIconPlay')",
     "isShuffled" : "$('*[playeraction=toggleShuffle]').hasClass('shuffled')",
     "isRepeatOff" : "!$('*[playeraction=toggleRepeat]').hasClass('repeated')",
     "isRepeatAll" : "$('*[playeraction=toggleRepeat]').hasClass('repeated')",
@@ -26,7 +26,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src').replace('64', '500')",
+    "artUrl" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src')",
     "artist" : "$('.artistName .artistLink').text()",
     "track" : "$('.currentSongDetails .title').text()",
     "currentTime" : "$('#currentTime').text()",
