@@ -52,6 +52,6 @@ Please don't hesitate to contact me if you have any questions.
   - Brad Lambeth
   - Marc-Andre Decoste
   - Michael Hart
-  - Francsico Salvador (Bandcamp support, and more)
+  - Francsico Salvador - Bandcamp support, and more
   - cucko (MyCloudPlayers support)
-  - NasaGeek (Soundcloud support)
+  - Chris Roberts (NasaGeek) - SoundCloud, Accuradio, Amazon Cloud Player, and more

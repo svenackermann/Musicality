@@ -28,9 +28,9 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#playerBarArt').attr('src').replace('=s180','=s550')",
+    "artUrl" : "$('#playingAlbumArt').attr('src').replace('=s180','=s550')",
     "artist" : "$('#player-artist').text()",
-    "track" : "$('#currently-playing-title').text()",
+    "track" : "$('#player-song-title').text()",
     "currentTime" : "$('#time_container_current').text()",
     "totalTime" : "$('#time_container_duration').text()",
 
