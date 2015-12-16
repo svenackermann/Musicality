@@ -24,7 +24,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('.playerBarArt').attr('src')",
+    "artUrl" : "var url=$('.playerBarArt').attr('src');(url.indexOf('http') < 0 ? 'http://pandora.com' : '') + url;",
     "artist" : "$('.playerBarArtist').text()",
     "track" : "$('.playerBarSong').text()",
     "currentTime" : "$('.elapsedTime').text()",
