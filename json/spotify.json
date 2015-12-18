@@ -24,7 +24,7 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#app-player').contents().find('.sp-image-img').css('background-image').replace(/^url\\(\"(.+)\"\\)/, '$1')",
+    "artUrl" : "$('#app-player').contents().find('.sp-image-img').css('background-image').replace(/^url\\((.+)\\)/, '$1')",
     "artist" : "$('#app-player').contents().find('#track-artist').text()",
     "track" : "$('#app-player').contents().find('#track-name').text()",
     "currentTime" : "$('#app-player').contents().find('#track-current').text()",
