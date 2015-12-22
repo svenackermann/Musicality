@@ -27,7 +27,7 @@
     "icons": {
         "250": "/images/icon250.png",
         "128": "/images/icon128.png",
-        "76": "/iamges/icon/76.png",
+        "76": "/images/icon/76.png",
         "48": "/images/icon48.png",
         "38": "/images/icon76.png",
         "19": "/images/icon19.png",
@@ -81,7 +81,7 @@
         }
     },
     "update_url": "http://clients2.google.com/service/update2/crx",
-    "version": "3.0.28",
+    "version": "3.0.29",
     "manifest_version": 2,
     "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://apis.google.com; object-src 'self'",
     "author": "Kyle Kamperschroer",
