@@ -161,6 +161,13 @@
         "open_page" : "http://www.saavn.com"
     },
 
+    "Shoutcast": {
+        "simple_name": "shoutcast",
+        "pattern": "https?:\\/\\/www.shoutcast.com\\/*",
+        "json_loc": "/json/shoutcast.json",
+        "open_path": "http://www.shoutcast.com"
+    },
+
     "Slacker" : {
         "simple_name" : "slacker",
         "pattern" : "https?:\\/\\/(.*?)\\.slacker.com\\/*",
