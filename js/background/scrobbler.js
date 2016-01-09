@@ -39,6 +39,8 @@ function Scrobbler(playerHandler){
 	this.sessionKey = undefined;
 	this.username = undefined;
 
+    var that = this;
+
 	/**
 	 * Helper method to prevent duped code, and deal with async
 	 * @param  {Object}   parameters
@@ -78,18 +80,18 @@ function Scrobbler(playerHandler){
 	 */
 	this.talkToLastFm = function(){
 		// Check if scrobbling is even enabled
-		this.IsScrobblingEnabled($.proxy(function(result){
+		this.IsScrobblingEnabled(function(result){
 			if (!result){
 				return;
 			}
 
 			// Get the most recent info from the player handler
-			var info = this.playerHandler.GetPlaybackInfo();
+			var info = that.playerHandler.GetPlaybackInfo();
 
 			// Ensure we have a track and artist and are playing
 			if (info.track && info.artist && info.isPlaying){
 			    // Cool. Tell Last.fm we are playing 
-			    this.RunLastFmQuery(
+			    that.RunLastFmQuery(
 			    	{
 			    		method: "track.updateNowPlaying",
 			    		track: info.track,
@@ -110,7 +112,7 @@ function Scrobbler(playerHandler){
 			var trackRepeated = false;
 
 			// Check if the current track is repeating
-			if ((this.listeningTrackName == curTrack) &&
+			if ((that.listeningTrackName == curTrack) &&
 			    (info.isRepeatOne || info.isRepeatAll)){
 			    // Set a variable that makes it clear this track is in the process
 			    // of repeating
@@ -118,25 +120,25 @@ function Scrobbler(playerHandler){
 
 			    // Now check if it has already repeated, and progress is less
 			    // than what it was last time we checked.
-			    if (info.currentTime < this.listeningTrackProgress){
+			    if (info.currentTime < that.listeningTrackProgress){
 			        // Yup. It has repeated, so let's log it as such.
 			        trackRepeated = true;
 
 			        // Reset trackRepeatingScrobbled so the next repeat will get scrobbled
-			        this.trackRepeatingScrobbled = false;
+			        that.trackRepeatingScrobbled = false;
 			    }
 			}
 
 			// Set the current listening time
-			this.listeningTrackProgress = info.currentTime;
+			that.listeningTrackProgress = info.currentTime;
 
 			// Check if this is a new track, or if we've repeated the same one
-			if (this.listeningTrackName != curTrack || trackRepeated){
+			if (that.listeningTrackName != curTrack || trackRepeated){
 			    // Reset the stored timestamp
-			    this.listeningTrackTimestamp = curTimestamp;
+			    that.listeningTrackTimestamp = curTimestamp;
 
 			    // Reset the listening track variable
-			    this.listeningTrackName = curTrack;
+			    that.listeningTrackName = curTrack;
 
 			    // Build up a new queue
 			    var newQueue = [];
@@ -144,13 +146,13 @@ function Scrobbler(playerHandler){
 			    // Iterate through the scrobble queue, scrobbling any
 			    // tracks we've saved off.
 			    // Now we should iterate through everything in our scrobble queue
-			    for (var i=0; i<this.scrobbleQueue.length; i++){
+			    for (var i=0; i<that.scrobbleQueue.length; i++){
 
 			        // Get the current track in the queue
-			        var curQTrack = this.scrobbleQueue[i];
+			        var curQTrack = that.scrobbleQueue[i];
 
 			        // Attempt to scrobble it
-			        this.RunLastFmQuery(
+			        that.RunLastFmQuery(
 			            {
 			                method: "track.scrobble",
 			                track: curQTrack.track,
@@ -171,14 +173,14 @@ function Scrobbler(playerHandler){
 			    }
 
 			    // Now save the mScrobbleQueue as the newQueue
-			    this.scrobbleQueue = newQueue.slice();
+			    that.scrobbleQueue = newQueue.slice();
 			}else{
 			    // This is not a new track. Check if our timestamp is old enough
-			    if (curTimestamp - this.listeningTrackTimestamp > 31000 - this.workDelay){
+			    if (curTimestamp - that.listeningTrackTimestamp > 31000 - that.workDelay){
 			        // Get the percentage
 			        var percentage = info.currentTime/info.totalTime;
 
-			        var playerDetails = this.playerHandler.GetPlayerDetails();
+			        var playerDetails = that.playerHandler.GetPlayerDetails();
 			        
 			        // Now check to ensure it's progress is greater than 50 or that this
 			        // player doesn't have any way of tracking progress
@@ -187,10 +189,10 @@ function Scrobbler(playerHandler){
 
 			            // Ensure we haven't already scrobbled this track, or that it's
 			            // repeating and we have gone backwards in progress
-			            if (curTrack != this.lastScrobble ||
-			                (trackRepeating && !this.trackRepeatingScrobbled)){
+			            if (curTrack != that.lastScrobble ||
+			                (trackRepeating && !that.trackRepeatingScrobbled)){
 			                // Push this scrobble into our queue
-			                this.scrobbleQueue.push(
+			                that.scrobbleQueue.push(
 			                	{
 			                		artist: info.artist,
 			                		track: info.track,
@@ -199,18 +201,18 @@ function Scrobbler(playerHandler){
 			                	});
 
 			                // Save this track off as the last scrobble
-			                this.lastScrobble = curTrack;
+			                that.lastScrobble = curTrack;
 
 			                // If we scrobbled this due to repeating track, make sure
 			                // we don't do it again until the next repeat
 			                if (trackRepeating){
-			                    this.trackRepeatingScrobbled = true;
+			                    that.trackRepeatingScrobbled = true;
 			                }
 			            }
 			        }
 			    }
 			}
-		}, this));
+		});
 	};
 }
 
@@ -218,44 +220,45 @@ function Scrobbler(playerHandler){
  * Start the execution loop for the scrobbler
  */
 Scrobbler.prototype.Run = function(){
+    var that = this;
     // First, determine if we already have a token saved
-    chrome.storage.local.get('lastfm_token', $.proxy(function(data){
+    chrome.storage.local.get('lastfm_token', function(data){
         // Check if it exists
-        this.token = data.lastfm_token;
+        that.token = data.lastfm_token;
 
-        if (this.token){
+        if (that.token){
             // We have a token!
-            this.logger.log("Token stored locally is: " + this.token);
+            that.logger.log("Token stored locally is: " + that.token);
         }else{
-        	this.logger.log("No token stored locally.");
+        	that.logger.log("No token stored locally.");
         }
-    }, this));
+    });
 
     // Also check if we have a session key already
-    chrome.storage.local.get('lastfm_session_key', $.proxy(function(data){
-        this.sessionKey = data.lastfm_session_key;
+    chrome.storage.local.get('lastfm_session_key', function(data){
+        that.sessionKey = data.lastfm_session_key;
 
-        if (this.sessionKey){
+        if (that.sessionKey){
             // We already have a key
-            this.logger.log("Session key stored locally is: " + this.sessionKey);
+            that.logger.log("Session key stored locally is: " + that.sessionKey);
         }else{
             // No session key.
-            this.logger.log("No session key.");
+            that.logger.log("No session key.");
         }
-    }, this));
+    });
 
     // Finally, check for the username
-    chrome.storage.local.get('lastfm_username', $.proxy(function(data){
-        this.username = data.lastfm_username;
+    chrome.storage.local.get('lastfm_username', function(data){
+        that.username = data.lastfm_username;
 
-        if (this.username){
+        if (that.username){
             // We already have a key
-            this.logger.log("Username stored locally is: " + this.username);
+            that.logger.log("Username stored locally is: " + that.username);
         }else{
             // No session key.
-            this.logger.log("No username.");
+            that.logger.log("No username.");
         }
-    }, this));
+    });
 
     // Finally, start the execution loop
     window.setInterval(
@@ -263,8 +266,8 @@ Scrobbler.prototype.Run = function(){
     		return function(){
     			self.talkToLastFm();
     		};
-    	})(this),
-    this.workDelay);
+    	})(that),
+    that.workDelay);
 };
 
 /**

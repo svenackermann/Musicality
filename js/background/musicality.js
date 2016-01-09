@@ -36,6 +36,7 @@ function Musicality(){
     this.iconHandler = new IconHandler(this.playerHandler);
     this.scrobbler = new Scrobbler(this.playerHandler);
     this.shortcutHandler = new ShortcutHandler(this.playerHandler, this.toaster);
+    var that = this;
 
 
 	// Private functions //
@@ -45,24 +46,24 @@ function Musicality(){
 	 */
 	this.processFirstRun = function(){
         // Query local storage for an init value
-        chrome.storage.local.get('init_complete', $.proxy(function(result){
+        chrome.storage.local.get('init_complete', function(result){
         	if (!result.init_complete){
                 // Do some init processing
                 chrome.storage.local.set({
                     'scrobbling_enabled' : false,
                 	'badge_text_enabled' : true,
                 	'init_complete' : true,
-                	'toaster_enabled' : true}, $.proxy(function(){
-                		this.logger.log("Init now completed");
-                	}, this));
+                	'toaster_enabled' : true}, function(){
+                		that.logger.log("Init now completed");
+                	});
 
                 this.iconHandler.SetBadgeTextEnabled(true);
                 this.toaster.SetEnabled(true);
             }else{
                 // We're good.
-                this.logger.log("Init already completed.");
+                that.logger.log("Init already completed.");
             }
-        }, this));
+        });
     };
 
     /**
@@ -85,38 +86,38 @@ function Musicality(){
 	/**
 	 * Update information method. Called periodically by the execution loop
 	 */
-	this.updateInformation = function(){
+	this.updateInformation = function() {
 		this.logger.log("UpdateInformation()");
 
         // Have we already found a tab playing music?
         var lastPlayingTabId = this.playerHandler.GetLastPlayingTabId();
         if (lastPlayingTabId != -1){
             // Check if the tab still exists
-            Helper.DoesTabExist(lastPlayingTabId, $.proxy(function(exists){
+            Helper.DoesTabExist(lastPlayingTabId, function(exists){
             	if (exists){
                     // Is it still playing music?
-                    this.playerHandler.IsStillPlayingMusic( $.proxy(function(isPlaying){
-                        if (this.blacklistHandler.IsPlayerBlacklisted(this.playerHandler.GetPlayerSimpleName())) {
-                            this.logger.log("This player was blacklisted. Looking for a new player.");
+                    this.playerHandler.IsStillPlayingMusic(function(isPlaying){
+                        if (that.blacklistHandler.IsPlayerBlacklisted(that.playerHandler.GetPlayerSimpleName())) {
+                            that.logger.log("This player was blacklisted. Looking for a new player.");
 
-                            this.playerHandler.SetTabAndDetails(-1, undefined);
-                            this.lookForPlayingTabHelper();
+                            that.playerHandler.SetTabAndDetails(-1, undefined);
+                            that.lookForPlayingTabHelper();
                         }else if (isPlaying){
-                            this.logger.log("Same player is still playing. Populating...");
+                            that.logger.log("Same player is still playing. Populating...");
                             // Grab the different pieces from that tab, if we are displaying
-                            this.playerHandler.PopulateInformation();
+                            that.playerHandler.PopulateInformation();
                         }else{
-                        	this.lookForPlayingTabHelper();
+                        	that.lookForPlayingTabHelper();
                         }
-                    }, this));
+                    });
                 }else{
                     // Clear the info in player handler, since it's gone
-                    this.playerHandler.ClearInfo();
+                    that.playerHandler.ClearInfo();
 
                     // Need to look for a tab playing music
-                    this.lookForPlayingTabHelper();
+                    that.lookForPlayingTabHelper();
                 }
-            }, this));
+            });
         }else{
             this.lookForPlayingTabHelper();
         }
@@ -126,12 +127,12 @@ function Musicality(){
      * Helper function called by updateInformation when we need to look again
      */
     this.lookForPlayingTabHelper = function(){
-        this.tabHandler.FindTabPlayingMusic($.proxy(function(tabId, playerDetails){
-            this.playerHandler.SetTabAndDetails(tabId, playerDetails);
+        this.tabHandler.FindTabPlayingMusic(function(tabId, playerDetails){
+            that.playerHandler.SetTabAndDetails(tabId, playerDetails);
 
             if (tabId !== null && playerDetails !== null){
                 // We've got one. Populate if displayed
-                this.playerHandler.PopulateInformation();
+                that.playerHandler.PopulateInformation();
 
                 // Let's push the player name as a custom GA variable
                 _gaq.push(['_setCustomVar',
@@ -147,17 +148,17 @@ function Musicality(){
                     ]);
             }else{
                 // If we didn't find anything, nothing is populated.
-                this.logger.log("UpdateInformation() -- No players playing");
+                that.logger.log("UpdateInformation() -- No players playing");
 
                 // Reset variables in the player handler
-                this.playerHandler.SetTabAndDetails(-1, undefined);
+                that.playerHandler.SetTabAndDetails(-1, undefined);
 
                 // Set the default icon
                 chrome.browserAction.setIcon({
                     path : "/images/icon19.png"
                 });
             }
-        }, this));
+        });
     };
 
 	this.logger.log("Musicality done initializing");

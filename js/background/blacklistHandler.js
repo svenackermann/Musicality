@@ -19,13 +19,14 @@
  */
 function BlacklistHandler(){
 	this.blacklist = [];
+	var that = this;
 
 	// Immediately determine which players are disabled
-	chrome.storage.local.get('disabled_players_list', $.proxy(function(data){
+	chrome.storage.local.get('disabled_players_list', function(data){
 		if (data.disabled_players_list){
-			this.blacklist = data.disabled_players_list.split(',');
+			that.blacklist = data.disabled_players_list.split(',');
 		}
-	}, this));
+	});
 
 	this.updateStorage = function(blacklist){
 		var joinedList = blacklist.join(',');

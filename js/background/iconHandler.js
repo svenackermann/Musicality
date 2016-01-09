@@ -22,16 +22,17 @@ function IconHandler(playerHandler){
 	this.lastScrollTime = 0;
 	this.scrollDelayTime = 250;
 	this.playerHandler = playerHandler;
+	var that = this;
 
 	// Immediately find out if badge text is enabled
-	chrome.storage.local.get('badge_text_enabled', $.proxy(function(data){
-		this.badgeTextEnabled = data.badge_text_enabled;
-	}, this));
+	chrome.storage.local.get('badge_text_enabled', function(data){
+		that.badgeTextEnabled = data.badge_text_enabled;
+	});
 
 	// Immediately find out if icon progress is enabled
-	chrome.storage.local.get('icon_progress_enabled', $.proxy(function(data){
-		this.iconProgressEnabled = data.icon_progress_enabled;
-	}, this));
+	chrome.storage.local.get('icon_progress_enabled', function(data){
+		that.iconProgressEnabled = data.icon_progress_enabled;
+	});
 
 	// Set the color of the icon's badge text background
 	chrome.browserAction.setBadgeBackgroundColor({color: "#000000"});

@@ -23,6 +23,7 @@ function PlayerHandler(){
   this.playerDetails = {};
   this.currentInfo = {}; // contains track information
   this.lastPopulateTime = 0;
+  var that = this;
 
   // Get the scrips needed to possibly re-inject
   chrome.manifest = chrome.app.getDetails();
@@ -55,7 +56,7 @@ function PlayerHandler(){
     // Check if we have the player details
     if (playerDetails !== null && playerDetails[whatIsNeeded] !== undefined){
       // Now ensure we have a content script already running
-      chrome.tabs.sendMessage(tabId, { ping : "ping" }, $.proxy(function(response){
+      chrome.tabs.sendMessage(tabId, { ping : "ping" }, function(response){
         if (response){
           // Tab has content script running. Send it the request.
           chrome.tabs.sendMessage(
@@ -63,23 +64,22 @@ function PlayerHandler(){
             {
               "playerDetails" : playerDetails,
               "scriptKey" : whatIsNeeded
-            },
-            $.proxy(function(result){
-              this.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
+            }, function(result){
+              that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
 
               if (callback){
                 callback(result);
               }
-            }, this));
+            });
         }else{
           // Inject an re-request information
-          this.reinjectContentScript(
+          that.reinjectContentScript(
             tabId,
             playerDetails,
             whatIsNeeded,
             callback);
         }
-      }, this));
+      });
     }
   };
 
@@ -94,31 +94,31 @@ function PlayerHandler(){
     // Need to re-inject everything. Either new install or update.
     this.logger.log("No contentscript detected on tab " + tabId + ". Re-injecting...");
 
-    $.each(this.scripts, $.proxy(function(index, curScript){
-      this.logger.log("Injecting " + curScript + " into tab " + tabId);
+    $.each(this.scripts, function(index, curScript){
+      that.logger.log("Injecting " + curScript + " into tab " + tabId);
 
       // Verify the tab exists before injecting
-      Helper.DoesTabExist(tabId, $.proxy(function(exists){
+      Helper.DoesTabExist(tabId, function(exists){
         if (!exists){
           // Tab doesn't exist anymore. Need to re-find one
-          this.SetTabAndDetails(-1, undefined);
+          that.SetTabAndDetails(-1, undefined);
         }else{
           chrome.tabs.executeScript(tabId,
           {
             file: curScript,
             allFrames: false,
             runAt: "document_start"
-          }, $.proxy(function(){
+          }, function(){
             // Re-try the call
-            this.sendPlayerStaticRequest(
+            that.sendPlayerStaticRequest(
               tabId,
               playerDetails,
               whatIsNeeded,
               callback);
-          }, this));
+          });
         }
-      },this));
-    }, this));
+      });
+    });
   };
 
   /**
@@ -127,15 +127,15 @@ function PlayerHandler(){
    * @param  {function} callback (optional)
    */
   this.getValueFromPlayer = function(key, callback){
-    this.sendPlayerRequest(key, $.proxy(function(result){
-      if (result != this.currentInfo[key]){
-        this.currentInfo[key] = result;
+    this.sendPlayerRequest(key, function(result){
+      if (result != that.currentInfo[key]){
+        that.currentInfo[key] = result;
       }
 
       if (callback){
         callback(result);
       }
-    }, this));
+    });
   };
 }
 
@@ -165,6 +165,7 @@ PlayerHandler.prototype.ClearInfo = function(){
  * Populate everything we can find out about the player
  */
 PlayerHandler.prototype.PopulateInformation = function(){
+  var that = this;
   if (this.lastPlayingTabId < 0 || this.playerDetails === undefined){
     return;
   }
@@ -197,38 +198,35 @@ PlayerHandler.prototype.PopulateInformation = function(){
     var hasTimeInMs = this.playerDetails.has_time_in_ms;
     if (this.playerDetails.has_current_track_time){
       this.getValueFromPlayer(
-        "currentTime",
-        $.proxy(function(result){
+        "currentTime", function(result){
           if (!hasTimeInMs){
-            this.currentInfo.currentTime = Helper.TimeToMs(result);
+            that.currentInfo.currentTime = Helper.TimeToMs(result);
           }else{
-            this.currentInfo.currentTime = result;
+            that.currentInfo.currentTime = result;
           }
-        }, this));
+        });
     }
 
     if (this.playerDetails.has_total_track_time){
       this.getValueFromPlayer(
-        "totalTime",
-        $.proxy(function(result){
+        "totalTime", function(result){
           if (!hasTimeInMs){
-            this.currentInfo.totalTime = Helper.TimeToMs(result);
+            that.currentInfo.totalTime = Helper.TimeToMs(result);
           }else{
-            this.currentInfo.totalTime = result;
+            that.currentInfo.totalTime = result;
           }
-        }, this));
+        });
     }else if (this.playerDetails.has_remaining_track_time){
       this.getValueFromPlayer(
-        "remainingTime",
-        $.proxy(function(result){
+        "remainingTime", function(result){
           var remainingMillis = result;
           if (!hasTimeInMs){
             remainingMillis = Helper.TimeToMs(remainingMillis);
           }
 
             // Update total time
-            this.currentInfo.totalTime = this.currentInfo.currentTime + Math.abs(remainingMillis);
-          }, this));
+            that.currentInfo.totalTime = that.currentInfo.currentTime + Math.abs(remainingMillis);
+          });
     }
   }else{
     this.logger.log("Artist and track unchanged. Not requesting art or current time");
@@ -300,14 +298,16 @@ PlayerHandler.prototype.IsPaused = function(tabId, playerDetails, callback){
  * @param {string} clickWhat is what to click
  */
 PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
+  var that = this;
+  
   this.logger.log("ClickSomething() -- " + clickWhat);
     // First, ensure that something is playing
     if (this.playerDetails !== null && this.lastPlayingTabId > 0){
         // Cool. Let's do it
-        this.sendPlayerRequest(clickWhat, $.proxy(function(result){
-          this.logger.log("ClickSomething callback -- " + result);
+        this.sendPlayerRequest(clickWhat, function(result){
+          that.logger.log("ClickSomething callback -- " + result);
           // Reset last update and immediately re-populate
-          this.lastPopulateTime = 0;
+          that.lastPopulateTime = 0;
 
           // Wait just a tenth of a second before populating
           window.setTimeout(
@@ -315,14 +315,14 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
               return function(){
                 self.PopulateInformation();
               };
-            })(this),
+            })(that),
             100);
 
           // Callback with the result
           if(callback){
             callback(result);
           }
-        }, this));
+        });
     }
 };
 
