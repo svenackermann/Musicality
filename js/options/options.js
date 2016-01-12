@@ -239,7 +239,7 @@ function BuildDefaultPlayerDropdown(playerList){
 
     // Update the button to reflect which one is already stored (if any)
     chrome.storage.local.get('default_open', function(data){
-        // Check it's value
+        // Check its value
         if (data.default_open){
             // Use our map to set the player text, if it exists
             var playerName = pagePlayerMap[data.default_open];
@@ -278,7 +278,7 @@ function SaveDefaultPlayer(playerName, openPage){
     playersListButton.append("  <span class='caret'></span>");
 }
 
-// This function build the table for enabling/disabling specific players
+// This function builds the table for enabling/disabling specific players
 function BuildDisabledPlayersList(playerList){
     // Empty the table so there's no "Loading..." there.
     $('#loading-row').remove();

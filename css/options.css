@@ -25,3 +25,9 @@ label{
 	float: right;
 	margin-right: 55px;
 }
+
+ul#players-list {
+   max-height:250px;  
+   overflow-x:hidden; 
+   overflow-y:auto;   
+}
