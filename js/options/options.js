@@ -310,32 +310,52 @@ function BuildDisabledPlayersList(playerList){
     }
 
     BindNewBlacklistElements();
+    BindEnableDisableAll();
 }
 
-// This function is used to bind all of the new blacklist checkboxes
+// This function is used to bind all of the player blacklist checkboxes
 function BindNewBlacklistElements(){
     $('.blacklist-checkbox').click(function(){
         var element = $(this);
-
-        var simpleName = element.attr('id').split('#player-enabler-')[1];
-
-        if (element.attr("checked")){
-            console.log("Blacklisting player " + simpleName);
-
-            mMusicality.BlacklistPlayer(simpleName);
-
-            // Remove the attribute
-            element.removeAttr("checked");
-        }else{
-            console.log("Enabling player " + simpleName);
-
-            mMusicality.EnablePlayer(simpleName);
-
-            // Add the checked attribute
-            element.attr("checked", "");
-        }
+        SetPlayerBlacklisted(element, !element.prop("checked"));
     });
 }
+
+// This function binds the enable/disable all button.
+function BindEnableDisableAll(){
+    $('#blacklist-all').click(function(){
+        var checkbox = $(this);
+        
+        // Toggle each blacklist-checkbox
+        $("td .blacklist-checkbox").each(function(){
+            SetPlayerBlacklisted($(this), !checkbox.prop("checked"));
+        });
+    });
+}
+
+// Helper function to blacklist a player corresponding to one checkbox
+function SetPlayerBlacklisted(element, toBlacklist){
+    var simpleName = element.attr('id').split('#player-enabler-')[1];
+
+    if (toBlacklist){
+        console.log("Blacklisting player " + simpleName);
+
+        mMusicality.BlacklistPlayer(simpleName);
+
+        // Uncheck the attribute
+        element.prop("checked", false);
+    }else{
+        console.log("Enabling player " + simpleName);
+
+        mMusicality.EnablePlayer(simpleName);
+
+        // Add the checked attribute
+        element.prop("checked", true);
+    }
+}
+
+// This function enables/disables the player on Musicality
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
