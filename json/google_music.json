@@ -2,7 +2,7 @@
 
     "name" : "Google Play Music",
 
-"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+"COMMENT_1" : "This block contains all of the things a player may or may not have",
 
     "has_thumbs_up" : true,
     "has_thumbs_down" : true,
@@ -28,9 +28,9 @@
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#playingAlbumArt').attr('src').replace('=s180','=s550')",
+    "artUrl" : "$('#playerBarArt').attr('src').replace('=s90','=s550')",
     "artist" : "$('#player-artist').text()",
-    "track" : "$('#player-song-title').text()",
+    "track" : "$('#currently-playing-title').text()",
     "currentTime" : "$('#time_container_current').text()",
     "totalTime" : "$('#time_container_duration').text()",
 
