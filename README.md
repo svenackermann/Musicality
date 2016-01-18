@@ -55,3 +55,4 @@ Please don't hesitate to contact me if you have any questions.
   - Francsico Salvador - Bandcamp support, and more
   - cucko (MyCloudPlayers support)
   - Chris Roberts (NasaGeek) - SoundCloud, Accuradio, Amazon Cloud Player, and more
+  - Jenny Li - Google Music and more
