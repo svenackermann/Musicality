@@ -168,6 +168,13 @@
         "open_path": "http://www.shoutcast.com"
     },
 
+    "Shuffler.fm": {
+        "simple_name": "shuffler_fm",
+        "pattern": "https?:\\/\\/(.*?)shuffler\\.fm\\/*",
+        "json_loc" : "/json/shuffler_fm.json",
+        "open_path": "http://www.shuffler.fm/"
+    },
+
     "Slacker" : {
         "simple_name" : "slacker",
         "pattern" : "https?:\\/\\/(.*?)\\.slacker.com\\/*",
