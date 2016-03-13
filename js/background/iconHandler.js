@@ -96,8 +96,6 @@ function IconHandler(playerHandler){
 			percentage = info.currentTime/info.totalTime;
 		}
 
-		console.log(info);
-
 		if (info.isPaused){
 			if (!this.previousDrawPaused){
  			    this.drawNewIcon(this.icons.paused, -1); // No progress when paused
