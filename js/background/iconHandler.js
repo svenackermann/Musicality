@@ -101,7 +101,7 @@ function IconHandler(playerHandler){
  			    this.drawNewIcon(this.icons.paused, -1); // No progress when paused
  			    this.previousDrawPaused = true;
  			}
-		}else{
+		}else if(Object.keys(info).length > 0){
 			this.drawNewIcon(this.icons.playing, percentage);
 			this.previousDrawPaused = false;
 		}
