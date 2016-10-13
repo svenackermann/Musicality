@@ -96,7 +96,7 @@ function Musicality(){
             Helper.DoesTabExist(lastPlayingTabId, function(exists){
             	if (exists){
                     // Is it still playing music?
-                    this.playerHandler.IsStillPlayingMusic(function(isPlaying){
+                    that.playerHandler.IsStillPlayingMusic(function(isPlaying){
                         if (that.blacklistHandler.IsPlayerBlacklisted(that.playerHandler.GetPlayerSimpleName())) {
                             that.logger.log("This player was blacklisted. Looking for a new player.");
 
