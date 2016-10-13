@@ -56,3 +56,4 @@ Please don't hesitate to contact me if you have any questions.
   - cucko (MyCloudPlayers support)
   - Chris Roberts (NasaGeek) - SoundCloud, Accuradio, Amazon Cloud Player, and more
   - Jenny Li - Google Music and more
+  - Christoph Kau (HanSolo80) - Bug fixes, player fixes, and more
