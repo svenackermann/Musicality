@@ -21,11 +21,11 @@
         "open_page" : "http://www.accuradio.com"
     },
 
-    "Amazon Cloud Player" : {
+    "Amazon Music" : {
         "simple_name" : "amazon",
-        "pattern" : "https?\\:\\/\\/www.amazon.com\\/gp\\/dmusic\\/*",
+        "pattern" : "https?\\:\\/\\/music\\.amazon\\.*",
         "json_loc" : "/json/amazon.json",
-        "open_page" : "http://www.amazon.com/cloudplayer"        
+        "open_page" : "https://music.amazon.com"
     },
 
     "Bandcamp" : {
