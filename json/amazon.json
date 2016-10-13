@@ -1,46 +1,42 @@
 {
     "name" : "Amazon",
 
-"COMMENT_1" : "This block contiains all of the things a player may or may not have",
+"COMMENT_1" : "This block contains all of the things a player may or may not have",
 
-    "has_thumbs_up" : true,
-    "has_thumbs_down" : true,
+    "has_thumbs_up" : false,
+    "has_thumbs_down" : false,
     "has_next_track" : true,
     "has_prev_track" : true,
     "has_play_pause" : true,
     "has_shuffle" : true,
     "has_repeat" : true,
     "has_current_track_time" : true,
-    "has_total_track_time" : true,
-    "has_remaining_track_time" : false,
+    "has_total_track_time" : false,
+    "has_remaining_track_time" : true,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
     "isPlaying" : "$('.button.playerIcon.playButton').hasClass('playerIconPause')",
     "isPaused" : "!$('.button.playerIcon.playButton').hasClass('disabled') && $('.button.playerIcon.playButton').hasClass('playerIconPlay')",
-    "isShuffled" : "$('*[playeraction=toggleShuffle]').hasClass('shuffled')",
-    "isRepeatOff" : "!$('*[playeraction=toggleRepeat]').hasClass('repeated')",
-    "isRepeatAll" : "$('*[playeraction=toggleRepeat]').hasClass('repeated')",
-    "isThumbedUp" : "$('#thumbsUp .thumbsUpIcon').hasClass('selected')",
-    "isThumbedDown" : "$('#thumbsDown .thumbsDownIcon').hasClass('selected')",
+    "isShuffled" : "$('.shuffleButton').hasClass('on')",
+    "isRepeatOff" : "!$('.repeatButton').hasClass('on')",
+    "isRepeatAll" : "$('.repeatButton').hasClass('on')",
 
 "COMMENT_3" : "This block contains all string values we can get back from the player",
     
-    "artUrl" : "$('#nowPlayingSection .nowPlayingDetail a img').attr('src')",
-    "artist" : "$('.artistName .artistLink').text()",
-    "track" : "$('.currentSongDetails .title').text()",
-    "currentTime" : "$('#currentTime').text()",
-    "totalTime" : "$('#currentDuration').text()",
+    "artUrl" : "$('.largeAlbumArtContainer .art').attr('style').split('background-image: url(')[1].split(')')[0]",
+    "artist" : "$('.trackArtist a span').text()",
+    "track" : "$('.trackTitle a span').text()",
+    "currentTime" : "$('.songDuration.timeElapsed').text()",
+    "totalTime" : "$('.songDuration.timeRemaining').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
-    "click_play" : "location.assign('javascript:window.amznMusic.widgets.player.resume()')",
-    "click_pause" : "location.assign('javascript:window.amznMusic.widgets.player.pause()')",
-    "click_next_track" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"next\", null, null)')",
-    "click_prev_track" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"previous\", null, null)')",
-    "click_shuffle" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleShuffle\")')",
-    "click_repeat" : "location.assign('javascript:window.amznMusic.widgets.player.playHash(\"toggleRepeat\")')",
-    "click_thumbs_up" : "$('#thumbsUp .thumbsUpIcon').click()",
-    "click_thumbs_down" : "$('#thumbsDown .thumbsDownIcon').click()"
+    "click_play" : "$('.playbackControlsView .button.playerIcon.playButton').click()",
+    "click_pause" : "$('.playbackControlsView .button.playerIcon.playButton').click()",
+    "click_next_track" : "$('.playbackControlsView .button.nextButton').click()",
+    "click_prev_track" : "$('.playbackControlsView .button.previousButton').click()",
+    "click_shuffle" : "$('.playbackControlsView .shuffleButton').click()",
+    "click_repeat" : "$('.playbackControlsView .button.playerIcon.playButton').click()"
 }
 
