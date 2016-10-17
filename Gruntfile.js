@@ -29,7 +29,11 @@ module.exports = function(grunt) {
     			    	expand: true,
     			    	src: ['js/**/*.js', '!js/tp/*.js'],
     			    	dest: 'build/'
-    			    }
+    			    },
+					{
+						src: ['node_modules/dragdealer/src/dragdealer.js'],
+						dest: 'build/js/popup/dragdealer.js'
+					}
     			]
     		}
     	},
@@ -57,7 +61,7 @@ module.exports = function(grunt) {
     		}
     	},
     	copy: {
-    		everything: {
+    		default: {
     			files: [
     			    {
     			    	expand: true,
@@ -72,7 +76,27 @@ module.exports = function(grunt) {
     			    	dest: 'build/'
     			    }
     			]
-    		}
+    		},
+			debug: {
+				files: [
+					{
+						expand: true,
+						src: [
+							'images/**/*.png',
+							'css/bootstrap*.css',
+							'js/**/*.js',
+							'fonts/*',
+							'manifest.json',
+							'json/*.json'
+						],
+						dest: 'build/'
+					},
+					{
+						src: ['node_modules/dragdealer/src/dragdealer.js'],
+						dest: 'build/js/popup/dragdealer.js'
+					}
+				]
+			}
     	},
     	compress: {
     		dist: {
@@ -108,4 +132,14 @@ module.exports = function(grunt) {
     	'copy',
     	'compress'
     	]);
+
+	grunt.registerTask('debug', [
+		'clean',
+		'jshint',
+		'jsonlint',
+		'cssmin',
+		'htmlmin',
+		'copy',
+		'compress'
+	]);
 };

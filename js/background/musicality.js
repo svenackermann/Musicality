@@ -229,11 +229,11 @@ Musicality.prototype.EnablePlayer = function(simpleName){
 /**
  * Request from the popup to perform an action
  */
-Musicality.prototype.ClickSomething = function(whatToClick, callback){
+Musicality.prototype.ClickSomething = function(whatToClick, callback, value){
     // Because this came from the popup, the track information is
     // already present. No need to display the popup
     this.toaster.SkipNextToast();
-    this.playerHandler.ClickSomething(whatToClick, callback);
+    this.playerHandler.ClickSomething(whatToClick, callback, value);
 };
 
 /**

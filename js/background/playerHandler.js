@@ -1,12 +1,12 @@
 /**
  * Copyright 2014 Kyle Kamperschroer (http://kylek.me)
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,13 +34,14 @@ function PlayerHandler(){
    * @param  {String}   whatIsNeeded
    * @param  {Function} callback function with result of action
    */
-  this.sendPlayerRequest = function(whatIsNeeded, callback){
+  this.sendPlayerRequest = function(whatIsNeeded, callback, value){
     // Call the static version with our members
     this.sendPlayerStaticRequest(
       this.lastPlayingTabId,
       this.playerDetails,
       whatIsNeeded,
-      callback);
+      callback,
+      value);
   };
 
   /**
@@ -50,34 +51,56 @@ function PlayerHandler(){
    * @param  {String}   whatIsNeeded
    * @param  {Function} callback
    */
-  this.sendPlayerStaticRequest = function(tabId, playerDetails, whatIsNeeded, callback){
+  this.sendPlayerStaticRequest = function(tabId, playerDetails, whatIsNeeded, callback, value){
     this.logger.log("SendPlayerRequest for " + whatIsNeeded);
 
+      if(whatIsNeeded == 'seek_update') {
+        console.log('stop');
+      }
     // Check if we have the player details
     if (playerDetails !== null && playerDetails[whatIsNeeded] !== undefined){
       // Now ensure we have a content script already running
       chrome.tabs.sendMessage(tabId, { ping : "ping" }, function(response){
         if (response){
           // Tab has content script running. Send it the request.
-          chrome.tabs.sendMessage(
-            tabId,
-            {
-              "playerDetails" : playerDetails,
-              "scriptKey" : whatIsNeeded
-            }, function(result){
-              that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
+          if(whatIsNeeded == 'seek_update') {
+            chrome.tabs.sendMessage(
+                tabId,
+                {
+                  "playerDetails" : playerDetails,
+                  "scriptKey" : whatIsNeeded,
+                  "value" : value
+                }, function(result){
+                  that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result + " and" +
+                      " value: " + value);
 
-              if (callback){
-                callback(result);
-              }
-            });
+                  if (callback){
+                    callback(result);
+                  }
+                });
+          } else {
+            chrome.tabs.sendMessage(
+                tabId,
+                {
+                  "playerDetails" : playerDetails,
+                  "scriptKey" : whatIsNeeded
+                }, function(result){
+                  that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
+
+                  if (callback){
+                    callback(result);
+                  }
+                });
+          }
+
         }else{
           // Inject an re-request information
           that.reinjectContentScript(
             tabId,
             playerDetails,
             whatIsNeeded,
-            callback);
+            callback,
+            value);
         }
       });
     }
@@ -90,7 +113,7 @@ function PlayerHandler(){
    * @param  {String}   whatIsNeeded
    * @param  {Function} callback
    */
-   this.reinjectContentScript = function(tabId, playerDetails, whatIsNeeded, callback){
+   this.reinjectContentScript = function(tabId, playerDetails, whatIsNeeded, callback, value){
     // Need to re-inject everything. Either new install or update.
     this.logger.log("No contentscript detected on tab " + tabId + ". Re-injecting...");
 
@@ -114,7 +137,8 @@ function PlayerHandler(){
               tabId,
               playerDetails,
               whatIsNeeded,
-              callback);
+              callback,
+              value);
           });
         }
       });
@@ -297,9 +321,9 @@ PlayerHandler.prototype.IsPaused = function(tabId, playerDetails, callback){
  * Perform an action, such as clicking play or next
  * @param {string} clickWhat is what to click
  */
-PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
+PlayerHandler.prototype.ClickSomething = function(clickWhat, callback, value){
   var that = this;
-  
+
   this.logger.log("ClickSomething() -- " + clickWhat);
     // First, ensure that something is playing
     if (this.playerDetails !== null && this.lastPlayingTabId > 0){
@@ -322,7 +346,7 @@ PlayerHandler.prototype.ClickSomething = function(clickWhat, callback){
           if(callback){
             callback(result);
           }
-        });
+        }, value);
     }
 };
 

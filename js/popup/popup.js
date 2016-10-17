@@ -84,7 +84,8 @@ function PopulateInformation(info){
     var trackInfoImgElement = $("#trackInfoBackgroundImage");
     var totalTimeElement = $("#totalTime");
     var curTimeElement = $("#currentTime");
-    
+    var seekMarker = $("#seekMarker");
+
     if (track && track !== null && track !== "" && mPlayerDetails){
         UpdateElementText(trackElement, track);
 
@@ -212,6 +213,9 @@ function PopulateInformation(info){
         }else{
             totalTimeElement.text("");
         }
+
+        var percentagePlayed = info.currentTime / info.totalTime;
+        seekMarker.css({left: percentagePlayed * 100 + "%"});
 
         // Get is playing from background
         var playing = info.isPlaying;
@@ -406,8 +410,13 @@ function ThumbsDownClick(){
     ClickSomething(CLICK_THUMBS_DOWN);
 }
 
+// Method executed when extensions thumbs down is clicked
+function SeekUpdate(value){
+    ClickSomething(SEEK_UPDATE, value);
+}
+
 // General method for dealing with clicking anything
-function ClickSomething(clickWhat){
+function ClickSomething(clickWhat, value){
     // Tell the background to take care of this
     mMusicality.ClickSomething(clickWhat, function(result){
         if (mDebug){
@@ -418,7 +427,7 @@ function ClickSomething(clickWhat){
         window.setTimeout(function(){
             UpdateInformation();
         }, 100);
-    });
+    }, value);
 }
 
 // A function to start the marquee when hovered over
@@ -508,6 +517,10 @@ $(function(){
     // Previous track
     $("#previousButton").bind('click', function(){
        PrevTrackClick();
+    });
+
+    $("#seekContainer").bind('click', function(){
+        SeekUpdate(0.5);
     });
 
     // Play/pause

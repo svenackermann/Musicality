@@ -16,4 +16,5 @@ var CLICK_PAUSE = "click_pause";
 var CLICK_NEXT_TRACK = "click_next_track";
 var CLICK_THUMBS_UP = "click_thumbs_up";
 var CLICK_THUMBS_DOWN = "click_thumbs_down";
+var SEEK_UPDATE = "seek_update";
 

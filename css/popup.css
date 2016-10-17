@@ -325,3 +325,23 @@ input:focus{
 .gc-bubbleDefault{
 	display: none;
 }
+
+#seekContainer {
+	height: 4px;
+	background-color: red;
+    padding: 0;
+    overflow: visible;
+}
+#markerContainer {
+    overflow: visible;
+}
+#seekMarker {
+    z-index: 10;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    background-color: green;
+    position: absolute;
+    top: -2px;
+    left: 0;
+}

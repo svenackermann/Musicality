@@ -3,6 +3,7 @@
   <head>        
     <script type='text/javascript' src='/js/tp/jquery.js'></script>
     <script type='text/javascript' src='/js/popup/popup.js'></script>
+    <script type='text/javascript' src='/js/popup/dragdealer.js'></script>
     <script type='text/javascript' src='/js/background/constants.js'></script>
     <script type='text/javascript' src='/js/background/helper.js'></script>
     <link rel='stylesheet' href='/css/popup.css'/>
@@ -32,6 +33,11 @@
         </span>
       </div>
   	</div>
+    <div id='seekContainer' class='container'>
+        <div id='markerContainer'>
+            <div id='seekMarker'></div>
+        </div>
+    </div>
   	<div id='lowerInfoContainer' class='container'>
       <div id='repeatButton' class='glyphicon glyphicon-refresh smallIcon'></div>
       <div id='shuffleButton' class='glyphicon glyphicon-random smallIcon'></div>
