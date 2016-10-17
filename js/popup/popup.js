@@ -28,6 +28,8 @@ var mMusicality = chrome.extension.getBackgroundPage().Musicality;
 // The player details
 var mPlayerDetails = mMusicality.GetPlayerDetails();
 
+var mSeekDragger;
+
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
@@ -215,7 +217,8 @@ function PopulateInformation(info){
         }
 
         var percentagePlayed = info.currentTime / info.totalTime;
-        seekMarker.css({left: percentagePlayed * 100 + "%"});
+
+        mSeekDragger.setValue(percentagePlayed, 0, true);
 
         // Get is playing from background
         var playing = info.isPlaying;
@@ -424,9 +427,9 @@ function ClickSomething(clickWhat, value){
         }
 
         // Wait a tenth of a second and update
-        window.setTimeout(function(){
+        /*window.setTimeout(function(){
             UpdateInformation();
-        }, 100);
+        }, 100);*/
     }, value);
 }
 
@@ -494,6 +497,14 @@ function CloseHiddenPopup(){
 
 // Once the document is ready, bind all of the functions.
 $(function(){
+
+    console.log(this);
+
+    mSeekDragger = new Dragdealer('markerContainer' ,{
+        dragStopCallback: function (x) {
+            SeekUpdate(x);
+        }
+    });
     // Immediately update our information
     UpdateInformation();
     
@@ -517,10 +528,6 @@ $(function(){
     // Previous track
     $("#previousButton").bind('click', function(){
        PrevTrackClick();
-    });
-
-    $("#seekContainer").bind('click', function(){
-        SeekUpdate(0.5);
     });
 
     // Play/pause
