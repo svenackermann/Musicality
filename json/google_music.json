@@ -34,7 +34,7 @@
     "track" : "$('#currently-playing-title').text()",
     "currentTime" : "$('#time_container_current').text()",
     "totalTime" : "$('#time_container_duration').text()",
-    "seekContainerId" : "material-player-progress",
+    "seekContainerSelector" : "#material-player-progress",
     "seekContainerMouseEvent" : "mousedown",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",

@@ -14,6 +14,7 @@
     "has_current_track_time" : true,
     "has_total_track_time" : true,
     "has_remaining_track_time" : false,
+    "seek_update" : true,
 
 "COMMENT_2" : "This block contains all boolean values we can get back from the player",
 
@@ -30,6 +31,8 @@
     "artist" : "''",
     "currentTime" : "$('.playControls .playbackTimeline__timePassed [aria-hidden]').text()",
     "totalTime" : "$('.playControls .playbackTimeline__duration [aria-hidden]').text()",
+    "seekContainerSelector" : ".playbackTimeline__progressWrapper",
+    "seekContainerMouseEvent" : "mousedown,mouseup",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 

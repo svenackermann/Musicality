@@ -30,6 +30,8 @@ var mPlayerDetails = mMusicality.GetPlayerDetails();
 
 var mSeekDragger;
 
+var updateTimerId;
+
 /////////////////////////////////////////////////////////////////////////////
 // Functions
 /////////////////////////////////////////////////////////////////////////////
@@ -420,16 +422,15 @@ function SeekUpdate(value){
 
 // General method for dealing with clicking anything
 function ClickSomething(clickWhat, value){
+    // Stop Update timer until action is complete
+    StopUpdateTimer();
     // Tell the background to take care of this
     mMusicality.ClickSomething(clickWhat, function(result){
         if (mDebug){
             console.log("ClickSomething callback with " + result);
         }
-
-        // Wait a tenth of a second and update
-        /*window.setTimeout(function(){
-            UpdateInformation();
-        }, 100);*/
+        //resume update timer
+        StartUpdateTimer();
     }, value);
 }
 
@@ -491,6 +492,24 @@ function CloseHiddenPopup(){
     $('#hiddenPopup').fadeOut();
 }
 
+/**
+ *  Update our information once second.
+ */
+function StartUpdateTimer() {
+    updateTimerId = window.setInterval(function() {
+        UpdateInformation();
+    }, 1000);
+}
+
+/**
+ *  Stop the update timer
+ */
+function StopUpdateTimer() {
+    if(updateTimerId) {
+        clearInterval(updateTimerId);
+    }
+}
+
 /////////////////////////////////////////////////////////////////////////////
 // Execution Start
 /////////////////////////////////////////////////////////////////////////////
@@ -508,12 +527,8 @@ $(function(){
     // Immediately update our information
     UpdateInformation();
     
-    //Update our information once second.
-    window.setInterval(function() {
-        UpdateInformation();
-    }, 1000);
-
-    // Get the clickable elements ready!
+    // Start the update Timer
+    StartUpdateTimer();
 
     // Shuffle button
     $("#shuffleButton").bind('click', function(){
@@ -563,6 +578,10 @@ $(function(){
     // Player name
     $('#art').bind('click', function(){
         mMusicality.GoToNowPlayingTab();
+    });
+
+    $('#seekContainer').bind('click', function(event){
+        SeekUpdate(event.clientX / event.target.getBoundingClientRect().width);
     });
 
     // Register all marquee items to marquee

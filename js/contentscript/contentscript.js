@@ -24,24 +24,33 @@ chrome.runtime.onMessage.addListener(
         }
         else if (request.scriptKey == "seek_update") {
 
-            var value = request.value;
-            var seekContainerElement = document.getElementById(playerDetails.seekContainerId);
-            var mouseEventType = playerDetails.seekContainerMouseEvent;
+            if(playerDetails.seekContainerSelector) {
+                var value = request.value;
+                var seekContainerElement = document.querySelector(playerDetails.seekContainerSelector);
 
-            var clickX = seekContainerElement.getBoundingClientRect().left + $(seekContainerElement).width() * value;
-            var clickY = seekContainerElement.getBoundingClientRect().top + $(seekContainerElement).height() / 2;
+                var clickX = seekContainerElement.getBoundingClientRect().left + $(seekContainerElement).width() * value;
+                var clickY = seekContainerElement.getBoundingClientRect().top + $(seekContainerElement).height() / 2;
 
-            var ev = new MouseEvent(mouseEventType, {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true,
-                'clientX': clickX,
-                'clientY': clickY
-            });
+                var elementToClick = document.elementFromPoint(clickX, clickY);
 
-            var element = document.elementFromPoint(clickX, clickY);
+                var mouseEventType = playerDetails.seekContainerMouseEvent || "mousedown";
 
-            element.dispatchEvent(ev);
+                var mouseEventTypes = mouseEventType.split(",");
+
+                for (var i = 0; i < mouseEventTypes.length; i++) {
+                    var ev = new MouseEvent(mouseEventTypes[i], {
+                        'view': window,
+                        'bubbles': true,
+                        'cancelable': true,
+                        'clientX': clickX,
+                        'clientY': clickY
+                    });
+
+                    elementToClick.dispatchEvent(ev);
+                }
+
+            }
+
 
             sendResponse("");
         }

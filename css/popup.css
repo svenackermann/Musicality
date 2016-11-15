@@ -327,19 +327,20 @@ input:focus{
 }
 
 #seekContainer {
-	height: 4px;
+	height: 6px;
 	background-color: red;
     padding: 0;
     overflow: visible;
+	cursor: pointer;
 }
 #markerContainer {
     overflow: visible;
 }
 #seekMarker {
     z-index: 10;
-    width: 8px;
-    height: 8px;
-    border-radius: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
     background-color: green;
     position: absolute;
     top: -2px;
