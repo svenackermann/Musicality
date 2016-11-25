@@ -21,9 +21,7 @@ chrome.runtime.onMessage.addListener(
 
             // Just respond with true
             sendResponse(true);
-        }
-        else if (request.scriptKey == "seek_update") {
-
+        } else if (request.scriptKey == "seek_update") {
             if(playerDetails.seekContainerSelector) {
                 var value = request.value;
                 var seekContainerElement = document.querySelector(playerDetails.seekContainerSelector);
@@ -51,10 +49,8 @@ chrome.runtime.onMessage.addListener(
 
             }
 
-
             sendResponse("");
-        }
-        else {
+        } else {
 
             // Disect the request
             var scriptKey = request.scriptKey;

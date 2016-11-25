@@ -515,10 +515,7 @@ function StopUpdateTimer() {
 /////////////////////////////////////////////////////////////////////////////
 
 // Once the document is ready, bind all of the functions.
-$(function(){
-
-    console.log(this);
-
+$(function() {
     mSeekDragger = new Dragdealer('markerContainer' ,{
         dragStopCallback: function (x) {
             SeekUpdate(x);

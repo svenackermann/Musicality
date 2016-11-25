@@ -54,9 +54,6 @@ function PlayerHandler(){
   this.sendPlayerStaticRequest = function(tabId, playerDetails, whatIsNeeded, callback, value){
     this.logger.log("SendPlayerRequest for " + whatIsNeeded);
 
-      if(whatIsNeeded == 'seek_update') {
-        console.log('stop');
-      }
     // Check if we have the player details
     if (playerDetails !== null && playerDetails[whatIsNeeded] !== undefined){
       // Now ensure we have a content script already running
@@ -72,7 +69,7 @@ function PlayerHandler(){
                   "value" : value
                 }, function(result){
                   that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result + " and" +
-                      " value: " + value);
+                    " value: " + value);
 
                   if (callback){
                     callback(result);
@@ -80,20 +77,19 @@ function PlayerHandler(){
                 });
           } else {
             chrome.tabs.sendMessage(
-                tabId,
-                {
-                  "playerDetails" : playerDetails,
-                  "scriptKey" : whatIsNeeded
-                }, function(result){
-                  that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
+              tabId,
+              {
+                "playerDetails" : playerDetails,
+                "scriptKey" : whatIsNeeded
+              }, function(result){
+                that.logger.log("SendPlayerRequest for " + whatIsNeeded + " callback with " + result);
 
-                  if (callback){
-                    callback(result);
-                  }
-                });
+                if (callback){
+                  callback(result);
+                }
+            });
           }
-
-        }else{
+        } else {
           // Inject an re-request information
           that.reinjectContentScript(
             tabId,
