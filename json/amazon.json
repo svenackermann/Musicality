@@ -28,7 +28,7 @@
     "artist" : "$('.trackArtist a span').text()",
     "track" : "$('.trackTitle a span').text()",
     "currentTime" : "$('.songDuration.timeElapsed').text()",
-    "totalTime" : "$('.songDuration.timeRemaining').text()",
+    "remainingTime" : "$('.songDuration.timeRemaining').text()",
 
 "COMMENT_4" : "Finally, this block contains info on how to perform actions",
 
